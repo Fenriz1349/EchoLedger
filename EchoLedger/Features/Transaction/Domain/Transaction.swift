@@ -5,23 +5,52 @@
 //  Created by Julien Cotte on 18/11/2025.
 //
 
-import SwiftData
 import Foundation
 
-@Model
-class Transaction {
-    @Attribute(.unique) var id: UUID
-    var amount: Double
-    var date: Date
-    var comment: String
-    
-    var account: Account?
+// MARK: - Transaction
+/// Represents a real-world financial event (e.g. a restaurant meal).
+/// The total amount is always positive — isExpense determines the direction.
+/// A transaction must always have at least one associated TransactionSplit.
+struct Transaction: Identifiable, Equatable, Codable {
 
-    init(amount: Double, date: Date, comment: String, account: Account?) {
-        self.id = UUID()
-        self.amount = amount
+    // MARK: Properties
+    let id: UUID
+    let label: String
+    let date: Date
+    let totalAmount: Decimal
+    let note: String?
+    let isExpense: Bool
+    let type: TransactionType
+    let splits: [TransactionSplit]
+
+    // MARK: Init
+    /// Creates a new Transaction.
+    /// - Parameters:
+    ///   - id: Unique identifier. Defaults to a new UUID.
+    ///   - label: Human-readable name for the transaction.
+    ///   - date: Date the transaction occurred.
+    ///   - totalAmount: Always positive. Use isExpense to determine direction.
+    ///   - note: Optional additional information.
+    ///   - isExpense: True if this is an expense, false if it is income.
+    ///   - type: Category of the transaction.
+    ///   - splits: Ventilation of the total amount across accounts. Must not be empty.
+    init(
+        id: UUID = UUID(),
+        label: String,
+        date: Date,
+        totalAmount: Decimal,
+        note: String? = nil,
+        isExpense: Bool,
+        type: TransactionType,
+        splits: [TransactionSplit]
+    ) {
+        self.id = id
+        self.label = label
         self.date = date
-        self.comment = comment
-        self.account = account
+        self.totalAmount = totalAmount
+        self.note = note
+        self.isExpense = isExpense
+        self.type = type
+        self.splits = splits
     }
 }
