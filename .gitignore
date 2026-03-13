@@ -1,0 +1,20 @@
+# Xcode user state
+*.xcuserstate
+xcuserdata/
+
+# Build
+build/
+DerivedData/
+
+# Swift Package Manager
+.build/
+*.resolved
+
+# CocoaPods (si applicable)
+Pods/
+
+# Firebase (ne jamais committer)
+GoogleService-Info.plist
+
+# MacOS
+.DS_Store
