@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - AddTransaction
-/// Handles the creation of a new transaction with its splits.
+/// Handles the creation of a new transaction with its embedded splits.
 /// Enforces all business rules before persisting.
 final class AddTransaction {
 
@@ -24,6 +24,7 @@ final class AddTransaction {
     // MARK: Execute
     /// Creates and persists a new transaction.
     /// - Parameters:
+    ///   - userId: The identifier of the user this transaction belongs to.
     ///   - label: Human-readable name for the transaction.
     ///   - date: Date the transaction occurred.
     ///   - totalAmount: Total amount, must be strictly positive.
@@ -33,6 +34,7 @@ final class AddTransaction {
     ///   - splits: Ventilation across accounts. Must not be empty and must sum to totalAmount.
     /// - Throws: `TransactionError` if any business rule is violated.
     func execute(
+        userId: UUID,
         label: String,
         date: Date,
         totalAmount: Decimal,
@@ -58,6 +60,7 @@ final class AddTransaction {
         }
 
         let transaction = Transaction(
+            userId: userId,
             label: label,
             date: date,
             totalAmount: totalAmount,

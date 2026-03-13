@@ -14,6 +14,7 @@ final class DeleteTransactionTests: XCTestCase {
     // MARK: Properties
     private var repository: TransactionRepositoryDouble!
     private var useCase: DeleteTransaction!
+    private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
@@ -32,8 +33,8 @@ final class DeleteTransactionTests: XCTestCase {
     /// Seeds and returns a transaction with a known id.
     private func seedTransaction() async throws -> UUID {
         let id = UUID()
-        let split = TransactionSplit(transactionId: id, accountId: UUID(), amount: 30)
-        let transaction = Transaction(id: id, label: "Test", date: Date(), totalAmount: 30, isExpense: true, type: .other, splits: [split])
+        let split = await TransactionSplit(accountId: UUID(), amount: 30)
+        let transaction = await Transaction(id: id,userId: userId, label: "Test", date: Date(), totalAmount: 30, isExpense: true, type: .other, splits: [split])
         try await repository.save(transaction)
         return id
     }

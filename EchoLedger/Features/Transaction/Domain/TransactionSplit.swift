@@ -15,7 +15,6 @@ struct TransactionSplit: Identifiable, Equatable, Codable {
 
     // MARK: Properties
     let id: UUID
-    let transactionId: UUID
     let accountId: UUID
     let amount: Decimal
 
@@ -23,17 +22,10 @@ struct TransactionSplit: Identifiable, Equatable, Codable {
     /// Creates a new TransactionSplit.
     /// - Parameters:
     ///   - id: Unique identifier. Defaults to a new UUID.
-    ///   - transactionId: The identifier of the parent Transaction.
     ///   - accountId: The identifier of the Account this split is allocated to.
     ///   - amount: The portion of the total transaction amount for this account. Must be positive.
-    init(
-        id: UUID = UUID(),
-        transactionId: UUID,
-        accountId: UUID,
-        amount: Decimal
-    ) {
+    init(id: UUID = UUID(), accountId: UUID, amount: Decimal) {
         self.id = id
-        self.transactionId = transactionId
         self.accountId = accountId
         self.amount = amount
     }

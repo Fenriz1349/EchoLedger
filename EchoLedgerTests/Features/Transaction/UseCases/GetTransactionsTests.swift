@@ -14,7 +14,7 @@ final class GetTransactionsTests: XCTestCase {
     // MARK: Properties
     private var repository: TransactionRepositoryDouble!
     private var useCase: GetTransactions!
-    private let accountId = UUID()
+    private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
@@ -30,25 +30,24 @@ final class GetTransactionsTests: XCTestCase {
     }
 
     // MARK: Helpers
-    /// Seeds a transaction linked to the shared accountId.
+    /// Seeds a transaction belonging to the shared userId.
     private func seedTransaction(label: String = "Test", amount: Decimal = 30) async throws {
-        let id = UUID()
-        let split = TransactionSplit(transactionId: id, accountId: accountId, amount: amount)
-        let transaction = Transaction(id: id, label: label, date: Date(), totalAmount: amount, isExpense: true, type: .other, splits: [split])
+        let split = await TransactionSplit(accountId: UUID(), amount: amount)
+        let transaction = await Transaction(userId: userId, label: label, date: Date(), totalAmount: amount, isExpense: true, type: .other, splits: [split])
         try await repository.save(transaction)
     }
 
     // MARK: Tests
-    /// Verifies that all transactions linked to the account are returned.
-    func test_execute_returnsAllTransactionsForAccount() async throws {
+    /// Verifies that all transactions belonging to the user are returned.
+    func test_execute_returnsAllTransactionsForUser() async throws {
         try await seedTransaction(label: "Premier")
         try await seedTransaction(label: "Deuxième")
-        let result = try await useCase.execute(for: accountId)
+        let result = try await useCase.execute(for: userId)
         XCTAssertEqual(result.count, 2)
     }
 
-    /// Verifies that transactions linked to a different account are not returned.
-    func test_execute_doesNotReturnTransactionsFromOtherAccount() async throws {
+    /// Verifies that transactions belonging to a different user are not returned.
+    func test_execute_doesNotReturnTransactionsFromOtherUser() async throws {
         try await seedTransaction()
         let result = try await useCase.execute(for: UUID())
         XCTAssertTrue(result.isEmpty)
@@ -56,7 +55,7 @@ final class GetTransactionsTests: XCTestCase {
 
     /// Verifies that an empty array is returned when no transactions exist.
     func test_execute_noTransactions_returnsEmpty() async throws {
-        let result = try await useCase.execute(for: accountId)
+        let result = try await useCase.execute(for: userId)
         XCTAssertTrue(result.isEmpty)
     }
 
@@ -64,7 +63,7 @@ final class GetTransactionsTests: XCTestCase {
     func test_execute_repositoryThrows_propagatesError() async {
         repository.errorToThrow = TransactionError.notFound
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(for: accountId)
+            try await useCase.execute(for: userId)
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
         }

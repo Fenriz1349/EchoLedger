@@ -32,12 +32,10 @@ final class TransactionRepositoryDouble: TransactionRepositoryProtocol {
 
     // MARK: TransactionRepositoryProtocol
 
-    /// Returns all transactions in the store associated with the given account.
-    func fetchAll(for accountId: UUID) async throws -> [Transaction] {
+    /// Returns all transactions in the store belonging to the given user.
+    func fetchAll(for userId: UUID) async throws -> [Transaction] {
         if let error = errorToThrow { throw error }
-        return store.filter { transaction in
-            transaction.splits.contains { $0.accountId == accountId }
-        }
+        return store.filter { $0.userId == userId }
     }
 
     /// Returns the first transaction in the store matching the given id.

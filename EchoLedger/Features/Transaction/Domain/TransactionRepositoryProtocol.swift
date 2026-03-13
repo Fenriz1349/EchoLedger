@@ -14,9 +14,9 @@ import Foundation
 protocol TransactionRepositoryProtocol {
 
     /// Fetches all transactions associated with a given account.
-    /// - Parameter accountId: The identifier of the account.
+    /// - Parameter userId: The identifier of the user.
     /// - Returns: An array of transactions, ordered by date descending.
-    func fetchAll(for accountId: UUID) async throws -> [Transaction]
+    func fetchAll(for userId: UUID) async throws -> [Transaction]
 
     /// Fetches a single transaction by its identifier.
     /// - Parameter id: The unique identifier of the transaction.

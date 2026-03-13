@@ -14,6 +14,7 @@ final class GetTransactionTests: XCTestCase {
     // MARK: Properties
     private var repository: TransactionRepositoryDouble!
     private var useCase: GetTransaction!
+    private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
@@ -30,10 +31,11 @@ final class GetTransactionTests: XCTestCase {
 
     // MARK: Helpers
     /// Seeds and returns a transaction with a known id.
+    @MainActor
     private func seedTransaction() async throws -> UUID {
         let id = UUID()
-        let split = TransactionSplit(transactionId: id, accountId: UUID(), amount: 30)
-        let transaction = Transaction(id: id, label: "Test", date: Date(), totalAmount: 30, isExpense: true, type: .other, splits: [split])
+        let split = TransactionSplit(accountId: UUID(), amount: 30)
+        let transaction = Transaction(id: id,userId: userId, label: "Test", date: Date(), totalAmount: 30, isExpense: true, type: .other, splits: [split])
         try await repository.save(transaction)
         return id
     }
@@ -43,14 +45,16 @@ final class GetTransactionTests: XCTestCase {
     func test_execute_existingId_returnsTransaction() async throws {
         let id = try await seedTransaction()
         let result = try await useCase.execute(id: id)
-        XCTAssertEqual(result.id, id)
+        let resultId = await result.id
+        XCTAssertEqual(resultId, id)
     }
 
     /// Verifies that the returned transaction has the expected label.
     func test_execute_existingId_returnsCorrectLabel() async throws {
         let id = try await seedTransaction()
         let result = try await useCase.execute(id: id)
-        XCTAssertEqual(result.label, "Test")
+        let resultLabel = await result.label
+        XCTAssertEqual(resultLabel, "Test")
     }
 
     /// Verifies that notFound is thrown when no transaction matches the id.

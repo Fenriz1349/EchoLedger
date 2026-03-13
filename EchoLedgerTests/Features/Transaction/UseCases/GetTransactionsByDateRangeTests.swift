@@ -14,7 +14,7 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
     // MARK: Properties
     private var repository: TransactionRepositoryDouble!
     private var useCase: GetTransactionsByDateRange!
-    private let accountId = UUID()
+    private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
@@ -35,11 +35,10 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
         Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())!
     }
 
-    /// Seeds a transaction at a given date linked to the shared accountId.
+    /// Seeds a transaction at a given date belonging to the shared userId.
     private func seedTransaction(date: Date, amount: Decimal = 30) async throws {
-        let id = UUID()
-        let split = await TransactionSplit(transactionId: id, accountId: accountId, amount: amount)
-        let transaction = await Transaction(id: id, label: "Test", date: date, totalAmount: amount, isExpense: true, type: .other, splits: [split])
+        let split = await TransactionSplit(accountId: UUID(), amount: amount)
+        let transaction = await Transaction(userId: userId, label: "Test", date: date, totalAmount: amount, isExpense: true, type: .other, splits: [split])
         try await repository.save(transaction)
     }
 
@@ -49,23 +48,21 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
         try await seedTransaction(date: date(daysAgo: 10))
         try await seedTransaction(date: date(daysAgo: 5))
         try await seedTransaction(date: date(daysAgo: 1))
-
-        let result = try await useCase.execute(for: accountId, from: date(daysAgo: 7), to: Date())
+        let result = try await useCase.execute(for: userId, from: date(daysAgo: 7), to: Date())
         XCTAssertEqual(result.count, 2)
     }
 
     /// Verifies that an empty result is returned when no transactions fall in the range.
     func test_execute_noTransactionsInRange_returnsEmpty() async throws {
         try await seedTransaction(date: date(daysAgo: 30))
-
-        let result = try await useCase.execute(for: accountId, from: date(daysAgo: 7), to: Date())
+        let result = try await useCase.execute(for: userId, from: date(daysAgo: 7), to: Date())
         XCTAssertTrue(result.isEmpty)
     }
 
     /// Verifies that an invalid date range throws invalidDateRange.
     func test_execute_fromAfterTo_throwsInvalidDateRange() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(for: accountId, from: Date(), to: date(daysAgo: 7))
+            try await useCase.execute(for: userId, from: Date(), to: date(daysAgo: 7))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidDateRange)
         }

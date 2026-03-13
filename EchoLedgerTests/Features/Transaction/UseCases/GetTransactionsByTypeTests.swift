@@ -14,7 +14,7 @@ final class GetTransactionsByTypeTests: XCTestCase {
     // MARK: Properties
     private var repository: TransactionRepositoryDouble!
     private var useCase: GetTransactionsByType!
-    private let accountId = UUID()
+    private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
@@ -30,11 +30,10 @@ final class GetTransactionsByTypeTests: XCTestCase {
     }
 
     // MARK: Helpers
-    /// Seeds a transaction of a given type linked to the shared accountId.
+    /// Seeds a transaction of a given type belonging to the shared userId.
     private func seedTransaction(type: TransactionType, amount: Decimal = 30) async throws {
-        let id = UUID()
-        let split = await TransactionSplit(transactionId: id, accountId: accountId, amount: amount)
-        let transaction = await Transaction(id: id, label: "Test", date: Date(), totalAmount: amount, isExpense: true, type: type, splits: [split])
+        let split = await TransactionSplit(accountId: UUID(), amount: amount)
+        let transaction = await Transaction(userId: userId, label: "Test", date: Date(), totalAmount: amount, isExpense: true, type: type, splits: [split])
         try await repository.save(transaction)
     }
 
@@ -44,8 +43,7 @@ final class GetTransactionsByTypeTests: XCTestCase {
         try await seedTransaction(type: .restaurant)
         try await seedTransaction(type: .travel)
         try await seedTransaction(type: .restaurant)
-
-        let result = try await useCase.execute(for: accountId, type: .restaurant)
+        let result = try await useCase.execute(for: userId, type: .restaurant)
         XCTAssertEqual(result.count, 2)
         XCTAssertTrue(result.allSatisfy { $0.type == .restaurant })
     }
@@ -53,9 +51,7 @@ final class GetTransactionsByTypeTests: XCTestCase {
     /// Verifies that an empty result is returned when no transactions match the type.
     func test_execute_noMatchingType_returnsEmpty() async throws {
         try await seedTransaction(type: .travel)
-
-        let result = try await useCase.execute(for: accountId, type: .restaurant)
+        let result = try await useCase.execute(for: userId, type: .restaurant)
         XCTAssertTrue(result.isEmpty)
     }
 }
-

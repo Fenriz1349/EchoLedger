@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - GetTransactionsByType
-/// Retrieves all transactions for a given account filtered by transaction type.
+/// Retrieves all transactions for a given user filtered by transaction type.
 /// Useful for category-based charts and statistics.
 final class GetTransactionsByType {
 
@@ -22,14 +22,14 @@ final class GetTransactionsByType {
     }
 
     // MARK: Execute
-    /// Fetches transactions for a specific account filtered by type.
+    /// Fetches transactions for a specific user filtered by type.
     /// - Parameters:
-    ///   - accountId: The identifier of the account.
+    ///   - userId: The identifier of the user.
     ///   - type: The transaction category to filter by.
     /// - Returns: An array of transactions matching the given type, ordered by date descending.
     /// - Throws: `TransactionError` if the fetch fails.
-    func execute(for accountId: UUID, type: TransactionType) async throws -> [Transaction] {
-        let all = try await repository.fetchAll(for: accountId)
+    func execute(for userId: UUID, type: TransactionType) async throws -> [Transaction] {
+        let all = try await repository.fetchAll(for: userId)
         return all.filter { $0.type == type }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - UpdateTransaction
-/// Handles updating an existing transaction and its splits.
+/// Handles updating an existing transaction and its embedded splits.
 /// Supports adding, removing, or modifying splits.
 /// Re-enforces all business rules before persisting.
 final class UpdateTransaction {
@@ -26,6 +26,7 @@ final class UpdateTransaction {
     /// Updates an existing transaction with new values and splits.
     /// - Parameters:
     ///   - id: The unique identifier of the transaction to update.
+    ///   - userId: The identifier of the user this transaction belongs to.
     ///   - label: Updated human-readable name.
     ///   - date: Updated date of the transaction.
     ///   - totalAmount: Updated total amount, must be strictly positive.
@@ -36,6 +37,7 @@ final class UpdateTransaction {
     /// - Throws: `TransactionError` if any business rule is violated.
     func execute(
         id: UUID,
+        userId: UUID,
         label: String,
         date: Date,
         totalAmount: Decimal,
@@ -62,6 +64,7 @@ final class UpdateTransaction {
 
         let updated = Transaction(
             id: id,
+            userId: userId,
             label: label,
             date: date,
             totalAmount: totalAmount,
