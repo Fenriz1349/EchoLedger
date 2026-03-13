@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F9CAB2F646F750014193B /* GetInstitution.swift */; };
 		681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */; };
 		681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */; };
 		681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */; };
@@ -31,8 +32,8 @@
 		685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E9E2F5ACF700009B885 /* Transaction.swift */; };
 		685A1EAE2F5ACF700009B885 /* AddAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E862F5ACF700009B885 /* AddAccountUseCase.swift */; };
 		685A1EAF2F5ACF700009B885 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E8D2F5ACF700009B885 /* AccountType.swift */; };
-		685A1EB02F5ACF700009B885 /* AddInstitutionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E952F5ACF700009B885 /* AddInstitutionUseCase.swift */; };
-		685A1EB12F5ACF700009B885 /* GetInstitutionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E962F5ACF700009B885 /* GetInstitutionsUseCase.swift */; };
+		685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E952F5ACF700009B885 /* AddInstitution.swift */; };
+		685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E962F5ACF700009B885 /* GetInstitutions.swift */; };
 		685A1EB22F5ACF700009B885 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E872F5ACF700009B885 /* DeleteAccountUseCase.swift */; };
 		685A1EB32F5ACF700009B885 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E7E2F5ACF700009B885 /* ContentView.swift */; };
 		685A1EB52F5ACF700009B885 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E8C2F5ACF700009B885 /* Account.swift */; };
@@ -49,8 +50,8 @@
 		685A1ECC2F5AD9990009B885 /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECB2F5AD9990009B885 /* UserRepositoryImpl.swift */; };
 		685A1ECE2F5AD9A20009B885 /* UserLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */; };
 		685A1ED02F5AD9AA0009B885 /* UserRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */; };
-		685A1ED72F5AE6CF0009B885 /* UpdateInstitutionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED62F5AE6CF0009B885 /* UpdateInstitutionUseCase.swift */; };
-		685A1ED92F5AE6D70009B885 /* DeleteInstitutionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED82F5AE6D70009B885 /* DeleteInstitutionUseCase.swift */; };
+		685A1ED72F5AE6CF0009B885 /* UpdateInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */; };
+		685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */; };
 		685A1EDB2F5AE6E60009B885 /* InstitutionRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDA2F5AE6E60009B885 /* InstitutionRepositoryImpl.swift */; };
 		685A1EDD2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDC2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift */; };
 		685A1EDF2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDE2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		680F9CAB2F646F750014193B /* GetInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitution.swift; sourceTree = "<group>"; };
 		681CA8542F62C0EE002E1EF7 /* EchoLedger.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EchoLedger.xctestplan; sourceTree = "<group>"; };
 		681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByDateRangeTests.swift; sourceTree = "<group>"; };
 		681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionTests.swift; sourceTree = "<group>"; };
@@ -112,8 +114,8 @@
 		685A1E8D2F5ACF700009B885 /* AccountType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
 		685A1E912F5ACF700009B885 /* InstitutionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionError.swift; sourceTree = "<group>"; };
 		685A1E932F5ACF700009B885 /* InstitutionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionRepositoryProtocol.swift; sourceTree = "<group>"; };
-		685A1E952F5ACF700009B885 /* AddInstitutionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionUseCase.swift; sourceTree = "<group>"; };
-		685A1E962F5ACF700009B885 /* GetInstitutionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionsUseCase.swift; sourceTree = "<group>"; };
+		685A1E952F5ACF700009B885 /* AddInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitution.swift; sourceTree = "<group>"; };
+		685A1E962F5ACF700009B885 /* GetInstitutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutions.swift; sourceTree = "<group>"; };
 		685A1E992F5ACF700009B885 /* Institution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Institution.swift; sourceTree = "<group>"; };
 		685A1E9A2F5ACF700009B885 /* InstitutionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionType.swift; sourceTree = "<group>"; };
 		685A1E9E2F5ACF700009B885 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -129,8 +131,8 @@
 		685A1ECB2F5AD9990009B885 /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalDataSource.swift; sourceTree = "<group>"; };
 		685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteDataSource.swift; sourceTree = "<group>"; };
-		685A1ED62F5AE6CF0009B885 /* UpdateInstitutionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInstitutionUseCase.swift; sourceTree = "<group>"; };
-		685A1ED82F5AE6D70009B885 /* DeleteInstitutionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitutionUseCase.swift; sourceTree = "<group>"; };
+		685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInstitution.swift; sourceTree = "<group>"; };
+		685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitution.swift; sourceTree = "<group>"; };
 		685A1EDA2F5AE6E60009B885 /* InstitutionRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionRepositoryImpl.swift; sourceTree = "<group>"; };
 		685A1EDC2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionLocalDataSource.swift; sourceTree = "<group>"; };
 		685A1EDE2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionRemoteDataSource.swift; sourceTree = "<group>"; };
@@ -305,10 +307,11 @@
 		685A1E972F5ACF700009B885 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				685A1E952F5ACF700009B885 /* AddInstitutionUseCase.swift */,
-				685A1E962F5ACF700009B885 /* GetInstitutionsUseCase.swift */,
-				685A1ED62F5AE6CF0009B885 /* UpdateInstitutionUseCase.swift */,
-				685A1ED82F5AE6D70009B885 /* DeleteInstitutionUseCase.swift */,
+				685A1E952F5ACF700009B885 /* AddInstitution.swift */,
+				680F9CAB2F646F750014193B /* GetInstitution.swift */,
+				685A1E962F5ACF700009B885 /* GetInstitutions.swift */,
+				685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */,
+				685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -318,8 +321,8 @@
 			children = (
 				685A1E992F5ACF700009B885 /* Institution.swift */,
 				685A1E9A2F5ACF700009B885 /* InstitutionType.swift */,
-				685A1E932F5ACF700009B885 /* InstitutionRepositoryProtocol.swift */,
 				685A1E912F5ACF700009B885 /* InstitutionError.swift */,
+				685A1E932F5ACF700009B885 /* InstitutionRepositoryProtocol.swift */,
 				685A1E972F5ACF700009B885 /* UseCases */,
 			);
 			path = Domain;
@@ -409,8 +412,8 @@
 			isa = PBXGroup;
 			children = (
 				685A1EBF2F5AD9510009B885 /* User.swift */,
-				685A1EC12F5AD95B0009B885 /* UserRepositoryProtocol.swift */,
 				685A1EC32F5AD9640009B885 /* UserError.swift */,
+				685A1EC12F5AD95B0009B885 /* UserRepositoryProtocol.swift */,
 				685A1EC52F5AD9710009B885 /* UseCases */,
 			);
 			path = Domain;
@@ -622,12 +625,13 @@
 				685A1EF92F5AEB0E0009B885 /* GetTransactions.swift in Sources */,
 				6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */,
 				683133AB2F617970004AA5E4 /* GetTransactionsByDateRange.swift in Sources */,
+				680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */,
 				685A1ED02F5AD9AA0009B885 /* UserRemoteDataSource.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
 				685A1EA72F5ACF700009B885 /* InstitutionRepositoryProtocol.swift in Sources */,
 				685A1EA82F5ACF700009B885 /* UpdateAccountUseCase.swift in Sources */,
-				685A1ED92F5AE6D70009B885 /* DeleteInstitutionUseCase.swift in Sources */,
+				685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */,
 				685A1F112F5AECD60009B885 /* SyncManager.swift in Sources */,
 				685A1EA92F5ACF700009B885 /* GetAccountsUseCase.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
@@ -639,7 +643,7 @@
 				685A1EAB2F5ACF700009B885 /* AccountRepositoryProtocol.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift in Sources */,
 				685A1F032F5AEB700009B885 /* TransactionRemoteDataSource.swift in Sources */,
-				685A1ED72F5AE6CF0009B885 /* UpdateInstitutionUseCase.swift in Sources */,
+				685A1ED72F5AE6CF0009B885 /* UpdateInstitution.swift in Sources */,
 				685A1EC02F5AD9510009B885 /* User.swift in Sources */,
 				685A1EAC2F5ACF700009B885 /* AccountError.swift in Sources */,
 				685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */,
@@ -649,13 +653,13 @@
 				685A1ECE2F5AD9A20009B885 /* UserLocalDataSource.swift in Sources */,
 				685A1EE62F5AE9A10009B885 /* AccountRepositoryImpl.swift in Sources */,
 				685A1EAF2F5ACF700009B885 /* AccountType.swift in Sources */,
-				685A1EB02F5ACF700009B885 /* AddInstitutionUseCase.swift in Sources */,
+				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
 				685A1EF72F5AEB070009B885 /* AddTransaction.swift in Sources */,
 				685A1EDB2F5AE6E60009B885 /* InstitutionRepositoryImpl.swift in Sources */,
 				685A1EE82F5AE9A80009B885 /* AccountLocalDataSource.swift in Sources */,
 				685A1EC22F5AD95B0009B885 /* UserRepositoryProtocol.swift in Sources */,
 				683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */,
-				685A1EB12F5ACF700009B885 /* GetInstitutionsUseCase.swift in Sources */,
+				685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */,
 				685A1EB22F5ACF700009B885 /* DeleteAccountUseCase.swift in Sources */,
 				685A1EB32F5ACF700009B885 /* ContentView.swift in Sources */,
 				685A1EB52F5ACF700009B885 /* Account.swift in Sources */,
