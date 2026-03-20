@@ -7,17 +7,16 @@
 
 import Foundation
 
-// MARK: - UpdateInstitution
 /// Handles updating an existing institution.
 /// Re-enforces all business rules before persisting.
 final class UpdateInstitution {
 
     // MARK: Dependencies
-    private let repository: InstitutionRepositoryProtocol
+    private let repository: InstitutionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for institution persistence.
-    init(repository: InstitutionRepositoryProtocol) {
+    init(repository: InstitutionProviding) {
         self.repository = repository
     }
 

@@ -7,17 +7,16 @@
 
 import Foundation
 
-// MARK: - AddInstitution
 /// Handles the creation of a new institution for a given user.
 /// Enforces all business rules before persisting.
 final class AddInstitution {
 
     // MARK: Dependencies
-    private let repository: InstitutionRepositoryProtocol
+    private let repository: InstitutionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for institution persistence.
-    init(repository: InstitutionRepositoryProtocol) {
+    init(repository: InstitutionProviding) {
         self.repository = repository
     }
 

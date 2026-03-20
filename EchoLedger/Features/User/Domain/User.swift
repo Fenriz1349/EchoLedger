@@ -6,3 +6,34 @@
 //
 
 import Foundation
+
+/// Represents an authenticated user of the application.
+/// Only knows its internal UUID — remote identifiers are handled exclusively in the Data layer.
+/// Owns institutions which in turn own accounts.
+struct User: Identifiable, Equatable, Codable, Sendable {
+
+    // MARK: Properties
+    let id: UUID
+    let displayName: String
+    let email: String
+    let photoURL: String?
+
+    // MARK: Init
+    /// Creates a new User.
+    /// - Parameters:
+    ///   - id: Internal unique identifier. Defaults to a new UUID.
+    ///   - displayName: Display name of the user.
+    ///   - email: Email address of the user.
+    ///   - photoURL: Optional URL string pointing to the user's profile photo.
+    init(
+        id: UUID = UUID(),
+        displayName: String,
+        email: String,
+        photoURL: String? = nil
+    ) {
+        self.id = id
+        self.displayName = displayName
+        self.email = email
+        self.photoURL = photoURL
+    }
+}

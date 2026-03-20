@@ -8,7 +8,7 @@
 import Foundation
 
 struct UpdateAccountUseCase {
-    let repository: AccountRepositoryProtocol
+    let repository: AccountProviding
 
     func execute(account: Account,
                  newName: String,

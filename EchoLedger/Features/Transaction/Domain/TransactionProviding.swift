@@ -1,5 +1,5 @@
 //
-//  TransactionRepositoryProtocol.swift
+//  TransactionProviding.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 06/03/2026.
@@ -7,11 +7,10 @@
 
 import Foundation
 
-// MARK: - TransactionRepositoryProtocol
 /// Defines the contract for transaction persistence.
 /// The Domain layer depends only on this protocol — it has no knowledge of CoreData or Firebase.
 /// Conforming types live in the Data layer.
-protocol TransactionRepositoryProtocol {
+protocol TransactionProviding {
 
     /// Fetches all transactions associated with a given account.
     /// - Parameter userId: The identifier of the user.

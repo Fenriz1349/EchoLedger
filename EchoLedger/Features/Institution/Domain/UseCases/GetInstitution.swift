@@ -7,16 +7,15 @@
 
 import Foundation
 
-// MARK: - GetInstitution
 /// Retrieves a single institution by its unique identifier.
 final class GetInstitution {
 
     // MARK: Dependencies
-    private let repository: InstitutionRepositoryProtocol
+    private let repository: InstitutionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for institution persistence.
-    init(repository: InstitutionRepositoryProtocol) {
+    init(repository: InstitutionProviding) {
         self.repository = repository
     }
 

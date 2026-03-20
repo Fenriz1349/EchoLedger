@@ -7,16 +7,15 @@
 
 import Foundation
 
-// MARK: - DeleteInstitution
 /// Handles the deletion of an institution and all its associated accounts.
 final class DeleteInstitution {
 
     // MARK: Dependencies
-    private let repository: InstitutionRepositoryProtocol
+    private let repository: InstitutionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for institution persistence.
-    init(repository: InstitutionRepositoryProtocol) {
+    init(repository: InstitutionProviding) {
         self.repository = repository
     }
 

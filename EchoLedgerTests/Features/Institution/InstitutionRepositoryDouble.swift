@@ -8,11 +8,9 @@
 import Foundation
 @testable import EchoLedger
 
-// MARK: - InstitutionRepositoryDouble
-
-/// In-memory mock implementation of InstitutionRepositoryProtocol.
+/// In-memory mock implementation of InstitutionProviding.
 /// Used exclusively in unit tests to isolate UseCases from persistence layers.
-final class InstitutionRepositoryDouble: InstitutionRepositoryProtocol {
+final class InstitutionRepositoryDouble: InstitutionProviding {
 
     // MARK: In-Memory Store
     private var store: [Institution] = []
@@ -31,7 +29,7 @@ final class InstitutionRepositoryDouble: InstitutionRepositoryProtocol {
     /// Set this to force any method to throw a specific error.
     var errorToThrow: Error?
 
-    // MARK: InstitutionRepositoryProtocol
+    // MARK: InstitutionProviding
 
     /// Returns all institutions in the store belonging to the given user.
     func fetchAll(for userId: UUID) async throws -> [Institution] {

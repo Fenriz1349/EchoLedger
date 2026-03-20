@@ -7,16 +7,15 @@
 
 import Foundation
 
-// MARK: - GetTransactions
 /// Retrieves all transactions belonging to a given user.
 final class GetTransactions {
 
     // MARK: Dependencies
-    private let repository: TransactionRepositoryProtocol
+    private let repository: TransactionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
-    init(repository: TransactionRepositoryProtocol) {
+    init(repository: TransactionProviding) {
         self.repository = repository
     }
 

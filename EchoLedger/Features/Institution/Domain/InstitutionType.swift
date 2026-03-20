@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - InstitutionType
 /// Represents the category of a financial institution.
 /// RawValue is used for Firebase persistence, name is used for display.
 enum InstitutionType: String, CaseIterable, Codable, Sendable {

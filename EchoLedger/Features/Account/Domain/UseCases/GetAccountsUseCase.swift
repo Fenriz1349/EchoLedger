@@ -8,7 +8,7 @@
 import Foundation
 
 struct GetAccountsUseCase {
-    let repository: AccountRepositoryProtocol
+    let repository: AccountProviding
 
     func execute() -> [Account] {
         repository.fetchAccounts()

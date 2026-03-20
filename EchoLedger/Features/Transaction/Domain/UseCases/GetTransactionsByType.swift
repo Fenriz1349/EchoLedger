@@ -7,17 +7,16 @@
 
 import Foundation
 
-// MARK: - GetTransactionsByType
 /// Retrieves all transactions for a given user filtered by transaction type.
 /// Useful for category-based charts and statistics.
 final class GetTransactionsByType {
 
     // MARK: Dependencies
-    private let repository: TransactionRepositoryProtocol
+    private let repository: TransactionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
-    init(repository: TransactionRepositoryProtocol) {
+    init(repository: TransactionProviding) {
         self.repository = repository
     }
 
