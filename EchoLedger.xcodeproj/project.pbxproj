@@ -17,6 +17,7 @@
 		6813E8112F6D4FEA00344774 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
 		6813E8142F6D51ED00344774 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8132F6D51ED00344774 /* FirebaseAuth */; };
 		6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8152F6D51ED00344774 /* FirebaseFirestore */; };
+		6813E8192F6D568900344774 /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8182F6D568900344774 /* UserRemote.swift */; };
 		681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */; };
 		681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */; };
 		681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */; };
@@ -104,6 +105,7 @@
 		6813E80E2F6D3CFC00344774 /* DeleteInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6813E8172F6D535F00344774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6813E8182F6D568900344774 /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		681CA8542F62C0EE002E1EF7 /* EchoLedger.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EchoLedger.xctestplan; sourceTree = "<group>"; };
 		681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByDateRangeTests.swift; sourceTree = "<group>"; };
 		681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionTests.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				685A1ECB2F5AD9990009B885 /* UserRepositoryImpl.swift */,
 				685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */,
 				685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */,
+				6813E8182F6D568900344774 /* UserRemote.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				685A1EC72F5AD97D0009B885 /* GetCurrentUserUseCase.swift in Sources */,
 				685A1ECC2F5AD9990009B885 /* UserRepositoryImpl.swift in Sources */,
 				685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */,
+				6813E8192F6D568900344774 /* UserRemote.swift in Sources */,
 				685A1F0B2F5AEBFC0009B885 /* SyncMetadata.swift in Sources */,
 				685A1EF42F5AEAF40009B885 /* TransactionError.swift in Sources */,
 				685A1EDD2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift in Sources */,
