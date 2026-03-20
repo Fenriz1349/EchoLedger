@@ -1,5 +1,5 @@
 //
-//  UserRemoteDataSource.swift
+//  UserRemoteSource.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 06/03/2026.
@@ -10,7 +10,7 @@ import FirebaseAuth
 
 // MARK: - UserRemoteDataSource
 /// Handles all Firebase operations for the User feature.
-final class UserRemoteDataSource {
+final class UserRemoteSource {
 
     // MARK: Authentication
     

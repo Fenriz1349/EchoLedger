@@ -70,16 +70,16 @@
 		685A1EC72F5AD97D0009B885 /* GetCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC62F5AD97D0009B885 /* GetCurrentUser.swift */; };
 		685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC82F5AD9860009B885 /* UpdateUser.swift */; };
 		685A1ECC2F5AD9990009B885 /* UserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECB2F5AD9990009B885 /* UserStoring.swift */; };
-		685A1ECE2F5AD9A20009B885 /* UserLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */; };
-		685A1ED02F5AD9AA0009B885 /* UserRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */; };
+		685A1ECE2F5AD9A20009B885 /* UserLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECD2F5AD9A20009B885 /* UserLocalSource.swift */; };
+		685A1ED02F5AD9AA0009B885 /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECF2F5AD9AA0009B885 /* UserRemoteSource.swift */; };
 		685A1ED72F5AE6CF0009B885 /* UpdateInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */; };
 		685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */; };
 		685A1EDB2F5AE6E60009B885 /* InstitutionStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDA2F5AE6E60009B885 /* InstitutionStoring.swift */; };
-		685A1EDD2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDC2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift */; };
-		685A1EDF2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDE2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift */; };
+		685A1EDD2F5AE6ED0009B885 /* InstitutionLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDC2F5AE6ED0009B885 /* InstitutionLocalSource.swift */; };
+		685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDE2F5AE6F90009B885 /* InstitutionRemoteSource.swift */; };
 		685A1EE62F5AE9A10009B885 /* AccountStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE52F5AE9A10009B885 /* AccountStoring.swift */; };
-		685A1EE82F5AE9A80009B885 /* AccountLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE72F5AE9A80009B885 /* AccountLocalDataSource.swift */; };
-		685A1EEA2F5AEA1D0009B885 /* AccountRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE92F5AEA1D0009B885 /* AccountRemoteDataSource.swift */; };
+		685A1EE82F5AE9A80009B885 /* AccountLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE72F5AE9A80009B885 /* AccountLocalSource.swift */; };
+		685A1EEA2F5AEA1D0009B885 /* AccountRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE92F5AEA1D0009B885 /* AccountRemoteSource.swift */; };
 		685A1EF02F5AEA9F0009B885 /* TransactionSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EEF2F5AEA9F0009B885 /* TransactionSplit.swift */; };
 		685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF12F5AEAEC0009B885 /* TransactionProviding.swift */; };
 		685A1EF42F5AEAF40009B885 /* TransactionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF32F5AEAF40009B885 /* TransactionError.swift */; };
@@ -88,12 +88,17 @@
 		685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EFA2F5AEB1C0009B885 /* UpdateTransaction.swift */; };
 		685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EFC2F5AEB240009B885 /* DeleteTransaction.swift */; };
 		685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EFE2F5AEB2F0009B885 /* TransactionStoring.swift */; };
-		685A1F012F5AEB680009B885 /* TransactionLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F002F5AEB680009B885 /* TransactionLocalDataSource.swift */; };
-		685A1F032F5AEB700009B885 /* TransactionRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F022F5AEB700009B885 /* TransactionRemoteDataSource.swift */; };
+		685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F002F5AEB680009B885 /* TransactionLocalSource.swift */; };
+		685A1F032F5AEB700009B885 /* TransactionRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F022F5AEB700009B885 /* TransactionRemoteSource.swift */; };
 		685A1F0B2F5AEBFC0009B885 /* SyncMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0A2F5AEBFC0009B885 /* SyncMetadata.swift */; };
 		685A1F0D2F5AEC050009B885 /* SyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0C2F5AEC050009B885 /* SyncStatus.swift */; };
 		685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */; };
 		685A1F112F5AECD60009B885 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F102F5AECD60009B885 /* SyncManager.swift */; };
+		6868A66D2F6D9CC90038A612 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A66C2F6D9CC90038A612 /* UserModel.swift */; };
+		6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A66E2F6D9D000038A612 /* InstitutionModel.swift */; };
+		6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6702F6D9D2C0038A612 /* AccountModel.swift */; };
+		6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */; };
+		6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6742F6D9D5A0038A612 /* TransactionModel.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 /* End PBXBuildFile section */
 
@@ -173,16 +178,16 @@
 		685A1EC62F5AD97D0009B885 /* GetCurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUser.swift; sourceTree = "<group>"; };
 		685A1EC82F5AD9860009B885 /* UpdateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUser.swift; sourceTree = "<group>"; };
 		685A1ECB2F5AD9990009B885 /* UserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoring.swift; sourceTree = "<group>"; };
-		685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalDataSource.swift; sourceTree = "<group>"; };
-		685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteDataSource.swift; sourceTree = "<group>"; };
+		685A1ECD2F5AD9A20009B885 /* UserLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSource.swift; sourceTree = "<group>"; };
+		685A1ECF2F5AD9AA0009B885 /* UserRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSource.swift; sourceTree = "<group>"; };
 		685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInstitution.swift; sourceTree = "<group>"; };
 		685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitution.swift; sourceTree = "<group>"; };
 		685A1EDA2F5AE6E60009B885 /* InstitutionStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionStoring.swift; sourceTree = "<group>"; };
-		685A1EDC2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionLocalDataSource.swift; sourceTree = "<group>"; };
-		685A1EDE2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionRemoteDataSource.swift; sourceTree = "<group>"; };
+		685A1EDC2F5AE6ED0009B885 /* InstitutionLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionLocalSource.swift; sourceTree = "<group>"; };
+		685A1EDE2F5AE6F90009B885 /* InstitutionRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionRemoteSource.swift; sourceTree = "<group>"; };
 		685A1EE52F5AE9A10009B885 /* AccountStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoring.swift; sourceTree = "<group>"; };
-		685A1EE72F5AE9A80009B885 /* AccountLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLocalDataSource.swift; sourceTree = "<group>"; };
-		685A1EE92F5AEA1D0009B885 /* AccountRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRemoteDataSource.swift; sourceTree = "<group>"; };
+		685A1EE72F5AE9A80009B885 /* AccountLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLocalSource.swift; sourceTree = "<group>"; };
+		685A1EE92F5AEA1D0009B885 /* AccountRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRemoteSource.swift; sourceTree = "<group>"; };
 		685A1EEF2F5AEA9F0009B885 /* TransactionSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplit.swift; sourceTree = "<group>"; };
 		685A1EF12F5AEAEC0009B885 /* TransactionProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionProviding.swift; sourceTree = "<group>"; };
 		685A1EF32F5AEAF40009B885 /* TransactionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionError.swift; sourceTree = "<group>"; };
@@ -191,12 +196,17 @@
 		685A1EFA2F5AEB1C0009B885 /* UpdateTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransaction.swift; sourceTree = "<group>"; };
 		685A1EFC2F5AEB240009B885 /* DeleteTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransaction.swift; sourceTree = "<group>"; };
 		685A1EFE2F5AEB2F0009B885 /* TransactionStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStoring.swift; sourceTree = "<group>"; };
-		685A1F002F5AEB680009B885 /* TransactionLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionLocalDataSource.swift; sourceTree = "<group>"; };
-		685A1F022F5AEB700009B885 /* TransactionRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRemoteDataSource.swift; sourceTree = "<group>"; };
+		685A1F002F5AEB680009B885 /* TransactionLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionLocalSource.swift; sourceTree = "<group>"; };
+		685A1F022F5AEB700009B885 /* TransactionRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRemoteSource.swift; sourceTree = "<group>"; };
 		685A1F0A2F5AEBFC0009B885 /* SyncMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMetadata.swift; sourceTree = "<group>"; };
 		685A1F0C2F5AEC050009B885 /* SyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatus.swift; sourceTree = "<group>"; };
 		685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManagerProtocol.swift; sourceTree = "<group>"; };
 		685A1F102F5AECD60009B885 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
+		6868A66C2F6D9CC90038A612 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		6868A66E2F6D9D000038A612 /* InstitutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionModel.swift; sourceTree = "<group>"; };
+		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
+		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,8 +414,9 @@
 			isa = PBXGroup;
 			children = (
 				685A1EE52F5AE9A10009B885 /* AccountStoring.swift */,
-				685A1EE72F5AE9A80009B885 /* AccountLocalDataSource.swift */,
-				685A1EE92F5AEA1D0009B885 /* AccountRemoteDataSource.swift */,
+				6868A6702F6D9D2C0038A612 /* AccountModel.swift */,
+				685A1EE72F5AE9A80009B885 /* AccountLocalSource.swift */,
+				685A1EE92F5AEA1D0009B885 /* AccountRemoteSource.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -447,8 +458,9 @@
 			isa = PBXGroup;
 			children = (
 				685A1EDA2F5AE6E60009B885 /* InstitutionStoring.swift */,
-				685A1EDC2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift */,
-				685A1EDE2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift */,
+				6868A66E2F6D9D000038A612 /* InstitutionModel.swift */,
+				685A1EDC2F5AE6ED0009B885 /* InstitutionLocalSource.swift */,
+				685A1EDE2F5AE6F90009B885 /* InstitutionRemoteSource.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -479,8 +491,10 @@
 			isa = PBXGroup;
 			children = (
 				685A1EFE2F5AEB2F0009B885 /* TransactionStoring.swift */,
-				685A1F002F5AEB680009B885 /* TransactionLocalDataSource.swift */,
-				685A1F022F5AEB700009B885 /* TransactionRemoteDataSource.swift */,
+				6868A6742F6D9D5A0038A612 /* TransactionModel.swift */,
+				6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */,
+				685A1F002F5AEB680009B885 /* TransactionLocalSource.swift */,
+				685A1F022F5AEB700009B885 /* TransactionRemoteSource.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -547,9 +561,10 @@
 			isa = PBXGroup;
 			children = (
 				685A1ECB2F5AD9990009B885 /* UserStoring.swift */,
-				685A1ECD2F5AD9A20009B885 /* UserLocalDataSource.swift */,
-				685A1ECF2F5AD9AA0009B885 /* UserRemoteDataSource.swift */,
+				6868A66C2F6D9CC90038A612 /* UserModel.swift */,
+				685A1ECD2F5AD9A20009B885 /* UserLocalSource.swift */,
 				6813E8182F6D568900344774 /* UserRemote.swift */,
+				685A1ECF2F5AD9AA0009B885 /* UserRemoteSource.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -758,48 +773,52 @@
 			files = (
 				685A1EC72F5AD97D0009B885 /* GetCurrentUser.swift in Sources */,
 				685A1ECC2F5AD9990009B885 /* UserStoring.swift in Sources */,
+				6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */,
 				685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */,
 				6813E81D2F6D919D00344774 /* GetAccountBalance.swift in Sources */,
 				6813E8192F6D568900344774 /* UserRemote.swift in Sources */,
 				6813E81B2F6D913200344774 /* GetAccounts.swift in Sources */,
 				685A1F0B2F5AEBFC0009B885 /* SyncMetadata.swift in Sources */,
 				685A1EF42F5AEAF40009B885 /* TransactionError.swift in Sources */,
-				685A1EDD2F5AE6ED0009B885 /* InstitutionLocalDataSource.swift in Sources */,
+				685A1EDD2F5AE6ED0009B885 /* InstitutionLocalSource.swift in Sources */,
 				685A1EF92F5AEB0E0009B885 /* GetTransactions.swift in Sources */,
 				6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */,
 				683133AB2F617970004AA5E4 /* GetTransactionsByDateRange.swift in Sources */,
 				680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */,
-				685A1ED02F5AD9AA0009B885 /* UserRemoteDataSource.swift in Sources */,
+				685A1ED02F5AD9AA0009B885 /* UserRemoteSource.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
+				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
 				685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */,
 				685A1EA82F5ACF700009B885 /* UpdateAccount.swift in Sources */,
 				685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */,
 				685A1F112F5AECD60009B885 /* SyncManager.swift in Sources */,
 				685A1EA92F5ACF700009B885 /* GetAccount.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
-				685A1F012F5AEB680009B885 /* TransactionLocalDataSource.swift in Sources */,
+				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
+				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionType.swift in Sources */,
 				685A1EBC2F5AD8B10009B885 /* AppCoordinator.swift in Sources */,
 				685A1F0D2F5AEC050009B885 /* SyncStatus.swift in Sources */,
 				685A1EAB2F5ACF700009B885 /* AccountProviding.swift in Sources */,
-				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteDataSource.swift in Sources */,
-				685A1F032F5AEB700009B885 /* TransactionRemoteDataSource.swift in Sources */,
+				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
+				685A1F032F5AEB700009B885 /* TransactionRemoteSource.swift in Sources */,
 				685A1ED72F5AE6CF0009B885 /* UpdateInstitution.swift in Sources */,
 				685A1EC02F5AD9510009B885 /* User.swift in Sources */,
+				6868A66D2F6D9CC90038A612 /* UserModel.swift in Sources */,
 				685A1EAC2F5ACF700009B885 /* AccountError.swift in Sources */,
 				685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */,
 				685A1EAE2F5ACF700009B885 /* AddAccount.swift in Sources */,
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
-				685A1ECE2F5AD9A20009B885 /* UserLocalDataSource.swift in Sources */,
+				685A1ECE2F5AD9A20009B885 /* UserLocalSource.swift in Sources */,
 				685A1EE62F5AE9A10009B885 /* AccountStoring.swift in Sources */,
 				685A1EAF2F5ACF700009B885 /* AccountType.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
 				685A1EF72F5AEB070009B885 /* AddTransaction.swift in Sources */,
 				685A1EDB2F5AE6E60009B885 /* InstitutionStoring.swift in Sources */,
-				685A1EE82F5AE9A80009B885 /* AccountLocalDataSource.swift in Sources */,
+				685A1EE82F5AE9A80009B885 /* AccountLocalSource.swift in Sources */,
 				685A1EC22F5AD95B0009B885 /* UserProviding.swift in Sources */,
 				683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */,
 				685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */,
@@ -809,10 +828,11 @@
 				685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */,
 				685A1EF02F5AEA9F0009B885 /* TransactionSplit.swift in Sources */,
 				683133A52F61736A004AA5E4 /* TransactionType.swift in Sources */,
+				6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */,
 				683133A92F617951004AA5E4 /* GetTransactionsByType.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
-				685A1EEA2F5AEA1D0009B885 /* AccountRemoteDataSource.swift in Sources */,
+				685A1EEA2F5AEA1D0009B885 /* AccountRemoteSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

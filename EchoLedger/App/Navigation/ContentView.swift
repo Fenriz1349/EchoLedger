@@ -12,7 +12,7 @@ struct ContentView: View {
         Text("EchoLedger")
             .task {
                 do {
-                    let dataSource = UserRemoteDataSource()
+                    let dataSource = UserRemoteSource()
                     let uid = try await dataSource.signInAnonymously()
                     print("✅ User anonyme : \(uid)")
                 } catch {
