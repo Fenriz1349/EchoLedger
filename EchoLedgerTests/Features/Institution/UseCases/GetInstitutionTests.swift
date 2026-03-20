@@ -12,13 +12,13 @@ import XCTest
 final class GetInstitutionTests: XCTestCase {
  
     // MARK: Properties
-    private var repository: InstitutionRepositoryDouble!
+    private var repository: InstitutionDouble!
     private var useCase: GetInstitution!
  
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = InstitutionRepositoryDouble()
+        repository = InstitutionDouble()
         useCase = GetInstitution(repository: repository)
     }
  

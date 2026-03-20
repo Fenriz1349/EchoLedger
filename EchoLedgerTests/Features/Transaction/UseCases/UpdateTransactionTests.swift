@@ -12,14 +12,14 @@ import XCTest
 final class UpdateTransactionTests: XCTestCase {
 
     // MARK: Properties
-    private var repository: TransactionRepositoryDouble!
+    private var repository: TransactionDouble!
     private var useCase: UpdateTransaction!
     private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = TransactionRepositoryDouble()
+        repository = TransactionDouble()
         useCase = UpdateTransaction(repository: repository)
     }
 

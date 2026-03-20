@@ -11,14 +11,14 @@ import XCTest
 final class GetTransactionsByDateRangeTests: XCTestCase {
 
     // MARK: Properties
-    private var repository: TransactionRepositoryDouble!
+    private var repository: TransactionDouble!
     private var useCase: GetTransactionsByDateRange!
     private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = TransactionRepositoryDouble()
+        repository = TransactionDouble()
         useCase = GetTransactionsByDateRange(repository: repository)
     }
 

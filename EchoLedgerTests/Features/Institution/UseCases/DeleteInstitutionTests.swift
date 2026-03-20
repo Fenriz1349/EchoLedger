@@ -12,13 +12,13 @@ import XCTest
 final class DeleteInstitutionTests: XCTestCase {
  
     // MARK: Properties
-    private var repository: InstitutionRepositoryDouble!
+    private var repository: InstitutionDouble!
     private var useCase: DeleteInstitution!
  
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = InstitutionRepositoryDouble()
+        repository = InstitutionDouble()
         useCase = DeleteInstitution(repository: repository)
     }
  

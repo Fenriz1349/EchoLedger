@@ -1,5 +1,5 @@
 //
-//  InstitutionRepositoryDouble.swift
+//  InstitutionDouble.swift
 //  EchoLedgerTests
 //
 //  Created by Julien Cotte on 20/03/2026.
@@ -10,7 +10,7 @@ import Foundation
 
 /// In-memory mock implementation of InstitutionProviding.
 /// Used exclusively in unit tests to isolate UseCases from persistence layers.
-final class InstitutionRepositoryDouble: InstitutionProviding {
+final class InstitutionDouble: InstitutionProviding {
 
     // MARK: In-Memory Store
     private var store: [Institution] = []
