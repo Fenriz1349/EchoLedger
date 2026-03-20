@@ -8,12 +8,8 @@ DerivedData/
 
 # Swift Package Manager
 .build/
-*.resolved
 
-# CocoaPods (si applicable)
-Pods/
-
-# Firebase (ne jamais committer)
+# Firebase
 GoogleService-Info.plist
 
 # MacOS

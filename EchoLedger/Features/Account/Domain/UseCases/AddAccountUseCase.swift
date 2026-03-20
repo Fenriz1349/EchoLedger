@@ -7,12 +7,3 @@
 
 import Foundation
 
-struct AddAccountUseCase {
-    let repository: AccountProviding
-
-    func execute(name: String,
-                 type: AccountType,
-                 initialBalance: Double) throws -> Account {
-        throw AccountError.unknown
-    }
-}
