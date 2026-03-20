@@ -12,14 +12,14 @@ import XCTest
 final class UpdateInstitutionTests: XCTestCase {
  
     // MARK: Properties
-    private var repository: InstitutionRepositoryDouble!
+    private var repository: InstitutionDouble!
     private var useCase: UpdateInstitution!
     private let userId = UUID()
  
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = InstitutionRepositoryDouble()
+        repository = InstitutionDouble()
         useCase = UpdateInstitution(repository: repository)
     }
  

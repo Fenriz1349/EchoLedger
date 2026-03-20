@@ -8,20 +8,18 @@
 import XCTest
 @testable import EchoLedger
 
-// MARK: - AddInstitutionTests
-
 @MainActor
 final class AddInstitutionTests: XCTestCase {
 
     // MARK: Properties
-    private var repository: InstitutionRepositoryDouble!
+    private var repository: InstitutionDouble!
     private var useCase: AddInstitution!
     private let userId = UUID()
 
     // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = InstitutionRepositoryDouble()
+        repository = InstitutionDouble()
         useCase = AddInstitution(repository: repository)
     }
 
