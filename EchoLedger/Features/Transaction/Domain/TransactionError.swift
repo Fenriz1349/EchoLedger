@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - TransactionError
 /// Represents domain-level errors for the Transaction feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
 enum TransactionError: Error, Equatable {

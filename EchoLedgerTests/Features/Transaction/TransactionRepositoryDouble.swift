@@ -8,10 +8,9 @@
 import Foundation
 @testable import EchoLedger
 
-// MARK: - TransactionRepositoryDouble
-/// In-memory mock implementation of TransactionRepositoryProtocol.
+/// In-memory mock implementation of TransactionProviding.
 /// Used exclusively in unit tests to isolate UseCases from persistence layers.
-final class TransactionRepositoryDouble: TransactionRepositoryProtocol {
+final class TransactionRepositoryDouble: TransactionProviding {
 
     // MARK: In-Memory Store
     private var store: [Transaction] = []

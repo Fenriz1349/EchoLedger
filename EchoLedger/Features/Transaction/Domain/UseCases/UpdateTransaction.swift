@@ -7,18 +7,17 @@
 
 import Foundation
 
-// MARK: - UpdateTransaction
 /// Handles updating an existing transaction and its embedded splits.
 /// Supports adding, removing, or modifying splits.
 /// Re-enforces all business rules before persisting.
 final class UpdateTransaction {
 
     // MARK: Dependencies
-    private let repository: TransactionRepositoryProtocol
+    private let repository: TransactionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
-    init(repository: TransactionRepositoryProtocol) {
+    init(repository: TransactionProviding) {
         self.repository = repository
     }
 

@@ -7,16 +7,15 @@
 
 import Foundation
 
-// MARK: - GetInstitutions
 /// Retrieves all institutions belonging to a given user.
 final class GetInstitutions {
 
     // MARK: Dependencies
-    private let repository: InstitutionRepositoryProtocol
+    private let repository: InstitutionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for institution persistence.
-    init(repository: InstitutionRepositoryProtocol) {
+    init(repository: InstitutionProviding) {
         self.repository = repository
     }
 

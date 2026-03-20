@@ -7,14 +7,33 @@
 
 import Foundation
 
-enum AccountError: Error, LocalizedError {
-    case emptyName
-    case unknown
+/// Represents domain-level errors for the Account feature.
+/// These errors are thrown by UseCases, not by repositories or data sources.
+enum AccountError: Error, Equatable {
 
-    var errorDescription: String? {
+    /// Thrown when the account name is shorter than the minimum allowed length of 2 characters.
+    case nameTooShort
+
+    /// Thrown when the account name exceeds the maximum allowed length of 50 characters.
+    case nameTooLong
+
+    /// Thrown when an account with the same name already exists for this institution.
+    case duplicateName
+
+    /// Thrown when no account is found for the given identifier.
+    case notFound
+
+    /// Returns a human-readable description of the error.
+    var localizedDescription: String {
         switch self {
-        case .emptyName: return String(localized: "error.account.emptyName")
-        case .unknown: return String(localized: "error.unknown")
+        case .nameTooShort:
+            return "Le nom du compte doit contenir au moins 2 caractères."
+        case .nameTooLong:
+            return "Le nom du compte ne peut pas dépasser 50 caractères."
+        case .duplicateName:
+            return "Un compte avec ce nom existe déjà dans cet établissement."
+        case .notFound:
+            return "Compte introuvable."
         }
     }
 }

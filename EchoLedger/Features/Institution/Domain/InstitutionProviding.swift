@@ -1,5 +1,5 @@
 //
-//  InstitutionRepositoryProtocol.swift
+//  InstitutionProviding.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 20/11/2025.
@@ -7,11 +7,10 @@
 
 import Foundation
 
-// MARK: - InstitutionRepositoryProtocol
 /// Defines the contract for institution persistence.
 /// The Domain layer depends only on this protocol — it has no knowledge of SwiftData or Firebase.
 /// Conforming types live in the Data layer.
-protocol InstitutionRepositoryProtocol {
+protocol InstitutionProviding {
 
     /// Fetches all institutions belonging to a given user.
     /// - Parameter userId: The identifier of the user.

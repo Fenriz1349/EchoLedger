@@ -7,16 +7,15 @@
 
 import Foundation
 
-// MARK: - GetTransaction
 /// Retrieves a single transaction by its unique identifier.
 final class GetTransaction {
 
     // MARK: Dependencies
-    private let repository: TransactionRepositoryProtocol
+    private let repository: TransactionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
-    init(repository: TransactionRepositoryProtocol) {
+    init(repository: TransactionProviding) {
         self.repository = repository
     }
 

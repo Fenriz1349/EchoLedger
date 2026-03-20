@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - TransactionSplit
 /// Represents the allocation of a portion of a Transaction to a specific Account.
 /// Acts as a join entity between Transaction and Account.
 /// The sum of all splits for a given transaction must equal the transaction's totalAmount.

@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Transaction
 /// Represents a real-world financial event (e.g. a restaurant meal).
 /// Belongs directly to a User. Account relationships are managed via splits.
 /// The total amount is always positive — isExpense determines the direction.

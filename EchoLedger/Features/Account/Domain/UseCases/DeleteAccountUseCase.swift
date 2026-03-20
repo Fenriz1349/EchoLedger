@@ -8,7 +8,7 @@
 import Foundation
 
 struct DeleteAccountUseCase {
-    let repository: AccountRepositoryProtocol
+    let repository: AccountProviding
 
     func execute(_ account: Account) throws {
         try repository.deleteAccount(account)

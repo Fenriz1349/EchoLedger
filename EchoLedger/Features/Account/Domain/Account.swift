@@ -5,31 +5,34 @@
 //  Created by Julien Cotte on 18/11/2025.
 //
 
-import SwiftData
 import Foundation
 
-@Model
-class Account {
-    @Attribute(.unique) var id: UUID
-    var name: String
-    var type: AccountType
-    var initialBalance: Double
-    var createdAt: Date
+/// Represents a financial account belonging to an Institution.
+/// Balance is not stored — it is computed on demand via GetAccountBalance.
+struct Account: Identifiable, Equatable, Codable, Sendable {
 
-    @Relationship
-    var institution: Institution
+    // MARK: Properties
+    let id: UUID
+    let institutionId: UUID
+    let name: String
+    let type: AccountType
 
-    @Relationship(deleteRule: .cascade)
-    var transactions: [Transaction] = []
-
-    init(name: String,
-         initialBalance: Double,
-         institution: Institution) {
-        self.id = UUID()
+    // MARK: Init
+    /// Creates a new Account.
+    /// - Parameters:
+    ///   - id: Unique identifier. Defaults to a new UUID.
+    ///   - institutionId: The identifier of the institution this account belongs to.
+    ///   - name: Human-readable name of the account (e.g. "Livret A").
+    ///   - type: Category of the account.
+    init(
+        id: UUID = UUID(),
+        institutionId: UUID,
+        name: String,
+        type: AccountType
+    ) {
+        self.id = id
+        self.institutionId = institutionId
         self.name = name
-        self.type = .unknown
-        self.initialBalance = initialBalance
-        self.createdAt = Date()
-        self.institution = institution
+        self.type = type
     }
 }

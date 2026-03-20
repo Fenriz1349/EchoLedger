@@ -7,17 +7,16 @@
 
 import Foundation
 
-// MARK: - AddTransaction
 /// Handles the creation of a new transaction with its embedded splits.
 /// Enforces all business rules before persisting.
 final class AddTransaction {
 
     // MARK: Dependencies
-    private let repository: TransactionRepositoryProtocol
+    private let repository: TransactionProviding
 
     // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
-    init(repository: TransactionRepositoryProtocol) {
+    init(repository: TransactionProviding) {
         self.repository = repository
     }
 
