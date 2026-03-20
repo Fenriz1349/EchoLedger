@@ -6,3 +6,127 @@
 //
 
 import Foundation
+import SwiftData
+
+// MARK: - DIContainer
+/// Assembles and provides all dependencies for the application.
+/// Acts as the single source of truth for dependency injection.
+@MainActor
+@Observable
+final class DIContainer {
+
+    // MARK: SwiftData Stack
+    let modelContainer: ModelContainer
+
+    private var modelContext: ModelContext {
+        modelContainer.mainContext
+    }
+
+    // MARK: Local Sources
+    private let userLocalSource: UserLocalSource
+    private let institutionLocalSource: InstitutionLocalSource
+    private let accountLocalSource: AccountLocalSource
+    private let transactionLocalSource: TransactionLocalSource
+
+    // MARK: Storings
+    let userStoring: UserProviding
+    let institutionStoring: InstitutionProviding
+    let accountStoring: AccountProviding
+    let transactionStoring: TransactionProviding
+
+    // MARK: Use Cases — User
+    let getCurrentUser: GetCurrentUser
+    let updateUser: UpdateUser
+
+    // MARK: Use Cases — Institution
+    let addInstitution: AddInstitution
+    let getInstitutions: GetInstitutions
+    let getInstitution: GetInstitution
+    let updateInstitution: UpdateInstitution
+    let deleteInstitution: DeleteInstitution
+
+    // MARK: Use Cases — Account
+    let addAccount: AddAccount
+    let getAccounts: GetAccounts
+    let getAccount: GetAccount
+    let updateAccount: UpdateAccount
+    let deleteAccount: DeleteAccount
+    let getAccountBalance: GetAccountBalance
+
+    // MARK: Use Cases — Transaction
+    let addTransaction: AddTransaction
+    let getTransactions: GetTransactions
+    let getTransaction: GetTransaction
+    let updateTransaction: UpdateTransaction
+    let deleteTransaction: DeleteTransaction
+    let getTransactionsByType: GetTransactionsByType
+    let getTransactionsByDateRange: GetTransactionsByDateRange
+
+    // MARK: Init
+    /// Creates the container with the given SwiftData storage configuration.
+    /// - Parameter inMemory: If true, data is stored in memory only. Defaults to false.
+    init(inMemory: Bool = false) {
+        let schema = Schema([
+            UserModel.self,
+            InstitutionModel.self,
+            AccountModel.self,
+            TransactionModel.self,
+            TransactionSplitModel.self
+        ])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
+        do {
+            self.modelContainer = try ModelContainer(for: schema, configurations: config)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+
+        let context = modelContainer.mainContext
+
+        let userLocal = UserLocalSource(context: context)
+        let institutionLocal = InstitutionLocalSource(context: context)
+        let accountLocal = AccountLocalSource(context: context)
+        let transactionLocal = TransactionLocalSource(context: context)
+
+        self.userLocalSource = userLocal
+        self.institutionLocalSource = institutionLocal
+        self.accountLocalSource = accountLocal
+        self.transactionLocalSource = transactionLocal
+
+        let userStore = UserStoring(local: userLocal)
+        let institutionStore = InstitutionStoring(local: institutionLocal)
+        let accountStore = AccountStoring(local: accountLocal)
+        let transactionStore = TransactionStoring(local: transactionLocal)
+
+        self.userStoring = userStore
+        self.institutionStoring = institutionStore
+        self.accountStoring = accountStore
+        self.transactionStoring = transactionStore
+
+        self.getCurrentUser = GetCurrentUser(repository: userStore)
+        self.updateUser = UpdateUser(repository: userStore)
+
+        self.addInstitution = AddInstitution(repository: institutionStore)
+        self.getInstitutions = GetInstitutions(repository: institutionStore)
+        self.getInstitution = GetInstitution(repository: institutionStore)
+        self.updateInstitution = UpdateInstitution(repository: institutionStore)
+        self.deleteInstitution = DeleteInstitution(repository: institutionStore)
+
+        self.addAccount = AddAccount(repository: accountStore)
+        self.getAccounts = GetAccounts(repository: accountStore)
+        self.getAccount = GetAccount(repository: accountStore)
+        self.updateAccount = UpdateAccount(repository: accountStore)
+        self.deleteAccount = DeleteAccount(repository: accountStore)
+        self.getAccountBalance = GetAccountBalance(
+            accountRepository: accountStore,
+            transactionRepository: transactionStore
+        )
+
+        self.addTransaction = AddTransaction(repository: transactionStore)
+        self.getTransactions = GetTransactions(repository: transactionStore)
+        self.getTransaction = GetTransaction(repository: transactionStore)
+        self.updateTransaction = UpdateTransaction(repository: transactionStore)
+        self.deleteTransaction = DeleteTransaction(repository: transactionStore)
+        self.getTransactionsByType = GetTransactionsByType(repository: transactionStore)
+        self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
+    }
+}
