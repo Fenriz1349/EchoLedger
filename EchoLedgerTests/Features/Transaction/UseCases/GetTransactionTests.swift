@@ -8,7 +8,6 @@
 import XCTest
 @testable import EchoLedger
 
-// MARK: - GetTransactionTests
 final class GetTransactionTests: XCTestCase {
 
     // MARK: Properties

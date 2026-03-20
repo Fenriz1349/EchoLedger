@@ -1,6 +1,6 @@
 //
 //  Account.swift
-//  CatLedger
+//  EchoLedger
 //
 //  Created by Julien Cotte on 18/11/2025.
 //
