@@ -7,10 +7,3 @@
 
 import Foundation
 
-struct GetAccountsUseCase {
-    let repository: AccountProviding
-
-    func execute() -> [Account] {
-        repository.fetchAccounts()
-    }
-}
