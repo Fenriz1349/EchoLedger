@@ -8,8 +8,6 @@
 import XCTest
 @testable import EchoLedger
 
-// MARK: - UpdateTransactionTests
-
 @MainActor
 final class UpdateTransactionTests: XCTestCase {
 

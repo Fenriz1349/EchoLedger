@@ -37,7 +37,7 @@ final class AddInstitution {
     ) async throws {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
-            throw trimmed.isEmpty ? InstitutionError.emptyName : InstitutionError.nameTooShort
+            throw InstitutionError.nameTooShort
         }
         guard trimmed.count <= 50 else {
             throw InstitutionError.nameTooLong
