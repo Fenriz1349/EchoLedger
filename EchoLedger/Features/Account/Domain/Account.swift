@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents a financial account belonging to an Institution.
 /// Balance is not stored — it is computed on demand via GetAccountBalance.
-struct Account: Identifiable, Equatable, Codable, Sendable {
+struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
 
     // MARK: Properties
     let id: UUID

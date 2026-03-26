@@ -8,22 +8,31 @@
 import Foundation
 
 extension DIContainer {
+    
+    private static let previewUserId = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
 
-    /// Creates an in-memory container pre-populated with demo data.
+    /// Creates an in-memory container for previews.
     static func preview() -> DIContainer {
         DIContainer(inMemory: true)
     }
-}
 
-extension AddInstitutionFormViewModel {
+    /// Creates a preview AddAccountViewModel from this container.
+    func makeAddAccountViewModel() -> AddAccountViewModel {
+        AddAccountViewModel(
+            addAccount: addAccount,
+            addInstitution: addInstitution,
+            getInstitutions: getInstitutions,
+            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        )
+    }
 
-    /// Creates a preview instance with demo data.
-    static func preview(onAdd: @escaping (Institution) -> Void = { _ in }) -> AddInstitutionFormViewModel {
-        let container = DIContainer.preview()
-        return AddInstitutionFormViewModel(
-            addInstitution: container.addInstitution,
-            getInstitutions: container.getInstitutions,
-            userId: PreviewData.user.id,
+    /// Creates a preview AddInstitutionFormViewModel from this container.
+    func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in }
+    ) -> AddInstitutionFormViewModel {
+        AddInstitutionFormViewModel(
+            addInstitution: addInstitution,
+            getInstitutions: getInstitutions,
+            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
             onAdd: onAdd
         )
     }

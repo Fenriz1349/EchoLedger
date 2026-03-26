@@ -60,6 +60,8 @@
 		684497372F75743F00337F74 /* AddInstitutionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497362F75743F00337F74 /* AddInstitutionFormView.swift */; };
 		684497392F75760600337F74 /* AddInstitutionFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497382F75760600337F74 /* AddInstitutionFormViewModel.swift */; };
 		6844973B2F7576B500337F74 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973A2F7576B500337F74 /* PreviewHelpers.swift */; };
+		6844973D2F7579A500337F74 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973C2F7579A500337F74 /* AddAccountViewModel.swift */; };
+		6844973F2F757AC400337F74 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973E2F757AC400337F74 /* AddAccountView.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -182,6 +184,8 @@
 		684497362F75743F00337F74 /* AddInstitutionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionFormView.swift; sourceTree = "<group>"; };
 		684497382F75760600337F74 /* AddInstitutionFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionFormViewModel.swift; sourceTree = "<group>"; };
 		6844973A2F7576B500337F74 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpers.swift; sourceTree = "<group>"; };
+		6844973C2F7579A500337F74 /* AddAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountViewModel.swift; sourceTree = "<group>"; };
+		6844973E2F757AC400337F74 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		6857E3C32F51AB4200913E12 /* EchoLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				684497272F7569C600337F74 /* AccountListView.swift */,
+				6844973C2F7579A500337F74 /* AddAccountViewModel.swift */,
+				6844973E2F757AC400337F74 /* AddAccountView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -906,6 +912,7 @@
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
+				6844973D2F7579A500337F74 /* AddAccountViewModel.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionType.swift in Sources */,
@@ -940,6 +947,7 @@
 				6844973B2F7576B500337F74 /* PreviewHelpers.swift in Sources */,
 				685A1EB32F5ACF700009B885 /* ContentView.swift in Sources */,
 				685A1EB52F5ACF700009B885 /* Account.swift in Sources */,
+				6844973F2F757AC400337F74 /* AddAccountView.swift in Sources */,
 				685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */,
 				685A1EF02F5AEA9F0009B885 /* TransactionSplit.swift in Sources */,
 				683133A52F61736A004AA5E4 /* TransactionType.swift in Sources */,

@@ -23,7 +23,7 @@ final class AddInstitutionFormViewModel {
     private let addInstitution: AddInstitution
     private let getInstitutions: GetInstitutions
     private let userId: UUID
-    let onAdd: (Institution) -> Void
+    var onAdd: (Institution) -> Void
 
     // MARK: Computed
     /// Returns true if the form is ready to be submitted.

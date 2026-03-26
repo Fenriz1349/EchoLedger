@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents a financial institution belonging to a user.
 /// An institution owns one or more accounts.
-struct Institution: Identifiable, Equatable, Codable, Sendable {
+struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
 
     // MARK: Properties
     let id: UUID
