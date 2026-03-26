@@ -43,6 +43,7 @@
 		683133C22F61A4CB004AA5E4 /* AddTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C12F61A4CB004AA5E4 /* AddTransactionTests.swift */; };
 		683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */; };
 		683133C82F61A5CB004AA5E4 /* GetTransactionsByTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C72F61A5CB004AA5E4 /* GetTransactionsByTypeTests.swift */; };
+		684497142F75380900337F74 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497132F75380900337F74 /* PreviewData.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -150,6 +151,7 @@
 		683133C12F61A4CB004AA5E4 /* AddTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionTests.swift; sourceTree = "<group>"; };
 		683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionTests.swift; sourceTree = "<group>"; };
 		683133C72F61A5CB004AA5E4 /* GetTransactionsByTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByTypeTests.swift; sourceTree = "<group>"; };
+		684497132F75380900337F74 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		6857E3C32F51AB4200913E12 /* EchoLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,14 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		684497122F7537F600337F74 /* PreviewContent */ = {
+			isa = PBXGroup;
+			children = (
+				684497132F75380900337F74 /* PreviewData.swift */,
+			);
+			path = PreviewContent;
+			sourceTree = "<group>";
+		};
 		6857E3BA2F51AB4200913E12 = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +366,7 @@
 		6857E3D42F51B70300913E12 /* EchoLedger */ = {
 			isa = PBXGroup;
 			children = (
+				684497122F7537F600337F74 /* PreviewContent */,
 				685A1E812F5ACF700009B885 /* App */,
 				685A1EA22F5ACF700009B885 /* Features */,
 				685A1F082F5AEBA40009B885 /* Core */,
@@ -803,6 +814,7 @@
 				685A1F0D2F5AEC050009B885 /* SyncStatus.swift in Sources */,
 				685A1EAB2F5ACF700009B885 /* AccountProviding.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
+				684497142F75380900337F74 /* PreviewData.swift in Sources */,
 				685A1F032F5AEB700009B885 /* TransactionRemoteSource.swift in Sources */,
 				685A1ED72F5AE6CF0009B885 /* UpdateInstitution.swift in Sources */,
 				685A1EC02F5AD9510009B885 /* User.swift in Sources */,
