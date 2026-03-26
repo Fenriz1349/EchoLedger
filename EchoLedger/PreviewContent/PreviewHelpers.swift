@@ -8,8 +8,6 @@
 import Foundation
 
 extension DIContainer {
-    
-    private static let previewUserId = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
 
     /// Creates an in-memory container for previews.
     static func preview() -> DIContainer {
@@ -36,7 +34,7 @@ extension DIContainer {
             onAdd: onAdd
         )
     }
-    
+
     func makeAccountListViewModel() -> AccountListViewModel {
         AccountListViewModel(
             getInstitutions: getInstitutions,

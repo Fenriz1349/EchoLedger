@@ -14,12 +14,12 @@ final class AddAccountViewModel {
     // MARK: Form State
     var name = ""
     var type: AccountType = .checking
-    var selectedInstitution: Institution? = nil
+    var selectedInstitution: Institution?
 
     // MARK: UI State
     var institutions: [Institution] = []
     var showAddInstitutionForm = false
-    var errorMessage: String? = nil
+    var errorMessage: String?
     var isLoading = false
     var isSuccess = false
 

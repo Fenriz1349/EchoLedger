@@ -16,7 +16,7 @@ final class AddInstitutionFormViewModel {
     var type: InstitutionType = .bank
 
     // MARK: UI State
-    var errorMessage: String? = nil
+    var errorMessage: String?
     var isLoading = false
 
     // MARK: Dependencies

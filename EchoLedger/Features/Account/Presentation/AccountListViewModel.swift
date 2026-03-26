@@ -13,7 +13,7 @@ final class AccountListViewModel {
 
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] = []
     var isLoading = false
-    var errorMessage: String? = nil
+    var errorMessage: String?
     var showAddAccount = false
 
     private let getInstitutions: GetInstitutions

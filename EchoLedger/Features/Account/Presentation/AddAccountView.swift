@@ -10,10 +10,10 @@ import CustomTextFields
 import CustomLabels
 
 struct AddAccountView: View {
-    
+
     @State var viewModel: AddAccountViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -27,14 +27,14 @@ struct AddAccountView: View {
                     )
                     .listRowInsets(EdgeInsets())
                     .padding(.horizontal)
-                    
+
                     Picker("Type", selection: $viewModel.type) {
                         ForEach(AccountType.allCases, id: \.self) { type in
                             Label(type.name, systemImage: type.icon).tag(type)
                         }
                     }
                 }
-                
+
                 Section("Établissement") {
                     if viewModel.institutions.isEmpty {
                         Text("Aucun établissement — créez-en un ci-dessous")
@@ -48,7 +48,7 @@ struct AddAccountView: View {
                             }
                         }
                     }
-                    
+
                     Button {
                         withAnimation { viewModel.showAddInstitutionForm.toggle() }
                     } label: {
@@ -57,13 +57,13 @@ struct AddAccountView: View {
                             systemImage: viewModel.showAddInstitutionForm ? "xmark" : "plus"
                         )
                     }
-                    
+
                     if viewModel.showAddInstitutionForm {
                         AddInstitutionFormView(viewModel: viewModel.addInstitutionFormViewModel)
                             .listRowInsets(EdgeInsets())
                     }
                 }
-                
+
                 if let errorMessage = viewModel.errorMessage {
                     Section {
                         Text(errorMessage)
