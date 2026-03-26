@@ -57,6 +57,9 @@
 		6844972A2F7569D800337F74 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497292F7569D800337F74 /* AddTransactionView.swift */; };
 		684497312F756E0B00337F74 /* CustomLabels in Frameworks */ = {isa = PBXBuildFile; productRef = 684497302F756E0B00337F74 /* CustomLabels */; };
 		684497342F756E4E00337F74 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = 684497332F756E4E00337F74 /* Toasty */; };
+		684497372F75743F00337F74 /* AddInstitutionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497362F75743F00337F74 /* AddInstitutionFormView.swift */; };
+		684497392F75760600337F74 /* AddInstitutionFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497382F75760600337F74 /* AddInstitutionFormViewModel.swift */; };
+		6844973B2F7576B500337F74 /* PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973A2F7576B500337F74 /* PreviewHelpers.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -176,6 +179,9 @@
 		684497252F7569AA00337F74 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
 		684497272F7569C600337F74 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
 		684497292F7569D800337F74 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
+		684497362F75743F00337F74 /* AddInstitutionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionFormView.swift; sourceTree = "<group>"; };
+		684497382F75760600337F74 /* AddInstitutionFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionFormViewModel.swift; sourceTree = "<group>"; };
+		6844973A2F7576B500337F74 /* PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpers.swift; sourceTree = "<group>"; };
 		6857E3C32F51AB4200913E12 /* EchoLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -367,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				684497132F75380900337F74 /* PreviewData.swift */,
+				6844973A2F7576B500337F74 /* PreviewHelpers.swift */,
 			);
 			path = PreviewContent;
 			sourceTree = "<group>";
@@ -400,6 +407,15 @@
 			isa = PBXGroup;
 			children = (
 				684497232F75699100337F74 /* DashboardView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		684497352F75742A00337F74 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				684497362F75743F00337F74 /* AddInstitutionFormView.swift */,
+				684497382F75760600337F74 /* AddInstitutionFormViewModel.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -545,6 +561,7 @@
 			children = (
 				685A1E982F5ACF700009B885 /* Domain */,
 				685A1E9B2F5ACF700009B885 /* Data */,
+				684497352F75742A00337F74 /* Presentation */,
 			);
 			path = Institution;
 			sourceTree = "<group>";
@@ -885,6 +902,7 @@
 				685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */,
 				685A1F112F5AECD60009B885 /* SyncManager.swift in Sources */,
 				685A1EA92F5ACF700009B885 /* GetAccount.swift in Sources */,
+				684497372F75743F00337F74 /* AddInstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
@@ -919,6 +937,7 @@
 				683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */,
 				685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */,
 				685A1EB22F5ACF700009B885 /* DeleteAccount.swift in Sources */,
+				6844973B2F7576B500337F74 /* PreviewHelpers.swift in Sources */,
 				685A1EB32F5ACF700009B885 /* ContentView.swift in Sources */,
 				685A1EB52F5ACF700009B885 /* Account.swift in Sources */,
 				685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */,
@@ -928,6 +947,7 @@
 				683133A92F617951004AA5E4 /* GetTransactionsByType.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
+				684497392F75760600337F74 /* AddInstitutionFormViewModel.swift in Sources */,
 				685A1EEA2F5AEA1D0009B885 /* AccountRemoteSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
