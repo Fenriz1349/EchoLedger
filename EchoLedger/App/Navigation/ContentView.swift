@@ -24,7 +24,7 @@ struct ContentView: View {
                     Label("Transactions", systemImage: "list.bullet")
                 }
 
-            AccountListView()
+            AccountListView(viewModel: container.makeAccountListViewModel())
                 .tabItem {
                     Label("Comptes", systemImage: "building.columns")
                 }

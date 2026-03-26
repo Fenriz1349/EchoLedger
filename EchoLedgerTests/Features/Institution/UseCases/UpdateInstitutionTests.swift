@@ -41,7 +41,7 @@ final class UpdateInstitutionTests: XCTestCase {
         name: String = "Caisse d'Épargne",
         type: InstitutionType = .bank
     ) -> UpdateInstitutionInput {
-        UpdateInstitutionInput(id: id, userId: userId, name: name, type: type)
+        UpdateInstitutionInput(id: id, userId: userId, name: name, type: type, logoURL: nil)
     }
 
     // MARK: Success

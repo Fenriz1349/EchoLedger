@@ -56,7 +56,9 @@ final class UpdateTransactionTests: XCTestCase {
             id: id,
             userId: userId,
             label: label,
+            date: Date(),
             totalAmount: totalAmount,
+            note: nil,
             isExpense: isExpense,
             type: type,
             splits: defaultSplits

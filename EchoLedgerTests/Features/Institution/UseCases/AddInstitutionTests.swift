@@ -124,7 +124,7 @@ final class AddInstitutionTests: XCTestCase {
     /// Verifies that the same name can be used by different users.
     func test_execute_sameNameDifferentUser_succeeds() async throws {
         try await seedInstitution(name: "BNP Paribas")
-        let otherInput = AddInstitutionInput(userId: UUID(), name: "BNP Paribas", type: .bank)
+        let otherInput = AddInstitutionInput(userId: UUID(), name: "BNP Paribas", type: .bank, logoURL: nil)
         try await useCase.execute(otherInput)
         XCTAssertTrue(repository.didCallSave)
     }
