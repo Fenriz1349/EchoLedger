@@ -35,18 +35,27 @@ final class UpdateAccountTests: XCTestCase {
         return account.id
     }
 
+    /// Returns a valid UpdateAccountInput with sensible defaults.
+    private func makeInput(
+        id: UUID,
+        name: String = "PEL",
+        type: AccountType = .savings
+    ) -> UpdateAccountInput {
+        UpdateAccountInput(id: id, institutionId: institutionId, name: name, type: type)
+    }
+
     // MARK: Success
     /// Verifies that a valid update calls update on the repository.
     func test_execute_validInput_callsUpdate() async throws {
         let id = try await seedAccount()
-        try await useCase.execute(id: id, institutionId: institutionId, name: "PEL", type: .savings)
+        try await useCase.execute(makeInput(id: id))
         XCTAssertTrue(repository.didCallUpdate)
     }
 
     /// Verifies that updating with the same name succeeds (no self-duplicate).
     func test_execute_sameNameSameId_succeeds() async throws {
         let id = try await seedAccount(name: "Livret A")
-        try await useCase.execute(id: id, institutionId: institutionId, name: "Livret A", type: .creditCard)
+        try await useCase.execute(makeInput(id: id, name: "Livret A", type: .creditCard))
         XCTAssertTrue(repository.didCallUpdate)
     }
 
@@ -55,7 +64,7 @@ final class UpdateAccountTests: XCTestCase {
     func test_execute_nameTooShort_throwsNameTooShort() async throws {
         let id = try await seedAccount()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, institutionId: institutionId, name: "A", type: .savings)
+            try await useCase.execute(makeInput(id: id, name: "A"))
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooShort)
         }
@@ -64,9 +73,8 @@ final class UpdateAccountTests: XCTestCase {
     /// Verifies that updating with a name exceeding 50 characters throws nameTooLong.
     func test_execute_nameTooLong_throwsNameTooLong() async throws {
         let id = try await seedAccount()
-        let longName = String(repeating: "A", count: 51)
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, institutionId: institutionId, name: longName, type: .savings)
+            try await useCase.execute(makeInput(id: id, name: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooLong)
         }
@@ -77,7 +85,7 @@ final class UpdateAccountTests: XCTestCase {
         try await seedAccount(name: "PEL")
         let id = try await seedAccount(name: "Livret A")
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, institutionId: institutionId, name: "PEL", type: .savings)
+            try await useCase.execute(makeInput(id: id, name: "PEL"))
         ) { error in
             XCTAssertEqual(error as? AccountError, .duplicateName)
         }

@@ -27,4 +27,3 @@ final class DeleteAccount {
         try await repository.delete(by: id)
     }
 }
-

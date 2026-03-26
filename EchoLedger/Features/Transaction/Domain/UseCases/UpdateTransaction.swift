@@ -23,56 +23,36 @@ final class UpdateTransaction {
 
     // MARK: Execute
     /// Updates an existing transaction with new values and splits.
-    /// - Parameters:
-    ///   - id: The unique identifier of the transaction to update.
-    ///   - userId: The identifier of the user this transaction belongs to.
-    ///   - label: Updated human-readable name.
-    ///   - date: Updated date of the transaction.
-    ///   - totalAmount: Updated total amount, must be strictly positive.
-    ///   - note: Updated optional additional information.
-    ///   - isExpense: Updated direction — true for expense, false for income.
-    ///   - type: Updated category.
-    ///   - splits: Updated ventilation. Must not be empty and must sum to totalAmount.
+    /// - Parameter input: The data required to update the transaction.
     /// - Throws: `TransactionError` if any business rule is violated.
-    func execute(
-        id: UUID,
-        userId: UUID,
-        label: String,
-        date: Date,
-        totalAmount: Decimal,
-        note: String? = nil,
-        isExpense: Bool,
-        type: TransactionType,
-        splits: [TransactionSplit]
-    ) async throws {
-        guard !label.trimmingCharacters(in: .whitespaces).isEmpty else {
+    func execute(_ input: UpdateTransactionInput) async throws {
+        guard !input.label.trimmingCharacters(in: .whitespaces).isEmpty else {
             throw TransactionError.emptyLabel
         }
-        guard totalAmount > 0 else {
+        guard input.totalAmount > 0 else {
             throw TransactionError.invalidTotalAmount
         }
-        guard !splits.isEmpty else {
+        guard !input.splits.isEmpty else {
             throw TransactionError.missingSplits
         }
-        guard splits.allSatisfy({ $0.amount > 0 }) else {
+        guard input.splits.allSatisfy({ $0.amount > 0 }) else {
             throw TransactionError.invalidSplitAmount
         }
-        guard splits.map(\.amount).reduce(0, +) == totalAmount else {
+        guard input.splits.map(\.amount).reduce(0, +) == input.totalAmount else {
             throw TransactionError.splitAmountMismatch
         }
 
         let updated = Transaction(
-            id: id,
-            userId: userId,
-            label: label,
-            date: date,
-            totalAmount: totalAmount,
-            note: note,
-            isExpense: isExpense,
-            type: type,
-            splits: splits
+            id: input.id,
+            userId: input.userId,
+            label: input.label,
+            date: input.date,
+            totalAmount: input.totalAmount,
+            note: input.note,
+            isExpense: input.isExpense,
+            type: input.type,
+            splits: input.splits
         )
-
         try await repository.update(updated)
     }
 }

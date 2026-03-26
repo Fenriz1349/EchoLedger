@@ -22,53 +22,35 @@ final class AddTransaction {
 
     // MARK: Execute
     /// Creates and persists a new transaction.
-    /// - Parameters:
-    ///   - userId: The identifier of the user this transaction belongs to.
-    ///   - label: Human-readable name for the transaction.
-    ///   - date: Date the transaction occurred.
-    ///   - totalAmount: Total amount, must be strictly positive.
-    ///   - note: Optional additional information.
-    ///   - isExpense: True if this is an expense, false if income.
-    ///   - type: Category of the transaction.
-    ///   - splits: Ventilation across accounts. Must not be empty and must sum to totalAmount.
+    /// - Parameter input: The data required to create the transaction.
     /// - Throws: `TransactionError` if any business rule is violated.
-    func execute(
-        userId: UUID,
-        label: String,
-        date: Date,
-        totalAmount: Decimal,
-        note: String? = nil,
-        isExpense: Bool,
-        type: TransactionType,
-        splits: [TransactionSplit]
-    ) async throws {
-        guard !label.trimmingCharacters(in: .whitespaces).isEmpty else {
+    func execute(_ input: AddTransactionInput) async throws {
+        guard !input.label.trimmingCharacters(in: .whitespaces).isEmpty else {
             throw TransactionError.emptyLabel
         }
-        guard totalAmount > 0 else {
+        guard input.totalAmount > 0 else {
             throw TransactionError.invalidTotalAmount
         }
-        guard !splits.isEmpty else {
+        guard !input.splits.isEmpty else {
             throw TransactionError.missingSplits
         }
-        guard splits.allSatisfy({ $0.amount > 0 }) else {
+        guard input.splits.allSatisfy({ $0.amount > 0 }) else {
             throw TransactionError.invalidSplitAmount
         }
-        guard splits.map(\.amount).reduce(0, +) == totalAmount else {
+        guard input.splits.map(\.amount).reduce(0, +) == input.totalAmount else {
             throw TransactionError.splitAmountMismatch
         }
 
         let transaction = Transaction(
-            userId: userId,
-            label: label,
-            date: date,
-            totalAmount: totalAmount,
-            note: note,
-            isExpense: isExpense,
-            type: type,
-            splits: splits
+            userId: input.userId,
+            label: input.label,
+            date: input.date,
+            totalAmount: input.totalAmount,
+            note: input.note,
+            isExpense: input.isExpense,
+            type: input.type,
+            splits: input.splits
         )
-
         try await repository.save(transaction)
     }
 }

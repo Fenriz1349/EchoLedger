@@ -28,7 +28,7 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when no transaction is found for the given identifier.
     case notFound
-    
+
     /// Thrown when the start date is after the end date in a date range query.
     case invalidDateRange
 

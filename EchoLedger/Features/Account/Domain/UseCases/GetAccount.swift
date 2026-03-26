@@ -28,4 +28,3 @@ final class GetAccount {
         try await repository.fetch(by: id)
     }
 }
-

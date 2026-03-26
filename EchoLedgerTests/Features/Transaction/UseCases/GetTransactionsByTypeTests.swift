@@ -32,7 +32,13 @@ final class GetTransactionsByTypeTests: XCTestCase {
     /// Seeds a transaction of a given type belonging to the shared userId.
     private func seedTransaction(type: TransactionType, amount: Decimal = 30) async throws {
         let split = await TransactionSplit(accountId: UUID(), amount: amount)
-        let transaction = await Transaction(userId: userId, label: "Test", date: Date(), totalAmount: amount, isExpense: true, type: type, splits: [split])
+        let transaction = await Transaction(userId: userId,
+                                            label: "Test",
+                                            date: Date(),
+                                            totalAmount: amount,
+                                            isExpense: true,
+                                            type: type,
+                                            splits: [split])
         try await repository.save(transaction)
     }
 
