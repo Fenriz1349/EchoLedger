@@ -8,20 +8,46 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @Environment(DIContainer.self) private var container
+    @State private var showAddTransaction = false
+
     var body: some View {
-        Text("EchoLedger")
-            .task {
-                do {
-                    let dataSource = UserRemoteSource()
-                    let uid = try await dataSource.signInAnonymously()
-                    print("✅ User anonyme : \(uid)")
-                } catch {
-                    print("❌ Erreur : \(error)")
+        TabView {
+            DashboardView()
+                .tabItem {
+                    Label("Tableau de bord", systemImage: "chart.pie")
                 }
+
+            TransactionListView()
+                .tabItem {
+                    Label("Transactions", systemImage: "list.bullet")
+                }
+
+            AccountListView()
+                .tabItem {
+                    Label("Comptes", systemImage: "building.columns")
+                }
+        }
+        .overlay(alignment: .bottom) {
+            Button {
+                showAddTransaction = true
+            } label: {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 56, height: 56)
+                    .background(Color(.systemBackground))
+                    .clipShape(Circle())
             }
+            .padding(.bottom, 24)
+        }
+        .sheet(isPresented: $showAddTransaction) {
+            AddTransactionView()
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(DIContainer(inMemory: true))
 }
