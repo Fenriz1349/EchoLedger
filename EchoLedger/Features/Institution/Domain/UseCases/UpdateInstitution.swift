@@ -22,38 +22,27 @@ final class UpdateInstitution {
 
     // MARK: Execute
     /// Updates an existing institution with new values.
-    /// - Parameters:
-    ///   - id: The unique identifier of the institution to update.
-    ///   - userId: The identifier of the user this institution belongs to.
-    ///   - name: Updated name. Must be between 2 and 50 characters.
-    ///   - type: Updated category.
-    ///   - logoURL: Updated optional logo URL.
+    /// - Parameter input: The data required to update the institution.
     /// - Throws: `InstitutionError` if any business rule is violated.
-    func execute(
-        id: UUID,
-        userId: UUID,
-        name: String,
-        type: InstitutionType,
-        logoURL: String? = nil
-    ) async throws {
-        let trimmed = name.trimmingCharacters(in: .whitespaces)
+    func execute(_ input: UpdateInstitutionInput) async throws {
+        let trimmed = input.name.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
             throw InstitutionError.nameTooShort
         }
         guard trimmed.count <= 50 else {
             throw InstitutionError.nameTooLong
         }
-        let existing = try await repository.fetchAll(for: userId)
-        guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != id }) else {
+        let existing = try await repository.fetchAll(for: input.userId)
+        guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }) else {
             throw InstitutionError.duplicateName
         }
-
+ 
         let updated = Institution(
-            id: id,
-            userId: userId,
+            id: input.id,
+            userId: input.userId,
             name: trimmed,
-            type: type,
-            logoURL: logoURL
+            type: input.type,
+            logoURL: input.logoURL
         )
         try await repository.update(updated)
     }

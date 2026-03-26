@@ -11,12 +11,10 @@ import XCTest
 @MainActor
 final class AddInstitutionTests: XCTestCase {
 
-    // MARK: Properties
     private var repository: InstitutionDouble!
     private var useCase: AddInstitution!
     private let userId = UUID()
 
-    // MARK: Setup
     override func setUp() {
         super.setUp()
         repository = InstitutionDouble()
@@ -29,16 +27,31 @@ final class AddInstitutionTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: Helpers
+    /// Returns a valid AddInstitutionInput with sensible defaults.
+    private func makeInput(
+        name: String = "BNP Paribas",
+        type: InstitutionType = .bank,
+        logoURL: String? = nil
+    ) -> AddInstitutionInput {
+        AddInstitutionInput(userId: userId, name: name, type: type, logoURL: logoURL)
+    }
+
+    /// Seeds an institution belonging to the shared userId.
+    private func seedInstitution(name: String = "BNP Paribas") async throws {
+        try await useCase.execute(makeInput(name: name))
+    }
+
     // MARK: Success
     /// Verifies that a valid institution is saved to the repository.
     func test_execute_validInput_callsSave() async throws {
-        try await useCase.execute(userId: userId, name: "BNP Paribas", type: .bank)
+        try await useCase.execute(makeInput())
         XCTAssertTrue(repository.didCallSave)
     }
 
     /// Verifies that the name is trimmed before being saved.
     func test_execute_nameWithWhitespace_isTrimmed() async throws {
-        try await useCase.execute(userId: userId, name: "  BNP  ", type: .bank)
+        try await useCase.execute(makeInput(name: "  BNP  "))
         let institutions = try await repository.fetchAll(for: userId)
         let savedName = institutions.first?.name
         XCTAssertEqual(savedName, "BNP")
@@ -48,7 +61,7 @@ final class AddInstitutionTests: XCTestCase {
     /// Verifies that an empty name throws nameTooShort.
     func test_execute_emptyName_throwsNameTooShort() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: "", type: .bank)
+            try await useCase.execute(makeInput(name: ""))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooShort)
         }
@@ -57,7 +70,7 @@ final class AddInstitutionTests: XCTestCase {
     /// Verifies that a single character name throws nameTooShort.
     func test_execute_singleCharName_throwsNameTooShort() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: "A", type: .bank)
+            try await useCase.execute(makeInput(name: "A"))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooShort)
         }
@@ -66,7 +79,7 @@ final class AddInstitutionTests: XCTestCase {
     /// Verifies that a whitespace-only name throws nameTooShort.
     func test_execute_whitespaceOnlyName_throwsNameTooShort() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: "   ", type: .bank)
+            try await useCase.execute(makeInput(name: "   "))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooShort)
         }
@@ -74,9 +87,8 @@ final class AddInstitutionTests: XCTestCase {
 
     /// Verifies that a name exceeding 50 characters throws nameTooLong.
     func test_execute_nameTooLong_throwsNameTooLong() async {
-        let longName = String(repeating: "A", count: 51)
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: longName, type: .bank)
+            try await useCase.execute(makeInput(name: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooLong)
         }
@@ -84,17 +96,16 @@ final class AddInstitutionTests: XCTestCase {
 
     /// Verifies that a name of exactly 50 characters succeeds.
     func test_execute_nameExactly50Chars_succeeds() async throws {
-        let maxName = String(repeating: "A", count: 50)
-        try await useCase.execute(userId: userId, name: maxName, type: .bank)
+        try await useCase.execute(makeInput(name: String(repeating: "A", count: 50)))
         XCTAssertTrue(repository.didCallSave)
     }
 
     // MARK: Duplicate Validation
     /// Verifies that adding an institution with the same name throws duplicateName.
     func test_execute_duplicateName_throwsDuplicateName() async throws {
-        try await useCase.execute(userId: userId, name: "BNP Paribas", type: .bank)
+        try await seedInstitution(name: "BNP Paribas")
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: "BNP Paribas", type: .bank)
+            try await useCase.execute(makeInput(name: "BNP Paribas"))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .duplicateName)
         }
@@ -102,9 +113,9 @@ final class AddInstitutionTests: XCTestCase {
 
     /// Verifies that duplicate check is case-insensitive.
     func test_execute_duplicateNameCaseInsensitive_throwsDuplicateName() async throws {
-        try await useCase.execute(userId: userId, name: "BNP Paribas", type: .bank)
+        try await seedInstitution(name: "BNP Paribas")
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(userId: userId, name: "bnp paribas", type: .bank)
+            try await useCase.execute(makeInput(name: "bnp paribas"))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .duplicateName)
         }
@@ -112,8 +123,9 @@ final class AddInstitutionTests: XCTestCase {
 
     /// Verifies that the same name can be used by different users.
     func test_execute_sameNameDifferentUser_succeeds() async throws {
-        try await useCase.execute(userId: userId, name: "BNP Paribas", type: .bank)
-        try await useCase.execute(userId: UUID(), name: "BNP Paribas", type: .bank)
+        try await seedInstitution(name: "BNP Paribas")
+        let otherInput = AddInstitutionInput(userId: UUID(), name: "BNP Paribas", type: .bank)
+        try await useCase.execute(otherInput)
         XCTAssertTrue(repository.didCallSave)
     }
 }

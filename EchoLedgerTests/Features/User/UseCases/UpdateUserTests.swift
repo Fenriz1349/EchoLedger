@@ -8,7 +8,6 @@
 import XCTest
 @testable import EchoLedger
 
-// MARK: - UpdateUserTests
 @MainActor
 final class UpdateUserTests: XCTestCase {
 
@@ -30,16 +29,26 @@ final class UpdateUserTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns a user with a known id.
     private func seedUser() async throws -> UUID {
-        let user = User(displayName: "Fen", email: "fen@test.com")
+        let user = User(displayName: "Batman", email: "batman@gotham.com")
         try await repository.save(user)
         return user.id
+    }
+
+    /// Returns a valid UpdateUserInput with sensible defaults.
+    private func makeInput(
+        id: UUID,
+        displayName: String = "Batman",
+        email: String = "batman@gotham.com",
+        photoURL: String? = nil
+    ) -> UpdateUserInput {
+        UpdateUserInput(id: id, displayName: displayName, email: email, photoURL: photoURL)
     }
 
     // MARK: Success
     /// Verifies that a valid update calls update on the repository.
     func test_execute_validInput_callsUpdate() async throws {
         let id = try await seedUser()
-        try await useCase.execute(id: id, displayName: "Fen Updated", email: "fen@test.com")
+        try await useCase.execute(makeInput(id: id, displayName: "Bruce Wayne"))
         XCTAssertTrue(repository.didCallUpdate)
     }
 
@@ -48,7 +57,7 @@ final class UpdateUserTests: XCTestCase {
     func test_execute_emptyName_throwsNameTooShort() async throws {
         let id = try await seedUser()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, displayName: "", email: "fen@test.com")
+            try await useCase.execute(makeInput(id: id, displayName: ""))
         ) { error in
             XCTAssertEqual(error as? UserError, .nameTooShort)
         }
@@ -58,7 +67,7 @@ final class UpdateUserTests: XCTestCase {
     func test_execute_singleCharName_throwsNameTooShort() async throws {
         let id = try await seedUser()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, displayName: "F", email: "fen@test.com")
+            try await useCase.execute(makeInput(id: id, displayName: "B"))
         ) { error in
             XCTAssertEqual(error as? UserError, .nameTooShort)
         }
@@ -67,9 +76,8 @@ final class UpdateUserTests: XCTestCase {
     /// Verifies that a name exceeding 50 characters throws nameTooLong.
     func test_execute_nameTooLong_throwsNameTooLong() async throws {
         let id = try await seedUser()
-        let longName = String(repeating: "A", count: 51)
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, displayName: longName, email: "fen@test.com")
+            try await useCase.execute(makeInput(id: id, displayName: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? UserError, .nameTooLong)
         }
@@ -80,7 +88,7 @@ final class UpdateUserTests: XCTestCase {
     func test_execute_invalidEmail_throwsInvalidEmail() async throws {
         let id = try await seedUser()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(id: id, displayName: "Fen", email: "notanemail")
+            try await useCase.execute(makeInput(id: id, email: "notanemail"))
         ) { error in
             XCTAssertEqual(error as? UserError, .invalidEmail)
         }

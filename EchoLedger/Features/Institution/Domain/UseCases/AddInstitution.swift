@@ -22,35 +22,26 @@ final class AddInstitution {
 
     // MARK: Execute
     /// Creates and persists a new institution.
-    /// - Parameters:
-    ///   - userId: The identifier of the user this institution belongs to.
-    ///   - name: Name of the institution. Must be between 2 and 50 characters.
-    ///   - type: Category of the institution.
-    ///   - logoURL: Optional URL string pointing to the institution's logo.
+    /// - Parameter input: The data required to create the institution.
     /// - Throws: `InstitutionError` if any business rule is violated.
-    func execute(
-        userId: UUID,
-        name: String,
-        type: InstitutionType,
-        logoURL: String? = nil
-    ) async throws {
-        let trimmed = name.trimmingCharacters(in: .whitespaces)
+    func execute(_ input: AddInstitutionInput) async throws {
+        let trimmed = input.name.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
             throw InstitutionError.nameTooShort
         }
         guard trimmed.count <= 50 else {
             throw InstitutionError.nameTooLong
         }
-        let existing = try await repository.fetchAll(for: userId)
+        let existing = try await repository.fetchAll(for: input.userId)
         guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() }) else {
             throw InstitutionError.duplicateName
         }
 
         let institution = Institution(
-            userId: userId,
+            userId: input.userId,
             name: trimmed,
-            type: type,
-            logoURL: logoURL
+            type: input.type,
+            logoURL: input.logoURL
         )
         try await repository.save(institution)
     }

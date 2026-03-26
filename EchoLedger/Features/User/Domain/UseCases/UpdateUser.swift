@@ -22,34 +22,25 @@ final class UpdateUser {
 
     // MARK: Execute
     /// Updates the current user's profile with new values.
-    /// - Parameters:
-    ///   - id: The internal unique identifier of the user to update.
-    ///   - displayName: Updated display name. Must be between 2 and 50 characters.
-    ///   - email: Updated email address.
-    ///   - photoURL: Updated optional profile photo URL.
+    /// - Parameter input: The data required to update the user.
     /// - Throws: `UserError` if any business rule is violated.
-    func execute(
-        id: UUID,
-        displayName: String,
-        email: String,
-        photoURL: String? = nil
-    ) async throws {
-        let trimmed = displayName.trimmingCharacters(in: .whitespaces)
+    func execute(_ input: UpdateUserInput) async throws {
+        let trimmed = input.displayName.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
             throw UserError.nameTooShort
         }
         guard trimmed.count <= 50 else {
             throw UserError.nameTooLong
         }
-        guard email.contains("@") else {
+        guard input.email.contains("@") else {
             throw UserError.invalidEmail
         }
-
+ 
         let updated = User(
-            id: id,
+            id: input.id,
             displayName: trimmed,
-            email: email,
-            photoURL: photoURL
+            email: input.email,
+            photoURL: input.photoURL
         )
         try await repository.update(updated)
     }
