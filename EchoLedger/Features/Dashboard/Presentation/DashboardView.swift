@@ -1,0 +1,29 @@
+//
+//  DashboardView.swift
+//  EchoLedger
+//
+//  Created by Julien Cotte on 26/03/2026.
+//
+
+import SwiftUI
+
+import SwiftUI
+
+struct DashboardView: View {
+
+    var body: some View {
+        NavigationStack {
+            Text("Tableau de bord — solde global et transactions récentes")
+                .navigationTitle("Tableau de bord")
+        }
+    }
+}
+
+#Preview {
+    DashboardView()
+        .environment(DIContainer(inMemory: true))
+}
+
+#Preview {
+    DashboardView()
+}

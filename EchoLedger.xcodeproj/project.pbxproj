@@ -51,6 +51,12 @@
 		6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844971D2F753DD600337F74 /* UpdateUserInput.swift */; };
 		684497202F753EBE00337F74 /* UpdateAccountInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844971F2F753EBE00337F74 /* UpdateAccountInput.swift */; };
 		684497222F75410C00337F74 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497212F75410C00337F74 /* TestHelper.swift */; };
+		684497242F75699100337F74 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497232F75699100337F74 /* DashboardView.swift */; };
+		684497262F7569AA00337F74 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497252F7569AA00337F74 /* TransactionListView.swift */; };
+		684497282F7569C600337F74 /* AccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497272F7569C600337F74 /* AccountListView.swift */; };
+		6844972A2F7569D800337F74 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497292F7569D800337F74 /* AddTransactionView.swift */; };
+		684497312F756E0B00337F74 /* CustomLabels in Frameworks */ = {isa = PBXBuildFile; productRef = 684497302F756E0B00337F74 /* CustomLabels */; };
+		684497342F756E4E00337F74 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = 684497332F756E4E00337F74 /* Toasty */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -166,6 +172,10 @@
 		6844971D2F753DD600337F74 /* UpdateUserInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserInput.swift; sourceTree = "<group>"; };
 		6844971F2F753EBE00337F74 /* UpdateAccountInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAccountInput.swift; sourceTree = "<group>"; };
 		684497212F75410C00337F74 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
+		684497232F75699100337F74 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		684497252F7569AA00337F74 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
+		684497272F7569C600337F74 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
+		684497292F7569D800337F74 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		6857E3C32F51AB4200913E12 /* EchoLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -237,8 +247,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				684497342F756E4E00337F74 /* Toasty in Frameworks */,
 				68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */,
 				6813E8142F6D51ED00344774 /* FirebaseAuth in Frameworks */,
+				684497312F756E0B00337F74 /* CustomLabels in Frameworks */,
 				6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +371,39 @@
 			path = PreviewContent;
 			sourceTree = "<group>";
 		};
+		6844972B2F756A5000337F74 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				684497252F7569AA00337F74 /* TransactionListView.swift */,
+				684497292F7569D800337F74 /* AddTransactionView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6844972C2F756AA000337F74 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				684497272F7569C600337F74 /* AccountListView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6844972D2F756B2A00337F74 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				6844972E2F756B3200337F74 /* Presentation */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		6844972E2F756B3200337F74 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				684497232F75699100337F74 /* DashboardView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		6857E3BA2F51AB4200913E12 = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +498,7 @@
 			children = (
 				685A1E8B2F5ACF700009B885 /* Domain */,
 				685A1E8E2F5ACF700009B885 /* Data */,
+				6844972C2F756AA000337F74 /* Presentation */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -533,6 +579,7 @@
 			children = (
 				685A1E9D2F5ACF700009B885 /* Domain */,
 				685A1E9F2F5ACF700009B885 /* Data */,
+				6844972B2F756A5000337F74 /* Presentation */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -540,6 +587,7 @@
 		685A1EA22F5ACF700009B885 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				6844972D2F756B2A00337F74 /* Dashboard */,
 				685A1EB92F5AD3AD0009B885 /* User */,
 				685A1E9C2F5ACF700009B885 /* Institution */,
 				685A1E902F5ACF700009B885 /* Account */,
@@ -698,6 +746,8 @@
 				68C4D7782F6C37E1008F1304 /* CustomTextFields */,
 				6813E8132F6D51ED00344774 /* FirebaseAuth */,
 				6813E8152F6D51ED00344774 /* FirebaseFirestore */,
+				684497302F756E0B00337F74 /* CustomLabels */,
+				684497332F756E4E00337F74 /* Toasty */,
 			);
 			productName = EchoLedger;
 			productReference = 6857E3C32F51AB4200913E12 /* EchoLedger.app */;
@@ -734,6 +784,8 @@
 			packageReferences = (
 				68C4D7772F6C37E1008F1304 /* XCRemoteSwiftPackageReference "CustomTextFields" */,
 				6813E8122F6D51ED00344774 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				6844972F2F756E0B00337F74 /* XCRemoteSwiftPackageReference "CustomLabels" */,
+				684497322F756E4E00337F74 /* XCRemoteSwiftPackageReference "Toasty" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6857E3C42F51AB4200913E12 /* Products */;
@@ -821,10 +873,12 @@
 				683133AB2F617970004AA5E4 /* GetTransactionsByDateRange.swift in Sources */,
 				680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */,
 				685A1ED02F5AD9AA0009B885 /* UserRemoteSource.swift in Sources */,
+				684497242F75699100337F74 /* DashboardView.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
 				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
+				684497262F7569AA00337F74 /* TransactionListView.swift in Sources */,
 				685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */,
 				684497162F753D4F00337F74 /* AddTransactionInput.swift in Sources */,
 				685A1EA82F5ACF700009B885 /* UpdateAccount.swift in Sources */,
@@ -838,6 +892,7 @@
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionType.swift in Sources */,
 				685A1EBC2F5AD8B10009B885 /* AppCoordinator.swift in Sources */,
+				684497282F7569C600337F74 /* AccountListView.swift in Sources */,
 				685A1F0D2F5AEC050009B885 /* SyncStatus.swift in Sources */,
 				685A1EAB2F5ACF700009B885 /* AccountProviding.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
@@ -847,6 +902,7 @@
 				685A1EC02F5AD9510009B885 /* User.swift in Sources */,
 				6868A66D2F6D9CC90038A612 /* UserModel.swift in Sources */,
 				685A1EAC2F5ACF700009B885 /* AccountError.swift in Sources */,
+				6844972A2F7569D800337F74 /* AddTransactionView.swift in Sources */,
 				685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */,
 				685A1EAE2F5ACF700009B885 /* AddAccount.swift in Sources */,
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
@@ -1157,6 +1213,22 @@
 				minimumVersion = 12.11.0;
 			};
 		};
+		6844972F2F756E0B00337F74 /* XCRemoteSwiftPackageReference "CustomLabels" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Fenriz1349/CustomLabels";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		684497322F756E4E00337F74 /* XCRemoteSwiftPackageReference "Toasty" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Fenriz1349/Toasty";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		68C4D7772F6C37E1008F1304 /* XCRemoteSwiftPackageReference "CustomTextFields" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Fenriz1349/CustomTextFields";
@@ -1177,6 +1249,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6813E8122F6D51ED00344774 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		684497302F756E0B00337F74 /* CustomLabels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6844972F2F756E0B00337F74 /* XCRemoteSwiftPackageReference "CustomLabels" */;
+			productName = CustomLabels;
+		};
+		684497332F756E4E00337F74 /* Toasty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 684497322F756E4E00337F74 /* XCRemoteSwiftPackageReference "Toasty" */;
+			productName = Toasty;
 		};
 		68C4D7782F6C37E1008F1304 /* CustomTextFields */ = {
 			isa = XCSwiftPackageProductDependency;
