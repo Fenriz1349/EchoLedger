@@ -40,7 +40,7 @@ final class AddTransaction {
         guard input.splits.map(\.amount).reduce(0, +) == input.totalAmount else {
             throw TransactionError.splitAmountMismatch
         }
-        
+
         let transaction = Transaction(
             userId: input.userId,
             label: input.label,

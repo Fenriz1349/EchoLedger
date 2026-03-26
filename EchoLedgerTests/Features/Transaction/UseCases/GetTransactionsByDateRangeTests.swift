@@ -37,7 +37,13 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
     /// Seeds a transaction at a given date belonging to the shared userId.
     private func seedTransaction(date: Date, amount: Decimal = 30) async throws {
         let split = await TransactionSplit(accountId: UUID(), amount: amount)
-        let transaction = await Transaction(userId: userId, label: "Test", date: date, totalAmount: amount, isExpense: true, type: .other, splits: [split])
+        let transaction = await Transaction(userId: userId,
+                                            label: "Test",
+                                            date: date,
+                                            totalAmount: amount,
+                                            isExpense: true,
+                                            type: .other,
+                                            splits: [split])
         try await repository.save(transaction)
     }
 

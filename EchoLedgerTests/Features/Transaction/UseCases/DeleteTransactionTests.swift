@@ -33,7 +33,14 @@ final class DeleteTransactionTests: XCTestCase {
     private func seedTransaction() async throws -> UUID {
         let id = UUID()
         let split = await TransactionSplit(accountId: UUID(), amount: 30)
-        let transaction = await Transaction(id: id,userId: userId, label: "Test", date: Date(), totalAmount: 30, isExpense: true, type: .other, splits: [split])
+        let transaction = await Transaction(id: id,
+                                            userId: userId,
+                                            label: "Test",
+                                            date: Date(),
+                                            totalAmount: 30,
+                                            isExpense: true,
+                                            type: .other,
+                                            splits: [split])
         try await repository.save(transaction)
         return id
     }

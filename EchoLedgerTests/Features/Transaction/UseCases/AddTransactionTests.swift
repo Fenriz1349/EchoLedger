@@ -87,7 +87,8 @@ final class AddTransactionTests: XCTestCase {
     /// Verifies that a zero totalAmount throws invalidTotalAmount.
     func test_execute_zeroTotalAmount_throwsInvalidTotalAmount() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(totalAmount: 0, splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
+            try await useCase.execute(makeInput(totalAmount: 0,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
         }
@@ -96,7 +97,8 @@ final class AddTransactionTests: XCTestCase {
     /// Verifies that a negative totalAmount throws invalidTotalAmount.
     func test_execute_negativeTotalAmount_throwsInvalidTotalAmount() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(totalAmount: -10, splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
+            try await useCase.execute(makeInput(totalAmount: -10,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
         }
@@ -124,7 +126,8 @@ final class AddTransactionTests: XCTestCase {
     /// Verifies that splits not summing to totalAmount throws splitAmountMismatch.
     func test_execute_splitMismatch_throwsSplitAmountMismatch() async {
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(totalAmount: 30, splits: [TransactionSplit(accountId: UUID(), amount: 20)]))
+            try await useCase.execute(makeInput(totalAmount: 30,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 20)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .splitAmountMismatch)
         }

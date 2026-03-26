@@ -28,11 +28,11 @@ final class GetTransactionsByDateRange {
     ///   - to: The end date of the range (inclusive). Defaults to the current date.
     /// - Returns: An array of transactions within the date range, ordered by date descending.
     /// - Throws: `TransactionError.invalidDateRange` if from is after to.
-    func execute(for userId: UUID, from: Date, to: Date = Date()) async throws -> [Transaction] {
-        guard from <= to else {
+    func execute(for userId: UUID, from fromDate: Date, to toDate: Date = Date()) async throws -> [Transaction] {
+        guard fromDate <= toDate else {
             throw TransactionError.invalidDateRange
         }
         let all = try await repository.fetchAll(for: userId)
-        return all.filter { $0.date >= from && $0.date <= to }
+        return all.filter { $0.date >= fromDate && $0.date <= toDate }
     }
 }

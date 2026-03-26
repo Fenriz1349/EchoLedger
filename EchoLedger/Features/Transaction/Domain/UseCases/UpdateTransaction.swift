@@ -41,7 +41,7 @@ final class UpdateTransaction {
         guard input.splits.map(\.amount).reduce(0, +) == input.totalAmount else {
             throw TransactionError.splitAmountMismatch
         }
- 
+
         let updated = Transaction(
             id: input.id,
             userId: input.userId,

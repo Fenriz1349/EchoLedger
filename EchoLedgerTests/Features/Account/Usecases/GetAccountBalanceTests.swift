@@ -44,7 +44,13 @@ final class GetAccountBalanceTests: XCTestCase {
     /// Seeds a transaction with a split on the shared accountId.
     private func seedTransaction(amount: Decimal, isExpense: Bool) async throws {
         let split = TransactionSplit(accountId: accountId, amount: amount)
-        let transaction = Transaction(userId: userId, label: "Test", date: Date(), totalAmount: amount, isExpense: isExpense, type: .other, splits: [split])
+        let transaction = Transaction(userId: userId,
+                                      label: "Test",
+                                      date: Date(),
+                                      totalAmount: amount,
+                                      isExpense: isExpense,
+                                      type: .other,
+                                      splits: [split])
         try await transactionDouble.save(transaction)
     }
 
@@ -86,7 +92,13 @@ final class GetAccountBalanceTests: XCTestCase {
     func test_execute_transactionOnOtherAccount_doesNotAffectBalance() async throws {
         try await seedAccount()
         let otherSplit = TransactionSplit(accountId: UUID(), amount: 50)
-        let transaction = Transaction(userId: userId, label: "Autre", date: Date(), totalAmount: 50, isExpense: true, type: .other, splits: [otherSplit])
+        let transaction = Transaction(userId: userId,
+                                      label: "Autre",
+                                      date: Date(),
+                                      totalAmount: 50,
+                                      isExpense: true,
+                                      type: .other,
+                                      splits: [otherSplit])
         try await transactionDouble.save(transaction)
         let balance = try await useCase.execute(accountId: accountId, userId: userId)
         XCTAssertEqual(balance, 0)

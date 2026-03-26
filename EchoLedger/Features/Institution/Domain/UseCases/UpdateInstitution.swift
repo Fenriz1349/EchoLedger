@@ -36,7 +36,7 @@ final class UpdateInstitution {
         guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }) else {
             throw InstitutionError.duplicateName
         }
- 
+
         let updated = Institution(
             id: input.id,
             userId: input.userId,

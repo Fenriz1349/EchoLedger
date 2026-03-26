@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+/// Encapsulates all parameters required to update an existing account.
+struct UpdateAccountInput {
+    let id: UUID
+    let institutionId: UUID
+    let name: String
+    let type: AccountType
+}

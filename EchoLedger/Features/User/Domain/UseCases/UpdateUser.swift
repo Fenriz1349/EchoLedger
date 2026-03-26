@@ -35,7 +35,7 @@ final class UpdateUser {
         guard input.email.contains("@") else {
             throw UserError.invalidEmail
         }
- 
+
         let updated = User(
             id: input.id,
             displayName: trimmed,

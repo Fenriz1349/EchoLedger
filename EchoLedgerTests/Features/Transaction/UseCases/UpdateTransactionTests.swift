@@ -31,7 +31,13 @@ final class UpdateTransactionTests: XCTestCase {
     /// Seeds the repository with a base transaction and returns its id.
     func seedTransaction(totalAmount: Decimal = 30) async throws -> UUID {
         let split = TransactionSplit(accountId: UUID(), amount: totalAmount)
-        let transaction = Transaction(userId: userId, label: "Initial", date: Date(), totalAmount: totalAmount, isExpense: true, type: .other, splits: [split])
+        let transaction = Transaction(userId: userId,
+                                      label: "Initial",
+                                      date: Date(),
+                                      totalAmount: totalAmount,
+                                      isExpense: true,
+                                      type: .other,
+                                      splits: [split])
         try await repository.save(transaction)
         return transaction.id
     }
@@ -87,7 +93,9 @@ final class UpdateTransactionTests: XCTestCase {
     func test_execute_zeroTotalAmount_throwsInvalidTotalAmount() async throws {
         let id = try await seedTransaction()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, totalAmount: 0, splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
+            try await useCase.execute(makeInput(id: id,
+                                                totalAmount: 0,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
         }
@@ -107,7 +115,8 @@ final class UpdateTransactionTests: XCTestCase {
     func test_execute_zeroSplitAmount_throwsInvalidSplitAmount() async throws {
         let id = try await seedTransaction()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
+            try await useCase.execute(makeInput(id: id,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidSplitAmount)
         }
@@ -117,7 +126,9 @@ final class UpdateTransactionTests: XCTestCase {
     func test_execute_splitMismatch_throwsSplitAmountMismatch() async throws {
         let id = try await seedTransaction()
         await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, totalAmount: 30, splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
+            try await useCase.execute(makeInput(id: id,
+                                                totalAmount: 30,
+                                                splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .splitAmountMismatch)
         }

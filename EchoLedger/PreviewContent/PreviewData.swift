@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - PreviewData
 /// Provides static sample data for SwiftUI previews.
 /// Never used in production code.
 enum PreviewData {

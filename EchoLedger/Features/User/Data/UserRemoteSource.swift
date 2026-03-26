@@ -13,7 +13,7 @@ import FirebaseAuth
 final class UserRemoteSource {
 
     // MARK: Authentication
-    
+
     /// Signs in anonymously via Firebase Auth.
     /// - Returns: The Firebase uid of the anonymous user.
     func signInAnonymously() async throws -> String {
