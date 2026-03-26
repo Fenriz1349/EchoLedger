@@ -40,7 +40,9 @@ final class AddTransactionTests: XCTestCase {
         return AddTransactionInput(
             userId: userId,
             label: label,
+            date: Date(),
             totalAmount: totalAmount,
+            note: nil,
             isExpense: isExpense,
             type: type,
             splits: defaultSplits
