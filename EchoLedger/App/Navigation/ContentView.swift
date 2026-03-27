@@ -20,8 +20,8 @@ struct ContentView: View {
                     Label("Tableau de bord", systemImage: "chart.pie")
                 }
 
-            if let vm = transactionListViewModel {
-                TransactionListView(viewModel: vm)
+            if let viewModel = transactionListViewModel {
+                TransactionListView(viewModel: viewModel)
                     .tabItem {
                         Label("Transactions", systemImage: "list.bullet")
                     }

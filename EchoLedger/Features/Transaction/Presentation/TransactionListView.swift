@@ -26,7 +26,7 @@ struct TransactionListView: View {
                                 let name = item.category.icon
                                 Image(systemName: name)
                                     .frame(width: 32)
-                                
+
                                 VStack(alignment: .leading) {
                                     Text(item.label)
                                         .font(.body)

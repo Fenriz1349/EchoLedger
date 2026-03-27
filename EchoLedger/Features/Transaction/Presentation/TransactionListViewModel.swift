@@ -13,7 +13,7 @@ final class TransactionListViewModel {
 
     var transactions: [Transaction] = []
     var isLoading = false
-    var errorMessage: String? = nil
+    var errorMessage: String?
 
     private let getTransactions: GetTransactions
     private let userId: UUID

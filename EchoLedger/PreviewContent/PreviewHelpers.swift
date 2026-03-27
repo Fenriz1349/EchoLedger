@@ -69,7 +69,8 @@ struct PreviewHelpers {
         )
     }
 
-    static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in }) -> AddInstitutionFormViewModel {
+    static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in })
+    -> AddInstitutionFormViewModel {
         return AddInstitutionFormViewModel(
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
