@@ -42,7 +42,7 @@ struct ContentView: View {
             .padding(.bottom, 24)
         }
         .sheet(isPresented: $showAddTransaction) {
-            AddTransactionView()
+            AddTransactionView(viewModel: container.makeAddTransactionViewModel())
         }
     }
 }

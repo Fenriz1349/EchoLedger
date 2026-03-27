@@ -14,7 +14,6 @@ extension DIContainer {
         DIContainer(inMemory: true)
     }
 
-    /// Creates a preview AddAccountViewModel from this container.
     func makeAddAccountViewModel() -> AddAccountViewModel {
         AddAccountViewModel(
             addAccount: addAccount,
@@ -24,7 +23,6 @@ extension DIContainer {
         )
     }
 
-    /// Creates a preview AddInstitutionFormViewModel from this container.
     func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in }
     ) -> AddInstitutionFormViewModel {
         AddInstitutionFormViewModel(
@@ -37,6 +35,16 @@ extension DIContainer {
 
     func makeAccountListViewModel() -> AccountListViewModel {
         AccountListViewModel(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        )
+    }
+
+    /// Creates an AddTransactionViewModel for previews.
+    func makeAddTransactionViewModel() -> AddTransactionViewModel {
+        AddTransactionViewModel(
+            addTransaction: addTransaction,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
