@@ -55,7 +55,6 @@ struct AddInstitutionFormView: View {
 }
 
 #Preview {
-    let container = DIContainer.preview()
-    return AddInstitutionFormView(viewModel: container.makeAddInstitutionFormViewModel())
-        .environment(container)
+    AddInstitutionFormView(viewModel: PreviewHelpers.makeAddInstitutionFormViewModel())
+        .environment(PreviewHelpers.container)
 }

@@ -19,7 +19,7 @@ struct ContentView: View {
                     Label("Tableau de bord", systemImage: "chart.pie")
                 }
 
-            TransactionListView()
+            TransactionListView(viewModel: container.makeTransactionListViewModel())
                 .tabItem {
                     Label("Transactions", systemImage: "list.bullet")
                 }

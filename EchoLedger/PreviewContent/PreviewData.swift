@@ -74,6 +74,12 @@ enum PreviewData {
         accountSwile
     ]
 
+    static let institutionsWithAccounts: [(institution: Institution, accounts: [Account])] = [
+        (institution: institutionBNP, accounts: [accountCourant]),
+        (institution: institutionSwile, accounts: [accountSwile]),
+        (institution: institutionCaisse, accounts: [accountLivret])
+    ]
+
     // MARK: Transactions
     static let transactionRestaurant = Transaction(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000030")!,

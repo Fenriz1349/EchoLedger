@@ -65,7 +65,6 @@ struct AccountListView: View {
 }
 
 #Preview {
-    let container = DIContainer.preview()
-    return AccountListView(viewModel: container.makeAccountListViewModel())
-        .environment(container)
+    AccountListView(viewModel: PreviewHelpers.makeAccountListViewModel())
+        .environment(PreviewHelpers.container)
 }

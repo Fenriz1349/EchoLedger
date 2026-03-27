@@ -6,47 +6,102 @@
 //
 
 import Foundation
+import SwiftData
 
-extension DIContainer {
+struct PreviewHelpers {
 
-    /// Creates an in-memory container for previews.
-    static func preview() -> DIContainer {
-        DIContainer(inMemory: true)
+    static let container = DIContainer(inMemory: true)
+    private static let userId = PreviewData.user.id
+
+    /// Seeds all preview institutions and accounts into SwiftData.
+    private static func seedInstitutionsAndAccounts() {
+        let context = container.modelContainer.mainContext
+        for institution in PreviewData.institutions {
+            let model = InstitutionModel(
+                id: institution.id,
+                userId: institution.userId,
+                name: institution.name,
+                category: institution.category.rawValue
+            )
+            context.insert(model)
+        }
+        for account in PreviewData.accounts {
+            let model = AccountModel(
+                id: account.id,
+                institutionId: account.institutionId,
+                name: account.name,
+                category: account.category.rawValue
+            )
+            context.insert(model)
+        }
+        try? context.save()
     }
 
-    func makeAddAccountViewModel() -> AddAccountViewModel {
-        AddAccountViewModel(
-            addAccount: addAccount,
-            addInstitution: addInstitution,
-            getInstitutions: getInstitutions,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+    /// Seeds all preview transactions and splits into SwiftData.
+    private static func seedTransactions() {
+        let context = container.modelContainer.mainContext
+        for transaction in PreviewData.transactions {
+            let model = TransactionModel(
+                id: transaction.id,
+                userId: transaction.userId,
+                label: transaction.label,
+                date: transaction.date,
+                totalAmount: transaction.totalAmount,
+                note: transaction.note,
+                isExpense: transaction.isExpense,
+                category: transaction.category.rawValue
+            )
+            model.splits = transaction.splits.map {
+                TransactionSplitModel(id: $0.id, accountId: $0.accountId, amount: $0.amount)
+            }
+            context.insert(model)
+        }
+        try? context.save()
+    }
+
+    static func makeAddAccountViewModel() -> AddAccountViewModel {
+        seedInstitutionsAndAccounts()
+        return AddAccountViewModel(
+            addAccount: container.addAccount,
+            addInstitution: container.addInstitution,
+            getInstitutions: container.getInstitutions,
+            userId: userId
         )
     }
 
-    func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in }
-    ) -> AddInstitutionFormViewModel {
-        AddInstitutionFormViewModel(
-            addInstitution: addInstitution,
-            getInstitutions: getInstitutions,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+    static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in }) -> AddInstitutionFormViewModel {
+        return AddInstitutionFormViewModel(
+            addInstitution: container.addInstitution,
+            getInstitutions: container.getInstitutions,
+            userId: userId,
             onAdd: onAdd
         )
     }
 
-    func makeAccountListViewModel() -> AccountListViewModel {
-        AccountListViewModel(
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+    static func makeAccountListViewModel() -> AccountListViewModel {
+        seedInstitutionsAndAccounts()
+        return AccountListViewModel(
+            getInstitutions: container.getInstitutions,
+            getAccounts: container.getAccounts,
+            userId: userId
         )
     }
 
-    func makeAddTransactionViewModel() -> AddTransactionViewModel {
-        AddTransactionViewModel(
-            addTransaction: addTransaction,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+    static func makeAddTransactionViewModel() -> AddTransactionViewModel {
+        seedInstitutionsAndAccounts()
+        return AddTransactionViewModel(
+            addTransaction: container.addTransaction,
+            getInstitutions: container.getInstitutions,
+            getAccounts: container.getAccounts,
+            userId: userId
+        )
+    }
+
+    static func makeTransactionListViewModel() -> TransactionListViewModel {
+        seedTransactions()
+        return TransactionListViewModel(
+            getTransactions: container.getTransactions,
+            userId: userId
         )
     }
 }

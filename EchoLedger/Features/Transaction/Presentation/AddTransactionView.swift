@@ -112,7 +112,6 @@ struct AddTransactionView: View {
 }
 
 #Preview {
-    let container = DIContainer.preview()
-    return AddTransactionView(viewModel: container.makeAddTransactionViewModel())
-        .environment(container)
+    AddTransactionView(viewModel: PreviewHelpers.makeAddTransactionViewModel())
+        .environment(PreviewHelpers.container)
 }

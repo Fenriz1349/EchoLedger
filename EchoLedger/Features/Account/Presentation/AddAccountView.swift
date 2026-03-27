@@ -96,7 +96,6 @@ struct AddAccountView: View {
 }
 
 #Preview {
-    let container = DIContainer.preview()
-    return AddAccountView(viewModel: container.makeAddAccountViewModel())
-        .environment(container)
+    AddAccountView(viewModel: PreviewHelpers.makeAddAccountViewModel())
+        .environment(PreviewHelpers.container)
 }
