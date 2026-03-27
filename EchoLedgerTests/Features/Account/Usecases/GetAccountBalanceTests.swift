@@ -37,7 +37,7 @@ final class GetAccountBalanceTests: XCTestCase {
     // MARK: Helpers
     /// Seeds the shared account into the account double.
     private func seedAccount() async throws {
-        let account = Account(id: accountId, institutionId: UUID(), name: "Livret A", type: .savings)
+        let account = Account(id: accountId, institutionId: UUID(), name: "Livret A", category: .savings)
         try await accountDouble.save(account)
     }
 
@@ -49,7 +49,7 @@ final class GetAccountBalanceTests: XCTestCase {
                                       date: Date(),
                                       totalAmount: amount,
                                       isExpense: isExpense,
-                                      type: .other,
+                                      category: .other,
                                       splits: [split])
         try await transactionDouble.save(transaction)
     }
@@ -97,7 +97,7 @@ final class GetAccountBalanceTests: XCTestCase {
                                       date: Date(),
                                       totalAmount: 50,
                                       isExpense: true,
-                                      type: .other,
+                                      category: .other,
                                       splits: [otherSplit])
         try await transactionDouble.save(transaction)
         let balance = try await useCase.execute(accountId: accountId, userId: userId)

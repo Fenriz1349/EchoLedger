@@ -41,7 +41,6 @@ extension DIContainer {
         )
     }
 
-    /// Creates an AddTransactionViewModel for previews.
     func makeAddTransactionViewModel() -> AddTransactionViewModel {
         AddTransactionViewModel(
             addTransaction: addTransaction,

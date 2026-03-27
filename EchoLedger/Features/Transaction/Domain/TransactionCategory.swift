@@ -1,5 +1,5 @@
 //
-//  TransactionType.swift
+//  TransactionCategory.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 11/03/2026.
@@ -7,7 +7,7 @@
 
 /// Represents the category of a transaction.
 /// RawValue is used for Firebase persistence, name is used for display.
-enum TransactionType: String, CaseIterable, Codable {
+enum TransactionCategory: String, CaseIterable, Codable {
     case initialBalance
     case travel
     case leisure
@@ -18,7 +18,7 @@ enum TransactionType: String, CaseIterable, Codable {
     case salary
     case other
 
-    /// Returns the French display name for the transaction type.
+    /// Returns the French display name for the transaction category.
     var name: String {
         switch self {
         case .initialBalance: return "Solde initial"
@@ -33,7 +33,7 @@ enum TransactionType: String, CaseIterable, Codable {
         }
     }
 
-    /// Returns the SF Symbol name associated with the transaction type.
+    /// Returns the SF Symbol name associated with the transaction category.
     var icon: String {
         switch self {
         case .initialBalance: return "flag"

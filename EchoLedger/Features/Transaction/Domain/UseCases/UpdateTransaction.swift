@@ -50,7 +50,7 @@ final class UpdateTransaction {
             totalAmount: input.totalAmount,
             note: input.note,
             isExpense: input.isExpense,
-            type: input.type,
+            category: input.category,
             splits: input.splits
         )
         try await repository.update(updated)

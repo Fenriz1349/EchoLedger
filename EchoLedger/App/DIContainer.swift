@@ -59,7 +59,7 @@ final class DIContainer {
     let getTransaction: GetTransaction
     let updateTransaction: UpdateTransaction
     let deleteTransaction: DeleteTransaction
-    let getTransactionsByType: GetTransactionsByType
+    let getTransactionsByCategory: GetTransactionsByCategory
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
     // MARK: Init
@@ -126,7 +126,7 @@ final class DIContainer {
         self.getTransaction = GetTransaction(repository: transactionStore)
         self.updateTransaction = UpdateTransaction(repository: transactionStore)
         self.deleteTransaction = DeleteTransaction(repository: transactionStore)
-        self.getTransactionsByType = GetTransactionsByType(repository: transactionStore)
+        self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
     }
 }

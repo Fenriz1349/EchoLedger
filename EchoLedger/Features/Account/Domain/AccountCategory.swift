@@ -1,5 +1,5 @@
 //
-//  AccountType.swift
+//  AccountCategory.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 18/11/2025.
@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents the category of a financial account.
 /// RawValue is used for Firebase persistence, name is used for display.
-enum AccountType: String, CaseIterable, Codable, Sendable {
+enum AccountCategory: String, CaseIterable, Codable, Sendable {
     case checking
     case savings
     case creditCard
@@ -20,7 +20,7 @@ enum AccountType: String, CaseIterable, Codable, Sendable {
     case cash
     case other
 
-    /// Returns the French display name for the account type.
+    /// Returns the French display name for the account category.
     var name: String {
         switch self {
         case .checking:     return "Compte courant"
@@ -35,7 +35,7 @@ enum AccountType: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    /// Returns the SF Symbol name associated with the account type.
+    /// Returns the SF Symbol name associated with the account category.
     var icon: String {
         switch self {
         case .checking:     return "banknote"

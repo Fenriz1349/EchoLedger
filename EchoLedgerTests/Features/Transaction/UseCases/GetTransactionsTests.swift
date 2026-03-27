@@ -37,7 +37,7 @@ final class GetTransactionsTests: XCTestCase {
                                             date: Date(),
                                             totalAmount: amount,
                                             isExpense: true,
-                                            type: .other,
+                                            category: .other,
                                             splits: [split])
         try await repository.save(transaction)
     }

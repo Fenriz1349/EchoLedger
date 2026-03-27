@@ -21,9 +21,9 @@ struct AddTransactionView: View {
 
                     Toggle("Dépense", isOn: $viewModel.isExpense)
 
-                    Picker("Type", selection: $viewModel.type) {
-                        ForEach(TransactionType.allCases, id: \.self) { type in
-                            Label(type.name, systemImage: type.icon).tag(type)
+                    Picker("Categorie", selection: $viewModel.category) {
+                        ForEach(TransactionCategory.allCases, id: \.self) { category in
+                            Label(category.name, systemImage: category.icon).tag(category)
                         }
                     }
                 }

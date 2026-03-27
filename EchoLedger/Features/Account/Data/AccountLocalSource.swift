@@ -60,7 +60,7 @@ final class AccountLocalSource {
             id: account.id,
             institutionId: account.institutionId,
             name: account.name,
-            type: account.type.rawValue
+            category: account.category.rawValue
         )
         context.insert(model)
         try context.save()

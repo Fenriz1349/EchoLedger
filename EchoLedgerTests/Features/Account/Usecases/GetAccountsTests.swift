@@ -30,7 +30,7 @@ final class GetAccountsTests: XCTestCase {
     // MARK: Helpers
     /// Seeds an account belonging to the shared institutionId.
     private func seedAccount(name: String = "Livret A") async throws {
-        let account = Account(institutionId: institutionId, name: name, type: .savings)
+        let account = Account(institutionId: institutionId, name: name, category: .savings)
         try await repository.save(account)
     }
 

@@ -42,7 +42,7 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
                                             date: date,
                                             totalAmount: amount,
                                             isExpense: true,
-                                            type: .other,
+                                            category: .other,
                                             splits: [split])
         try await repository.save(transaction)
     }

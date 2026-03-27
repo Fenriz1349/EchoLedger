@@ -16,6 +16,6 @@ struct UpdateTransactionInput {
     let totalAmount: Decimal
     let note: String?
     let isExpense: Bool
-    let type: TransactionType
+    let category: TransactionCategory
     let splits: [TransactionSplit]
 }

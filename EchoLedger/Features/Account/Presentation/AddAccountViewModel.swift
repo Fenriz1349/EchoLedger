@@ -13,7 +13,7 @@ final class AddAccountViewModel {
 
     // MARK: Form State
     var name = ""
-    var type: AccountType = .checking
+    var category: AccountCategory = .checking
     var selectedInstitution: Institution?
 
     // MARK: UI State
@@ -88,7 +88,7 @@ final class AddAccountViewModel {
         isLoading = true
         errorMessage = nil
         do {
-            try await addAccount.execute(institutionId: institution.id, name: name, type: type)
+            try await addAccount.execute(institutionId: institution.id, name: name, category: category)
             isSuccess = true
         } catch let error as AccountError {
             errorMessage = error.localizedDescription

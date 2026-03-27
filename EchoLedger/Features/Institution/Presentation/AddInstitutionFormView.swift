@@ -23,10 +23,10 @@ struct AddInstitutionFormView: View {
                 errorMessage: "Le nom doit contenir au moins 2 caractères"
             )
 
-            Picker("Type", selection: $viewModel.type) {
-                ForEach(InstitutionType.allCases, id: \.self) { type in
-                    Label(type.name, systemImage: type.icon)
-                        .tag(type)
+            Picker("Categorie", selection: $viewModel.category) {
+                ForEach(InstitutionCategory.allCases, id: \.self) { category in
+                    Label(category.name, systemImage: category.icon)
+                        .tag(category)
                 }
             }
             .pickerStyle(.menu)

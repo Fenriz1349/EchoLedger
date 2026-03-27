@@ -15,7 +15,7 @@ final class AddTransactionViewModel {
     var amount: String = ""
     var label: String = ""
     var isExpense: Bool = true
-    var type: TransactionType = .other
+    var category: TransactionCategory = .other
     var splits: [TransactionSplit] = []
 
     // MARK: UI State
@@ -120,12 +120,12 @@ final class AddTransactionViewModel {
 
         let input = AddTransactionInput(
             userId: userId,
-            label: label.trimmingCharacters(in: .whitespaces).isEmpty ? type.name : label,
+            label: label.trimmingCharacters(in: .whitespaces).isEmpty ? category.name : label,
             date: Date(),
             totalAmount: totalAmount,
             note: nil,
             isExpense: isExpense,
-            type: type,
+            category: category,
             splits: splits
         )
         do {

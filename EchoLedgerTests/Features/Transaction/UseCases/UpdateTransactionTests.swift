@@ -36,7 +36,7 @@ final class UpdateTransactionTests: XCTestCase {
                                       date: Date(),
                                       totalAmount: totalAmount,
                                       isExpense: true,
-                                      type: .other,
+                                      category: .other,
                                       splits: [split])
         try await repository.save(transaction)
         return transaction.id
@@ -48,7 +48,7 @@ final class UpdateTransactionTests: XCTestCase {
         label: String = "Updated",
         totalAmount: Decimal = 30,
         isExpense: Bool = true,
-        type: TransactionType = .other,
+        category: TransactionCategory = .other,
         splits: [TransactionSplit]? = nil
     ) -> UpdateTransactionInput {
         let defaultSplits = splits ?? [TransactionSplit(accountId: UUID(), amount: totalAmount)]
@@ -60,7 +60,7 @@ final class UpdateTransactionTests: XCTestCase {
             totalAmount: totalAmount,
             note: nil,
             isExpense: isExpense,
-            type: type,
+            category: category,
             splits: defaultSplits
         )
     }

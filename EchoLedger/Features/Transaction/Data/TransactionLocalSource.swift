@@ -64,7 +64,7 @@ final class TransactionLocalSource {
             totalAmount: transaction.totalAmount,
             note: transaction.note,
             isExpense: transaction.isExpense,
-            type: transaction.type.rawValue
+            category: transaction.category.rawValue
         )
         model.splits = transaction.splits.map {
             TransactionSplitModel(id: $0.id, accountId: $0.accountId, amount: $0.amount)

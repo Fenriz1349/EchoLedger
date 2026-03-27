@@ -33,7 +33,7 @@ final class AddTransactionTests: XCTestCase {
         label: String = "Restaurant",
         totalAmount: Decimal = 30,
         isExpense: Bool = true,
-        type: TransactionType = .restaurant,
+        category: TransactionCategory = .restaurant,
         splits: [TransactionSplit]? = nil
     ) -> AddTransactionInput {
         let defaultSplits = splits ?? [TransactionSplit(accountId: UUID(), amount: totalAmount)]
@@ -44,7 +44,7 @@ final class AddTransactionTests: XCTestCase {
             totalAmount: totalAmount,
             note: nil,
             isExpense: isExpense,
-            type: type,
+            category: category,
             splits: defaultSplits
         )
     }

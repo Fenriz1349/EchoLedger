@@ -26,10 +26,10 @@ struct AccountListView: View {
                             Section(item.institution.name) {
                                 ForEach(item.accounts) { account in
                                     HStack {
-                                        Image(systemName: account.type.icon)
+                                        Image(systemName: account.category.icon)
                                         Text(account.name)
                                         Spacer()
-                                        Text(account.type.name)
+                                        Text(account.category.name)
                                             .foregroundStyle(.secondary)
                                             .font(.caption)
                                     }
