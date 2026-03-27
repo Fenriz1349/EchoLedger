@@ -30,7 +30,7 @@ final class GetTransactionsTests: XCTestCase {
 
     // MARK: Helpers
     /// Seeds a transaction belonging to the shared userId.
-    private func seedTransaction(label: String = "Test", amount: Decimal = 30) async throws {
+    private func seedTransaction(label: String = "Test", amount: Double = 30) async throws {
         let split = await TransactionSplit(accountId: UUID(), amount: amount)
         let transaction = await Transaction(userId: userId,
                                             label: label,

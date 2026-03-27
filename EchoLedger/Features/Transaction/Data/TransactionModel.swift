@@ -18,7 +18,7 @@ final class TransactionModel {
     var userId: UUID
     var label: String
     var date: Date
-    var totalAmount: Decimal
+    var totalAmount: Double
     var note: String?
     var isExpense: Bool
     var category: String
@@ -34,7 +34,7 @@ final class TransactionModel {
         userId: UUID,
         label: String,
         date: Date,
-        totalAmount: Decimal,
+        totalAmount: Double,
         note: String? = nil,
         isExpense: Bool,
         category: String

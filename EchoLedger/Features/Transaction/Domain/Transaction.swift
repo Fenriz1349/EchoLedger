@@ -18,7 +18,7 @@ struct Transaction: Identifiable, Equatable, Codable {
     let userId: UUID
     let label: String
     let date: Date
-    let totalAmount: Decimal
+    let totalAmount: Double
     let note: String?
     let isExpense: Bool
     let category: TransactionCategory
@@ -42,7 +42,7 @@ struct Transaction: Identifiable, Equatable, Codable {
         userId: UUID,
         label: String,
         date: Date,
-        totalAmount: Decimal,
+        totalAmount: Double,
         note: String? = nil,
         isExpense: Bool,
         category: TransactionCategory,

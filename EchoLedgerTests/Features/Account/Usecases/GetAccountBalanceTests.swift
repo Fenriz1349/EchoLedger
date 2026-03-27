@@ -42,7 +42,7 @@ final class GetAccountBalanceTests: XCTestCase {
     }
 
     /// Seeds a transaction with a split on the shared accountId.
-    private func seedTransaction(amount: Decimal, isExpense: Bool) async throws {
+    private func seedTransaction(amount: Double, isExpense: Bool) async throws {
         let split = TransactionSplit(accountId: accountId, amount: amount)
         let transaction = Transaction(userId: userId,
                                       label: "Test",

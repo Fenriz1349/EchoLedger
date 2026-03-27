@@ -28,8 +28,8 @@ final class AddTransactionViewModel {
 
     // MARK: Computed
     /// Returns the parsed total amount from the string input.
-    var totalAmount: Decimal {
-        Decimal(string: amount.replacingOccurrences(of: ",", with: ".")) ?? 0
+    var totalAmount: Double {
+        Double(amount.replacingOccurrences(of: ",", with: ".")) ?? 0
     }
 
     /// Returns true if the form is ready to be submitted.
@@ -46,7 +46,7 @@ final class AddTransactionViewModel {
     }
 
     /// Returns the remaining amount not yet allocated to a split.
-    var remainingAmount: Decimal {
+    var remainingAmount: Double {
         totalAmount - splits.map(\.amount).reduce(0, +)
     }
 
