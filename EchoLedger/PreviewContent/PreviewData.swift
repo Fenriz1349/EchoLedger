@@ -23,21 +23,21 @@ enum PreviewData {
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000010")!,
         userId: user.id,
         name: "BNP Paribas",
-        type: .bank
+        category: .bank
     )
 
     static let institutionSwile = Institution(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000011")!,
         userId: user.id,
         name: "Swile",
-        type: .mealVoucher
+        category: .mealVoucher
     )
 
     static let institutionCaisse = Institution(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000012")!,
         userId: user.id,
         name: "Caisse d'Épargne",
-        type: .bank
+        category: .bank
     )
 
     static let institutions: [Institution] = [
@@ -51,27 +51,33 @@ enum PreviewData {
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000020")!,
         institutionId: institutionBNP.id,
         name: "Compte courant",
-        type: .checking
+        category: .checking
     )
 
     static let accountLivret = Account(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000021")!,
         institutionId: institutionCaisse.id,
         name: "Livret A",
-        type: .savings
+        category: .savings
     )
 
     static let accountSwile = Account(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000022")!,
         institutionId: institutionSwile.id,
         name: "Carte Swile",
-        type: .mealVoucher
+        category: .mealVoucher
     )
 
     static let accounts: [Account] = [
         accountCourant,
         accountLivret,
         accountSwile
+    ]
+
+    static let institutionsWithAccounts: [(institution: Institution, accounts: [Account])] = [
+        (institution: institutionBNP, accounts: [accountCourant]),
+        (institution: institutionSwile, accounts: [accountSwile]),
+        (institution: institutionCaisse, accounts: [accountLivret])
     ]
 
     // MARK: Transactions
@@ -82,7 +88,7 @@ enum PreviewData {
         date: Date(),
         totalAmount: 30,
         isExpense: true,
-        type: .restaurant,
+        category: .restaurant,
         splits: [
             TransactionSplit(accountId: accountCourant.id, amount: 15),
             TransactionSplit(accountId: accountSwile.id, amount: 15)
@@ -96,7 +102,7 @@ enum PreviewData {
         date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!,
         totalAmount: 2500,
         isExpense: false,
-        type: .salary,
+        category: .salary,
         splits: [
             TransactionSplit(accountId: accountCourant.id, amount: 2500)
         ]
@@ -109,7 +115,7 @@ enum PreviewData {
         date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
         totalAmount: 65,
         isExpense: true,
-        type: .shopping,
+        category: .shopping,
         splits: [
             TransactionSplit(accountId: accountCourant.id, amount: 65)
         ]
@@ -122,7 +128,7 @@ enum PreviewData {
         date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
         totalAmount: 200,
         isExpense: true,
-        type: .other,
+        category: .other,
         splits: [
             TransactionSplit(accountId: accountLivret.id, amount: 200)
         ]

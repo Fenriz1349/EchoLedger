@@ -40,7 +40,7 @@ final class AddInstitution {
         let institution = Institution(
             userId: input.userId,
             name: trimmed,
-            type: input.type,
+            category: input.category,
             logoURL: input.logoURL
         )
         try await repository.save(institution)

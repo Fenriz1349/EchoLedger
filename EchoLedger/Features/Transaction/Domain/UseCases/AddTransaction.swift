@@ -48,7 +48,7 @@ final class AddTransaction {
             totalAmount: input.totalAmount,
             note: input.note,
             isExpense: input.isExpense,
-            type: input.type,
+            category: input.category,
             splits: input.splits
         )
         try await repository.save(transaction)

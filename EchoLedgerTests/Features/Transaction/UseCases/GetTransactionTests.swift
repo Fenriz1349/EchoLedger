@@ -40,7 +40,7 @@ final class GetTransactionTests: XCTestCase {
                                       date: Date(),
                                       totalAmount: 30,
                                       isExpense: true,
-                                      type: .other,
+                                      category: .other,
                                       splits: [split])
         try await repository.save(transaction)
         return id

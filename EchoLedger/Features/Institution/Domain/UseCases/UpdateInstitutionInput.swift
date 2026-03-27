@@ -12,6 +12,6 @@ struct UpdateInstitutionInput {
     let id: UUID
     let userId: UUID
     let name: String
-    let type: InstitutionType
+    let category: InstitutionCategory
     let logoURL: String?
 }

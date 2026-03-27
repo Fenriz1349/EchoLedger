@@ -12,5 +12,5 @@ struct UpdateAccountInput {
     let id: UUID
     let institutionId: UUID
     let name: String
-    let type: AccountType
+    let category: AccountCategory
 }

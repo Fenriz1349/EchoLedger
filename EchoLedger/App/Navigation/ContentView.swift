@@ -11,6 +11,7 @@ struct ContentView: View {
 
     @Environment(DIContainer.self) private var container
     @State private var showAddTransaction = false
+    @State private var transactionListViewModel: TransactionListViewModel?
 
     var body: some View {
         TabView {
@@ -19,15 +20,20 @@ struct ContentView: View {
                     Label("Tableau de bord", systemImage: "chart.pie")
                 }
 
-            TransactionListView()
-                .tabItem {
-                    Label("Transactions", systemImage: "list.bullet")
-                }
+            if let viewModel = transactionListViewModel {
+                TransactionListView(viewModel: viewModel)
+                    .tabItem {
+                        Label("Transactions", systemImage: "list.bullet")
+                    }
+            }
 
             AccountListView(viewModel: container.makeAccountListViewModel())
                 .tabItem {
                     Label("Comptes", systemImage: "building.columns")
                 }
+        }
+        .task {
+            transactionListViewModel = container.makeTransactionListViewModel()
         }
         .overlay(alignment: .bottom) {
             Button {
@@ -42,7 +48,12 @@ struct ContentView: View {
             .padding(.bottom, 24)
         }
         .sheet(isPresented: $showAddTransaction) {
-            AddTransactionView()
+            AddTransactionView(viewModel: container.makeAddTransactionViewModel())
+        }
+        .onChange(of: showAddTransaction) {
+            if !showAddTransaction {
+                Task { await transactionListViewModel?.load() }
+            }
         }
     }
 }

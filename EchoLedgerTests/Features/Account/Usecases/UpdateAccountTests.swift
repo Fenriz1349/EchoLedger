@@ -30,7 +30,7 @@ final class UpdateAccountTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns an account with a known id.
     func seedAccount(name: String = "Livret A") async throws -> UUID {
-        let account = Account(institutionId: institutionId, name: name, type: .savings)
+        let account = Account(institutionId: institutionId, name: name, category: .savings)
         try await repository.save(account)
         return account.id
     }
@@ -39,9 +39,9 @@ final class UpdateAccountTests: XCTestCase {
     private func makeInput(
         id: UUID,
         name: String = "PEL",
-        type: AccountType = .savings
+        category: AccountCategory = .savings
     ) -> UpdateAccountInput {
-        UpdateAccountInput(id: id, institutionId: institutionId, name: name, type: type)
+        UpdateAccountInput(id: id, institutionId: institutionId, name: name, category: category)
     }
 
     // MARK: Success
@@ -55,7 +55,7 @@ final class UpdateAccountTests: XCTestCase {
     /// Verifies that updating with the same name succeeds (no self-duplicate).
     func test_execute_sameNameSameId_succeeds() async throws {
         let id = try await seedAccount(name: "Livret A")
-        try await useCase.execute(makeInput(id: id, name: "Livret A", type: .creditCard))
+        try await useCase.execute(makeInput(id: id, name: "Livret A", category: .creditCard))
         XCTAssertTrue(repository.didCallUpdate)
     }
 

@@ -30,17 +30,17 @@ final class GetAccountBalance {
     /// - Parameters:
     ///   - accountId: The identifier of the account.
     ///   - userId: The identifier of the user owning the transactions.
-    /// - Returns: The computed balance as a Decimal.
+    /// - Returns: The computed balance as a Double.
     /// - Throws: `AccountError.notFound` if the account does not exist.
-    func execute(accountId: UUID, userId: UUID) async throws -> Decimal {
+    func execute(accountId: UUID, userId: UUID) async throws -> Double {
         _ = try await accountRepository.fetch(by: accountId)
         let transactions = try await transactionRepository.fetchAll(for: userId)
 
-        return transactions.reduce(Decimal(0)) { balance, transaction in
+        return transactions.reduce(Double(0)) { balance, transaction in
             let splitAmount = transaction.splits
                 .filter { $0.accountId == accountId }
                 .map(\.amount)
-                .reduce(Decimal(0), +)
+                .reduce(Double(0), +)
 
             return transaction.isExpense ? balance - splitAmount : balance + splitAmount
         }

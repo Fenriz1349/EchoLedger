@@ -29,7 +29,7 @@ final class GetAccountTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns an account with a known id.
     private func seedAccount() async throws -> UUID {
-        let account = Account(institutionId: UUID(), name: "Livret A", type: .savings)
+        let account = Account(institutionId: UUID(), name: "Livret A", category: .savings)
         try await repository.save(account)
         return account.id
     }

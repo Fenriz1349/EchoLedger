@@ -28,9 +28,9 @@ struct AddAccountView: View {
                     .listRowInsets(EdgeInsets())
                     .padding(.horizontal)
 
-                    Picker("Type", selection: $viewModel.type) {
-                        ForEach(AccountType.allCases, id: \.self) { type in
-                            Label(type.name, systemImage: type.icon).tag(type)
+                    Picker("Categorie", selection: $viewModel.category) {
+                        ForEach(AccountCategory.allCases, id: \.self) { category in
+                            Label(category.name, systemImage: category.icon).tag(category)
                         }
                     }
                 }
@@ -43,7 +43,7 @@ struct AddAccountView: View {
                     } else {
                         Picker("Établissement", selection: $viewModel.selectedInstitution) {
                             ForEach(viewModel.institutions) { institution in
-                                Label(institution.name, systemImage: institution.type.icon)
+                                Label(institution.name, systemImage: institution.category.icon)
                                     .tag(Optional(institution))
                             }
                         }
@@ -96,7 +96,6 @@ struct AddAccountView: View {
 }
 
 #Preview {
-    let container = DIContainer.preview()
-    return AddAccountView(viewModel: container.makeAddAccountViewModel())
-        .environment(container)
+    AddAccountView(viewModel: PreviewHelpers.makeAddAccountViewModel())
+        .environment(PreviewHelpers.container)
 }

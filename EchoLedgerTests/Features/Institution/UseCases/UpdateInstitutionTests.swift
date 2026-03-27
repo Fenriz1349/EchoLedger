@@ -30,7 +30,7 @@ final class UpdateInstitutionTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns an institution with a known id.
     private func seedInstitution(name: String = "BNP Paribas") async throws -> UUID {
-        let institution = Institution(userId: userId, name: name, type: .bank)
+        let institution = Institution(userId: userId, name: name, category: .bank)
         try await repository.save(institution)
         return institution.id
     }
@@ -39,9 +39,9 @@ final class UpdateInstitutionTests: XCTestCase {
     private func makeInput(
         id: UUID,
         name: String = "Caisse d'Épargne",
-        type: InstitutionType = .bank
+        category: InstitutionCategory = .bank
     ) -> UpdateInstitutionInput {
-        UpdateInstitutionInput(id: id, userId: userId, name: name, type: type, logoURL: nil)
+        UpdateInstitutionInput(id: id, userId: userId, name: name, category: category, logoURL: nil)
     }
 
     // MARK: Success
@@ -55,7 +55,7 @@ final class UpdateInstitutionTests: XCTestCase {
     /// Verifies that updating with the same name succeeds (no self-duplicate).
     func test_execute_sameNameSameId_succeeds() async throws {
         let id = try await seedInstitution(name: "BNP Paribas")
-        try await useCase.execute(makeInput(id: id, name: "BNP Paribas", type: .insurance))
+        try await useCase.execute(makeInput(id: id, name: "BNP Paribas", category: .insurance))
         XCTAssertTrue(repository.didCallUpdate)
     }
 

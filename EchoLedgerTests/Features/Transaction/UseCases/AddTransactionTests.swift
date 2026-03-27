@@ -31,9 +31,9 @@ final class AddTransactionTests: XCTestCase {
     /// Returns a valid AddTransactionInput with sensible defaults.
     private func makeInput(
         label: String = "Restaurant",
-        totalAmount: Decimal = 30,
+        totalAmount: Double = 30,
         isExpense: Bool = true,
-        type: TransactionType = .restaurant,
+        category: TransactionCategory = .restaurant,
         splits: [TransactionSplit]? = nil
     ) -> AddTransactionInput {
         let defaultSplits = splits ?? [TransactionSplit(accountId: UUID(), amount: totalAmount)]
@@ -44,7 +44,7 @@ final class AddTransactionTests: XCTestCase {
             totalAmount: totalAmount,
             note: nil,
             isExpense: isExpense,
-            type: type,
+            category: category,
             splits: defaultSplits
         )
     }

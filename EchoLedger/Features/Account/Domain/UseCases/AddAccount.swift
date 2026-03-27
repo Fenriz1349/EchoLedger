@@ -25,12 +25,12 @@ final class AddAccount {
     /// - Parameters:
     ///   - institutionId: The identifier of the institution this account belongs to.
     ///   - name: Name of the account. Must be between 2 and 50 characters.
-    ///   - type: Category of the account.
+    ///   - category: Category of the account.
     /// - Throws: `AccountError` if any business rule is violated.
     func execute(
         institutionId: UUID,
         name: String,
-        type: AccountType
+        category: AccountCategory
     ) async throws {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
@@ -47,7 +47,7 @@ final class AddAccount {
         let account = Account(
             institutionId: institutionId,
             name: trimmed,
-            type: type
+            category: category
         )
         try await repository.save(account)
     }

@@ -29,14 +29,14 @@ final class UpdateTransactionTests: XCTestCase {
 
     // MARK: Helpers
     /// Seeds the repository with a base transaction and returns its id.
-    func seedTransaction(totalAmount: Decimal = 30) async throws -> UUID {
+    func seedTransaction(totalAmount: Double = 30) async throws -> UUID {
         let split = TransactionSplit(accountId: UUID(), amount: totalAmount)
         let transaction = Transaction(userId: userId,
                                       label: "Initial",
                                       date: Date(),
                                       totalAmount: totalAmount,
                                       isExpense: true,
-                                      type: .other,
+                                      category: .other,
                                       splits: [split])
         try await repository.save(transaction)
         return transaction.id
@@ -46,9 +46,9 @@ final class UpdateTransactionTests: XCTestCase {
     private func makeInput(
         id: UUID,
         label: String = "Updated",
-        totalAmount: Decimal = 30,
+        totalAmount: Double = 30,
         isExpense: Bool = true,
-        type: TransactionType = .other,
+        category: TransactionCategory = .other,
         splits: [TransactionSplit]? = nil
     ) -> UpdateTransactionInput {
         let defaultSplits = splits ?? [TransactionSplit(accountId: UUID(), amount: totalAmount)]
@@ -60,7 +60,7 @@ final class UpdateTransactionTests: XCTestCase {
             totalAmount: totalAmount,
             note: nil,
             isExpense: isExpense,
-            type: type,
+            category: category,
             splits: defaultSplits
         )
     }

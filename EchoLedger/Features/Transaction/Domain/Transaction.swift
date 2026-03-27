@@ -18,10 +18,10 @@ struct Transaction: Identifiable, Equatable, Codable {
     let userId: UUID
     let label: String
     let date: Date
-    let totalAmount: Decimal
+    let totalAmount: Double
     let note: String?
     let isExpense: Bool
-    let type: TransactionType
+    let category: TransactionCategory
     let splits: [TransactionSplit]
 
     // MARK: Init
@@ -35,17 +35,17 @@ struct Transaction: Identifiable, Equatable, Codable {
     ///   - userId: The Id of the User related to this transaction.
     ///   - note: Optional additional information.
     ///   - isExpense: True if this is an expense, false if it is income.
-    ///   - type: Category of the transaction.
+    ///   - category: Category of the transaction.
     ///   - splits: Ventilation of the total amount across accounts. Must not be empty.
     init(
         id: UUID = UUID(),
         userId: UUID,
         label: String,
         date: Date,
-        totalAmount: Decimal,
+        totalAmount: Double,
         note: String? = nil,
         isExpense: Bool,
-        type: TransactionType,
+        category: TransactionCategory,
         splits: [TransactionSplit]
     ) {
         self.id = id
@@ -55,7 +55,7 @@ struct Transaction: Identifiable, Equatable, Codable {
         self.totalAmount = totalAmount
         self.note = note
         self.isExpense = isExpense
-        self.type = type
+        self.category = category
         self.splits = splits
     }
 }

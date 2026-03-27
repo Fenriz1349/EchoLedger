@@ -13,7 +13,7 @@ final class AddInstitutionFormViewModel {
 
     // MARK: Form State
     var name = ""
-    var type: InstitutionType = .bank
+    var category: InstitutionCategory = .bank
 
     // MARK: UI State
     var errorMessage: String?
@@ -55,7 +55,7 @@ final class AddInstitutionFormViewModel {
     func submit() async {
         isLoading = true
         errorMessage = nil
-        let input = AddInstitutionInput(userId: userId, name: name, type: type, logoURL: nil)
+        let input = AddInstitutionInput(userId: userId, name: name, category: category, logoURL: nil)
         do {
             try await addInstitution.execute(input)
             let institutions = try await getInstitutions.execute(for: userId)
@@ -75,7 +75,7 @@ final class AddInstitutionFormViewModel {
     /// Resets the form to its initial state.
     func reset() {
         name = ""
-        type = .bank
+        category = .bank
         errorMessage = nil
     }
 }

@@ -16,14 +16,14 @@ final class TransactionSplitModel {
     // MARK: Properties
     var id: UUID
     var accountId: UUID
-    var amount: Decimal
+    var amount: Double
 
     // MARK: Init
     /// Creates a new TransactionSplitModel from primitive values.
     init(
         id: UUID = UUID(),
         accountId: UUID,
-        amount: Decimal
+        amount: Double
     ) {
         self.id = id
         self.accountId = accountId

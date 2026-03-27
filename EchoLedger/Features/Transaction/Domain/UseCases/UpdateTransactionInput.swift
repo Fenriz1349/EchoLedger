@@ -13,9 +13,9 @@ struct UpdateTransactionInput {
     let userId: UUID
     let label: String
     let date: Date
-    let totalAmount: Decimal
+    let totalAmount: Double
     let note: String?
     let isExpense: Bool
-    let type: TransactionType
+    let category: TransactionCategory
     let splits: [TransactionSplit]
 }

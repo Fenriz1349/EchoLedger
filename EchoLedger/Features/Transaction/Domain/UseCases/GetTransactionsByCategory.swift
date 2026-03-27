@@ -1,5 +1,5 @@
 //
-//  GetTransactionsByType.swift
+//  GetTransactionsByCategory.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 11/03/2026.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// Retrieves all transactions for a given user filtered by transaction type.
+/// Retrieves all transactions for a given user filtered by transaction category.
 /// Useful for category-based charts and statistics.
-final class GetTransactionsByType {
+final class GetTransactionsByCategory {
 
     // MARK: Dependencies
     private let repository: TransactionProviding
@@ -21,14 +21,14 @@ final class GetTransactionsByType {
     }
 
     // MARK: Execute
-    /// Fetches transactions for a specific user filtered by type.
+    /// Fetches transactions for a specific user filtered by category.
     /// - Parameters:
     ///   - userId: The identifier of the user.
-    ///   - type: The transaction category to filter by.
-    /// - Returns: An array of transactions matching the given type, ordered by date descending.
+    ///   - category: The transaction category to filter by.
+    /// - Returns: An array of transactions matching the given category, ordered by date descending.
     /// - Throws: `TransactionError` if the fetch fails.
-    func execute(for userId: UUID, type: TransactionType) async throws -> [Transaction] {
+    func execute(for userId: UUID, category: TransactionCategory) async throws -> [Transaction] {
         let all = try await repository.fetchAll(for: userId)
-        return all.filter { $0.type == type }
+        return all.filter { $0.category == category }
     }
 }

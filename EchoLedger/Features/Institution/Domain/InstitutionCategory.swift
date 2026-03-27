@@ -1,5 +1,5 @@
 //
-//  InstitutionType.swift
+//  InstitutionCategory.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 20/11/2025.
@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents the category of a financial institution.
 /// RawValue is used for Firebase persistence, name is used for display.
-enum InstitutionType: String, CaseIterable, Codable, Sendable {
+enum InstitutionCategory: String, CaseIterable, Codable, Sendable {
     case bank
     case insurance
     case broker
@@ -18,7 +18,7 @@ enum InstitutionType: String, CaseIterable, Codable, Sendable {
     case cash
     case other
 
-    /// Returns the French display name for the institution type.
+    /// Returns the French display name for the institution category.
     var name: String {
         switch self {
         case .bank:         return "Banque"
@@ -31,7 +31,7 @@ enum InstitutionType: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    /// Returns the SF Symbol name associated with the institution type.
+    /// Returns the SF Symbol name associated with the institution category.
     var icon: String {
         switch self {
         case .bank:         return "building.columns"

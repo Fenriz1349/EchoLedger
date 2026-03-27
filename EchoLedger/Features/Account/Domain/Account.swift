@@ -15,7 +15,7 @@ struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
     let id: UUID
     let institutionId: UUID
     let name: String
-    let type: AccountType
+    let category: AccountCategory
 
     // MARK: Init
     /// Creates a new Account.
@@ -23,16 +23,16 @@ struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
     ///   - id: Unique identifier. Defaults to a new UUID.
     ///   - institutionId: The identifier of the institution this account belongs to.
     ///   - name: Human-readable name of the account (e.g. "Livret A").
-    ///   - type: Category of the account.
+    ///   - category: Category of the account.
     init(
         id: UUID = UUID(),
         institutionId: UUID,
         name: String,
-        type: AccountType
+        category: AccountCategory
     ) {
         self.id = id
         self.institutionId = institutionId
         self.name = name
-        self.type = type
+        self.category = category
     }
 }

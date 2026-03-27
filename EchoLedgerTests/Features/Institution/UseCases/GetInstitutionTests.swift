@@ -31,7 +31,7 @@ final class GetInstitutionTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns an institution with a known id.
     private func seedInstitution() async throws -> UUID {
-        let institution = Institution(userId: UUID(), name: "BNP Paribas", type: .bank)
+        let institution = Institution(userId: UUID(), name: "BNP Paribas", category: .bank)
         try await repository.save(institution)
         return institution.id
     }

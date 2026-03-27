@@ -17,7 +17,7 @@ final class AccountModel {
     var id: UUID
     var institutionId: UUID
     var name: String
-    var type: String
+    var category: String
 
     // MARK: Init
     /// Creates a new AccountModel from primitive values.
@@ -25,23 +25,23 @@ final class AccountModel {
         id: UUID = UUID(),
         institutionId: UUID,
         name: String,
-        type: String
+        category: String
     ) {
         self.id = id
         self.institutionId = institutionId
         self.name = name
-        self.type = type
+        self.category = category
     }
 
     // MARK: Mapping
     /// Converts this SwiftData model to a Domain Account entity.
     func toDomain() -> Account? {
-        guard let accountType = AccountType(rawValue: type) else { return nil }
+        guard let accountCategory = AccountCategory(rawValue: category) else { return nil }
         return Account(
             id: id,
             institutionId: institutionId,
             name: name,
-            type: accountType
+            category: accountCategory
         )
     }
 
@@ -49,6 +49,6 @@ final class AccountModel {
     /// - Parameter account: The domain entity with updated values.
     func update(from account: Account) {
         self.name = account.name
-        self.type = account.type.rawValue
+        self.category = account.category.rawValue
     }
 }

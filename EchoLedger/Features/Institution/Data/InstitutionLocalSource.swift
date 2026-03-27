@@ -60,7 +60,7 @@ final class InstitutionLocalSource {
             id: institution.id,
             userId: institution.userId,
             name: institution.name,
-            type: institution.type.rawValue,
+            category: institution.category.rawValue,
             logoURL: institution.logoURL
         )
         context.insert(model)

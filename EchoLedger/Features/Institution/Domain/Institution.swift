@@ -15,7 +15,7 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     let id: UUID
     let userId: UUID
     let name: String
-    let type: InstitutionType
+    let category: InstitutionCategory
     let logoURL: String?
 
     // MARK: Init
@@ -24,19 +24,19 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     ///   - id: Unique identifier. Defaults to a new UUID.
     ///   - userId: The identifier of the user this institution belongs to.
     ///   - name: Human-readable name of the institution (e.g. "Caisse d'Épargne").
-    ///   - type: Category of the institution.
+    ///   - category: Category of the institution.
     ///   - logoURL: Optional URL string pointing to the institution's logo.
     init(
         id: UUID = UUID(),
         userId: UUID,
         name: String,
-        type: InstitutionType,
+        category: InstitutionCategory,
         logoURL: String? = nil
     ) {
         self.id = id
         self.userId = userId
         self.name = name
-        self.type = type
+        self.category = category
         self.logoURL = logoURL
     }
 }

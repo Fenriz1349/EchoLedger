@@ -17,7 +17,7 @@ final class InstitutionModel {
     var id: UUID
     var userId: UUID
     var name: String
-    var type: String
+    var category: String
     var logoURL: String?
 
     // MARK: Relationships
@@ -30,13 +30,13 @@ final class InstitutionModel {
         id: UUID = UUID(),
         userId: UUID,
         name: String,
-        type: String,
+        category: String,
         logoURL: String? = nil
     ) {
         self.id = id
         self.userId = userId
         self.name = name
-        self.type = type
+        self.category = category
         self.logoURL = logoURL
         self.accounts = []
     }
@@ -44,12 +44,12 @@ final class InstitutionModel {
     // MARK: Mapping
     /// Converts this SwiftData model to a Domain Institution entity.
     func toDomain() -> Institution? {
-        guard let institutionType = InstitutionType(rawValue: type) else { return nil }
+        guard let institutionCategory = InstitutionCategory(rawValue: category) else { return nil }
         return Institution(
             id: id,
             userId: userId,
             name: name,
-            type: institutionType,
+            category: institutionCategory,
             logoURL: logoURL
         )
     }
@@ -58,7 +58,7 @@ final class InstitutionModel {
     /// - Parameter institution: The domain entity with updated values.
     func update(from institution: Institution) {
         self.name = institution.name
-        self.type = institution.type.rawValue
+        self.category = institution.category.rawValue
         self.logoURL = institution.logoURL
     }
 }
