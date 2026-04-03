@@ -58,16 +58,13 @@ struct PreviewHelpers {
         }
         try? context.save()
     }
-    
-//    static func makeAppCoordinator() -> AppCoordinator {
-//        seedInstitutionsAndAccounts()
-//        seedTransactions()
-//        return AppCoordinator(container: container)
-//    }
 
-//    static func makeContentView() -> ContentView {
-//        ContentView(coordinator: makeAppCoordinator())
-//    }
+    /// Creates a preview AppCoordinator with seeded data.
+    static var appCoordinator: AppCoordinator {
+        seedInstitutionsAndAccounts()
+        seedTransactions()
+        return AppCoordinator(container: container)
+    }
 
     static func makeccountFormViewModel() -> AccountFormViewModel {
         seedInstitutionsAndAccounts()

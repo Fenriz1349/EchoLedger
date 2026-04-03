@@ -19,13 +19,14 @@ extension DIContainer {
         )
     }
     
-    func makeTransactionFormViewModel() -> TransactionFormViewModel {
+    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
         TransactionFormViewModel(
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+            existingTransaction: existing
         )
     }
 

@@ -699,8 +699,6 @@
 			children = (
 				685A1F092F5AEBF50009B885 /* Sync */,
 				685A1F122F5AECE30009B885 /* Extensions */,
-				685A1F132F5AECEB0009B885 /* Constants */,
-				685A1F142F5AECF10009B885 /* Utilities */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -723,20 +721,6 @@
 				681B47062F7FA04F000CC7C4 /* Double+Extension.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		685A1F132F5AECEB0009B885 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
-		685A1F142F5AECF10009B885 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

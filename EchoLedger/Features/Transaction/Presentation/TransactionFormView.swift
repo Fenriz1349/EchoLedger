@@ -60,7 +60,7 @@ struct TransactionFormView: View {
                             HStack {
                                 Text(viewModel.accountNames[split.accountId] ?? "Compte inconnu")
                                 Spacer()
-                                Text("\(split.amount)")
+                                Text(split.amount.toEuro)
                                     .foregroundStyle(.secondary)
                             }
                             .swipeActions {
