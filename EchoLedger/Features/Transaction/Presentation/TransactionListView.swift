@@ -13,7 +13,7 @@ struct TransactionListView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            Group {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if viewModel.transactions.isEmpty {
@@ -37,10 +37,22 @@ struct TransactionListView: View {
 
                                 Spacer()
 
-                                Text("\(item.totalAmount)")
+                                Text(item.totalAmount.toEuro)
                                     .foregroundStyle(item.isExpense ? Color.primary : Color.green)
                                     .fontWeight(item.isExpense ? .regular : .semibold)
                             }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .confirm) {
+                                    Task { showAddTransaction = true }
+                                } label: {
+                                    Label("Modifier", systemImage: "pencil")
+                                }
+                                    Button(role: .destructive) {
+                                        Task { await viewModel.delete(item) }
+                                    } label: {
+                                        Label("Supprimer", systemImage: "trash")
+                                    }
+                                }
                         }
                     }
                 }

@@ -16,7 +16,7 @@ struct TransactionFormView: View {
         NavigationStack {
             Form {
                 Section("Montant") {
-                    TextField("0.00", text: $viewModel.amount)
+                    TextField("0,00", text: $viewModel.amount)
                         .keyboardType(.decimalPad)
 
                     Toggle("Dépense", isOn: $viewModel.isExpense)

@@ -12,6 +12,7 @@ extension DIContainer {
     func makeTransactionListViewModel() -> TransactionListViewModel {
         TransactionListViewModel(
             getTransactions: getTransactions,
+            deleteTransaction: deleteTransaction,
             userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         )
     }
@@ -36,6 +37,7 @@ extension DIContainer {
     func makeAddTransactionViewModel() -> TransactionFormViewModel {
         TransactionFormViewModel(
             addTransaction: addTransaction,
+            updateTransaction: updateTransaction,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!

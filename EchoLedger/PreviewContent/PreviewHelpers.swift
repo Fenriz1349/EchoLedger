@@ -92,6 +92,7 @@ struct PreviewHelpers {
         seedInstitutionsAndAccounts()
         return TransactionFormViewModel(
             addTransaction: container.addTransaction,
+            updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
             userId: userId
@@ -102,6 +103,7 @@ struct PreviewHelpers {
         seedTransactions()
         return TransactionListViewModel(
             getTransactions: container.getTransactions,
+            deleteTransaction: container.deleteTransaction,
             userId: userId
         )
     }
