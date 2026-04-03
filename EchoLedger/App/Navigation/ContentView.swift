@@ -10,49 +10,60 @@ import SwiftUI
 struct ContentView: View {
 
     @Environment(DIContainer.self) private var container
-    @State private var showAddTransaction = false
-    @State private var transactionListViewModel: TransactionListViewModel?
+    @State private var coordinator: AppCoordinator?
 
     var body: some View {
-        TabView {
-            DashboardView()
-                .tabItem {
-                    Label("Tableau de bord", systemImage: "chart.pie")
+        Group {
+            if let coordinator {
+
+                TabView {
+                    DashboardView()
+                        .tabItem { Label("Tableau de bord", systemImage: "chart.pie") }
+
+                    TransactionListView(coordinator: coordinator)
+                        .tabItem { Label("Transactions", systemImage: "list.bullet") }
+
+                    AccountListView(viewModel: coordinator.accountListViewModel)
+                        .tabItem { Label("Comptes", systemImage: "building.columns") }
                 }
 
-            if let viewModel = transactionListViewModel {
-                TransactionListView(viewModel: viewModel)
-                    .tabItem {
-                        Label("Transactions", systemImage: "list.bullet")
+                .overlay(alignment: .bottom) {
+                    Button {
+                        coordinator.transactionListViewModel.showAddTransaction = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 56, height: 56)
+                            .background(Color(.systemBackground))
+                            .clipShape(Circle())
                     }
-            }
-
-            AccountListView(viewModel: container.makeAccountListViewModel())
-                .tabItem {
-                    Label("Comptes", systemImage: "building.columns")
+                    .padding(.bottom, 24)
                 }
+
+                .sheet(
+                    isPresented: Binding(
+                        get: { coordinator.transactionListViewModel.showAddTransaction },
+                        set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
+                    )
+                ) {
+                    TransactionFormView(
+                        viewModel: coordinator.makeTransactionFormViewModel()
+                    )
+                }
+                .onChange(of: coordinator.transactionListViewModel.showAddTransaction) {
+                    if !coordinator.transactionListViewModel.showAddTransaction {
+                        Task {
+                            await coordinator.transactionListViewModel.load()
+                        }
+                    }
+                }
+            } else {
+                ProgressView()
+            }
         }
         .task {
-            transactionListViewModel = container.makeTransactionListViewModel()
-        }
-        .overlay(alignment: .bottom) {
-            Button {
-                showAddTransaction = true
-            } label: {
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .frame(width: 56, height: 56)
-                    .background(Color(.systemBackground))
-                    .clipShape(Circle())
-            }
-            .padding(.bottom, 24)
-        }
-        .sheet(isPresented: $showAddTransaction) {
-            TransactionFormView(viewModel: container.makeAddTransactionViewModel())
-        }
-        .onChange(of: showAddTransaction) {
-            if !showAddTransaction {
-                Task { await transactionListViewModel?.load() }
+            if coordinator == nil {
+                coordinator = AppCoordinator(container: container)
             }
         }
     }

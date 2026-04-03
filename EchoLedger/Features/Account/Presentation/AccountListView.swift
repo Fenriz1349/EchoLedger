@@ -50,7 +50,7 @@ struct AccountListView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showAddAccount) {
-                AccountFormView(viewModel: container.makeAddAccountViewModel())
+                AccountFormView(viewModel: container.makeAccountFormViewModel())
             }
             .task {
                 await viewModel.load()

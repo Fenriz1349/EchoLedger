@@ -21,7 +21,3 @@ struct DashboardView: View {
     DashboardView()
         .environment(DIContainer(inMemory: true))
 }
-
-#Preview {
-    DashboardView()
-}

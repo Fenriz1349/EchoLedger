@@ -17,9 +17,9 @@ final class TransactionFormViewModel {
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let userId: UUID
-    private let existingTransaction: Transaction?
 
     // MARK: Form State
+    var existingTransaction: Transaction?
     var amount: String = ""
     var label: String = ""
     var isExpense: Bool = true

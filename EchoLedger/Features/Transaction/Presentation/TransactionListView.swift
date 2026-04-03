@@ -9,63 +9,72 @@ import SwiftUI
 
 struct TransactionListView: View {
 
-    @State var viewModel: TransactionListViewModel
+    @Environment(DIContainer.self) private var container
+   let coordinator: AppCoordinator?
 
     var body: some View {
         NavigationStack {
             Group {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else if viewModel.transactions.isEmpty {
-                    Text("Aucune transaction pour le moment")
-                        .foregroundStyle(.secondary)
-                } else {
-                    List {
-                        ForEach(viewModel.transactions, id: \.id) { item in
-                            HStack {
-                                let name = item.category.icon
-                                Image(systemName: name)
-                                    .frame(width: 32)
-
-                                VStack(alignment: .leading) {
-                                    Text(item.label)
-                                        .font(.body)
-                                    Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                if let coordinator {
+                    if coordinator.transactionListViewModel.isLoading {
+                        ProgressView()
+                    } else if coordinator.transactionListViewModel.transactions.isEmpty {
+                        Text("Aucune transaction pour le moment")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        List {
+                            ForEach(coordinator.transactionListViewModel.transactions, id: \.id) { item in
+                                HStack {
+                                    let name = item.category.icon
+                                    Image(systemName: name)
+                                        .frame(width: 32)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(item.label)
+                                            .font(.body)
+                                        Text(item.date.formatted(date: .abbreviated, time: .omitted))
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.totalAmount.toEuro)
+                                        .foregroundStyle(item.isExpense ? Color.primary : Color.green)
+                                        .fontWeight(item.isExpense ? .regular : .semibold)
                                 }
-
-                                Spacer()
-
-                                Text(item.totalAmount.toEuro)
-                                    .foregroundStyle(item.isExpense ? Color.primary : Color.green)
-                                    .fontWeight(item.isExpense ? .regular : .semibold)
-                            }
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .confirm) {
-                                    Task { showAddTransaction = true }
-                                } label: {
-                                    Label("Modifier", systemImage: "pencil")
-                                }
+                                .swipeActions(edge: .trailing) {
                                     Button(role: .destructive) {
-                                        Task { await viewModel.delete(item) }
+                                        Task { await coordinator.transactionListViewModel.delete(item) }
                                     } label: {
                                         Label("Supprimer", systemImage: "trash")
                                     }
+                                    Button() {
+                                        //                                    coordinator.transactionFormViewModel.existingTransaction = item
+                                        coordinator.transactionListViewModel.showAddTransaction = true
+                                    } label: {
+                                        Label("Modifier", systemImage: "pencil")
+                                    }
                                 }
+                            }
                         }
                     }
                 }
-            }
-            .navigationTitle("Transactions")
-            .task {
-                await viewModel.load()
-            }
+            }.navigationTitle("Transactions")
+            //            .sheet(isPresented: $coordinator.transactionListViewModel.showAddTransaction) {
+            //                TransactionFormView(viewModel: coordinator.transactionFormViewModel)
+            //            }
+            
+            //            .task {
+            //                await coordinator.transactionListViewModel.load()
+            //            }
         }
     }
+
 }
 
-#Preview {
-    TransactionListView(viewModel: PreviewHelpers.makeTransactionListViewModel())
-        .environment(PreviewHelpers.container)
-}
+//#Preview {
+//    TransactionListView(/*coordinator: PreviewHelpers.makeAppCoordinator(),*/
+//                        viewModel: PreviewHelpers.makeTransactionListViewModel())
+//    .environment(PreviewHelpers.container)
+//}

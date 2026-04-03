@@ -112,6 +112,6 @@ struct TransactionFormView: View {
 }
 
 #Preview {
-    TransactionFormView(viewModel: PreviewHelpers.makeAddTransactionViewModel())
+    TransactionFormView(viewModel: PreviewHelpers.makeTransactionFormViewModel())
         .environment(PreviewHelpers.container)
 }

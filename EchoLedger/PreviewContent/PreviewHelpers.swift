@@ -58,8 +58,18 @@ struct PreviewHelpers {
         }
         try? context.save()
     }
+    
+//    static func makeAppCoordinator() -> AppCoordinator {
+//        seedInstitutionsAndAccounts()
+//        seedTransactions()
+//        return AppCoordinator(container: container)
+//    }
 
-    static func makeAddAccountViewModel() -> AccountFormViewModel {
+//    static func makeContentView() -> ContentView {
+//        ContentView(coordinator: makeAppCoordinator())
+//    }
+
+    static func makeccountFormViewModel() -> AccountFormViewModel {
         seedInstitutionsAndAccounts()
         return AccountFormViewModel(
             addAccount: container.addAccount,
@@ -88,7 +98,7 @@ struct PreviewHelpers {
         )
     }
 
-    static func makeAddTransactionViewModel() -> TransactionFormViewModel {
+    static func makeTransactionFormViewModel() -> TransactionFormViewModel {
         seedInstitutionsAndAccounts()
         return TransactionFormViewModel(
             addTransaction: container.addTransaction,
