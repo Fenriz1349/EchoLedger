@@ -1,5 +1,5 @@
 //
-//  AddAccountViewModel.swift
+//  AccountFormViewModel.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 26/03/2026.
@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 @Observable
-final class AddAccountViewModel {
+final class AccountFormViewModel {
 
     // MARK: Form State
     var name = ""

@@ -24,8 +24,8 @@ extension DIContainer {
         )
     }
 
-    func makeAddAccountViewModel() -> AddAccountViewModel {
-        AddAccountViewModel(
+    func makeAddAccountViewModel() -> AccountFormViewModel {
+        AccountFormViewModel(
             addAccount: addAccount,
             addInstitution: addInstitution,
             getInstitutions: getInstitutions,
@@ -33,8 +33,8 @@ extension DIContainer {
         )
     }
 
-    func makeAddTransactionViewModel() -> AddTransactionViewModel {
-        AddTransactionViewModel(
+    func makeAddTransactionViewModel() -> TransactionFormViewModel {
+        TransactionFormViewModel(
             addTransaction: addTransaction,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,

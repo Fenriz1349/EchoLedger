@@ -48,7 +48,7 @@ struct ContentView: View {
             .padding(.bottom, 24)
         }
         .sheet(isPresented: $showAddTransaction) {
-            AddTransactionView(viewModel: container.makeAddTransactionViewModel())
+            TransactionFormView(viewModel: container.makeAddTransactionViewModel())
         }
         .onChange(of: showAddTransaction) {
             if !showAddTransaction {

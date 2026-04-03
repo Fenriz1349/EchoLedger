@@ -1,5 +1,5 @@
 //
-//  AddTransactionViewModel.swift
+//  TransactionFormViewModel.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 27/03/2026.
@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 @Observable
-final class AddTransactionViewModel {
+final class TransactionFormViewModel {
 
     // MARK: Form State
     var amount: String = ""

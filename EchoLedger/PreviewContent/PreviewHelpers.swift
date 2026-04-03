@@ -59,9 +59,9 @@ struct PreviewHelpers {
         try? context.save()
     }
 
-    static func makeAddAccountViewModel() -> AddAccountViewModel {
+    static func makeAddAccountViewModel() -> AccountFormViewModel {
         seedInstitutionsAndAccounts()
-        return AddAccountViewModel(
+        return AccountFormViewModel(
             addAccount: container.addAccount,
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
@@ -88,9 +88,9 @@ struct PreviewHelpers {
         )
     }
 
-    static func makeAddTransactionViewModel() -> AddTransactionViewModel {
+    static func makeAddTransactionViewModel() -> TransactionFormViewModel {
         seedInstitutionsAndAccounts()
-        return AddTransactionViewModel(
+        return TransactionFormViewModel(
             addTransaction: container.addTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,

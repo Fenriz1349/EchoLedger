@@ -1,5 +1,5 @@
 //
-//  AddTransactionView.swift
+//  TransactionFormView.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 26/03/2026.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct AddTransactionView: View {
+struct TransactionFormView: View {
 
-    @State var viewModel: AddTransactionViewModel
+    @State var viewModel: TransactionFormViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -112,6 +112,6 @@ struct AddTransactionView: View {
 }
 
 #Preview {
-    AddTransactionView(viewModel: PreviewHelpers.makeAddTransactionViewModel())
+    TransactionFormView(viewModel: PreviewHelpers.makeAddTransactionViewModel())
         .environment(PreviewHelpers.container)
 }
