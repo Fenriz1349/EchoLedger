@@ -34,6 +34,9 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when the start date is after the end date in a date range query.
     case invalidDateRange
+    
+    /// Thrown when loading transactions or related data fails.
+    case loadFailed
 
     /// Returns a human-readable description of the error.
     var localizedDescription: String {
@@ -54,6 +57,8 @@ enum TransactionError: Error, Equatable {
             return "Transaction introuvable."
         case .invalidDateRange:
             return "La date de début doit être antérieure à la date de fin."
+        case .loadFailed:
+            return "Impossible de charger les données."
         }
     }
 }

@@ -94,7 +94,10 @@ final class TransactionFormViewModel {
             let institutions = try await getInstitutions.execute(for: userId)
             var result: [Account] = []
             for institution in institutions {
-                let accounts = try await getAccounts.execute(for: institution.id)
+                let accounts = try await getAccounts.execute(
+                    for: institution.id,
+                    filter: existingTransaction == nil ? .active : .all
+                )
                 result.append(contentsOf: accounts)
             }
             availableAccounts = result
@@ -103,7 +106,7 @@ final class TransactionFormViewModel {
                 addSplit(for: account)
             }
         } catch {
-            errorMessage = "Impossible de charger les comptes"
+            errorMessage = TransactionError.loadFailed.localizedDescription
         }
     }
 
