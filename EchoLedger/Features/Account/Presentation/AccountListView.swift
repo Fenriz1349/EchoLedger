@@ -11,6 +11,7 @@ struct AccountListView: View {
 
     @State var viewModel: AccountListViewModel
     @Environment(DIContainer.self) private var container
+    @State private var selectedAccount: Account?
 
     var body: some View {
         NavigationStack {
@@ -25,47 +26,37 @@ struct AccountListView: View {
                         ForEach(viewModel.institutionsWithAccounts, id: \.institution.id) { item in
                             Section(item.institution.name) {
                                 ForEach(item.accounts) { account in
-                                    HStack {
-                                        Image(systemName: account.category.icon)
-                                        Text(account.name)
-                                        Spacer()
-                                        Text(account.category.name)
-                                            .foregroundStyle(.secondary)
-                                            .font(.caption)
-                                    }
-                                    .swipeActions(edge: .trailing) {
-                                        Button(role: .destructive) {
-                                            Task { await viewModel.archive(account) }
-                                        } label: {
-                                            Label("Archiver", systemImage: "trash")
-                                        }
-                                    }
+                                    AccountRowView(
+                                        account: account,
+                                        onEdit: { selectedAccount = account },
+                                        onArchive: { Task { await viewModel.archive(account) } }
+                                    )
                                 }
                             }
                         }
                     }
                 }
             }
-            .navigationTitle("Comptes")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        viewModel.showAddAccount = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+        }
+        .navigationTitle("Comptes")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    viewModel.showAccountForm = true
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $viewModel.showAddAccount) {
-                AccountFormView(viewModel: container.makeAccountFormViewModel())
-            }
-            .task {
-                await viewModel.load()
-            }
-            .onChange(of: viewModel.showAddAccount) {
-                if !viewModel.showAddAccount {
-                    Task { await viewModel.load() }
-                }
+        }
+        .sheet(item: $selectedAccount) { account in
+            AccountFormView(viewModel: container.makeAccountFormViewModel(existing: account))
+        }
+        .task {
+            await viewModel.load()
+        }
+        .onChange(of: viewModel.showAccountForm) {
+            if !viewModel.showAccountForm {
+                Task { await viewModel.load() }
             }
         }
     }

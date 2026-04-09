@@ -70,6 +70,7 @@ struct PreviewHelpers {
         seedInstitutionsAndAccounts()
         return AccountFormViewModel(
             addAccount: container.addAccount,
+            updateAccount: container.updateAccount,
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
             userId: userId

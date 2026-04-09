@@ -72,14 +72,14 @@ struct AccountFormView: View {
                     }
                 }
             }
-            .navigationTitle("Nouveau compte")
+            .navigationTitle(viewModel.existingAccount == nil ? "Nouveau compte" : "Modifier le compte")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Ajouter") {
+                    Button(viewModel.existingAccount == nil ? "Ajouter" : "Modifier") {
                         Task { await viewModel.submit() }
                     }
                     .disabled(!viewModel.isValid || viewModel.isLoading)

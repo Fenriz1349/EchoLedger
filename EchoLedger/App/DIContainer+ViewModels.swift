@@ -40,12 +40,14 @@ extension DIContainer {
         )
     }
 
-    func makeAccountFormViewModel() -> AccountFormViewModel {
+    func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {
         AccountFormViewModel(
             addAccount: addAccount,
+            updateAccount: updateAccount,
             addInstitution: addInstitution,
             getInstitutions: getInstitutions,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+            existingAccount: existing
         )
     }
 }
