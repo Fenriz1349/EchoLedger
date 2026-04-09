@@ -35,6 +35,8 @@
 		6813E8352F6D96E300344774 /* UpdateUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8342F6D96E300344774 /* UpdateUserTests.swift */; };
 		681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47042F7F9F27000CC7C4 /* String+Extension.swift */; };
 		681B47072F7FA04F000CC7C4 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47062F7FA04F000CC7C4 /* Double+Extension.swift */; };
+		681B47092F7FEB60000CC7C4 /* SplitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47082F7FEB60000CC7C4 /* SplitRowView.swift */; };
+		681B470B2F7FEDB0000CC7C4 /* AccountPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B470A2F7FEDB0000CC7C4 /* AccountPickerView.swift */; };
 		681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */; };
 		681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */; };
 		681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */; };
@@ -167,6 +169,8 @@
 		681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoLedgerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		681B47042F7F9F27000CC7C4 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		681B47062F7FA04F000CC7C4 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		681B47082F7FEB60000CC7C4 /* SplitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitRowView.swift; sourceTree = "<group>"; };
+		681B470A2F7FEDB0000CC7C4 /* AccountPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPickerView.swift; sourceTree = "<group>"; };
 		681CA8542F62C0EE002E1EF7 /* EchoLedger.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EchoLedger.xctestplan; sourceTree = "<group>"; };
 		681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByDateRangeTests.swift; sourceTree = "<group>"; };
 		681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionTests.swift; sourceTree = "<group>"; };
@@ -401,6 +405,7 @@
 				684497252F7569AA00337F74 /* TransactionListView.swift */,
 				68000F642F76886B00B30EB6 /* TransactionFormViewModel.swift */,
 				684497292F7569D800337F74 /* TransactionFormView.swift */,
+				681B47082F7FEB60000CC7C4 /* SplitRowView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				684497272F7569C600337F74 /* AccountListView.swift */,
 				6844973C2F7579A500337F74 /* AccountFormViewModel.swift */,
 				6844973E2F757AC400337F74 /* AccountFormView.swift */,
+				681B470A2F7FEDB0000CC7C4 /* AccountPickerView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -895,6 +901,7 @@
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
+				681B47092F7FEB60000CC7C4 /* SplitRowView.swift in Sources */,
 				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
 				684497262F7569AA00337F74 /* TransactionListView.swift in Sources */,
 				685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */,
@@ -910,6 +917,7 @@
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
 				6844973D2F7579A500337F74 /* AccountFormViewModel.swift in Sources */,
+				681B470B2F7FEDB0000CC7C4 /* AccountPickerView.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionCategory.swift in Sources */,

@@ -13,6 +13,9 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when a transaction is created or updated with no splits.
     case missingSplits
+    
+    /// Thrown when a transaction is created or updated with the same account in differents splits
+    case redundantSplitsAccounts
 
     /// Thrown when the sum of split amounts does not equal the transaction's totalAmount.
     case splitAmountMismatch
@@ -37,6 +40,8 @@ enum TransactionError: Error, Equatable {
         switch self {
         case .missingSplits:
             return "Une transaction doit avoir au moins une ventilation."
+        case .redundantSplitsAccounts:
+            return "Chaque compte doit être unique"
         case .splitAmountMismatch:
             return "La somme des ventilations ne correspond pas au montant total."
         case .invalidSplitAmount:

@@ -27,7 +27,7 @@ final class TransactionFormViewModel {
     var splits: [TransactionSplit] = []
 
     // MARK: UI State
-    var availableAccounts: [(account: Account, institution: Institution)] = []
+    var availableAccounts: [Account] = []
     var accountNames: [UUID: String] = [:]
     var selectedAccount: Account?
     var isLoading = false
@@ -92,16 +92,13 @@ final class TransactionFormViewModel {
     func loadAccounts() async {
         do {
             let institutions = try await getInstitutions.execute(for: userId)
-            var result: [(account: Account, institution: Institution)] = []
+            var result: [Account] = []
             for institution in institutions {
                 let accounts = try await getAccounts.execute(for: institution.id)
-                for account in accounts {
-                    result.append((account: account, institution: institution))
-                    accountNames[account.id] = "\(institution.name) — \(account.name)"
-                }
+                result.append(contentsOf: accounts)
             }
-            availableAccounts = result.sorted { $0.account.name < $1.account.name }
-            selectedAccount = availableAccounts.first?.account
+            availableAccounts = result
+            selectedAccount = availableAccounts.first
             if existingTransaction == nil, let account = selectedAccount {
                 addSplit(for: account)
             }
@@ -138,6 +135,11 @@ final class TransactionFormViewModel {
 
         guard !splits.isEmpty else {
             errorMessage = TransactionError.missingSplits.localizedDescription
+            return
+        }
+
+        guard Set(splits.map(\.accountId)).count == splits.count else {
+            errorMessage = TransactionError.redundantSplitsAccounts.localizedDescription
             return
         }
 

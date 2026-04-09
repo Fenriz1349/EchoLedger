@@ -34,42 +34,32 @@ struct TransactionFormView: View {
 
                 Section("Compte") {
                     if viewModel.availableAccounts.isEmpty {
-                        Text("Aucun compte disponible")
-                            .foregroundStyle(.secondary)
+                        Text("Aucun compte disponible").foregroundStyle(.secondary)
                     } else {
-                        Picker("Compte", selection: $viewModel.selectedAccount) {
-                            ForEach(viewModel.availableAccounts, id: \.account.id) { item in
-                                Text("\(item.institution.name) — \(item.account.name)")
-                                    .tag(Optional(item.account))
-                            }
-                        }
-
-                        if let account = viewModel.selectedAccount {
-                            Button {
+                        AccountPickerView(
+                            selectedAccount: $viewModel.selectedAccount,
+                            availableAccounts: viewModel.availableAccounts
+                        )
+                        Button {
+                            if let account = viewModel.selectedAccount {
                                 viewModel.addSplit(for: account)
-                            } label: {
-                                Label("Ajouter un compte", systemImage: "plus")
                             }
+                        } label: {
+                            Label("Ajouter un compte", systemImage: "plus")
                         }
                     }
                 }
 
                 if viewModel.splits.count > 1 {
                     Section("Répartition") {
-                        ForEach(Array(viewModel.splits.enumerated()), id: \.element.id) { index, split in
-                            HStack {
-                                Text(viewModel.accountNames[split.accountId] ?? "Compte inconnu")
-                                Spacer()
-                                Text(split.amount.toEuro)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    viewModel.removeSplit(at: index)
-                                } label: {
-                                    Label("Supprimer", systemImage: "trash")
-                                }
-                            }
+                        let indexedSplits = Array(viewModel.splits.enumerated())
+                        ForEach(indexedSplits, id: \.element.id) { index, _ in
+                            SplitRowView(
+                                index: index,
+                                split: $viewModel.splits[index],
+                                availableAccounts: viewModel.availableAccounts,
+                                onDelete: { viewModel.removeSplit(at: index) }
+                            )
                         }
                     }
                 }

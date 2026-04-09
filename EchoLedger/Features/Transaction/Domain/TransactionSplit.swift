@@ -14,8 +14,8 @@ struct TransactionSplit: Identifiable, Equatable, Codable {
 
     // MARK: Properties
     let id: UUID
-    let accountId: UUID
-    let amount: Double
+    var accountId: UUID
+    var amount: Double
 
     // MARK: Init
     /// Creates a new TransactionSplit.
