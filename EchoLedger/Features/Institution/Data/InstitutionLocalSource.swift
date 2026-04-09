@@ -8,14 +8,11 @@
 import Foundation
 import SwiftData
 
-// MARK: - InstitutionLocalSource
 /// Handles all SwiftData read and write operations for the Institution feature.
 final class InstitutionLocalSource {
 
-    // MARK: Properties
     private let context: ModelContext
 
-    // MARK: Init
     /// - Parameter context: The SwiftData model context used for persistence.
     init(context: ModelContext) {
         self.context = context

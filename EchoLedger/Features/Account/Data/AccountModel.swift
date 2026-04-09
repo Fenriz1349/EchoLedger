@@ -13,27 +13,26 @@ import SwiftData
 @Model
 final class AccountModel {
 
-    // MARK: Properties
     var id: UUID
     var institutionId: UUID
     var name: String
     var category: String
+    var isArchived: Bool
 
-    // MARK: Init
     /// Creates a new AccountModel from primitive values.
-    init(
-        id: UUID = UUID(),
-        institutionId: UUID,
-        name: String,
-        category: String
+    init(id: UUID = UUID(),
+         institutionId: UUID,
+         name: String,
+         category: String,
+         isArchived: Bool = false
     ) {
         self.id = id
         self.institutionId = institutionId
         self.name = name
         self.category = category
+        self.isArchived = isArchived
     }
 
-    // MARK: Mapping
     /// Converts this SwiftData model to a Domain Account entity.
     func toDomain() -> Account? {
         guard let accountCategory = AccountCategory(rawValue: category) else { return nil }
@@ -41,7 +40,8 @@ final class AccountModel {
             id: id,
             institutionId: institutionId,
             name: name,
-            category: accountCategory
+            category: accountCategory,
+            isArchived: isArchived
         )
     }
 
@@ -50,5 +50,6 @@ final class AccountModel {
     func update(from account: Account) {
         self.name = account.name
         self.category = account.category.rawValue
+        self.isArchived = account.isArchived
     }
 }

@@ -91,6 +91,7 @@ struct PreviewHelpers {
         return AccountListViewModel(
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
+            archiveAccount: container.archiveAccount,
             userId: userId
         )
     }

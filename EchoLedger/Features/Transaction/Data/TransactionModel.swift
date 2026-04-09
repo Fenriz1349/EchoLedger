@@ -13,7 +13,6 @@ import SwiftData
 @Model
 final class TransactionModel {
 
-    // MARK: Properties
     var id: UUID
     var userId: UUID
     var label: String
@@ -23,21 +22,18 @@ final class TransactionModel {
     var isExpense: Bool
     var category: String
 
-    // MARK: Relationships
     @Relationship(deleteRule: .cascade)
     var splits: [TransactionSplitModel]
 
-    // MARK: Init
     /// Creates a new TransactionModel from primitive values.
-    init(
-        id: UUID = UUID(),
-        userId: UUID,
-        label: String,
-        date: Date,
-        totalAmount: Double,
-        note: String? = nil,
-        isExpense: Bool,
-        category: String
+    init(id: UUID = UUID(),
+         userId: UUID,
+         label: String,
+         date: Date,
+         totalAmount: Double,
+         note: String? = nil,
+         isExpense: Bool,
+         category: String
     ) {
         self.id = id
         self.userId = userId
@@ -50,7 +46,6 @@ final class TransactionModel {
         self.splits = []
     }
 
-    // MARK: Mapping
     /// Converts this SwiftData model to a Domain Transaction entity.
     func toDomain() -> Transaction? {
         guard let transactionCategory = TransactionCategory(rawValue: category) else { return nil }

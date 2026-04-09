@@ -35,6 +35,7 @@ extension DIContainer {
         AccountListViewModel(
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
+            archiveAccount: archiveAccount,
             userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
         )
     }

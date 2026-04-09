@@ -11,16 +11,13 @@ import Foundation
 /// Enforces all business rules before persisting.
 final class AddAccount {
 
-    // MARK: Dependencies
     private let repository: AccountProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for account persistence.
     init(repository: AccountProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Creates and persists a new account.
     /// - Parameters:
     ///   - institutionId: The identifier of the institution this account belongs to.
@@ -39,7 +36,7 @@ final class AddAccount {
         guard trimmed.count <= 50 else {
             throw AccountError.nameTooLong
         }
-        let existing = try await repository.fetchAll(for: institutionId)
+        let existing = try await repository.fetchAllActive(for: institutionId)
         guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() }) else {
             throw AccountError.duplicateName
         }

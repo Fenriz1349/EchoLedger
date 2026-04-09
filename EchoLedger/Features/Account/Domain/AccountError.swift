@@ -22,6 +22,12 @@ enum AccountError: Error, Equatable {
 
     /// Thrown when no account is found for the given identifier.
     case notFound
+    
+    /// Thrown when loading accounts fails.
+    case loadFailed
+    
+    /// Thrown when archiving an account fails.
+    case archiveFailed
 
     /// Returns a human-readable description of the error.
     var localizedDescription: String {
@@ -34,6 +40,10 @@ enum AccountError: Error, Equatable {
             return "Un compte avec ce nom existe déjà dans cet établissement."
         case .notFound:
             return "Compte introuvable."
+        case .loadFailed:
+            return "Impossible de charger les comptes."
+        case .archiveFailed:
+            return "Impossible d'archiver le compte."
         }
     }
 }

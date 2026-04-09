@@ -11,14 +11,12 @@ import Foundation
 /// An institution owns one or more accounts.
 struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
 
-    // MARK: Properties
     let id: UUID
     let userId: UUID
     let name: String
     let category: InstitutionCategory
     let logoURL: String?
 
-    // MARK: Init
     /// Creates a new Institution.
     /// - Parameters:
     ///   - id: Unique identifier. Defaults to a new UUID.

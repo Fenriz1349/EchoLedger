@@ -11,16 +11,13 @@ import Foundation
 /// Useful for monthly or custom period statistics and charts.
 final class GetTransactionsByDateRange {
 
-    // MARK: Dependencies
     private let repository: TransactionProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
     init(repository: TransactionProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Fetches transactions for a specific user within a date range (inclusive).
     /// - Parameters:
     ///   - userId: The identifier of the user.

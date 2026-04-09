@@ -11,16 +11,13 @@ import Foundation
 /// Enforces all business rules before persisting.
 final class UpdateUser {
 
-    // MARK: Dependencies
     private let repository: UserProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for user persistence.
     init(repository: UserProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Updates the current user's profile with new values.
     /// - Parameter input: The data required to update the user.
     /// - Throws: `UserError` if any business rule is violated.

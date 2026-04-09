@@ -12,13 +12,11 @@ import Foundation
 /// Owns institutions which in turn own accounts.
 struct User: Identifiable, Equatable, Codable, Sendable {
 
-    // MARK: Properties
     let id: UUID
     let displayName: String
     let email: String
     let photoURL: String?
 
-    // MARK: Init
     /// Creates a new User.
     /// - Parameters:
     ///   - id: Internal unique identifier. Defaults to a new UUID.

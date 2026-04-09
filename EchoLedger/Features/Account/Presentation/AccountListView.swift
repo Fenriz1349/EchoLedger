@@ -33,6 +33,13 @@ struct AccountListView: View {
                                             .foregroundStyle(.secondary)
                                             .font(.caption)
                                     }
+                                    .swipeActions(edge: .trailing) {
+                                        Button(role: .destructive) {
+                                            Task { await viewModel.archive(account) }
+                                        } label: {
+                                            Label("Archiver", systemImage: "trash")
+                                        }
+                                    }
                                 }
                             }
                         }

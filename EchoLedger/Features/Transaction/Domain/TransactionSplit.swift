@@ -12,12 +12,10 @@ import Foundation
 /// The sum of all splits for a given transaction must equal the transaction's totalAmount.
 struct TransactionSplit: Identifiable, Equatable, Codable {
 
-    // MARK: Properties
     let id: UUID
     var accountId: UUID
     var amount: Double
 
-    // MARK: Init
     /// Creates a new TransactionSplit.
     /// - Parameters:
     ///   - id: Unique identifier. Defaults to a new UUID.

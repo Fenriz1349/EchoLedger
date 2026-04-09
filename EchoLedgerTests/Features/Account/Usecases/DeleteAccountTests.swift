@@ -12,12 +12,12 @@ import XCTest
 final class DeleteAccountTests: XCTestCase {
 
     private var repository: AccountDouble!
-    private var useCase: DeleteAccount!
+    private var useCase: ArchiveAccount!
 
     override func setUp() {
         super.setUp()
         repository = AccountDouble()
-        useCase = DeleteAccount(repository: repository)
+        useCase = ArchiveAccount(repository: repository)
     }
 
     override func tearDown() {

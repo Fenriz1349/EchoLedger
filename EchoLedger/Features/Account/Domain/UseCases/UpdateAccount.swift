@@ -11,16 +11,13 @@ import Foundation
 /// Re-enforces all business rules before persisting.
 final class UpdateAccount {
 
-    // MARK: Dependencies
     private let repository: AccountProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for account persistence.
     init(repository: AccountProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Updates an existing account with new values.
     /// - Parameter input: The data required to update the account.
     /// - Throws: `AccountError` if any business rule is violated.

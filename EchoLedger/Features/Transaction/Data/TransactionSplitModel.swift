@@ -13,12 +13,10 @@ import SwiftData
 @Model
 final class TransactionSplitModel {
 
-    // MARK: Properties
     var id: UUID
     var accountId: UUID
     var amount: Double
 
-    // MARK: Init
     /// Creates a new TransactionSplitModel from primitive values.
     init(
         id: UUID = UUID(),
@@ -30,7 +28,6 @@ final class TransactionSplitModel {
         self.amount = amount
     }
 
-    // MARK: Mapping
     /// Converts this SwiftData model to a Domain TransactionSplit entity.
     func toDomain() -> TransactionSplit {
         TransactionSplit(

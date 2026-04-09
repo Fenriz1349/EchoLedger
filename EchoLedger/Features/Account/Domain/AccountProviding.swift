@@ -17,6 +17,16 @@ protocol AccountProviding {
     /// - Returns: An array of accounts ordered by name.
     func fetchAll(for institutionId: UUID) async throws -> [Account]
 
+    /// Fetches all activet accounts belonging to a given institution.
+    /// - Parameter institutionId: The identifier of the institution.
+    /// - Returns: An array of accounts ordered by name.
+    func fetchAllActive(for institutionId: UUID) async throws -> [Account]
+    
+    /// Fetches all archived accounts belonging to a given institution.
+    /// - Parameter institutionId: The identifier of the institution.
+    /// - Returns: An array of accounts ordered by name.
+    func fetchAllArchived(for institutionId: UUID) async throws -> [Account]
+
     /// Fetches a single account by its identifier.
     /// - Parameter id: The unique identifier of the account.
     /// - Returns: The matching account.
