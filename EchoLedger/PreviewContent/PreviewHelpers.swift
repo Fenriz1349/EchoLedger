@@ -110,7 +110,8 @@ struct PreviewHelpers {
             updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
-            userId: userId
+            userId: userId,
+            addAccountFormViewModel: container.makeAccountFormViewModel()
         )
     }
 

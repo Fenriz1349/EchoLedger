@@ -26,6 +26,8 @@ final class TransactionFormViewModel {
     var isExpense: Bool = true
     var category: TransactionCategory = .other
     var splits: [TransactionSplit] = []
+    var showAddAccountForm = false
+    let addAccountFormViewModel: AccountFormViewModel
 
     // MARK: UI State
     var availableAccounts: [Account] = []
@@ -73,6 +75,7 @@ final class TransactionFormViewModel {
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         userId: UUID,
+        addAccountFormViewModel: AccountFormViewModel,
         existingTransaction: Transaction? = nil
     ) {
         self.addTransaction = addTransaction
@@ -81,6 +84,7 @@ final class TransactionFormViewModel {
         self.getAccounts = getAccounts
         self.userId = userId
         self.existingTransaction = existingTransaction
+        self.addAccountFormViewModel = addAccountFormViewModel
 
         if let existing = self.existingTransaction {
             prefillTransaction(with: existing)
