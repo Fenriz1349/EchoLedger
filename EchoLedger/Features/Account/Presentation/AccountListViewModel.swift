@@ -11,10 +11,17 @@ import Foundation
 @Observable
 final class AccountListViewModel {
 
-    var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] = []
+    var accounts: [Account] = []
+    var institutions: [Institution] = []
     var isLoading = false
     var errorMessage: String?
-    var showAccountForm = false
+    
+    var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
+        institutions.compactMap { institution in
+            let accountsForInstitution = accounts.filter { $0.institutionId == institution.id }
+            return accountsForInstitution.isEmpty ? nil : (institution, accountsForInstitution)
+        }
+    }
 
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
@@ -39,19 +46,24 @@ final class AccountListViewModel {
     func load() async {
         isLoading = true
         errorMessage = nil
+        
         do {
             let institutions = try await getInstitutions.execute(for: userId)
-            var result: [(institution: Institution, accounts: [Account])] = []
+            self.institutions = institutions
+            
+            var allAccounts: [Account] = []
+            
             for institution in institutions {
                 let accounts = try await getAccounts.execute(for: institution.id)
-                if !accounts.isEmpty {
-                    result.append((institution: institution, accounts: accounts))
-                }
+                allAccounts.append(contentsOf: accounts)
             }
-            institutionsWithAccounts = result
+            
+            self.accounts = allAccounts
+            
         } catch {
             errorMessage = AccountError.loadFailed.localizedDescription
         }
+        
         isLoading = false
     }
     

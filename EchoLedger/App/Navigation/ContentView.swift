@@ -22,7 +22,7 @@ struct ContentView: View {
                 TransactionListView(coordinator: coordinator)
                     .tabItem { Label("Transactions", systemImage: "list.bullet") }
                 
-                AccountListView(viewModel: coordinator.accountListViewModel)
+                AccountListView(coordinator: coordinator)
                     .tabItem { Label("Comptes", systemImage: "building.columns") }
             }
 

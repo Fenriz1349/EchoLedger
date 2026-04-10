@@ -27,4 +27,8 @@ final class AppCoordinator {
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
         container.makeTransactionFormViewModel(existing: existing)
     }
+    
+    func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {
+        container.makeAccountFormViewModel(existing: existing)
+    }
 }
