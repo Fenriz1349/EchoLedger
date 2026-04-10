@@ -11,7 +11,7 @@ import Foundation
 /// Belongs directly to a User. Account relationships are managed via splits.
 /// The total amount is always positive — isExpense determines the direction.
 /// A transaction must always have at least one associated TransactionSplit.
-struct Transaction: Identifiable, Equatable, Codable {
+struct Transaction: Identifiable, Equatable, Codable, Hashable {
 
     let id: UUID
     let userId: UUID

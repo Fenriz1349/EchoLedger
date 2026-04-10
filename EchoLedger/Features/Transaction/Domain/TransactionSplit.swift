@@ -10,7 +10,7 @@ import Foundation
 /// Represents the allocation of a portion of a Transaction to a specific Account.
 /// Acts as a join entity between Transaction and Account.
 /// The sum of all splits for a given transaction must equal the transaction's totalAmount.
-struct TransactionSplit: Identifiable, Equatable, Codable {
+struct TransactionSplit: Identifiable, Equatable, Codable, Hashable {
 
     let id: UUID
     var accountId: UUID

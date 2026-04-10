@@ -11,7 +11,8 @@ struct TransactionListView: View {
 
     @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
-    @State private var selectedTransaction: Transaction?
+    @State private var detailTransaction: Transaction?
+    @State private var editTransaction: Transaction?
 
     var body: some View {
         NavigationStack {
@@ -38,10 +39,13 @@ struct TransactionListView: View {
                                 }
 
                                 Spacer()
-
+                                
                                 Text(item.totalAmount.toEuro)
                                     .foregroundStyle(item.isExpense ? Color.primary : Color.green)
                                     .fontWeight(item.isExpense ? .regular : .semibold)
+                            }
+                            .onTapGesture {
+                                detailTransaction = item
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -50,7 +54,7 @@ struct TransactionListView: View {
                                     Label("Supprimer", systemImage: "trash")
                                 }
                                 Button {
-                                    selectedTransaction = item
+                                    editTransaction = item
                                 } label: {
                                     Label("Modifier", systemImage: "pencil")
                                 }
@@ -59,20 +63,24 @@ struct TransactionListView: View {
                     }
                 }
             }
-        }.navigationTitle("Transactions")
-            .sheet(item: $selectedTransaction) { transaction in
+            .navigationTitle("Transactions")
+            .navigationDestination(item: $detailTransaction) { transaction in
+                TransactionDetailView(transaction: transaction)
+            }
+            .sheet(item: $editTransaction) { transaction in
                 TransactionFormView(
                     viewModel: coordinator.makeTransactionFormViewModel(existing: transaction)
                 )
             }
-            .onChange(of: selectedTransaction) {
-                if selectedTransaction == nil {
+            .onChange(of: editTransaction) {
+                if editTransaction == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }
             .task {
                 await coordinator.transactionListViewModel.load()
             }
+        }
     }
 }
 
