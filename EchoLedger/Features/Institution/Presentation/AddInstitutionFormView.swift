@@ -9,9 +9,10 @@ import SwiftUI
 import CustomTextFields
 import CustomLabels
 
+/// Inline form for creating a new institution, embedded inside AccountFormView.
 struct AddInstitutionFormView: View {
 
-    @State var viewModel: AddInstitutionFormViewModel
+    @Bindable var viewModel: AddInstitutionFormViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {

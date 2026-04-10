@@ -39,7 +39,7 @@ enum AccountCategory: String, CaseIterable, Codable, Sendable {
     var icon: String {
         switch self {
         case .checking:     return "banknote"
-        case .savings:      return "piggybank"
+        case .savings:      return "eurosign.bank.building"
         case .creditCard:   return "creditcard"
         case .crypto:       return "bitcoinsign.circle"
         case .giftCard:     return "gift"

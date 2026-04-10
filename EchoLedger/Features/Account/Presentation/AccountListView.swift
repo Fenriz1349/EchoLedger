@@ -7,62 +7,81 @@
 
 import SwiftUI
 
+/// Displays accounts grouped by institution, with navigation to detail and swipe actions for edit and archive.
 struct AccountListView: View {
 
-    @State var viewModel: AccountListViewModel
     @Environment(DIContainer.self) private var container
+    let coordinator: AppCoordinator
     @State private var selectedAccount: Account?
+    @State private var sheet: AccountSheet?
 
     var body: some View {
         NavigationStack {
             Group {
-                if viewModel.isLoading {
+                if coordinator.accountListViewModel.isLoading {
                     ProgressView()
-                } else if viewModel.institutionsWithAccounts.isEmpty {
+                } else if coordinator.accountListViewModel.institutionsWithAccounts.isEmpty {
                     Text("Aucun compte — ajoutez-en un avec le bouton +")
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(viewModel.institutionsWithAccounts, id: \.institution.id) { item in
+                        ForEach(coordinator.accountListViewModel.institutionsWithAccounts, id: \.institution.id) { item in
                             Section(item.institution.name) {
                                 ForEach(item.accounts) { account in
-                                    AccountRowView(
-                                        account: account,
-                                        onEdit: { selectedAccount = account },
-                                        onArchive: { Task { await viewModel.archive(account) } }
-                                    )
+                                    NavigationLink(value: account) {
+                                        AccountRowView(
+                                            account: account,
+                                            onEdit: { sheet = .edit(account) },
+                                            onArchive: { Task { await coordinator.accountListViewModel.archive(account) } }
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        .navigationTitle("Comptes")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    viewModel.showAccountForm = true
-                } label: {
-                    Image(systemName: "plus")
+            .navigationTitle("Comptes")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        sheet = .add
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
-        }
-        .sheet(item: $selectedAccount) { account in
-            AccountFormView(viewModel: container.makeAccountFormViewModel(existing: account))
-        }
-        .task {
-            await viewModel.load()
-        }
-        .onChange(of: viewModel.showAccountForm) {
-            if !viewModel.showAccountForm {
-                Task { await viewModel.load() }
+            .navigationDestination(for: Account.self) { account in
+                AccountDetailView(account: account, coordinator: coordinator)
+                    .onDisappear {
+                        Task { await coordinator.accountListViewModel.load() }
+                    }
+            }
+            .sheet(item: $sheet) { sheet in
+                switch sheet {
+                case .add:
+                    AccountFormView(
+                        viewModel: container.makeAccountFormViewModel()
+                    )
+                case .edit(let account):
+                    AccountFormView(
+                        viewModel: container.makeAccountFormViewModel(existing: account)
+                    )
+                }
+            }
+            .onChange(of: sheet) {
+                if sheet == nil {
+                    Task { await coordinator.accountListViewModel.load() }
+                }
+            }
+            .task {
+                await coordinator.accountListViewModel.load()
             }
         }
     }
 }
 
 #Preview {
-    AccountListView(viewModel: PreviewHelpers.makeAccountListViewModel())
+    AccountListView(coordinator: PreviewHelpers.appCoordinator)
         .environment(PreviewHelpers.container)
 }

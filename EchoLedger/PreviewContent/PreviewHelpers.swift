@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+/// Provides pre-configured ViewModels and a seeded DIContainer for SwiftUI previews.
 struct PreviewHelpers {
 
     static let container = DIContainer(inMemory: true)
@@ -66,6 +67,7 @@ struct PreviewHelpers {
         return AppCoordinator(container: container)
     }
 
+    /// - Returns: An AccountFormViewModel seeded with preview institutions and accounts.
     static func makeccountFormViewModel() -> AccountFormViewModel {
         seedInstitutionsAndAccounts()
         return AccountFormViewModel(
@@ -77,6 +79,8 @@ struct PreviewHelpers {
         )
     }
 
+    /// - Parameter onAdd: Callback invoked when an institution is created. Defaults to a no-op.
+    /// - Returns: An AddInstitutionFormViewModel wired to the preview container.
     static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in })
     -> AddInstitutionFormViewModel {
         return AddInstitutionFormViewModel(
@@ -87,6 +91,7 @@ struct PreviewHelpers {
         )
     }
 
+    /// - Returns: An AccountListViewModel seeded with preview institutions and accounts.
     static func makeAccountListViewModel() -> AccountListViewModel {
         seedInstitutionsAndAccounts()
         return AccountListViewModel(
@@ -97,6 +102,7 @@ struct PreviewHelpers {
         )
     }
 
+    /// - Returns: A TransactionFormViewModel seeded with preview institutions and accounts.
     static func makeTransactionFormViewModel() -> TransactionFormViewModel {
         seedInstitutionsAndAccounts()
         return TransactionFormViewModel(
@@ -104,10 +110,12 @@ struct PreviewHelpers {
             updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
-            userId: userId
+            userId: userId,
+            addAccountFormViewModel: container.makeAccountFormViewModel()
         )
     }
 
+    /// - Returns: A TransactionListViewModel seeded with preview transactions.
     static func makeTransactionListViewModel() -> TransactionListViewModel {
         seedTransactions()
         return TransactionListViewModel(

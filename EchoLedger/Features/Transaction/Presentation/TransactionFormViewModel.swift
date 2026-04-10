@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages form state and submission logic for creating or editing a transaction.
 @MainActor
 @Observable
 final class TransactionFormViewModel {
@@ -25,6 +26,8 @@ final class TransactionFormViewModel {
     var isExpense: Bool = true
     var category: TransactionCategory = .other
     var splits: [TransactionSplit] = []
+    var showAddAccountForm = false
+    let addAccountFormViewModel: AccountFormViewModel
 
     // MARK: UI State
     var availableAccounts: [Account] = []
@@ -72,6 +75,7 @@ final class TransactionFormViewModel {
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         userId: UUID,
+        addAccountFormViewModel: AccountFormViewModel,
         existingTransaction: Transaction? = nil
     ) {
         self.addTransaction = addTransaction
@@ -80,6 +84,7 @@ final class TransactionFormViewModel {
         self.getAccounts = getAccounts
         self.userId = userId
         self.existingTransaction = existingTransaction
+        self.addAccountFormViewModel = addAccountFormViewModel
 
         if let existing = self.existingTransaction {
             prefillTransaction(with: existing)
@@ -110,6 +115,8 @@ final class TransactionFormViewModel {
         }
     }
 
+    /// Populates form fields from an existing transaction for editing.
+    /// - Parameter transaction: The transaction whose values will pre-fill the form.
     private func prefillTransaction(with transaction: Transaction) {
         amount = String(transaction.totalAmount)
         label = transaction.label

@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// Displays the full list of transactions with navigation to detail and swipe actions for delete and edit.
 struct TransactionListView: View {
 
     @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
-    @State private var selectedTransaction: Transaction?
+    @State private var editTransaction: Transaction?
 
     var body: some View {
         NavigationStack {
@@ -24,24 +25,26 @@ struct TransactionListView: View {
                 } else {
                     List {
                         ForEach(coordinator.transactionListViewModel.transactions, id: \.id) { item in
-                            HStack {
-                                let name = item.category.icon
-                                Image(systemName: name)
-                                    .frame(width: 32)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(item.label)
-                                        .font(.body)
-                                    Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                            NavigationLink(value: item) {
+                                HStack {
+                                    let name = item.category.icon
+                                    Image(systemName: name)
+                                        .frame(width: 32)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(item.label)
+                                            .font(.body)
+                                        Text(item.date.formatted(date: .abbreviated, time: .omitted))
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.totalAmount.toEuro)
+                                        .foregroundStyle(item.isExpense ? Color.primary : Color.green)
+                                        .fontWeight(item.isExpense ? .regular : .semibold)
                                 }
-
-                                Spacer()
-
-                                Text(item.totalAmount.toEuro)
-                                    .foregroundStyle(item.isExpense ? Color.primary : Color.green)
-                                    .fontWeight(item.isExpense ? .regular : .semibold)
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -50,7 +53,7 @@ struct TransactionListView: View {
                                     Label("Supprimer", systemImage: "trash")
                                 }
                                 Button {
-                                    selectedTransaction = item
+                                    editTransaction = item
                                 } label: {
                                     Label("Modifier", systemImage: "pencil")
                                 }
@@ -59,20 +62,27 @@ struct TransactionListView: View {
                     }
                 }
             }
-        }.navigationTitle("Transactions")
-            .sheet(item: $selectedTransaction) { transaction in
+            .navigationTitle("Transactions")
+            .navigationDestination(for: Transaction.self) { transaction in
+                TransactionDetailView(transaction: transaction, coordinator: coordinator)
+                    .onDisappear {
+                        Task { await coordinator.transactionListViewModel.load() }
+                    }
+            }
+            .sheet(item: $editTransaction) { transaction in
                 TransactionFormView(
                     viewModel: coordinator.makeTransactionFormViewModel(existing: transaction)
                 )
             }
-            .onChange(of: selectedTransaction) {
-                if selectedTransaction == nil {
+            .onChange(of: editTransaction) {
+                if editTransaction == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }
             .task {
                 await coordinator.transactionListViewModel.load()
             }
+        }
     }
 }
 

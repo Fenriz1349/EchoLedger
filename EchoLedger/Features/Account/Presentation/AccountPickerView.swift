@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A picker allowing the user to select one account from a list of available accounts.
 struct AccountPickerView: View {
 
     @Binding var selectedAccount: Account?
