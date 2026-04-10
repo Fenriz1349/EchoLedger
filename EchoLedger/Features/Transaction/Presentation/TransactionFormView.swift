@@ -78,14 +78,14 @@ struct TransactionFormView: View {
                     }
                 }
             }
-            .navigationTitle("Nouvelle transaction")
+            .navigationTitle(viewModel.existingTransaction == nil ? "Nouvelle transaction" :"Modifier la transaction")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Ajouter") {
+                    Button(viewModel.existingTransaction == nil ? "Ajouter" : "Modifier ") {
                         Task { await viewModel.submit() }
                     }
                     .disabled(!viewModel.isValid || viewModel.isLoading)

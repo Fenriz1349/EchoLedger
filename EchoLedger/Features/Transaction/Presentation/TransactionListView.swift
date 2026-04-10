@@ -11,7 +11,6 @@ struct TransactionListView: View {
 
     @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
-    @State private var detailTransaction: Transaction?
     @State private var editTransaction: Transaction?
 
     var body: some View {
@@ -25,27 +24,26 @@ struct TransactionListView: View {
                 } else {
                     List {
                         ForEach(coordinator.transactionListViewModel.transactions, id: \.id) { item in
-                            HStack {
-                                let name = item.category.icon
-                                Image(systemName: name)
-                                    .frame(width: 32)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(item.label)
-                                        .font(.body)
-                                    Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
+                            NavigationLink(value: item) {
+                                HStack {
+                                    let name = item.category.icon
+                                    Image(systemName: name)
+                                        .frame(width: 32)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(item.label)
+                                            .font(.body)
+                                        Text(item.date.formatted(date: .abbreviated, time: .omitted))
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Text(item.totalAmount.toEuro)
+                                        .foregroundStyle(item.isExpense ? Color.primary : Color.green)
+                                        .fontWeight(item.isExpense ? .regular : .semibold)
                                 }
-
-                                Spacer()
-                                
-                                Text(item.totalAmount.toEuro)
-                                    .foregroundStyle(item.isExpense ? Color.primary : Color.green)
-                                    .fontWeight(item.isExpense ? .regular : .semibold)
-                            }
-                            .onTapGesture {
-                                detailTransaction = item
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -64,8 +62,11 @@ struct TransactionListView: View {
                 }
             }
             .navigationTitle("Transactions")
-            .navigationDestination(item: $detailTransaction) { transaction in
-                TransactionDetailView(transaction: transaction)
+            .navigationDestination(for: Transaction.self) { transaction in
+                TransactionDetailView(transaction: transaction, coordinator: coordinator)
+                    .onDisappear {
+                        Task { await coordinator.transactionListViewModel.load() }
+                    }
             }
             .sheet(item: $editTransaction) { transaction in
                 TransactionFormView(

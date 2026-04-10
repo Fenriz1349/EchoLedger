@@ -47,6 +47,9 @@ struct AccountListView: View {
                     }
                 }
             }
+            .sheet(isPresented: $viewModel.showAccountForm) {
+                AccountFormView(viewModel: container.makeAccountFormViewModel())
+            }
             .sheet(item: $selectedAccount) { account in
                 AccountFormView(viewModel: container.makeAccountFormViewModel(existing: account))
             }

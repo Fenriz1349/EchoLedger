@@ -23,14 +23,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 // MARK: - EchoLedgerApp
 @main
 struct EchoLedgerApp: App {
-
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var container = DIContainer()
+    @State private var coordinator: AppCoordinator?
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(container)
+            Group {
+                if let coordinator {
+                    ContentView(coordinator: coordinator)
+                        .environment(container)
+                } else {
+                    ProgressView()
+                }
+            }
+            .task {
+                if coordinator == nil {
+                    coordinator = AppCoordinator(container: container)
+                }
+            }
         }
     }
 }
