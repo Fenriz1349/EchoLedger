@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages the list of transactions and handles delete operations.
 @MainActor
 @Observable
 final class TransactionListViewModel {

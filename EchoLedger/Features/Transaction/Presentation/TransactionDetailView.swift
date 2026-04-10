@@ -8,6 +8,7 @@
 import SwiftUI
 import CustomLabels
 
+/// Shows the full details of a transaction, with actions to edit or delete it.
 struct TransactionDetailView: View {
 
     let transaction: Transaction

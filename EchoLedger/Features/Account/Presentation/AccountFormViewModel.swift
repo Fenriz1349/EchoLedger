@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages form state and submission logic for creating or editing an account.
 @MainActor
 @Observable
 final class AccountFormViewModel {

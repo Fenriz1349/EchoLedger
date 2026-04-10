@@ -9,6 +9,7 @@ import SwiftUI
 import CustomTextFields
 import CustomLabels
 
+/// Modal form for creating or editing an account, including inline institution creation.
 struct AccountFormView: View {
 
     @State var viewModel: AccountFormViewModel

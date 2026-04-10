@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages form state and submission logic for creating or editing a transaction.
 @MainActor
 @Observable
 final class TransactionFormViewModel {
@@ -110,6 +111,8 @@ final class TransactionFormViewModel {
         }
     }
 
+    /// Populates form fields from an existing transaction for editing.
+    /// - Parameter transaction: The transaction whose values will pre-fill the form.
     private func prefillTransaction(with transaction: Transaction) {
         amount = String(transaction.totalAmount)
         label = transaction.label

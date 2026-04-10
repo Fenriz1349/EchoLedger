@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A single list row displaying an account with swipe actions for edit and archive.
 struct AccountRowView: View {
 
     let account: Account

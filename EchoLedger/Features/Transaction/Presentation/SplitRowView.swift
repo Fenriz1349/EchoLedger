@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A single editable row representing one split of a transaction across an account.
 struct SplitRowView: View {
 
     let index: Int

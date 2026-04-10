@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages the grouped list of accounts by institution and handles archive operations.
 @MainActor
 @Observable
 final class AccountListViewModel {
@@ -16,6 +17,7 @@ final class AccountListViewModel {
     var isLoading = false
     var errorMessage: String?
     
+    /// Returns institutions paired with their non-empty account lists, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
             let accountsForInstitution = accounts.filter { $0.institutionId == institution.id }

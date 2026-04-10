@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Displays the full list of transactions with navigation to detail and swipe actions for delete and edit.
 struct TransactionListView: View {
 
     @Environment(DIContainer.self) private var container

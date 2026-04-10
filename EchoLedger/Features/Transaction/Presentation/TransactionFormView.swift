@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Modal form for creating or editing a transaction, including splits across multiple accounts.
 struct TransactionFormView: View {
 
     @State var viewModel: TransactionFormViewModel

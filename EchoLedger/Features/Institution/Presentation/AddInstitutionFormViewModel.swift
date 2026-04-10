@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Manages form state and submission for creating a new institution inline within an account form.
 @MainActor
 @Observable
 final class AddInstitutionFormViewModel {

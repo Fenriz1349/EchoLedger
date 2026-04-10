@@ -8,6 +8,7 @@
 import SwiftUI
 import CustomLabels
 
+/// Shows the full details of an account, with actions to edit or archive it.
 struct AccountDetailView: View {
 
     let account: Account

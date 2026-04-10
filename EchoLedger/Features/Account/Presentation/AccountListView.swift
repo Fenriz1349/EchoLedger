@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Displays accounts grouped by institution, with navigation to detail and swipe actions for edit and archive.
 struct AccountListView: View {
 
     @Environment(DIContainer.self) private var container
