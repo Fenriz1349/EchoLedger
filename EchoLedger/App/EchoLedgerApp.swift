@@ -25,7 +25,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct EchoLedgerApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
     @State private var container = DIContainer()
 
     var body: some Scene {

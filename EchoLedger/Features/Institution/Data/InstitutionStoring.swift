@@ -10,16 +10,12 @@ import Foundation
 /// Concrete implementation of InstitutionProviding.
 final class InstitutionStoring: InstitutionProviding {
 
-    // MARK: Dependencies
     private let local: InstitutionLocalSource
 
-    // MARK: Init
     /// - Parameter local: The local SwiftData data source.
     init(local: InstitutionLocalSource) {
         self.local = local
     }
-
-    // MARK: InstitutionProviding
 
     /// Fetches all institutions for a given user from local storage.
     func fetchAll(for userId: UUID) async throws -> [Institution] {

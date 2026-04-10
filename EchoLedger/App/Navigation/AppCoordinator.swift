@@ -6,3 +6,25 @@
 //
 
 import Foundation
+
+/// Owns all ViewModels and coordinates navigation for the application.
+@MainActor
+@Observable
+final class AppCoordinator {
+
+    let transactionListViewModel: TransactionListViewModel
+    let accountListViewModel: AccountListViewModel
+
+    private let container: DIContainer
+
+    init(container: DIContainer) {
+        self.container = container
+
+        self.transactionListViewModel = container.makeTransactionListViewModel()
+        self.accountListViewModel = container.makeAccountListViewModel()
+    }
+
+    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
+        container.makeTransactionFormViewModel(existing: existing)
+    }
+}

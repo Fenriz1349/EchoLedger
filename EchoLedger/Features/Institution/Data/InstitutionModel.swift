@@ -13,18 +13,15 @@ import SwiftData
 @Model
 final class InstitutionModel {
 
-    // MARK: Properties
     var id: UUID
     var userId: UUID
     var name: String
     var category: String
     var logoURL: String?
 
-    // MARK: Relationships
     @Relationship(deleteRule: .cascade)
     var accounts: [AccountModel]
 
-    // MARK: Init
     /// Creates a new InstitutionModel from a Domain Institution entity.
     init(
         id: UUID = UUID(),

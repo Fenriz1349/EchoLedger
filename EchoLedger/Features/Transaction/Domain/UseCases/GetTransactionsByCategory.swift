@@ -11,16 +11,13 @@ import Foundation
 /// Useful for category-based charts and statistics.
 final class GetTransactionsByCategory {
 
-    // MARK: Dependencies
     private let repository: TransactionProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
     init(repository: TransactionProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Fetches transactions for a specific user filtered by category.
     /// - Parameters:
     ///   - userId: The identifier of the user.

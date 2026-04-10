@@ -11,11 +11,9 @@ import Foundation
 /// This is the only UseCase that depends on both AccountProviding and TransactionProviding.
 final class GetAccountBalance {
 
-    // MARK: Dependencies
     private let accountRepository: AccountProviding
     private let transactionRepository: TransactionProviding
 
-    // MARK: Init
     /// - Parameters:
     ///   - accountRepository: The data contract for account persistence.
     ///   - transactionRepository: The data contract for transaction persistence.
@@ -24,7 +22,6 @@ final class GetAccountBalance {
         self.transactionRepository = transactionRepository
     }
 
-    // MARK: Execute
     /// Computes the balance of a given account from all its associated transaction splits.
     /// Expenses are subtracted, income is added.
     /// - Parameters:

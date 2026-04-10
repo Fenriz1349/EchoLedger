@@ -1,5 +1,5 @@
 //
-//  AddAccountView.swift
+//  AccountFormView.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 26/03/2026.
@@ -9,9 +9,9 @@ import SwiftUI
 import CustomTextFields
 import CustomLabels
 
-struct AddAccountView: View {
+struct AccountFormView: View {
 
-    @State var viewModel: AddAccountViewModel
+    @State var viewModel: AccountFormViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -72,14 +72,14 @@ struct AddAccountView: View {
                     }
                 }
             }
-            .navigationTitle("Nouveau compte")
+            .navigationTitle(viewModel.existingAccount == nil ? "Nouveau compte" : "Modifier le compte")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Ajouter") {
+                    Button(viewModel.existingAccount == nil ? "Ajouter" : "Modifier") {
                         Task { await viewModel.submit() }
                     }
                     .disabled(!viewModel.isValid || viewModel.isLoading)
@@ -96,6 +96,6 @@ struct AddAccountView: View {
 }
 
 #Preview {
-    AddAccountView(viewModel: PreviewHelpers.makeAddAccountViewModel())
+    AccountFormView(viewModel: PreviewHelpers.makeccountFormViewModel())
         .environment(PreviewHelpers.container)
 }

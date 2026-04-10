@@ -13,6 +13,9 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when a transaction is created or updated with no splits.
     case missingSplits
+    
+    /// Thrown when a transaction is created or updated with the same account in differents splits
+    case redundantSplitsAccounts
 
     /// Thrown when the sum of split amounts does not equal the transaction's totalAmount.
     case splitAmountMismatch
@@ -31,12 +34,17 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when the start date is after the end date in a date range query.
     case invalidDateRange
+    
+    /// Thrown when loading transactions or related data fails.
+    case loadFailed
 
     /// Returns a human-readable description of the error.
     var localizedDescription: String {
         switch self {
         case .missingSplits:
             return "Une transaction doit avoir au moins une ventilation."
+        case .redundantSplitsAccounts:
+            return "Chaque compte doit être unique"
         case .splitAmountMismatch:
             return "La somme des ventilations ne correspond pas au montant total."
         case .invalidSplitAmount:
@@ -49,6 +57,8 @@ enum TransactionError: Error, Equatable {
             return "Transaction introuvable."
         case .invalidDateRange:
             return "La date de début doit être antérieure à la date de fin."
+        case .loadFailed:
+            return "Impossible de charger les données."
         }
     }
 }

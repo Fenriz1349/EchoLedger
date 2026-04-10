@@ -13,7 +13,6 @@ import Foundation
 /// A transaction must always have at least one associated TransactionSplit.
 struct Transaction: Identifiable, Equatable, Codable {
 
-    // MARK: Properties
     let id: UUID
     let userId: UUID
     let label: String
@@ -24,7 +23,6 @@ struct Transaction: Identifiable, Equatable, Codable {
     let category: TransactionCategory
     let splits: [TransactionSplit]
 
-    // MARK: Init
     /// Creates a new Transaction.
     /// - Parameters:
     ///   - id: Unique identifier. Defaults to a new UUID.
@@ -37,16 +35,15 @@ struct Transaction: Identifiable, Equatable, Codable {
     ///   - isExpense: True if this is an expense, false if it is income.
     ///   - category: Category of the transaction.
     ///   - splits: Ventilation of the total amount across accounts. Must not be empty.
-    init(
-        id: UUID = UUID(),
-        userId: UUID,
-        label: String,
-        date: Date,
-        totalAmount: Double,
-        note: String? = nil,
-        isExpense: Bool,
-        category: TransactionCategory,
-        splits: [TransactionSplit]
+    init(id: UUID = UUID(),
+         userId: UUID,
+         label: String,
+         date: Date,
+         totalAmount: Double,
+         note: String? = nil,
+         isExpense: Bool,
+         category: TransactionCategory,
+         splits: [TransactionSplit]
     ) {
         self.id = id
         self.userId = userId

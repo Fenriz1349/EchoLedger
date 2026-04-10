@@ -10,16 +10,12 @@ import Foundation
 /// Concrete implementation of TransactionProviding.
 final class TransactionStoring: TransactionProviding {
 
-    // MARK: Dependencies
     private let local: TransactionLocalSource
 
-    // MARK: Init
     /// - Parameter local: The local SwiftData data source.
     init(local: TransactionLocalSource) {
         self.local = local
     }
-
-    // MARK: TransactionProviding
 
     /// Fetches all transactions for a given user from local storage.
     func fetchAll(for userId: UUID) async throws -> [Transaction] {

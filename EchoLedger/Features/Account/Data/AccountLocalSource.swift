@@ -12,10 +12,8 @@ import SwiftData
 /// Handles all SwiftData read and write operations for the Account feature.
 final class AccountLocalSource {
 
-    // MARK: Properties
     private let context: ModelContext
 
-    // MARK: Init
     /// - Parameter context: The SwiftData model context used for persistence.
     init(context: ModelContext) {
         self.context = context
@@ -29,6 +27,30 @@ final class AccountLocalSource {
     func fetchAll(for institutionId: UUID) throws -> [Account] {
         let descriptor = FetchDescriptor<AccountModel>(
             predicate: #Predicate { $0.institutionId == institutionId },
+            sortBy: [SortDescriptor(\.name)]
+        )
+        return try context.fetch(descriptor).compactMap { $0.toDomain() }
+    }
+
+    /// Fetches all active (non-archived) accounts belonging to a given institution.
+    /// - Parameter institutionId: The identifier of the institution.
+    /// - Returns: An array of active accounts ordered by name.
+    /// - Throws: `AccountError` if the fetch fails.
+    func fetchAllActive(for institutionId: UUID) throws -> [Account] {
+        let descriptor = FetchDescriptor<AccountModel>(
+            predicate: #Predicate { $0.institutionId == institutionId && !$0.isArchived },
+            sortBy: [SortDescriptor(\.name)]
+        )
+        return try context.fetch(descriptor).compactMap { $0.toDomain() }
+    }
+
+    /// Fetches all archived accounts belonging to a given institution.
+    /// - Parameter institutionId: The identifier of the institution.
+    /// - Returns: An array of archived accounts ordered by name.
+    /// - Throws: `AccountError` if the fetch fails.
+    func fetchAllArchived(for institutionId: UUID) throws -> [Account] {
+        let descriptor = FetchDescriptor<AccountModel>(
+            predicate: #Predicate { $0.institutionId == institutionId && $0.isArchived },
             sortBy: [SortDescriptor(\.name)]
         )
         return try context.fetch(descriptor).compactMap { $0.toDomain() }

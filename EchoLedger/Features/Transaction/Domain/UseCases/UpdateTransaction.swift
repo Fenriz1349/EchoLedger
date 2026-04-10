@@ -12,16 +12,13 @@ import Foundation
 /// Re-enforces all business rules before persisting.
 final class UpdateTransaction {
 
-    // MARK: Dependencies
     private let repository: TransactionProviding
 
-    // MARK: Init
     /// - Parameter repository: The data contract for transaction persistence.
     init(repository: TransactionProviding) {
         self.repository = repository
     }
 
-    // MARK: Execute
     /// Updates an existing transaction with new values and splits.
     /// - Parameter input: The data required to update the transaction.
     /// - Throws: `TransactionError` if any business rule is violated.

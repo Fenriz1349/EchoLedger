@@ -59,10 +59,18 @@ struct PreviewHelpers {
         try? context.save()
     }
 
-    static func makeAddAccountViewModel() -> AddAccountViewModel {
+    /// Creates a preview AppCoordinator with seeded data.
+    static var appCoordinator: AppCoordinator {
         seedInstitutionsAndAccounts()
-        return AddAccountViewModel(
+        seedTransactions()
+        return AppCoordinator(container: container)
+    }
+
+    static func makeccountFormViewModel() -> AccountFormViewModel {
+        seedInstitutionsAndAccounts()
+        return AccountFormViewModel(
             addAccount: container.addAccount,
+            updateAccount: container.updateAccount,
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
             userId: userId
@@ -84,14 +92,16 @@ struct PreviewHelpers {
         return AccountListViewModel(
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
+            archiveAccount: container.archiveAccount,
             userId: userId
         )
     }
 
-    static func makeAddTransactionViewModel() -> AddTransactionViewModel {
+    static func makeTransactionFormViewModel() -> TransactionFormViewModel {
         seedInstitutionsAndAccounts()
-        return AddTransactionViewModel(
+        return TransactionFormViewModel(
             addTransaction: container.addTransaction,
+            updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
             userId: userId
@@ -102,6 +112,7 @@ struct PreviewHelpers {
         seedTransactions()
         return TransactionListViewModel(
             getTransactions: container.getTransactions,
+            deleteTransaction: container.deleteTransaction,
             userId: userId
         )
     }

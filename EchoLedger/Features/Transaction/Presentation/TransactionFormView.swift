@@ -1,5 +1,5 @@
 //
-//  AddTransactionView.swift
+//  TransactionFormView.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 26/03/2026.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct AddTransactionView: View {
+struct TransactionFormView: View {
 
-    @State var viewModel: AddTransactionViewModel
+    @State var viewModel: TransactionFormViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
             Form {
                 Section("Montant") {
-                    TextField("0.00", text: $viewModel.amount)
+                    TextField("0,00", text: $viewModel.amount)
                         .keyboardType(.decimalPad)
 
                     Toggle("Dépense", isOn: $viewModel.isExpense)
@@ -34,42 +34,32 @@ struct AddTransactionView: View {
 
                 Section("Compte") {
                     if viewModel.availableAccounts.isEmpty {
-                        Text("Aucun compte disponible")
-                            .foregroundStyle(.secondary)
+                        Text("Aucun compte disponible").foregroundStyle(.secondary)
                     } else {
-                        Picker("Compte", selection: $viewModel.selectedAccount) {
-                            ForEach(viewModel.availableAccounts, id: \.account.id) { item in
-                                Text("\(item.institution.name) — \(item.account.name)")
-                                    .tag(Optional(item.account))
-                            }
-                        }
-
-                        if let account = viewModel.selectedAccount {
-                            Button {
+                        AccountPickerView(
+                            selectedAccount: $viewModel.selectedAccount,
+                            availableAccounts: viewModel.availableAccounts
+                        )
+                        Button {
+                            if let account = viewModel.selectedAccount {
                                 viewModel.addSplit(for: account)
-                            } label: {
-                                Label("Ajouter un compte", systemImage: "plus")
                             }
+                        } label: {
+                            Label("Ajouter un compte", systemImage: "plus")
                         }
                     }
                 }
 
                 if viewModel.splits.count > 1 {
                     Section("Répartition") {
-                        ForEach(Array(viewModel.splits.enumerated()), id: \.element.id) { index, split in
-                            HStack {
-                                Text(viewModel.accountNames[split.accountId] ?? "Compte inconnu")
-                                Spacer()
-                                Text("\(split.amount)")
-                                    .foregroundStyle(.secondary)
-                            }
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    viewModel.removeSplit(at: index)
-                                } label: {
-                                    Label("Supprimer", systemImage: "trash")
-                                }
-                            }
+                        let indexedSplits = Array(viewModel.splits.enumerated())
+                        ForEach(indexedSplits, id: \.element.id) { index, _ in
+                            SplitRowView(
+                                index: index,
+                                split: $viewModel.splits[index],
+                                availableAccounts: viewModel.availableAccounts,
+                                onDelete: { viewModel.removeSplit(at: index) }
+                            )
                         }
                     }
                 }
@@ -112,6 +102,6 @@ struct AddTransactionView: View {
 }
 
 #Preview {
-    AddTransactionView(viewModel: PreviewHelpers.makeAddTransactionViewModel())
+    TransactionFormView(viewModel: PreviewHelpers.makeTransactionFormViewModel())
         .environment(PreviewHelpers.container)
 }

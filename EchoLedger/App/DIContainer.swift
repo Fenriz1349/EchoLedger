@@ -50,7 +50,7 @@ final class DIContainer {
     let getAccounts: GetAccounts
     let getAccount: GetAccount
     let updateAccount: UpdateAccount
-    let deleteAccount: DeleteAccount
+    let archiveAccount: ArchiveAccount
     let getAccountBalance: GetAccountBalance
 
     // MARK: Use Cases — Transaction
@@ -115,7 +115,7 @@ final class DIContainer {
         self.getAccounts = GetAccounts(repository: accountStore)
         self.getAccount = GetAccount(repository: accountStore)
         self.updateAccount = UpdateAccount(repository: accountStore)
-        self.deleteAccount = DeleteAccount(repository: accountStore)
+        self.archiveAccount = ArchiveAccount(repository: accountStore)
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountStore,
             transactionRepository: transactionStore
