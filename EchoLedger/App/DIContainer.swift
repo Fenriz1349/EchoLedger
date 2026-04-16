@@ -72,6 +72,7 @@ final class DIContainer {
     init(userId: UUID, inMemory: Bool = false) {
         self.userId = userId
 
+        // MARK: SwiftData Stack
         let schema = Schema([
             UserModel.self,
             InstitutionModel.self,
@@ -88,6 +89,7 @@ final class DIContainer {
 
         let context = modelContainer.mainContext
 
+        // MARK: Local Sources
         let userLocal = UserLocalSource(context: context)
         let institutionLocal = InstitutionLocalSource(context: context)
         let accountLocal = AccountLocalSource(context: context)
@@ -98,13 +100,18 @@ final class DIContainer {
         self.accountLocalSource = accountLocal
         self.transactionLocalSource = transactionLocal
 
+        // MARK: Storings
         let userStore = UserStoring(local: userLocal)
         let institutionStore = InstitutionStoring(
             local: institutionLocal,
             remote: InstitutionRemoteSource(),
             userId: userId
         )
-        let accountStore = AccountStoring(local: accountLocal)
+        let accountStore = AccountStoring(
+            local: accountLocal,
+            remote: AccountRemoteSource(),
+            userId: userId
+        )
         let transactionStore = TransactionStoring(local: transactionLocal)
 
         self.userStoring = userStore
@@ -112,15 +119,18 @@ final class DIContainer {
         self.accountStoring = accountStore
         self.transactionStoring = transactionStore
 
+        // MARK: Use Cases — User
         self.getCurrentUser = GetCurrentUser(repository: userStore)
         self.updateUser = UpdateUser(repository: userStore)
 
+        // MARK: Use Cases — Institution
         self.addInstitution = AddInstitution(repository: institutionStore)
         self.getInstitutions = GetInstitutions(repository: institutionStore)
         self.getInstitution = GetInstitution(repository: institutionStore)
         self.updateInstitution = UpdateInstitution(repository: institutionStore)
         self.deleteInstitution = DeleteInstitution(repository: institutionStore)
 
+        // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountStore)
         self.getAccounts = GetAccounts(repository: accountStore)
         self.getAccount = GetAccount(repository: accountStore)
@@ -131,6 +141,7 @@ final class DIContainer {
             transactionRepository: transactionStore
         )
 
+        // MARK: Use Cases — Transaction
         self.addTransaction = AddTransaction(repository: transactionStore)
         self.getTransactions = GetTransactions(repository: transactionStore)
         self.getTransaction = GetTransaction(repository: transactionStore)
