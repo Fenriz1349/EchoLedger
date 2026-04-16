@@ -133,6 +133,7 @@
 		6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6702F6D9D2C0038A612 /* AccountModel.swift */; };
 		6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */; };
 		6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6742F6D9D5A0038A612 /* TransactionModel.swift */; };
+		687AF8662F90C33200195647 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687AF8652F90C33200195647 /* SignInAnonymously.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 /* End PBXBuildFile section */
 
@@ -273,6 +274,7 @@
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		687AF8652F90C33200195647 /* SignInAnonymously.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAnonymously.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -689,6 +691,7 @@
 				685A1EC62F5AD97D0009B885 /* GetCurrentUser.swift */,
 				6844971D2F753DD600337F74 /* UpdateUserInput.swift */,
 				685A1EC82F5AD9860009B885 /* UpdateUser.swift */,
+				687AF8652F90C33200195647 /* SignInAnonymously.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				683133A52F61736A004AA5E4 /* TransactionCategory.swift in Sources */,
 				6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */,
 				683133A92F617951004AA5E4 /* GetTransactionsByCategory.swift in Sources */,
+				687AF8662F90C33200195647 /* SignInAnonymously.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
 				684497392F75760600337F74 /* AddInstitutionFormViewModel.swift in Sources */,

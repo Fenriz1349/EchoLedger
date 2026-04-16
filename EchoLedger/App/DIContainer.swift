@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-// MARK: - DIContainer
 /// Assembles and provides all dependencies for the application.
 /// Acts as the single source of truth for dependency injection.
 @MainActor
@@ -27,6 +26,9 @@ final class DIContainer {
     private let institutionLocalSource: InstitutionLocalSource
     private let accountLocalSource: AccountLocalSource
     private let transactionLocalSource: TransactionLocalSource
+
+    // MARK: User
+    let userId: UUID
 
     // MARK: Storings
     let userStoring: UserProviding
@@ -63,9 +65,13 @@ final class DIContainer {
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
     // MARK: Init
-    /// Creates the container with the given SwiftData storage configuration.
-    /// - Parameter inMemory: If true, data is stored in memory only. Defaults to false.
-    init(inMemory: Bool = false) {
+    /// Creates the container with the given user identifier and SwiftData storage configuration.
+    /// - Parameters:
+    ///   - userId: The stable UUID derived from Firebase Auth uid.
+    ///   - inMemory: If true, data is stored in memory only. Defaults to false.
+    init(userId: UUID, inMemory: Bool = false) {
+        self.userId = userId
+
         let schema = Schema([
             UserModel.self,
             InstitutionModel.self,
@@ -93,7 +99,11 @@ final class DIContainer {
         self.transactionLocalSource = transactionLocal
 
         let userStore = UserStoring(local: userLocal)
-        let institutionStore = InstitutionStoring(local: institutionLocal)
+        let institutionStore = InstitutionStoring(
+            local: institutionLocal,
+            remote: InstitutionRemoteSource(),
+            userId: userId
+        )
         let accountStore = AccountStoring(local: accountLocal)
         let transactionStore = TransactionStoring(local: transactionLocal)
 

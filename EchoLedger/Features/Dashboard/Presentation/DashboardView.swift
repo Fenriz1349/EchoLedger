@@ -19,5 +19,5 @@ struct DashboardView: View {
 
 #Preview {
     DashboardView()
-        .environment(DIContainer(inMemory: true))
+        .environment(DIContainer(userId: PreviewData.user.id, inMemory: true))
 }

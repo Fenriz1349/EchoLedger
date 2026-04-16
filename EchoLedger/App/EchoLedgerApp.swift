@@ -24,13 +24,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct EchoLedgerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var container = DIContainer()
+    @State private var container: DIContainer?
     @State private var coordinator: AppCoordinator?
 
     var body: some Scene {
         WindowGroup {
             Group {
-                if let coordinator {
+                if let coordinator, let container {
                     ContentView(coordinator: coordinator)
                         .environment(container)
                 } else {
@@ -38,9 +38,10 @@ struct EchoLedgerApp: App {
                 }
             }
             .task {
-                if coordinator == nil {
-                    coordinator = AppCoordinator(container: container)
-                }
+                let userId = (try? await UserRemoteSource().signInAnonymously())?.toUUID ?? UUID()
+                let newContainer = DIContainer(userId: userId)
+                container = newContainer
+                coordinator = AppCoordinator(container: newContainer)
             }
         }
     }

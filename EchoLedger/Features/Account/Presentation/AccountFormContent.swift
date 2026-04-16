@@ -58,6 +58,11 @@ struct AccountFormContent: View {
             if viewModel.showAddInstitutionForm {
                 AddInstitutionFormView(viewModel: viewModel.addInstitutionFormViewModel)
                     .listRowInsets(EdgeInsets())
+                    .onChange(of: viewModel.addInstitutionFormViewModel.isSuccess) {
+                        if viewModel.addInstitutionFormViewModel.isSuccess {
+                            viewModel.showAddInstitutionForm = false
+                        }
+                    }
             }
         }
 
