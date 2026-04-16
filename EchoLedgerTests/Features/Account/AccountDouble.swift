@@ -37,6 +37,18 @@ final class AccountDouble: AccountProviding {
         return store.filter { $0.institutionId == institutionId }
     }
 
+    /// Returns all non-archived accounts in the store belonging to the given institution.
+    func fetchAllActive(for institutionId: UUID) async throws -> [Account] {
+        if let error = errorToThrow { throw error }
+        return store.filter { $0.institutionId == institutionId && !$0.isArchived }
+    }
+
+    /// Returns all archived accounts in the store belonging to the given institution.
+    func fetchAllArchived(for institutionId: UUID) async throws -> [Account] {
+        if let error = errorToThrow { throw error }
+        return store.filter { $0.institutionId == institutionId && $0.isArchived }
+    }
+
     /// Returns the first account in the store matching the given id.
     func fetch(by id: UUID) async throws -> Account {
         if let error = errorToThrow { throw error }

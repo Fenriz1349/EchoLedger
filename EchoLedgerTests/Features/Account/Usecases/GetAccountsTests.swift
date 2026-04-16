@@ -29,8 +29,8 @@ final class GetAccountsTests: XCTestCase {
 
     // MARK: Helpers
     /// Seeds an account belonging to the shared institutionId.
-    private func seedAccount(name: String = "Livret A") async throws {
-        let account = Account(institutionId: institutionId, name: name, category: .savings)
+    private func seedAccount(name: String = "Livret A", isArchived: Bool = false) async throws {
+        let account = Account(institutionId: institutionId, name: name, category: .savings, isArchived: isArchived)
         try await repository.save(account)
     }
 
@@ -54,6 +54,32 @@ final class GetAccountsTests: XCTestCase {
     func test_execute_noAccounts_returnsEmpty() async throws {
         let result = try await useCase.execute(for: institutionId)
         XCTAssertTrue(result.isEmpty)
+    }
+
+    /// Verifies that only active accounts are returned with the .active filter.
+    func test_execute_activeFilter_returnsOnlyActiveAccounts() async throws {
+        try await seedAccount(name: "Livret A", isArchived: false)
+        try await seedAccount(name: "PEL", isArchived: true)
+        let result = try await useCase.execute(for: institutionId, filter: .active)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first?.name, "Livret A")
+    }
+
+    /// Verifies that only archived accounts are returned with the .archived filter.
+    func test_execute_archivedFilter_returnsOnlyArchivedAccounts() async throws {
+        try await seedAccount(name: "Livret A", isArchived: false)
+        try await seedAccount(name: "PEL", isArchived: true)
+        let result = try await useCase.execute(for: institutionId, filter: .archived)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first?.name, "PEL")
+    }
+
+    /// Verifies that all accounts are returned with the .all filter.
+    func test_execute_allFilter_returnsAllAccounts() async throws {
+        try await seedAccount(name: "Livret A", isArchived: false)
+        try await seedAccount(name: "PEL", isArchived: true)
+        let result = try await useCase.execute(for: institutionId, filter: .all)
+        XCTAssertEqual(result.count, 2)
     }
 
     /// Verifies that a repository error is propagated correctly.
