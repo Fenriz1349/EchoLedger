@@ -89,7 +89,7 @@ struct TransactionFormContent: View {
                 .foregroundStyle(.secondary)
                 .font(.footnote)
         }
-        
+
         Button {
             Task { await viewModel.submit() }
         } label: {
@@ -114,7 +114,7 @@ struct TransactionFormContent: View {
 }
 
 #Preview {
-    Form{
+    Form {
         TransactionFormContent(viewModel: PreviewHelpers.makeTransactionFormViewModel())
     }
 }

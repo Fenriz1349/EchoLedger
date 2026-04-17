@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents domain-level errors for the Institution feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum InstitutionError: Error, Equatable {
+enum InstitutionError: Error, Equatable, LocalizedError {
 
     /// Thrown when the institution name is shorter than the minimum allowed length.
     case nameTooShort

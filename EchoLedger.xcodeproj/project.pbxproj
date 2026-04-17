@@ -18,6 +18,8 @@
 		6807E57E2F922C340099DCE4 /* AuthLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57D2F922C340099DCE4 /* AuthLocalSource.swift */; };
 		6807E5802F922C3D0099DCE4 /* AuthRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57F2F922C3D0099DCE4 /* AuthRemoteSource.swift */; };
 		6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5812F922C450099DCE4 /* AuthStoring.swift */; };
+		6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5832F9266800099DCE4 /* SyncButton.swift */; };
+		6807E5862F926C0D0099DCE4 /* SyncError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5852F926C0D0099DCE4 /* SyncError.swift */; };
 		680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F9CAB2F646F750014193B /* GetInstitution.swift */; };
 		6812CFC02F87833F0019F634 /* AccountFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFBF2F87833F0019F634 /* AccountFilter.swift */; };
 		6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFC12F878BF50019F634 /* AccountRowView.swift */; };
@@ -166,6 +168,8 @@
 		6807E57D2F922C340099DCE4 /* AuthLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLocalSource.swift; sourceTree = "<group>"; };
 		6807E57F2F922C3D0099DCE4 /* AuthRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRemoteSource.swift; sourceTree = "<group>"; };
 		6807E5812F922C450099DCE4 /* AuthStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStoring.swift; sourceTree = "<group>"; };
+		6807E5832F9266800099DCE4 /* SyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncButton.swift; sourceTree = "<group>"; };
+		6807E5852F926C0D0099DCE4 /* SyncError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncError.swift; sourceTree = "<group>"; };
 		680F9CAB2F646F750014193B /* GetInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitution.swift; sourceTree = "<group>"; };
 		6812CFBF2F87833F0019F634 /* AccountFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFilter.swift; sourceTree = "<group>"; };
 		6812CFC12F878BF50019F634 /* AccountRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRowView.swift; sourceTree = "<group>"; };
@@ -351,6 +355,26 @@
 				6807E57B2F922C290099DCE4 /* SignOut.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		6807E5872F926DCC0099DCE4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				685A1F0A2F5AEBFC0009B885 /* SyncMetadata.swift */,
+				685A1F0C2F5AEC050009B885 /* SyncStatus.swift */,
+				6807E5852F926C0D0099DCE4 /* SyncError.swift */,
+				685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */,
+				685A1F102F5AECD60009B885 /* SyncManager.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		6807E5882F926DE50099DCE4 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				6807E5832F9266800099DCE4 /* SyncButton.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		6813E7FF2F6D3BF000344774 /* Institution */ = {
@@ -789,10 +813,8 @@
 		685A1F092F5AEBF50009B885 /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				685A1F0A2F5AEBFC0009B885 /* SyncMetadata.swift */,
-				685A1F0C2F5AEC050009B885 /* SyncStatus.swift */,
-				685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */,
-				685A1F102F5AECD60009B885 /* SyncManager.swift */,
+				6807E5872F926DCC0099DCE4 /* Domain */,
+				6807E5882F926DE50099DCE4 /* Presentation */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -1026,6 +1048,7 @@
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,
 				681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */,
 				68000F6A2F76D14500B30EB6 /* DIContainer+ViewModels.swift in Sources */,
+				6807E5862F926C0D0099DCE4 /* SyncError.swift in Sources */,
 				6807E5772F922C090099DCE4 /* AuthProviding.swift in Sources */,
 				685A1ECE2F5AD9A20009B885 /* UserLocalSource.swift in Sources */,
 				685A1EE62F5AE9A10009B885 /* AccountStoring.swift in Sources */,
@@ -1054,6 +1077,7 @@
 				6807E57E2F922C340099DCE4 /* AuthLocalSource.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
+				6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */,
 				684497392F75760600337F74 /* AddInstitutionFormViewModel.swift in Sources */,
 				683C909B2F892A3200CE2A6D /* TransactionFormContent.swift in Sources */,
 				685A1EEA2F5AEA1D0009B885 /* AccountRemoteSource.swift in Sources */,

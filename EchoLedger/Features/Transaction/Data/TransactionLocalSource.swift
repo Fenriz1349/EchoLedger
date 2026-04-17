@@ -98,4 +98,34 @@ final class TransactionLocalSource {
         context.delete(model)
         try context.save()
     }
+
+    /// Inserts a new transaction and its splits locally if it does not exist, or updates it if it does.
+    /// - Parameter transaction: The domain Transaction to insert or update.
+    /// - Throws: A SwiftData error if the operation fails.
+    func upsert(_ transaction: Transaction) throws {
+        let id = transaction.id
+        var descriptor = FetchDescriptor<TransactionModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        if let existing = try context.fetch(descriptor).first {
+            existing.update(from: transaction, context: context)
+        } else {
+            let model = TransactionModel(
+                id: transaction.id,
+                userId: transaction.userId,
+                label: transaction.label,
+                date: transaction.date,
+                totalAmount: transaction.totalAmount,
+                note: transaction.note,
+                isExpense: transaction.isExpense,
+                category: transaction.category.rawValue
+            )
+            model.splits = transaction.splits.map {
+                TransactionSplitModel(id: $0.id, accountId: $0.accountId, amount: $0.amount)
+            }
+            context.insert(model)
+        }
+        try context.save()
+    }
 }

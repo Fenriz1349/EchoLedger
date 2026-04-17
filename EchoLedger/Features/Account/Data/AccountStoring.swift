@@ -9,6 +9,7 @@ import Foundation
 
 /// Concrete implementation of AccountProviding.
 /// Orchestrates local and remote persistence for the Account feature.
+/// Local storage is always used for reads — data is kept up to date via SyncManager.
 final class AccountStoring: AccountProviding {
 
     private let local: AccountLocalSource
@@ -27,33 +28,29 @@ final class AccountStoring: AccountProviding {
 
     /// Fetches all accounts for a given institution from local storage.
     func fetchAll(for institutionId: UUID) async throws -> [Account] {
-//        try local.fetchAll(for: institutionId)
-        try await remote.fetchAll(for: institutionId, userId: userId)
+        try local.fetchAll(for: institutionId)
     }
 
     /// Fetches all active accounts for a given institution from local storage.
     func fetchAllActive(for institutionId: UUID) async throws -> [Account] {
-//        try local.fetchAllActive(for: institutionId)
-        try await remote.fetchAllActive(for: institutionId, userId: userId)
+        try local.fetchAllActive(for: institutionId)
     }
 
     /// Fetches all archived accounts for a given institution from local storage.
     func fetchAllArchived(for institutionId: UUID) async throws -> [Account] {
-//        try local.fetchAllArchived(for: institutionId)
-        try await remote.fetchAllArchived(for: institutionId, userId: userId)
+        try local.fetchAllArchived(for: institutionId)
     }
 
     /// Fetches a single account by id from local storage.
     func fetch(by id: UUID) async throws -> Account {
-//        try local.fetch(by: id
-        try await remote.fetch(by: id, userId: userId)
+        try local.fetch(by: id)
     }
 
     /// Persists a new account to local storage, then attempts a remote save.
     /// - Parameter account: The account to save.
     /// - Throws: A local persistence error if the local save fails.
     func save(_ account: Account) async throws {
-//        try local.save(account)
+        try local.save(account)
         try await remote.save(account, userId: userId)
     }
 
@@ -61,7 +58,7 @@ final class AccountStoring: AccountProviding {
     /// - Parameter account: The account with updated values.
     /// - Throws: A local persistence error if the local update fails.
     func update(_ account: Account) async throws {
-//        try local.update(account)
+        try local.update(account)
         try await remote.update(account, userId: userId)
     }
 }

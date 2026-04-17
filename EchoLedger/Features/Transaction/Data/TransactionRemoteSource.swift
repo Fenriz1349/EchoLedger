@@ -52,7 +52,7 @@ final class TransactionRemoteSource {
             .document(id.uuidString)
             .delete()
     }
-    
+
     // MARK: Read
 
     /// Fetches all transactions for a given user from Firestore, ordered by date descending.

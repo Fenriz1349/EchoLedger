@@ -9,11 +9,11 @@ import Foundation
 
 /// Represents domain-level errors for the Transaction feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum TransactionError: Error, Equatable {
+enum TransactionError: Error, Equatable, LocalizedError {
 
     /// Thrown when a transaction is created or updated with no splits.
     case missingSplits
-    
+
     /// Thrown when a transaction is created or updated with the same account in differents splits
     case redundantSplitsAccounts
 
@@ -34,7 +34,7 @@ enum TransactionError: Error, Equatable {
 
     /// Thrown when the start date is after the end date in a date range query.
     case invalidDateRange
-    
+
     /// Thrown when loading transactions or related data fails.
     case loadFailed
 

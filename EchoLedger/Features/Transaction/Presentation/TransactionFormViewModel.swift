@@ -107,7 +107,7 @@ final class TransactionFormViewModel {
             }
             availableAccounts = result
             selectedAccount = availableAccounts.first
-            if existingTransaction == nil, let account = selectedAccount {
+            if existingTransaction == nil, let account = selectedAccount, splits.isEmpty {
                 addSplit(for: account)
             }
         } catch {
@@ -162,29 +162,25 @@ final class TransactionFormViewModel {
 
         do {
             if let existingTransaction {
-                let input = UpdateTransactionInput(
-                    id: existingTransaction.id,
-                    userId: userId,
-                    label: trimmedLabel,
-                    date: Date(),
-                    totalAmount: total,
-                    note: nil,
-                    isExpense: isExpense,
-                    category: category,
-                    splits: splits
-                )
+                let input = UpdateTransactionInput(id: existingTransaction.id,
+                                                   userId: userId,
+                                                   label: trimmedLabel,
+                                                   date: Date(),
+                                                   totalAmount: total,
+                                                   note: nil,
+                                                   isExpense: isExpense,
+                                                   category: category,
+                                                   splits: splits)
                 try await updateTransaction.execute(input)
             } else {
-                let input = AddTransactionInput(
-                    userId: userId,
-                    label: trimmedLabel,
-                    date: Date(),
-                    totalAmount: total,
-                    note: nil,
-                    isExpense: isExpense,
-                    category: category,
-                    splits: splits
-                )
+                let input = AddTransactionInput(userId: userId,
+                                                label: trimmedLabel,
+                                                date: Date(),
+                                                totalAmount: total,
+                                                note: nil,
+                                                isExpense: isExpense,
+                                                category: category,
+                                                splits: splits)
                 try await addTransaction.execute(input)
             }
             isSuccess = true

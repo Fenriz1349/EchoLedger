@@ -41,10 +41,15 @@ final class AccountRemoteSource {
             .document(account.id.uuidString)
             .setData(encode(account), merge: true)
     }
-    
+
     // MARK: Read
 
-    /// Fetches all accounts for a given institution from Firestore.
+    /// Fetches all accounts belonging to a given institution from Firestore.
+    /// - Parameters:
+    ///   - institutionId: The identifier of the institution to filter by.
+    ///   - userId: The identifier of the owning user.
+    /// - Returns: An array of decoded Account domain objects.
+    /// - Throws: A Firestore error if the read fails.
     func fetchAll(for institutionId: UUID, userId: UUID) async throws -> [Account] {
         let snapshot = try await collection(for: userId)
             .whereField("institutionId", isEqualTo: institutionId.uuidString)
@@ -52,17 +57,41 @@ final class AccountRemoteSource {
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 
-    /// Fetches all active accounts for a given institution from Firestore.
+    /// Fetches all accounts belonging to a given user from Firestore, regardless of institution.
+    /// - Parameter userId: The identifier of the owning user.
+    /// - Returns: An array of Domain Account entities.
+    /// - Throws: A Firestore error if the fetch fails.
+    func fetchAll(for userId: UUID) async throws -> [Account] {
+        let snapshot = try await collection(for: userId).getDocuments()
+        return snapshot.documents.compactMap { decode($0.data()) }
+    }
+
+    /// Fetches all non-archived accounts belonging to a given institution from Firestore.
+    /// - Parameters:
+    ///   - institutionId: The identifier of the institution to filter by.
+    ///   - userId: The identifier of the owning user.
+    /// - Returns: An array of active (non-archived) Account domain objects.
+    /// - Throws: A Firestore error if the read fails.
     func fetchAllActive(for institutionId: UUID, userId: UUID) async throws -> [Account] {
         try await fetchAll(for: institutionId, userId: userId).filter { !$0.isArchived }
     }
 
-    /// Fetches all archived accounts for a given institution from Firestore.
+    /// Fetches all archived accounts belonging to a given institution from Firestore.
+    /// - Parameters:
+    ///   - institutionId: The identifier of the institution to filter by.
+    ///   - userId: The identifier of the owning user.
+    /// - Returns: An array of archived Account domain objects.
+    /// - Throws: A Firestore error if the read fails.
     func fetchAllArchived(for institutionId: UUID, userId: UUID) async throws -> [Account] {
         try await fetchAll(for: institutionId, userId: userId).filter { $0.isArchived }
     }
 
     /// Fetches a single account by its identifier from Firestore.
+    /// - Parameters:
+    ///   - id: The unique identifier of the account to fetch.
+    ///   - userId: The identifier of the owning user.
+    /// - Returns: The matching Account domain object.
+    /// - Throws: `AccountError.notFound` if no document exists, or a Firestore error if the read fails.
     func fetch(by id: UUID, userId: UUID) async throws -> Account {
         let document = try await collection(for: userId).document(id.uuidString).getDocument()
         guard let data = document.data(), let account = decode(data) else {
@@ -73,6 +102,9 @@ final class AccountRemoteSource {
 
     // MARK: Private
 
+    /// Decodes a Firestore document dictionary into a domain Account.
+    /// - Parameter data: The raw Firestore document data.
+    /// - Returns: A decoded Account, or `nil` if any required field is missing or invalid.
     private func decode(_ data: [String: Any]) -> Account? {
         guard
             let idString = data["id"] as? String,

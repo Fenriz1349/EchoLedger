@@ -16,7 +16,7 @@ final class AccountListViewModel {
     var institutions: [Institution] = []
     var isLoading = false
     var errorMessage: String?
-    
+
     /// Returns institutions paired with their non-empty account lists, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
@@ -48,27 +48,26 @@ final class AccountListViewModel {
     func load() async {
         isLoading = true
         errorMessage = nil
-        
+
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
-            
+
             var allAccounts: [Account] = []
-            
+
             for institution in institutions {
                 let accounts = try await getAccounts.execute(for: institution.id)
                 allAccounts.append(contentsOf: accounts)
             }
-            
+
             self.accounts = allAccounts
-            
         } catch {
             errorMessage = AccountError.loadFailed.localizedDescription
         }
-        
+
         isLoading = false
     }
-    
+
     /// Archives an account and reloads the list.
     func archive(_ account: Account) async {
         do {

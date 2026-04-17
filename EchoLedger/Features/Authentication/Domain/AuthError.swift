@@ -8,7 +8,7 @@
 import Foundation
 
 /// Errors that can occur during authentication operations.
-enum AuthError: Error, Equatable {
+enum AuthError: Error, Equatable, LocalizedError {
     /// Thrown when the sign-in process fails.
     case signInFailed
     /// Thrown when the sign-out process fails.

@@ -42,7 +42,7 @@ final class TransactionListViewModel {
         }
         isLoading = false
     }
-    
+
     /// Deletes a transaction by its identifier.
     func delete(_ transaction: Transaction) async {
         do {

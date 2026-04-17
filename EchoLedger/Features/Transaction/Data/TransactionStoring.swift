@@ -8,7 +8,8 @@
 import Foundation
 
 /// Concrete implementation of TransactionProviding.
-/// Orchestrates local and remote persistence for the Transaction feature.
+/// Orchestrates local and remote persistence for the Transaction feature
+/// Local storage is always used for reads — data is kept up to date via SyncManager.
 final class TransactionStoring: TransactionProviding {
 
     private let local: TransactionLocalSource
@@ -27,21 +28,19 @@ final class TransactionStoring: TransactionProviding {
 
     /// Fetches all transactions for a given user from local storage.
     func fetchAll(for userId: UUID) async throws -> [Transaction] {
-//        try local.fetchAll(for: userId)
-        try await remote.fetchAll(for: userId)
+        try local.fetchAll(for: userId)
     }
 
     /// Fetches a single transaction by id from local storage.
     func fetch(by id: UUID) async throws -> Transaction {
-//        try local.fetch(by: id)
-        try await remote.fetch(by: id, userId: userId)
+        try local.fetch(by: id)
     }
 
     /// Persists a new transaction and its splits to local storage, then attempts a remote save.
     /// - Parameter transaction: The transaction to save.
     /// - Throws: A local persistence error if the local save fails.
     func save(_ transaction: Transaction) async throws {
-//        try local.save(transaction)
+        try local.save(transaction)
         try await remote.save(transaction, userId: userId)
     }
 
@@ -49,7 +48,7 @@ final class TransactionStoring: TransactionProviding {
     /// - Parameter transaction: The transaction with updated values.
     /// - Throws: A local persistence error if the local update fails.
     func update(_ transaction: Transaction) async throws {
-//        try local.update(transaction)
+        try local.update(transaction)
         try await remote.update(transaction, userId: userId)
     }
 
@@ -57,7 +56,7 @@ final class TransactionStoring: TransactionProviding {
     /// - Parameter id: The unique identifier of the transaction to delete.
     /// - Throws: A local persistence error if the local delete fails.
     func delete(by id: UUID) async throws {
-//        try local.delete(by: id)
+        try local.delete(by: id)
         try await remote.delete(id: id, userId: userId)
     }
 }

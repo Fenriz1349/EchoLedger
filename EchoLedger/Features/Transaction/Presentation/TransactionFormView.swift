@@ -16,7 +16,7 @@ struct TransactionFormView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TransactionFormContent(viewModel: viewModel)                
+                TransactionFormContent(viewModel: viewModel)
             }
             .navigationTitle(viewModel.existingTransaction == nil ? "Nouvelle transaction" :"Modifier la transaction")
             .navigationBarTitleDisplayMode(.inline)

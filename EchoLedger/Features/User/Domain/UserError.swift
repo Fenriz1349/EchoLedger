@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents domain-level errors for the User feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum UserError: Error, Equatable {
+enum UserError: Error, Equatable, LocalizedError {
 
     /// Thrown when no user is found for the given identifier.
     case notFound

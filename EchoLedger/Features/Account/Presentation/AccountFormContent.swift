@@ -25,7 +25,7 @@ struct AccountFormContent: View {
                 )
                 .listRowInsets(EdgeInsets())
                 .padding(.horizontal)
-                
+
                 Picker("Categorie", selection: $viewModel.category) {
                     ForEach(AccountCategory.allCases, id: \.self) { category in
                         Label(category.name, systemImage: category.icon).tag(category)
@@ -46,7 +46,7 @@ struct AccountFormContent: View {
                         }
                     }
                 }
-                
+
                 Button {
                     withAnimation { viewModel.showAddInstitutionForm.toggle() }
                 } label: {
@@ -55,7 +55,7 @@ struct AccountFormContent: View {
                         systemImage: viewModel.showAddInstitutionForm ? "xmark" : "plus"
                     )
                 }
-                
+
                 if viewModel.showAddInstitutionForm {
                     AddInstitutionFormView(viewModel: viewModel.addInstitutionFormViewModel)
                         .listRowInsets(EdgeInsets())

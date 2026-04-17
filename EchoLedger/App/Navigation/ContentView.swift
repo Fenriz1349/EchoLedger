@@ -14,18 +14,16 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-
             TabView {
                 DashboardView()
                     .tabItem { Label("Tableau de bord", systemImage: "chart.pie") }
-                
+
                 TransactionListView(coordinator: coordinator)
                     .tabItem { Label("Transactions", systemImage: "list.bullet") }
-                
+
                 AccountListView(coordinator: coordinator)
                     .tabItem { Label("Comptes", systemImage: "building.columns") }
             }
-
             .overlay(alignment: .bottom) {
                 Button {
                     coordinator.transactionListViewModel.showAddTransaction = true

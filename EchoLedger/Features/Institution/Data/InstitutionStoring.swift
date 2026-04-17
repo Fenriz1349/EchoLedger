@@ -9,6 +9,7 @@ import Foundation
 
 /// Concrete implementation of InstitutionProviding.
 /// Orchestrates local and remote persistence for the Institution feature.
+/// Local storage is always used for reads — data is kept up to date via SyncManager.
 final class InstitutionStoring: InstitutionProviding {
 
     private let local: InstitutionLocalSource
@@ -27,21 +28,19 @@ final class InstitutionStoring: InstitutionProviding {
 
     /// Fetches all institutions for a given user from local storage.
     func fetchAll(for userId: UUID) async throws -> [Institution] {
-//        try local.fetchAll(for: userId)
-        try await remote.fetchAll(for: userId)
+        try local.fetchAll(for: userId)
     }
 
     /// Fetches a single institution by id from local storage.
     func fetch(by id: UUID) async throws -> Institution {
-//        try local.fetch(by: id)
-        try await remote.fetch(by: id, userId: userId)
+        try local.fetch(by: id)
     }
 
     /// Persists a new institution to local storage, then attempts a remote save.
     /// - Parameter institution: The institution to save.
     /// - Throws: A local persistence error if the local save fails.
     func save(_ institution: Institution) async throws {
-//        try local.save(institution)
+        try local.save(institution)
         try await remote.save(institution, userId: userId)
     }
 
@@ -49,7 +48,7 @@ final class InstitutionStoring: InstitutionProviding {
     /// - Parameter institution: The institution with updated values.
     /// - Throws: A local persistence error if the local update fails.
     func update(_ institution: Institution) async throws {
-//        try local.update(institution)
+        try local.update(institution)
         try await remote.update(institution, userId: userId)
     }
 
@@ -57,7 +56,7 @@ final class InstitutionStoring: InstitutionProviding {
     /// - Parameter id: The unique identifier of the institution to delete.
     /// - Throws: A local persistence error if the local delete fails.
     func delete(by id: UUID) async throws {
-//        try local.delete(by: id)
+        try local.delete(by: id)
         try await remote.delete(id: id, userId: userId)
     }
 }
