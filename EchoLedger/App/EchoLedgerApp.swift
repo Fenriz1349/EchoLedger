@@ -38,8 +38,14 @@ struct EchoLedgerApp: App {
                 }
             }
             .task {
-                let userId = (try? await UserRemoteSource().signInAnonymously())?.toUUID ?? UUID()
-                let newContainer = DIContainer(userId: userId)
+                let authStoring = AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource())
+                let resolveSession = ResolveSession(repository: authStoring)
+
+                guard let session = try? await resolveSession.execute() else {
+                    return
+                }
+
+                let newContainer = DIContainer(userId: session.userId)
                 container = newContainer
                 coordinator = AppCoordinator(container: newContainer)
             }
