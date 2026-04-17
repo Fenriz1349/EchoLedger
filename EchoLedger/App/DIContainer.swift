@@ -102,17 +102,12 @@ final class DIContainer {
 
         // MARK: Storings
         let userStore = UserStoring(local: userLocal)
-        let institutionStore = InstitutionStoring(
-            local: institutionLocal,
-            remote: InstitutionRemoteSource(),
-            userId: userId
-        )
-        let accountStore = AccountStoring(
-            local: accountLocal,
-            remote: AccountRemoteSource(),
-            userId: userId
-        )
-        let transactionStore = TransactionStoring(local: transactionLocal)
+        let institutionStore = InstitutionStoring(local: institutionLocal,
+                                                  remote: InstitutionRemoteSource(), userId: userId)
+        let accountStore = AccountStoring(local: accountLocal,
+                                          remote: AccountRemoteSource(), userId: userId)
+        let transactionStore = TransactionStoring(local: transactionLocal,
+                                                  remote: TransactionRemoteSource(), userId: userId)
 
         self.userStoring = userStore
         self.institutionStoring = institutionStore
