@@ -24,7 +24,7 @@ enum UserError: Error, Equatable, LocalizedError {
     case invalidEmail
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .notFound:
             return "Utilisateur introuvable."

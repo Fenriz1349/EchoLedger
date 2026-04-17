@@ -48,7 +48,7 @@ struct EchoLedgerApp: App {
                         return
                     }
 
-                    let newContainer = DIContainer(userId: session.userId)
+                    let newContainer = DIContainer(userId: session.userId, toasty: toasty)
                     container = newContainer
                     coordinator = AppCoordinator(container: newContainer)
                 }

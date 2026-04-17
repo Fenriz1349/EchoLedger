@@ -39,7 +39,7 @@ enum TransactionError: Error, Equatable, LocalizedError {
     case loadFailed
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .missingSplits:
             return "Une transaction doit avoir au moins une ventilation."

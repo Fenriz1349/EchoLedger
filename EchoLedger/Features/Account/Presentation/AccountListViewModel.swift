@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages the grouped list of accounts by institution and handles archive operations.
 @MainActor
@@ -25,24 +26,29 @@ final class AccountListViewModel {
         }
     }
 
+    private let toasty: ToastyManager
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
     private let userId: UUID
 
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - userId: The identifier of the current user.
-    init(getInstitutions: GetInstitutions,
-         getAccounts: GetAccounts,
-         archiveAccount: ArchiveAccount,
-         userId: UUID) {
-        self.getInstitutions = getInstitutions
-        self.getAccounts = getAccounts
-        self.archiveAccount = archiveAccount
-        self.userId = userId
-    }
+    init(
+        toasty: ToastyManager,
+        getInstitutions: GetInstitutions,
+        getAccounts: GetAccounts,
+        archiveAccount: ArchiveAccount,
+        userId: UUID) {
+            self.toasty = toasty
+            self.getInstitutions = getInstitutions
+            self.getAccounts = getAccounts
+            self.archiveAccount = archiveAccount
+            self.userId = userId
+        }
 
     /// Loads all institutions with their associated accounts.
     func load() async {

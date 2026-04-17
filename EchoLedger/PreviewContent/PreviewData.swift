@@ -6,10 +6,14 @@
 //
 
 import Foundation
+import Toasty
 
 /// Provides static sample data for SwiftUI previews.
 /// Never used in production code.
 enum PreviewData {
+    
+    // MARK: Toasty
+    static let toasty = ToastyManager()
 
     // MARK: User
     static let user = User(

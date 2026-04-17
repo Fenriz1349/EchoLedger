@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages the list of transactions and handles delete operations.
 @MainActor
@@ -17,15 +18,18 @@ final class TransactionListViewModel {
     var isLoading = false
     var errorMessage: String?
 
+    private let toasty: ToastyManager
     private let getTransactions: GetTransactions
     private let deleteTransaction: DeleteTransaction
     private let userId: UUID
 
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - getTransactions: UseCase for fetching all transactions.
     ///   - deleteTransaction:UseCase for deleting one transaction..
     ///   - userId: The identifier of the current user.
-    init(getTransactions: GetTransactions, deleteTransaction: DeleteTransaction, userId: UUID) {
+    init(toasty: ToastyManager,getTransactions: GetTransactions, deleteTransaction: DeleteTransaction, userId: UUID) {
+        self.toasty = toasty
         self.getTransactions = getTransactions
         self.deleteTransaction = deleteTransaction
         self.userId = userId

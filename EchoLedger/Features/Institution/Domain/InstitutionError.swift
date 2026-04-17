@@ -24,7 +24,7 @@ enum InstitutionError: Error, Equatable, LocalizedError {
     case notFound
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .nameTooShort:
             return "Le nom de l'établissement doit contenir au moins 2 caractères."

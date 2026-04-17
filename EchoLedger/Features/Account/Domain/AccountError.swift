@@ -30,7 +30,7 @@ enum AccountError: Error, Equatable, LocalizedError {
     case archiveFailed
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .nameTooShort:
             return "Le nom du compte doit contenir au moins 2 caractères."

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import Toasty
 
 /// Assembles and provides all dependencies for the application.
 /// Acts as the single source of truth for dependency injection.
@@ -34,6 +35,9 @@ final class DIContainer {
 
     // MARK: User
     let userId: UUID
+
+    // MARK: Toasty
+    let toasty: ToastyManager
 
     // MARK: Sync
     let syncManager: SyncManager
@@ -77,7 +81,8 @@ final class DIContainer {
     /// - Parameters:
     ///   - userId: The stable UUID derived from Firebase Auth uid.
     ///   - inMemory: If true, data is stored in memory only. Defaults to false.
-    init(userId: UUID, inMemory: Bool = false) {
+    init(userId: UUID, toasty: ToastyManager, inMemory: Bool = false) {
+        self.toasty = toasty
         self.userId = userId
 
         // MARK: SwiftData Stack

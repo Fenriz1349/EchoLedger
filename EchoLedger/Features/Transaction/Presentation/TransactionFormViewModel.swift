@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages form state and submission logic for creating or editing a transaction.
 @MainActor
@@ -13,6 +14,7 @@ import Foundation
 final class TransactionFormViewModel {
 
     // MARK: Dependencies
+    private let toasty: ToastyManager
     private let addTransaction: AddTransaction
     private let updateTransaction: UpdateTransaction
     private let getInstitutions: GetInstitutions
@@ -64,12 +66,14 @@ final class TransactionFormViewModel {
 
     // MARK: Init
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - addTransaction: UseCase for creating a new transaction.
     ///   - updateTransaction: UseCase to update a existing transaction.
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - userId: The identifier of the current user.
     init(
+        toasty: ToastyManager,
         addTransaction: AddTransaction,
         updateTransaction: UpdateTransaction,
         getInstitutions: GetInstitutions,
@@ -78,6 +82,7 @@ final class TransactionFormViewModel {
         addAccountFormViewModel: AccountFormViewModel,
         existingTransaction: Transaction? = nil
     ) {
+        self.toasty = toasty
         self.addTransaction = addTransaction
         self.updateTransaction = updateTransaction
         self.getInstitutions = getInstitutions
