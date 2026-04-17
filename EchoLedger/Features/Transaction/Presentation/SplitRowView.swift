@@ -10,7 +10,6 @@ import SwiftUI
 /// A single editable row representing one split of a transaction across an account.
 struct SplitRowView: View {
 
-    let index: Int
     @Binding var split: TransactionSplit
     let availableAccounts: [Account]
     let onDelete: () -> Void
@@ -38,7 +37,6 @@ struct SplitRowView: View {
     var split = TransactionSplit(accountId: PreviewData.accountCourant.id, amount: 30)
     return List {
         SplitRowView(
-            index: 0,
             split: .constant(split),
             availableAccounts: PreviewData.accounts,
             onDelete: {}

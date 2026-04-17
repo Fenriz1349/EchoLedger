@@ -24,12 +24,6 @@ struct TransactionFormView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(viewModel.existingTransaction == nil ? "Ajouter" : "Modifier ") {
-                        Task { await viewModel.submit() }
-                    }
-                    .disabled(!viewModel.isValid || viewModel.isLoading)
-                }
             }
             .task {
                 await viewModel.loadAccounts()
