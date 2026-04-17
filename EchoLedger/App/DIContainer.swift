@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-// MARK: - DIContainer
 /// Assembles and provides all dependencies for the application.
 /// Acts as the single source of truth for dependency injection.
 @MainActor
@@ -27,6 +26,9 @@ final class DIContainer {
     private let institutionLocalSource: InstitutionLocalSource
     private let accountLocalSource: AccountLocalSource
     private let transactionLocalSource: TransactionLocalSource
+
+    // MARK: User
+    let userId: UUID
 
     // MARK: Storings
     let userStoring: UserProviding
@@ -63,9 +65,14 @@ final class DIContainer {
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
     // MARK: Init
-    /// Creates the container with the given SwiftData storage configuration.
-    /// - Parameter inMemory: If true, data is stored in memory only. Defaults to false.
-    init(inMemory: Bool = false) {
+    /// Creates the container with the given user identifier and SwiftData storage configuration.
+    /// - Parameters:
+    ///   - userId: The stable UUID derived from Firebase Auth uid.
+    ///   - inMemory: If true, data is stored in memory only. Defaults to false.
+    init(userId: UUID, inMemory: Bool = false) {
+        self.userId = userId
+
+        // MARK: SwiftData Stack
         let schema = Schema([
             UserModel.self,
             InstitutionModel.self,
@@ -82,6 +89,7 @@ final class DIContainer {
 
         let context = modelContainer.mainContext
 
+        // MARK: Local Sources
         let userLocal = UserLocalSource(context: context)
         let institutionLocal = InstitutionLocalSource(context: context)
         let accountLocal = AccountLocalSource(context: context)
@@ -92,25 +100,32 @@ final class DIContainer {
         self.accountLocalSource = accountLocal
         self.transactionLocalSource = transactionLocal
 
+        // MARK: Storings
         let userStore = UserStoring(local: userLocal)
-        let institutionStore = InstitutionStoring(local: institutionLocal)
-        let accountStore = AccountStoring(local: accountLocal)
-        let transactionStore = TransactionStoring(local: transactionLocal)
+        let institutionStore = InstitutionStoring(local: institutionLocal,
+                                                  remote: InstitutionRemoteSource(), userId: userId)
+        let accountStore = AccountStoring(local: accountLocal,
+                                          remote: AccountRemoteSource(), userId: userId)
+        let transactionStore = TransactionStoring(local: transactionLocal,
+                                                  remote: TransactionRemoteSource(), userId: userId)
 
         self.userStoring = userStore
         self.institutionStoring = institutionStore
         self.accountStoring = accountStore
         self.transactionStoring = transactionStore
 
+        // MARK: Use Cases — User
         self.getCurrentUser = GetCurrentUser(repository: userStore)
         self.updateUser = UpdateUser(repository: userStore)
 
+        // MARK: Use Cases — Institution
         self.addInstitution = AddInstitution(repository: institutionStore)
         self.getInstitutions = GetInstitutions(repository: institutionStore)
         self.getInstitution = GetInstitution(repository: institutionStore)
         self.updateInstitution = UpdateInstitution(repository: institutionStore)
         self.deleteInstitution = DeleteInstitution(repository: institutionStore)
 
+        // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountStore)
         self.getAccounts = GetAccounts(repository: accountStore)
         self.getAccount = GetAccount(repository: accountStore)
@@ -121,6 +136,7 @@ final class DIContainer {
             transactionRepository: transactionStore
         )
 
+        // MARK: Use Cases — Transaction
         self.addTransaction = AddTransaction(repository: transactionStore)
         self.getTransactions = GetTransactions(repository: transactionStore)
         self.getTransaction = GetTransaction(repository: transactionStore)

@@ -11,8 +11,7 @@ import SwiftData
 /// Provides pre-configured ViewModels and a seeded DIContainer for SwiftUI previews.
 struct PreviewHelpers {
 
-    static let container = DIContainer(inMemory: true)
-    private static let userId = PreviewData.user.id
+    static let container = DIContainer(userId: PreviewData.user.id, inMemory: true)
 
     /// Seeds all preview institutions and accounts into SwiftData.
     private static func seedInstitutionsAndAccounts() {
@@ -75,7 +74,7 @@ struct PreviewHelpers {
             updateAccount: container.updateAccount,
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
-            userId: userId
+            userId: container.userId
         )
     }
 
@@ -86,7 +85,7 @@ struct PreviewHelpers {
         return AddInstitutionFormViewModel(
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
-            userId: userId,
+            userId: container.userId,
             onAdd: onAdd
         )
     }
@@ -98,7 +97,7 @@ struct PreviewHelpers {
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
             archiveAccount: container.archiveAccount,
-            userId: userId
+            userId: container.userId
         )
     }
 
@@ -110,7 +109,7 @@ struct PreviewHelpers {
             updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
-            userId: userId,
+            userId: container.userId,
             addAccountFormViewModel: container.makeAccountFormViewModel()
         )
     }
@@ -121,7 +120,7 @@ struct PreviewHelpers {
         return TransactionListViewModel(
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
-            userId: userId
+            userId: container.userId
         )
     }
 }

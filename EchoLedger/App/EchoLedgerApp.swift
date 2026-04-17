@@ -24,13 +24,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct EchoLedgerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var container = DIContainer()
+    @State private var container: DIContainer?
     @State private var coordinator: AppCoordinator?
 
     var body: some Scene {
         WindowGroup {
             Group {
-                if let coordinator {
+                if let coordinator, let container {
                     ContentView(coordinator: coordinator)
                         .environment(container)
                 } else {
@@ -38,9 +38,16 @@ struct EchoLedgerApp: App {
                 }
             }
             .task {
-                if coordinator == nil {
-                    coordinator = AppCoordinator(container: container)
+                let authStoring = AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource())
+                let resolveSession = ResolveSession(repository: authStoring)
+
+                guard let session = try? await resolveSession.execute() else {
+                    return
                 }
+
+                let newContainer = DIContainer(userId: session.userId)
+                container = newContainer
+                coordinator = AppCoordinator(container: newContainer)
             }
         }
     }

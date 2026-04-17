@@ -102,18 +102,4 @@ final class AccountLocalSource {
         model.update(from: account)
         try context.save()
     }
-
-    /// Deletes an account locally by its internal identifier.
-    /// - Parameter id: The internal UUID of the account to delete.
-    func delete(by id: UUID) throws {
-        var descriptor = FetchDescriptor<AccountModel>(
-            predicate: #Predicate { $0.id == id }
-        )
-        descriptor.fetchLimit = 1
-        guard let model = try context.fetch(descriptor).first else {
-            throw AccountError.notFound
-        }
-        context.delete(model)
-        try context.save()
-    }
 }

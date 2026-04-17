@@ -19,6 +19,7 @@ final class AddInstitutionFormViewModel {
     // MARK: UI State
     var errorMessage: String?
     var isLoading = false
+    var isSuccess = false
 
     // MARK: Dependencies
     private let addInstitution: AddInstitution
@@ -63,6 +64,7 @@ final class AddInstitutionFormViewModel {
             let trimmed = name.trimmingCharacters(in: .whitespaces).lowercased()
             if let created = institutions.first(where: { $0.name.lowercased() == trimmed }) {
                 onAdd(created)
+                isSuccess = true
                 reset()
             }
         } catch let error as InstitutionError {
@@ -78,5 +80,6 @@ final class AddInstitutionFormViewModel {
         name = ""
         category = .bank
         errorMessage = nil
+        isSuccess = false
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-// MARK: - UserLocalSource
 /// Handles all SwiftData read and write operations for the User feature.
 final class UserLocalSource {
 

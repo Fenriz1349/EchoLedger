@@ -1,5 +1,5 @@
 //
-//  DeleteAccountTests.swift
+//  ArchiveAccountTests.swift
 //  EchoLedgerTests
 //
 //  Created by Julien Cotte on 20/03/2026.
@@ -9,7 +9,7 @@ import XCTest
 @testable import EchoLedger
 
 @MainActor
-final class DeleteAccountTests: XCTestCase {
+final class ArchiveAccountTests: XCTestCase {
 
     private var repository: AccountDouble!
     private var useCase: ArchiveAccount!
@@ -35,22 +35,19 @@ final class DeleteAccountTests: XCTestCase {
     }
 
     // MARK: Tests
-    /// Verifies that an existing account is deleted and didCallDelete is set.
-    func test_execute_existingId_callsDelete() async throws {
+    /// Verifies that archiving an existing account calls update on the repository.
+    func test_execute_existingId_callsUpdate() async throws {
         let id = try await seedAccount()
         try await useCase.execute(id: id)
-        XCTAssertTrue(repository.didCallDelete)
+        XCTAssertTrue(repository.didCallUpdate)
     }
 
-    /// Verifies that the account is no longer fetchable after deletion.
-    func test_execute_existingId_accountNoLongerExists() async throws {
+    /// Verifies that the account is marked as archived after execution.
+    func test_execute_existingId_accountIsArchived() async throws {
         let id = try await seedAccount()
         try await useCase.execute(id: id)
-        await XCTAssertThrowsErrorAsync(
-            try await repository.fetch(by: id)
-        ) { error in
-            XCTAssertEqual(error as? AccountError, .notFound)
-        }
+        let account = try await repository.fetch(by: id)
+        XCTAssertTrue(account.isArchived)
     }
 
     /// Verifies that deleting an unknown id throws notFound.

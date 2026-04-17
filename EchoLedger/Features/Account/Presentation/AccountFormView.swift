@@ -17,7 +17,9 @@ struct AccountFormView: View {
 
     var body: some View {
         NavigationStack {
-            AccountFormContent(viewModel: viewModel)
+            Form {
+                AccountFormContent(viewModel: viewModel)
+            }
             .navigationTitle(viewModel.existingAccount == nil ? "Nouveau compte" : "Modifier le compte")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

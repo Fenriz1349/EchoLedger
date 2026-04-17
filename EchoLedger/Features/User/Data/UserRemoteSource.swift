@@ -8,15 +8,16 @@
 import Foundation
 import FirebaseAuth
 
-// MARK: - UserRemoteDataSource
 /// Handles all Firebase operations for the User feature.
 final class UserRemoteSource {
 
-    // MARK: Authentication
-
-    /// Signs in anonymously via Firebase Auth.
-    /// - Returns: The Firebase uid of the anonymous user.
+    /// Signs in anonymously via Firebase Auth if no session currently exists.
+    /// - Returns: The Firebase Auth uid of the current user.
+    /// - Throws: A Firebase Auth error if sign-in fails.
     func signInAnonymously() async throws -> String {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.uid
+        }
         let result = try await Auth.auth().signInAnonymously()
         return result.user.uid
     }

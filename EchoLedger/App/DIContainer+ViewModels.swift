@@ -17,7 +17,7 @@ extension DIContainer {
         TransactionListViewModel(
             getTransactions: getTransactions,
             deleteTransaction: deleteTransaction,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+            userId: userId
         )
     }
     
@@ -28,7 +28,7 @@ extension DIContainer {
             updateTransaction: updateTransaction,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+            userId: userId,
             addAccountFormViewModel: makeAccountFormViewModel(),
             existingTransaction: existing
         )
@@ -42,7 +42,7 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+            userId: userId
         )
     }
 
@@ -53,7 +53,7 @@ extension DIContainer {
             updateAccount: updateAccount,
             addInstitution: addInstitution,
             getInstitutions: getInstitutions,
-            userId: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+            userId: userId,
             existingAccount: existing
         )
     }
