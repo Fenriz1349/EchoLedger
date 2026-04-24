@@ -43,7 +43,7 @@ struct EchoLedgerApp: App {
                         ContentView(coordinator: coordinator)
                             .environment(container)
                     } else {
-                        ProgressView()
+                        AuthView(authStoring: authStoring, toasty: toasty, onAuthSuccess: buildApp)
                     }
                 }
                 .task { await resolveExistingSession() }

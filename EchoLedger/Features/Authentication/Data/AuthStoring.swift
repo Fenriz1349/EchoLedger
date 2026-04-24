@@ -28,6 +28,7 @@ final class AuthStoring: AuthProviding {
     /// Restores an existing session from local storage without creating a new one.
     func resolveSession() async throws -> AuthSession {
         guard let userId = local.fetchUserId() else {
+            try? remote.signOut()
             throw AuthError.noSessionFound
         }
         let isAnonymous = Auth.auth().currentUser?.isAnonymous ?? true
