@@ -37,6 +37,7 @@ final class AuthViewModel {
     private let signInWithEmailUseCase: SignInWithEmail
     private let createAccountUseCase: CreateAccount
     private let signInAnonymouslyUseCase: SignInAnonymously
+    private let resetPasswordUseCase: ResetPassword
     let onAuthSuccess: (AuthSession) -> Void
     
     /// Returns true when all required fields are filled and valid.
@@ -60,13 +61,15 @@ final class AuthViewModel {
         signInWithEmail: SignInWithEmail,
         createAccount: CreateAccount,
         signInAnonymously: SignInAnonymously,
-        onAuthSuccess: @escaping (AuthSession) -> Void
+        onAuthSuccess: @escaping (AuthSession) -> Void,
+        resetPassword: ResetPassword,
     ) {
         self.toasty = toasty
         self.signInWithEmailUseCase = signInWithEmail
         self.createAccountUseCase = createAccount
         self.signInAnonymouslyUseCase = signInAnonymously
         self.onAuthSuccess = onAuthSuccess
+        self.resetPasswordUseCase = resetPassword
     }
 
     /// Validates and submits the form, signing in or creating an account depending on the current mode.
@@ -99,6 +102,22 @@ final class AuthViewModel {
         do {
             let session = try await signInAnonymouslyUseCase.execute()
             onAuthSuccess(session)
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Sends a password reset email using the current email field value.
+    func forgotPassword() async {
+        guard Validators.isValidEmail(email) else {
+            emailState = .invalid
+            return
+        }
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await resetPasswordUseCase.execute(email: email)
+            toasty.showSuccess("Un email de réinitialisation a été envoyé.")
         } catch {
             toasty.showError(error)
         }

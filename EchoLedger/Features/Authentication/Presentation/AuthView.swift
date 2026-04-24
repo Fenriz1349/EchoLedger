@@ -25,7 +25,8 @@ struct AuthView: View {
             signInWithEmail: SignInWithEmail(repository: authStoring),
             createAccount: CreateAccount(repository: authStoring),
             signInAnonymously: SignInAnonymously(repository: authStoring),
-            onAuthSuccess: onAuthSuccess
+            onAuthSuccess: onAuthSuccess,
+            resetPassword: ResetPassword(repository: authStoring)
         ))
     }
 
@@ -45,29 +46,32 @@ struct AuthView: View {
                 }
                 .padding(.top, 40)
 
-                // MARK: Fields
-                VStack(spacing: 16) {
-                    if viewModel.isSignUp {
-                        CustomTextField(placeholder: "Prénom", text: $viewModel.firstName, type: .lettersOnly,
-                            errorMessage: "Le prénom est requis.",
-                            validationState: $viewModel.firstNameState, showErrorOnlyWhenTriggered: false)
-                        CustomTextField(placeholder: "Nom", text: $viewModel.lastName, type: .lettersOnly,
-                            errorMessage: "Le nom est requis.",
-                            validationState: $viewModel.lastNameState, showErrorOnlyWhenTriggered: false)
+                AuthFormContent(
+                    isSignUp: $viewModel.isSignUp,
+                    firstName: $viewModel.firstName,
+                    lastName: $viewModel.lastName,
+                    email: $viewModel.email,
+                    password: $viewModel.password,
+                    confirmPassword: $viewModel.confirmPassword,
+                    firstNameState: $viewModel.firstNameState,
+                    lastNameState: $viewModel.lastNameState,
+                    emailState: $viewModel.emailState,
+                    passwordState: $viewModel.passwordState,
+                    confirmPasswordState: $viewModel.confirmPasswordState
+                )
+
+                // MARK: Password Reset
+                if !viewModel.isSignUp {
+                    Button {
+                        Task { await viewModel.forgotPassword() }
+                    } label: {
+                        Text("Mot de passe oublié ?")
+                            .font(.subheadline)
+                            .foregroundColor(.accentColor)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
                     }
-                    CustomTextField(placeholder: "Email", text: $viewModel.email, type: .email,
-                        errorMessage: "Adresse email invalide.",
-                        validationState: $viewModel.emailState, showErrorOnlyWhenTriggered: false)
-                    CustomTextField(placeholder: "Mot de passe", text: $viewModel.password, type: .password,
-                        errorMessage: AuthError.weakPassword.errorDescription,
-                        validationState: $viewModel.passwordState, showErrorOnlyWhenTriggered: false)
-                    if viewModel.isSignUp {
-                        CustomTextField(placeholder: "Confirmer le mot de passe", text: $viewModel.confirmPassword, type: .password,
-                            errorMessage: AuthError.passwordsDoNotMatch.errorDescription,
-                            validationState: $viewModel.confirmPasswordState, showErrorOnlyWhenTriggered: false)
-                    }
+                    .disabled(viewModel.isLoading)
                 }
-                .animation(.easeInOut(duration: 0.2), value: viewModel.isSignUp)
 
                 // MARK: Submit
                 Button {

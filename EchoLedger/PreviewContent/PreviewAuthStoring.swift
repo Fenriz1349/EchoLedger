@@ -16,4 +16,5 @@ final class PreviewAuthStoring: AuthProviding {
     func signOut() async throws {}
     func deleteAccount() async throws {}
     func linkAnonymousAccount(toEmail email: String, password: String) async throws -> AuthSession { PreviewData.authSession }
+    func resetPassword(email: String) async throws {}
 }

@@ -70,6 +70,8 @@
 		683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */; };
 		683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */; };
 		683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FD2F9B7A2D00DA5796 /* AuthView.swift */; };
+		683276002F9BA04400DA5796 /* AuthFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FF2F9BA04400DA5796 /* AuthFormContent.swift */; };
+		683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683276012F9BA22200DA5796 /* ResetPassword.swift */; };
 		683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
 		683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
@@ -230,6 +232,8 @@
 		683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAuthStoring.swift; sourceTree = "<group>"; };
 		683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		683275FD2F9B7A2D00DA5796 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		683275FF2F9BA04400DA5796 /* AuthFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFormContent.swift; sourceTree = "<group>"; };
+		683276012F9BA22200DA5796 /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
 		683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
@@ -375,6 +379,7 @@
 				6807E57B2F922C290099DCE4 /* SignOut.swift */,
 				683275F42F9B66F500DA5796 /* DeleteAccount.swift */,
 				683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */,
+				683276012F9BA22200DA5796 /* ResetPassword.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -509,6 +514,7 @@
 			children = (
 				683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */,
 				683275FD2F9B7A2D00DA5796 /* AuthView.swift */,
+				683275FF2F9BA04400DA5796 /* AuthFormContent.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1034,6 +1040,7 @@
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
 				6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */,
 				683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */,
+				683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
 				681B47092F7FEB60000CC7C4 /* SplitRowView.swift in Sources */,
 				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
@@ -1091,6 +1098,7 @@
 				6807E5772F922C090099DCE4 /* AuthProviding.swift in Sources */,
 				685A1ECE2F5AD9A20009B885 /* UserLocalSource.swift in Sources */,
 				685A1EE62F5AE9A10009B885 /* AccountStoring.swift in Sources */,
+				683276002F9BA04400DA5796 /* AuthFormContent.swift in Sources */,
 				6807E5802F922C3D0099DCE4 /* AuthRemoteSource.swift in Sources */,
 				685A1EAF2F5ACF700009B885 /* AccountCategory.swift in Sources */,
 				683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */,

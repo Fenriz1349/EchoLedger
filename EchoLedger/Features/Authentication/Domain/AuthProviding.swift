@@ -46,4 +46,8 @@ protocol AuthProviding {
     ///   - password: The password for the new permanent account.
     /// - Returns: An updated non-anonymous `AuthSession`.
     func linkAnonymousAccount(toEmail email: String, password: String) async throws -> AuthSession
+    
+    /// Sends a password reset email to the given address.
+    /// - Parameter email: The email address of the account to reset.
+    func resetPassword(email: String) async throws
 }

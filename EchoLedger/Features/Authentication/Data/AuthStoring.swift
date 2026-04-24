@@ -122,4 +122,9 @@ final class AuthStoring: AuthProviding {
             throw AuthError.accountLinkingFailed
         }
     }
+
+    /// Delegates password reset to the remote authentication source.
+    func resetPassword(email: String) async throws {
+        try await remote.resetPassword(email: email)
+    }
 }

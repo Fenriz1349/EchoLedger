@@ -28,6 +28,8 @@ enum AuthError: Error, Equatable, LocalizedError {
     case accountLinkingFailed
     /// Thrown when the account deletion process fails.
     case deletionFailed
+    /// Thrown when the password reset email fails to send.
+    case resetPasswordFailed
 
     var errorDescription: String? {
         switch self {
@@ -40,6 +42,7 @@ enum AuthError: Error, Equatable, LocalizedError {
         case .passwordsDoNotMatch:  return "Les mots de passe ne correspondent pas."
         case .accountLinkingFailed: return "La migration du compte démo a échoué."
         case .deletionFailed:       return "La suppression du compte a échoué."
+        case .resetPasswordFailed: return "L'envoi de l'email de réinitialisation a échoué."
         }
     }
 }
