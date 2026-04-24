@@ -32,12 +32,6 @@ struct AddInstitutionFormView: View {
             }
             .pickerStyle(.menu)
 
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-            }
-
             Button {
                 Task { await viewModel.submit() }
             } label: {

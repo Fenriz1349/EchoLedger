@@ -116,7 +116,7 @@ final class TransactionFormViewModel {
                 addSplit(for: account)
             }
         } catch {
-            errorMessage = TransactionError.loadFailed.localizedDescription
+            toasty.showError(error)
         }
     }
 
@@ -190,9 +190,9 @@ final class TransactionFormViewModel {
             }
             isSuccess = true
         } catch let error as TransactionError {
-            errorMessage = error.localizedDescription
+            toasty.showError(error)
         } catch {
-            errorMessage = "Une erreur est survenue"
+            toasty.showError("Une erreur est survenue" as! any Error)
         }
         isLoading = false
     }

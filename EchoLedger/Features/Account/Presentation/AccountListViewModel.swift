@@ -16,7 +16,6 @@ final class AccountListViewModel {
     var accounts: [Account] = []
     var institutions: [Institution] = []
     var isLoading = false
-    var errorMessage: String?
 
     /// Returns institutions paired with their non-empty account lists, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
@@ -53,7 +52,6 @@ final class AccountListViewModel {
     /// Loads all institutions with their associated accounts.
     func load() async {
         isLoading = true
-        errorMessage = nil
 
         do {
             let institutions = try await getInstitutions.execute(for: userId)
@@ -68,7 +66,7 @@ final class AccountListViewModel {
 
             self.accounts = allAccounts
         } catch {
-            errorMessage = AccountError.loadFailed.localizedDescription
+            toasty.showError(error)
         }
 
         isLoading = false
@@ -80,7 +78,7 @@ final class AccountListViewModel {
             try await archiveAccount.execute(id: account.id)
             await load()
         } catch {
-            errorMessage = AccountError.archiveFailed.localizedDescription
+            toasty.showError(error)
         }
     }
 }

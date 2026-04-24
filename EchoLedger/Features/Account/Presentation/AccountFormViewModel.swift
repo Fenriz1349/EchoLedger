@@ -101,7 +101,7 @@ final class AccountFormViewModel {
                 selectedInstitution = institutions.first
             }
         } catch {
-            errorMessage = "Impossible de charger les établissements"
+            toasty.showError(error)
         }
     }
 
@@ -110,6 +110,7 @@ final class AccountFormViewModel {
         guard let institution = selectedInstitution else { return }
         isLoading = true
         errorMessage = nil
+
         do {
             if let existing = existingAccount {
                 let input = UpdateAccountInput(
@@ -124,9 +125,9 @@ final class AccountFormViewModel {
             }
             isSuccess = true
         } catch let error as AccountError {
-            errorMessage = error.localizedDescription
+            toasty.showError(error)
         } catch {
-            errorMessage = "Une erreur est survenue"
+            toasty.showError("Une erreur est survenue" as! Error)
         }
         isLoading = false
     }

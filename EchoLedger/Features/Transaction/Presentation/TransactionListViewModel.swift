@@ -16,7 +16,6 @@ final class TransactionListViewModel {
     var showAddTransaction = false
     var transactions: [Transaction] = []
     var isLoading = false
-    var errorMessage: String?
 
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
@@ -38,11 +37,11 @@ final class TransactionListViewModel {
     /// Loads all transactions for the current user.
     func load() async {
         isLoading = true
-        errorMessage = nil
+
         do {
             transactions = try await getTransactions.execute(for: userId)
         } catch {
-            errorMessage = "Impossible de charger les transactions"
+            toasty.showError(error)
         }
         isLoading = false
     }
@@ -53,7 +52,7 @@ final class TransactionListViewModel {
             try await deleteTransaction.execute(id: transaction.id)
             transactions.removeAll { $0.id == transaction.id }
         } catch {
-            errorMessage = "Impossible de supprimer la transaction"
+            toasty.showError(error)
         }
     }
 }
