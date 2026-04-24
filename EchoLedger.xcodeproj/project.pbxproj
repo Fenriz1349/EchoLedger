@@ -67,6 +67,7 @@
 		683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
 		683275F52F9B66F500DA5796 /* DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteAccount.swift */; };
 		683275F72F9B670600DA5796 /* LinkAnonymousAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */; };
+		683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */; };
 		683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
 		683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
@@ -224,6 +225,7 @@
 		683275F22F9B662F00DA5796 /* SignInAnonymously.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAnonymously.swift; sourceTree = "<group>"; };
 		683275F42F9B66F500DA5796 /* DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccount.swift; sourceTree = "<group>"; };
 		683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAnonymousAccount.swift; sourceTree = "<group>"; };
+		683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAuthStoring.swift; sourceTree = "<group>"; };
 		683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 			children = (
 				684497132F75380900337F74 /* PreviewData.swift */,
 				6844973A2F7576B500337F74 /* PreviewHelpers.swift */,
+				683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */,
 			);
 			path = PreviewContent;
 			sourceTree = "<group>";
@@ -1042,6 +1045,7 @@
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionCategory.swift in Sources */,
+				683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */,
 				685A1EBC2F5AD8B10009B885 /* AppCoordinator.swift in Sources */,
 				684497282F7569C600337F74 /* AccountListView.swift in Sources */,
 				685A1F0D2F5AEC050009B885 /* SyncStatus.swift in Sources */,

@@ -17,16 +17,43 @@ final class UserRemoteSource {
         firestore.collection("users").document(userId.uuidString)
     }
 
-    /// Saves a new user document to Firestore.
-    /// - Parameter user: The domain User to persist remotely.
-    func save(_ user: User) async throws {
-        try await document(for: user.id).setData(encode(user))
+    /// Creates a new user document in Firestore, storing the Firebase UID for multi-device sign-in.
+    /// - Parameters:
+    ///   - user: The domain User to persist remotely.
+    ///   - firebaseUID: The Firebase Auth UID used to retrieve the internal UUID on a new device.
+    func save(_ user: User, firebaseUID: String) async throws {
+        var data = encode(user)
+        data["firebaseUID"] = firebaseUID
+        try await document(for: user.id).setData(data)
     }
 
-    /// Updates an existing user document in Firestore.
+    /// Updates an existing user document in Firestore. Does not overwrite the firebaseUID field.
     /// - Parameter user: The domain User with updated values.
     func update(_ user: User) async throws {
         try await document(for: user.id).setData(encode(user), merge: true)
+    }
+
+    /// Adds the Firebase UID to an existing user document. Used when linking an anonymous account.
+    /// - Parameters:
+    ///   - firebaseUID: The Firebase Auth UID to store.
+    ///   - userId: The internal UUID of the user.
+    func linkFirebaseUID(_ firebaseUID: String, toUserId userId: UUID) async throws {
+        try await document(for: userId).setData(["firebaseUID": firebaseUID], merge: true)
+    }
+
+    /// Fetches the internal UUID for a user by their Firebase UID.
+    /// Used when signing in on a new device where UserDefaults has been cleared.
+    /// - Parameter firebaseUID: The Firebase Auth UID to look up.
+    /// - Returns: The internal UUID if found, nil otherwise.
+    func fetchInternalUserId(forFirebaseUID firebaseUID: String) async -> UUID? {
+        guard let snapshot = try? await firestore.collection("users")
+            .whereField("firebaseUID", isEqualTo: firebaseUID)
+            .limit(to: 1)
+            .getDocuments(),
+              let data = snapshot.documents.first?.data(),
+              let idString = data["id"] as? String
+        else { return nil }
+        return UUID(uuidString: idString)
     }
 
     /// Deletes the user document from Firestore.

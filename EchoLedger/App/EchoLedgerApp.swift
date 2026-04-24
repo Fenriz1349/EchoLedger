@@ -29,6 +29,12 @@ struct EchoLedgerApp: App {
     @State private var coordinator: AppCoordinator?
     @StateObject private var toasty = ToastyManager()
 
+    private let authStoring = AuthStoring(
+        local: AuthLocalSource(),
+        remote: AuthRemoteSource(),
+        userRemote: UserRemoteSource()
+    )
+
     var body: some Scene {
         WindowGroup {
             ToastyContainer(manager: toasty) {
@@ -40,20 +46,36 @@ struct EchoLedgerApp: App {
                         ProgressView()
                     }
                 }
-                .task {
-                    let authStoring = AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource())
-                    let resolveSession = ResolveSession(repository: authStoring)
-
-                    guard let session = try? await resolveSession.execute() else {
-                        return
-                    }
-
-                    let newContainer = DIContainer(userId: session.userId, toasty: toasty)
-                    container = newContainer
-                    coordinator = AppCoordinator(container: newContainer)
-                }
+                .task { await resolveExistingSession() }
                 .environmentObject(toasty)
             }
         }
+    }
+
+    /// Attempts to restore an existing session from local storage at launch.
+    private func resolveExistingSession() async {
+        let resolve = ResolveSession(repository: authStoring)
+        if let session = await resolve.execute() {
+            buildApp(session: session)
+        }
+    }
+
+    /// Assembles the full dependency graph and activates the main app for the given session.
+    /// - Parameter session: The authenticated session to build from.
+    private func buildApp(session: AuthSession) {
+        let newContainer = DIContainer(
+            userId: session.userId,
+            toasty: toasty,
+            authStoring: authStoring,
+            authSession: session
+        )
+        container = newContainer
+        coordinator = AppCoordinator(container: newContainer, onSignOut: resetToAuth)
+    }
+
+    /// Tears down the app state and returns to the authentication screen.
+    private func resetToAuth() {
+        container = nil
+        coordinator = nil
     }
 }

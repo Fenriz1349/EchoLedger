@@ -16,11 +16,14 @@ final class AppCoordinator {
     let accountListViewModel: AccountListViewModel
 
     private let container: DIContainer
+    private let onSignOut: () -> Void
 
-    /// - Parameter container: The dependency injection container providing all use cases.
-    init(container: DIContainer) {
+    /// - Parameters:
+    ///   - container: The dependency injection container providing all use cases.
+    ///   - onSignOut: Closure called after a successful sign-out or account deletion.
+    init(container: DIContainer, onSignOut: @escaping () -> Void) {
         self.container = container
-
+        self.onSignOut = onSignOut
         self.transactionListViewModel = container.makeTransactionListViewModel()
         self.accountListViewModel = container.makeAccountListViewModel()
     }
@@ -35,5 +38,16 @@ final class AppCoordinator {
     /// - Returns: A configured AccountFormViewModel.
     func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {
         container.makeAccountFormViewModel(existing: existing)
+    }
+
+    /// Updates the current auth session, used after linking an anonymous account.
+    /// - Parameter session: The updated authentication session.
+    func updateSession(_ session: AuthSession) {
+        container.authSession = session
+    }
+
+    /// Triggers the sign-out flow, resetting the app to the authentication screen.
+    func signOut() {
+        onSignOut()
     }
 }

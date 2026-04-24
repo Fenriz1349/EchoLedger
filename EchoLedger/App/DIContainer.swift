@@ -29,9 +29,14 @@ final class DIContainer {
     private let transactionLocalSource: TransactionLocalSource
 
     // MARK: Remote Sources
+    let userRemote = UserRemoteSource()
     let institutionRemote = InstitutionRemoteSource()
     let accountRemote = AccountRemoteSource()
     let transactionRemote = TransactionRemoteSource()
+
+    // MARK: Auth
+    let authStoring: AuthProviding
+    var authSession: AuthSession
 
     // MARK: User
     let userId: UUID
@@ -47,6 +52,11 @@ final class DIContainer {
     let institutionStoring: InstitutionProviding
     let accountStoring: AccountProviding
     let transactionStoring: TransactionProviding
+
+    // MARK: Use Cases — Auth
+    let signOut: SignOut
+    let deleteAccount: DeleteAccount
+    let linkAnonymousAccount: LinkAnonymousAccount
 
     // MARK: Use Cases — User
     let getCurrentUser: GetCurrentUser
@@ -77,13 +87,20 @@ final class DIContainer {
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
     // MARK: Init
-    /// Creates the container with the given user identifier and SwiftData storage configuration.
+
+    /// Creates the container with all resolved dependencies.
     /// - Parameters:
-    ///   - userId: The stable UUID derived from Firebase Auth uid.
-    ///   - inMemory: If true, data is stored in memory only. Defaults to false.
-    init(userId: UUID, toasty: ToastyManager, inMemory: Bool = false) {
-        self.toasty = toasty
+    ///   - userId: The stable UUID derived from the authentication session.
+    ///   - toasty: The shared toast notification manager.
+    ///   - authStoring: The authentication provider used for sign-out and account deletion.
+    ///   - authSession: The current authentication session.
+    ///   - inMemory: If true, SwiftData stores data in memory only. Defaults to false.
+    init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
+         authSession: AuthSession, inMemory: Bool = false) {
         self.userId = userId
+        self.toasty = toasty
+        self.authStoring = authStoring
+        self.authSession = authSession
 
         // MARK: SwiftData Stack
         let schema = Schema([
@@ -114,7 +131,7 @@ final class DIContainer {
         self.transactionLocalSource = transactionLocal
 
         // MARK: Storings
-        let userStore = UserStoring(local: userLocal)
+        let userStore = UserStoring(local: userLocal, remote: userRemote)
         let institutionStore = InstitutionStoring(local: institutionLocal,
                                                   remote: institutionRemote, userId: userId)
         let accountStore = AccountStoring(local: accountLocal,
@@ -137,6 +154,11 @@ final class DIContainer {
             accountLocal: accountLocal,
             transactionLocal: transactionLocal
         )
+
+        // MARK: Use Cases — Auth
+        self.signOut = SignOut(repository: authStoring)
+        self.deleteAccount = DeleteAccount(repository: authStoring)
+        self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
 
         // MARK: Use Cases — User
         self.getCurrentUser = GetCurrentUser(repository: userStore)
