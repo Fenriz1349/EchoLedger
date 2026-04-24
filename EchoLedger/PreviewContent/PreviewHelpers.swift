@@ -11,7 +11,13 @@ import SwiftData
 /// Provides pre-configured ViewModels and a seeded DIContainer for SwiftUI previews.
 struct PreviewHelpers {
 
-    static let container = DIContainer(userId: PreviewData.user.id,toasty: PreviewData.toasty, inMemory: true)
+    static let container = DIContainer(
+        userId: PreviewData.user.id,
+        toasty: PreviewData.toasty,
+        authStoring: PreviewData.authStoring,
+        authSession: PreviewData.authSession,
+        inMemory: true
+    )
 
     /// Seeds all preview institutions and accounts into SwiftData.
     private static func seedInstitutionsAndAccounts() {
@@ -63,7 +69,7 @@ struct PreviewHelpers {
     static var appCoordinator: AppCoordinator {
         seedInstitutionsAndAccounts()
         seedTransactions()
-        return AppCoordinator(container: container)
+        return AppCoordinator(container: container, onSignOut: {})
     }
 
     /// - Returns: An AccountFormViewModel seeded with preview institutions and accounts.
