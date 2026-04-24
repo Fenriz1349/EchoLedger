@@ -119,7 +119,8 @@ final class AccountLocalSource {
                 id: account.id,
                 institutionId: account.institutionId,
                 name: account.name,
-                category: account.category.rawValue
+                category: account.category.rawValue,
+                isArchived: account.isArchived
             ))
         }
         try context.save()

@@ -63,9 +63,26 @@ final class UserLocalSource {
         try context.save()
     }
 
-    /// Deletes a user locally by its internal identifier.
+    /// Deletes a user and all associated institutions, accounts, and transactions from local storage.
     /// - Parameter id: The internal UUID of the user to delete.
     func delete(by id: UUID) throws {
+        let institutionDescriptor = FetchDescriptor<InstitutionModel>(
+            predicate: #Predicate { $0.userId == id }
+        )
+        let institutions = try context.fetch(institutionDescriptor)
+        for institution in institutions {
+            let accountDescriptor = FetchDescriptor<AccountModel>(
+                predicate: #Predicate { $0.institutionId == institution.id }
+            )
+            try context.fetch(accountDescriptor).forEach { context.delete($0) }
+            context.delete(institution)
+        }
+
+        let transactionDescriptor = FetchDescriptor<TransactionModel>(
+            predicate: #Predicate { $0.userId == id }
+        )
+        try context.fetch(transactionDescriptor).forEach { context.delete($0) }
+
         var descriptor = FetchDescriptor<UserModel>(
             predicate: #Predicate { $0.id == id }
         )

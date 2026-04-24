@@ -19,10 +19,6 @@ final class UserModel {
     var email: String
     var photoURL: String?
 
-    // MARK: Relationships
-    @Relationship(deleteRule: .cascade)
-    var institutions: [InstitutionModel]
-
     // MARK: Init
     /// Creates a new UserModel from primitive values.
     init(
@@ -35,7 +31,6 @@ final class UserModel {
         self.displayName = displayName
         self.email = email
         self.photoURL = photoURL
-        self.institutions = []
     }
 
     // MARK: Mapping

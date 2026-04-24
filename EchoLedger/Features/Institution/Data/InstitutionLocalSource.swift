@@ -79,9 +79,14 @@ final class InstitutionLocalSource {
         try context.save()
     }
 
-    /// Deletes an institution and all its associated accounts locally.
+    /// Deletes an institution and all its associated accounts from local storage.
     /// - Parameter id: The internal UUID of the institution to delete.
     func delete(by id: UUID) throws {
+        let accountDescriptor = FetchDescriptor<AccountModel>(
+            predicate: #Predicate { $0.institutionId == id }
+        )
+        try context.fetch(accountDescriptor).forEach { context.delete($0) }
+
         var descriptor = FetchDescriptor<InstitutionModel>(
             predicate: #Predicate { $0.id == id }
         )
