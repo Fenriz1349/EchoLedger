@@ -71,8 +71,9 @@ final class UserLocalSource {
         )
         let institutions = try context.fetch(institutionDescriptor)
         for institution in institutions {
+            let institutionId = institution.id
             let accountDescriptor = FetchDescriptor<AccountModel>(
-                predicate: #Predicate { $0.institutionId == institution.id }
+                predicate: #Predicate { $0.institutionId == institutionId }
             )
             try context.fetch(accountDescriptor).forEach { context.delete($0) }
             context.delete(institution)
