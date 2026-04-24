@@ -11,7 +11,7 @@ import SwiftData
 /// Provides pre-configured ViewModels and a seeded DIContainer for SwiftUI previews.
 struct PreviewHelpers {
 
-    static let container = DIContainer(userId: PreviewData.user.id, inMemory: true)
+    static let container = DIContainer(userId: PreviewData.user.id,toasty: PreviewData.toasty, inMemory: true)
 
     /// Seeds all preview institutions and accounts into SwiftData.
     private static func seedInstitutionsAndAccounts() {
@@ -70,6 +70,7 @@ struct PreviewHelpers {
     static func makeccountFormViewModel() -> AccountFormViewModel {
         seedInstitutionsAndAccounts()
         return AccountFormViewModel(
+            toasty: container.toasty,
             addAccount: container.addAccount,
             updateAccount: container.updateAccount,
             addInstitution: container.addInstitution,
@@ -83,6 +84,7 @@ struct PreviewHelpers {
     static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in })
     -> AddInstitutionFormViewModel {
         return AddInstitutionFormViewModel(
+            toasty: container.toasty,
             addInstitution: container.addInstitution,
             getInstitutions: container.getInstitutions,
             userId: container.userId,
@@ -94,6 +96,7 @@ struct PreviewHelpers {
     static func makeAccountListViewModel() -> AccountListViewModel {
         seedInstitutionsAndAccounts()
         return AccountListViewModel(
+            toasty: container.toasty,
             getInstitutions: container.getInstitutions,
             getAccounts: container.getAccounts,
             archiveAccount: container.archiveAccount,
@@ -105,6 +108,7 @@ struct PreviewHelpers {
     static func makeTransactionFormViewModel() -> TransactionFormViewModel {
         seedInstitutionsAndAccounts()
         return TransactionFormViewModel(
+            toasty: container.toasty,
             addTransaction: container.addTransaction,
             updateTransaction: container.updateTransaction,
             getInstitutions: container.getInstitutions,
@@ -118,6 +122,7 @@ struct PreviewHelpers {
     static func makeTransactionListViewModel() -> TransactionListViewModel {
         seedTransactions()
         return TransactionListViewModel(
+            toasty: container.toasty,
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
             userId: container.userId

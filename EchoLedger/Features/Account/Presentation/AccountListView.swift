@@ -25,14 +25,16 @@ struct AccountListView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.accountListViewModel.institutionsWithAccounts, id: \.institution.id) { item in
+                        ForEach(coordinator.accountListViewModel.institutionsWithAccounts,
+                                id: \.institution.id) { item in
                             Section(item.institution.name) {
                                 ForEach(item.accounts) { account in
                                     NavigationLink(value: account) {
                                         AccountRowView(
                                             account: account,
                                             onEdit: { sheet = .edit(account) },
-                                            onArchive: { Task { await coordinator.accountListViewModel.archive(account) } }
+                                            onArchive: { Task { await coordinator.accountListViewModel
+                                                .archive(account) } }
                                         )
                                     }
                                 }

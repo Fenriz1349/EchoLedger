@@ -79,9 +79,14 @@ final class InstitutionLocalSource {
         try context.save()
     }
 
-    /// Deletes an institution and all its associated accounts locally.
+    /// Deletes an institution and all its associated accounts from local storage.
     /// - Parameter id: The internal UUID of the institution to delete.
     func delete(by id: UUID) throws {
+        let accountDescriptor = FetchDescriptor<AccountModel>(
+            predicate: #Predicate { $0.institutionId == id }
+        )
+        try context.fetch(accountDescriptor).forEach { context.delete($0) }
+
         var descriptor = FetchDescriptor<InstitutionModel>(
             predicate: #Predicate { $0.id == id }
         )
@@ -90,6 +95,29 @@ final class InstitutionLocalSource {
             throw InstitutionError.notFound
         }
         context.delete(model)
+        try context.save()
+    }
+
+    /// Inserts a new institution locally if it does not exist, or updates it if it does.
+    /// - Parameter institution: The domain Institution to insert or update.
+    /// - Throws: A SwiftData error if the operation fails.
+    func upsert(_ institution: Institution) throws {
+        let id = institution.id
+        var descriptor = FetchDescriptor<InstitutionModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        if let existing = try context.fetch(descriptor).first {
+            existing.update(from: institution)
+        } else {
+            context.insert(InstitutionModel(
+                id: institution.id,
+                userId: institution.userId,
+                name: institution.name,
+                category: institution.category.rawValue,
+                logoURL: institution.logoURL
+            ))
+        }
         try context.save()
     }
 }

@@ -16,19 +16,13 @@ struct TransactionFormView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TransactionFormContent(viewModel: viewModel)                
+                TransactionFormContent(viewModel: viewModel)
             }
             .navigationTitle(viewModel.existingTransaction == nil ? "Nouvelle transaction" :"Modifier la transaction")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(viewModel.existingTransaction == nil ? "Ajouter" : "Modifier ") {
-                        Task { await viewModel.submit() }
-                    }
-                    .disabled(!viewModel.isValid || viewModel.isLoading)
                 }
             }
             .task {

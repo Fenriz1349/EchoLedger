@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import Toasty
 
 // MARK: - AppDelegate
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -26,28 +27,32 @@ struct EchoLedgerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var container: DIContainer?
     @State private var coordinator: AppCoordinator?
+    @StateObject private var toasty = ToastyManager()
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if let coordinator, let container {
-                    ContentView(coordinator: coordinator)
-                        .environment(container)
-                } else {
-                    ProgressView()
+            ToastyContainer(manager: toasty) {
+                Group {
+                    if let coordinator, let container {
+                        ContentView(coordinator: coordinator)
+                            .environment(container)
+                    } else {
+                        ProgressView()
+                    }
                 }
-            }
-            .task {
-                let authStoring = AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource())
-                let resolveSession = ResolveSession(repository: authStoring)
+                .task {
+                    let authStoring = AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource())
+                    let resolveSession = ResolveSession(repository: authStoring)
 
-                guard let session = try? await resolveSession.execute() else {
-                    return
+                    guard let session = try? await resolveSession.execute() else {
+                        return
+                    }
+
+                    let newContainer = DIContainer(userId: session.userId, toasty: toasty)
+                    container = newContainer
+                    coordinator = AppCoordinator(container: newContainer)
                 }
-
-                let newContainer = DIContainer(userId: session.userId)
-                container = newContainer
-                coordinator = AppCoordinator(container: newContainer)
+                .environmentObject(toasty)
             }
         }
     }

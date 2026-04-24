@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import Toasty
 
 /// Assembles and provides all dependencies for the application.
 /// Acts as the single source of truth for dependency injection.
@@ -27,8 +28,19 @@ final class DIContainer {
     private let accountLocalSource: AccountLocalSource
     private let transactionLocalSource: TransactionLocalSource
 
+    // MARK: Remote Sources
+    let institutionRemote = InstitutionRemoteSource()
+    let accountRemote = AccountRemoteSource()
+    let transactionRemote = TransactionRemoteSource()
+
     // MARK: User
     let userId: UUID
+
+    // MARK: Toasty
+    let toasty: ToastyManager
+
+    // MARK: Sync
+    let syncManager: SyncManager
 
     // MARK: Storings
     let userStoring: UserProviding
@@ -69,7 +81,8 @@ final class DIContainer {
     /// - Parameters:
     ///   - userId: The stable UUID derived from Firebase Auth uid.
     ///   - inMemory: If true, data is stored in memory only. Defaults to false.
-    init(userId: UUID, inMemory: Bool = false) {
+    init(userId: UUID, toasty: ToastyManager, inMemory: Bool = false) {
+        self.toasty = toasty
         self.userId = userId
 
         // MARK: SwiftData Stack
@@ -103,16 +116,27 @@ final class DIContainer {
         // MARK: Storings
         let userStore = UserStoring(local: userLocal)
         let institutionStore = InstitutionStoring(local: institutionLocal,
-                                                  remote: InstitutionRemoteSource(), userId: userId)
+                                                  remote: institutionRemote, userId: userId)
         let accountStore = AccountStoring(local: accountLocal,
-                                          remote: AccountRemoteSource(), userId: userId)
+                                          remote: accountRemote, userId: userId)
         let transactionStore = TransactionStoring(local: transactionLocal,
-                                                  remote: TransactionRemoteSource(), userId: userId)
+                                                  remote: transactionRemote, userId: userId)
 
         self.userStoring = userStore
         self.institutionStoring = institutionStore
         self.accountStoring = accountStore
         self.transactionStoring = transactionStore
+
+        // MARK: Sync
+        self.syncManager = SyncManager(
+            userId: userId,
+            institutionRemote: institutionRemote,
+            accountRemote: accountRemote,
+            transactionRemote: transactionRemote,
+            institutionLocal: institutionLocal,
+            accountLocal: accountLocal,
+            transactionLocal: transactionLocal
+        )
 
         // MARK: Use Cases — User
         self.getCurrentUser = GetCurrentUser(repository: userStore)

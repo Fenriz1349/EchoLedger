@@ -9,6 +9,7 @@ import Foundation
 
 /// Concrete implementation of AccountProviding.
 /// Orchestrates local and remote persistence for the Account feature.
+/// Local storage is always used for reads — data is kept up to date via SyncManager.
 final class AccountStoring: AccountProviding {
 
     private let local: AccountLocalSource
@@ -50,7 +51,7 @@ final class AccountStoring: AccountProviding {
     /// - Throws: A local persistence error if the local save fails.
     func save(_ account: Account) async throws {
         try local.save(account)
-        try? await remote.save(account, userId: userId)
+        try await remote.save(account, userId: userId)
     }
 
     /// Updates an existing account in local storage, then attempts a remote update.
@@ -58,6 +59,6 @@ final class AccountStoring: AccountProviding {
     /// - Throws: A local persistence error if the local update fails.
     func update(_ account: Account) async throws {
         try local.update(account)
-        try? await remote.update(account, userId: userId)
+        try await remote.update(account, userId: userId)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages form state and submission logic for creating or editing an account.
 @MainActor
@@ -26,6 +27,7 @@ final class AccountFormViewModel {
     var isSuccess = false
 
     // MARK: Dependencies
+    private let toasty: ToastyManager
     private let addAccount: AddAccount
     private let updateAccount: UpdateAccount
     private let addInstitution: AddInstitution
@@ -42,6 +44,7 @@ final class AccountFormViewModel {
     /// Returns a pre-configured AddInstitutionFormViewModel wired to this ViewModel.
     var addInstitutionFormViewModel: AddInstitutionFormViewModel {
         AddInstitutionFormViewModel(
+            toasty: toasty,
             addInstitution: addInstitution,
             getInstitutions: getInstitutions,
             userId: userId,
@@ -55,12 +58,14 @@ final class AccountFormViewModel {
 
     // MARK: Init
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - addAccount: UseCase for creating a new account.
     ///   - updateAccount: UseCase for updating  an account.
     ///   - addInstitution: UseCase for creating a new institution inline.
     ///   - getInstitutions: UseCase for fetching available institutions.
     ///   - userId: The identifier of the current user.
     init(
+        toasty: ToastyManager,
         addAccount: AddAccount,
         updateAccount: UpdateAccount,
         addInstitution: AddInstitution,
@@ -68,6 +73,7 @@ final class AccountFormViewModel {
         userId: UUID,
         existingAccount: Account? = nil
     ) {
+        self.toasty = toasty
         self.addAccount = addAccount
         self.updateAccount = updateAccount
         self.addInstitution = addInstitution
@@ -95,7 +101,7 @@ final class AccountFormViewModel {
                 selectedInstitution = institutions.first
             }
         } catch {
-            errorMessage = "Impossible de charger les établissements"
+            toasty.showError(error)
         }
     }
 
@@ -104,6 +110,7 @@ final class AccountFormViewModel {
         guard let institution = selectedInstitution else { return }
         isLoading = true
         errorMessage = nil
+
         do {
             if let existing = existingAccount {
                 let input = UpdateAccountInput(
@@ -118,9 +125,9 @@ final class AccountFormViewModel {
             }
             isSuccess = true
         } catch let error as AccountError {
-            errorMessage = error.localizedDescription
+            toasty.showError(error)
         } catch {
-            errorMessage = "Une erreur est survenue"
+            toasty.showError("Une erreur est survenue" as! Error)
         }
         isLoading = false
     }

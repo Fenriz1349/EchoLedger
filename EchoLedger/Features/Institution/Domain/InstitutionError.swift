@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents domain-level errors for the Institution feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum InstitutionError: Error, Equatable {
+enum InstitutionError: Error, Equatable, LocalizedError {
 
     /// Thrown when the institution name is shorter than the minimum allowed length.
     case nameTooShort
@@ -24,7 +24,7 @@ enum InstitutionError: Error, Equatable {
     case notFound
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .nameTooShort:
             return "Le nom de l'établissement doit contenir au moins 2 caractères."

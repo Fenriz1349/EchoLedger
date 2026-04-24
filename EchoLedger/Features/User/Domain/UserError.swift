@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents domain-level errors for the User feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum UserError: Error, Equatable {
+enum UserError: Error, Equatable, LocalizedError {
 
     /// Thrown when no user is found for the given identifier.
     case notFound
@@ -24,7 +24,7 @@ enum UserError: Error, Equatable {
     case invalidEmail
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .notFound:
             return "Utilisateur introuvable."

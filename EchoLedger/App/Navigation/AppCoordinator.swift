@@ -30,7 +30,7 @@ final class AppCoordinator {
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
         container.makeTransactionFormViewModel(existing: existing)
     }
-    
+
     /// - Parameter existing: An optional account to pre-fill the form for editing.
     /// - Returns: A configured AccountFormViewModel.
     func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {

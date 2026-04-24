@@ -19,9 +19,6 @@ final class InstitutionModel {
     var category: String
     var logoURL: String?
 
-    @Relationship(deleteRule: .cascade)
-    var accounts: [AccountModel]
-
     /// Creates a new InstitutionModel from a Domain Institution entity.
     init(
         id: UUID = UUID(),
@@ -35,7 +32,6 @@ final class InstitutionModel {
         self.name = name
         self.category = category
         self.logoURL = logoURL
-        self.accounts = []
     }
 
     // MARK: Mapping

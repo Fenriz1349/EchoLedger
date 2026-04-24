@@ -102,4 +102,27 @@ final class AccountLocalSource {
         model.update(from: account)
         try context.save()
     }
+
+    /// Inserts a new account locally if it does not exist, or updates it if it does.
+    /// - Parameter account: The domain Account to insert or update.
+    /// - Throws: A SwiftData error if the operation fails.
+    func upsert(_ account: Account) throws {
+        let id = account.id
+        var descriptor = FetchDescriptor<AccountModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        if let existing = try context.fetch(descriptor).first {
+            existing.update(from: account)
+        } else {
+            context.insert(AccountModel(
+                id: account.id,
+                institutionId: account.institutionId,
+                name: account.name,
+                category: account.category.rawValue,
+                isArchived: account.isArchived
+            ))
+        }
+        try context.save()
+    }
 }

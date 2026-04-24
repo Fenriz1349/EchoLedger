@@ -65,6 +65,15 @@ final class InstitutionRemoteSource {
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 
+    /// Fetches a single institution by its identifier from Firestore.
+    func fetch(by id: UUID, userId: UUID) async throws -> Institution {
+        let document = try await collection(for: userId).document(id.uuidString).getDocument()
+        guard let data = document.data(), let institution = decode(data) else {
+            throw InstitutionError.notFound
+        }
+        return institution
+    }
+
     // MARK: Private
 
     private func encode(_ institution: Institution) -> [String: Any] {

@@ -53,6 +53,67 @@ final class TransactionRemoteSource {
             .delete()
     }
 
+    // MARK: Read
+
+    /// Fetches all transactions for a given user from Firestore, ordered by date descending.
+    func fetchAll(for userId: UUID) async throws -> [Transaction] {
+        let snapshot = try await collection(for: userId)
+            .order(by: "date", descending: true)
+            .getDocuments()
+        return snapshot.documents.compactMap { decode($0.data()) }
+    }
+
+    /// Fetches a single transaction by its identifier from Firestore.
+    func fetch(by id: UUID, userId: UUID) async throws -> Transaction {
+        let document = try await collection(for: userId).document(id.uuidString).getDocument()
+        guard let data = document.data(), let transaction = decode(data) else {
+            throw TransactionError.notFound
+        }
+        return transaction
+    }
+
+    // MARK: Private
+
+    private func decode(_ data: [String: Any]) -> Transaction? {
+        guard
+            let idString = data["id"] as? String,
+            let id = UUID(uuidString: idString),
+            let userIdString = data["userId"] as? String,
+            let userId = UUID(uuidString: userIdString),
+            let label = data["label"] as? String,
+            let timestamp = data["date"] as? Timestamp,
+            let totalAmount = data["totalAmount"] as? Double,
+            let isExpense = data["isExpense"] as? Bool,
+            let categoryRaw = data["category"] as? String,
+            let category = TransactionCategory(rawValue: categoryRaw),
+            let splitsData = data["splits"] as? [[String: Any]]
+        else { return nil }
+
+        return Transaction(
+            id: id,
+            userId: userId,
+            label: label,
+            date: timestamp.dateValue(),
+            totalAmount: totalAmount,
+            note: data["note"] as? String,
+            isExpense: isExpense,
+            category: category,
+            splits: splitsData.compactMap { decodeSplit($0) }
+        )
+    }
+
+    private func decodeSplit(_ data: [String: Any]) -> TransactionSplit? {
+        guard
+            let idString = data["id"] as? String,
+            let id = UUID(uuidString: idString),
+            let accountIdString = data["accountId"] as? String,
+            let accountId = UUID(uuidString: accountIdString),
+            let amount = data["amount"] as? Double
+        else { return nil }
+
+        return TransactionSplit(id: id, accountId: accountId, amount: amount)
+    }
+
     // MARK: Private
 
     /// Encodes a domain Transaction into a Firestore-compatible dictionary.

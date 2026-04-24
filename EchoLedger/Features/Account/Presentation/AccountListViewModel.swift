@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages the grouped list of accounts by institution and handles archive operations.
 @MainActor
@@ -15,8 +16,7 @@ final class AccountListViewModel {
     var accounts: [Account] = []
     var institutions: [Institution] = []
     var isLoading = false
-    var errorMessage: String?
-    
+
     /// Returns institutions paired with their non-empty account lists, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
@@ -25,57 +25,60 @@ final class AccountListViewModel {
         }
     }
 
+    private let toasty: ToastyManager
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
     private let userId: UUID
 
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - userId: The identifier of the current user.
-    init(getInstitutions: GetInstitutions,
-         getAccounts: GetAccounts,
-         archiveAccount: ArchiveAccount,
-         userId: UUID) {
-        self.getInstitutions = getInstitutions
-        self.getAccounts = getAccounts
-        self.archiveAccount = archiveAccount
-        self.userId = userId
-    }
+    init(
+        toasty: ToastyManager,
+        getInstitutions: GetInstitutions,
+        getAccounts: GetAccounts,
+        archiveAccount: ArchiveAccount,
+        userId: UUID) {
+            self.toasty = toasty
+            self.getInstitutions = getInstitutions
+            self.getAccounts = getAccounts
+            self.archiveAccount = archiveAccount
+            self.userId = userId
+        }
 
     /// Loads all institutions with their associated accounts.
     func load() async {
         isLoading = true
-        errorMessage = nil
-        
+
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
-            
+
             var allAccounts: [Account] = []
-            
+
             for institution in institutions {
                 let accounts = try await getAccounts.execute(for: institution.id)
                 allAccounts.append(contentsOf: accounts)
             }
-            
+
             self.accounts = allAccounts
-            
         } catch {
-            errorMessage = AccountError.loadFailed.localizedDescription
+            toasty.showError(error)
         }
-        
+
         isLoading = false
     }
-    
+
     /// Archives an account and reloads the list.
     func archive(_ account: Account) async {
         do {
             try await archiveAccount.execute(id: account.id)
             await load()
         } catch {
-            errorMessage = AccountError.archiveFailed.localizedDescription
+            toasty.showError(error)
         }
     }
 }

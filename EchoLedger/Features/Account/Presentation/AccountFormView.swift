@@ -27,9 +27,6 @@ struct AccountFormView: View {
                     Button("Annuler") { dismiss() }
                 }
             }
-            .task {
-                await viewModel.loadInstitutions()
-            }
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }
             }

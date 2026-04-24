@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CustomLabels
 
 struct TransactionFormContent: View {
 
@@ -54,7 +55,7 @@ struct TransactionFormContent: View {
                 )
             }
         }
-        
+
         if viewModel.showAddAccountForm {
             AccountFormContent(viewModel: viewModel.addAccountFormViewModel)
                 .scrollDisabled(true)
@@ -69,13 +70,15 @@ struct TransactionFormContent: View {
 
         if viewModel.splits.count > 1 {
             Section("Répartition") {
-                let indexedSplits = Array(viewModel.splits.enumerated())
-                ForEach(indexedSplits, id: \.element.id) { index, _ in
+                ForEach($viewModel.splits) { $split in
                     SplitRowView(
-                        index: index,
-                        split: $viewModel.splits[index],
+                        split: $split,
                         availableAccounts: viewModel.availableAccounts,
-                        onDelete: { viewModel.removeSplit(at: index) }
+                        onDelete: {
+                            if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
+                                viewModel.removeSplit(at: index)
+                            }
+                        }
                     )
                 }
             }
@@ -86,6 +89,19 @@ struct TransactionFormContent: View {
                 .foregroundStyle(.secondary)
                 .font(.footnote)
         }
+
+        Button {
+            Task { await viewModel.submit() }
+        } label: {
+            CustomButtonLabel(
+                message: viewModel.existingTransaction == nil
+                ? "Ajouter la transaction"
+                : "Modifier la transaction",
+                color: .accentColor,
+                isSelected: viewModel.isValid
+            )
+        }
+        .disabled(!viewModel.isValid || viewModel.isLoading)
 
         if let errorMessage = viewModel.errorMessage {
             Section {
@@ -98,7 +114,7 @@ struct TransactionFormContent: View {
 }
 
 #Preview {
-    Form{
+    Form {
         TransactionFormContent(viewModel: PreviewHelpers.makeTransactionFormViewModel())
     }
 }

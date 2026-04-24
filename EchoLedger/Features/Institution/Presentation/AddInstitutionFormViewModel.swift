@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toasty
 
 /// Manages form state and submission for creating a new institution inline within an account form.
 @MainActor
@@ -22,6 +23,7 @@ final class AddInstitutionFormViewModel {
     var isSuccess = false
 
     // MARK: Dependencies
+    private let toasty: ToastyManager
     private let addInstitution: AddInstitution
     private let getInstitutions: GetInstitutions
     private let userId: UUID
@@ -35,16 +37,19 @@ final class AddInstitutionFormViewModel {
 
     // MARK: Init
     /// - Parameters:
+    ///   - toasty: Toaster to display message to user.
     ///   - addInstitution: UseCase for creating a new institution.
     ///   - getInstitutions: UseCase for fetching institutions after creation.
     ///   - userId: The identifier of the current user.
     ///   - onAdd: Callback invoked with the newly created institution.
     init(
+        toasty: ToastyManager,
         addInstitution: AddInstitution,
         getInstitutions: GetInstitutions,
         userId: UUID,
         onAdd: @escaping (Institution) -> Void
     ) {
+        self.toasty = toasty
         self.addInstitution = addInstitution
         self.getInstitutions = getInstitutions
         self.userId = userId

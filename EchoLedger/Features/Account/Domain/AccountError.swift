@@ -9,7 +9,7 @@ import Foundation
 
 /// Represents domain-level errors for the Account feature.
 /// These errors are thrown by UseCases, not by repositories or data sources.
-enum AccountError: Error, Equatable {
+enum AccountError: Error, Equatable, LocalizedError {
 
     /// Thrown when the account name is shorter than the minimum allowed length of 2 characters.
     case nameTooShort
@@ -22,15 +22,15 @@ enum AccountError: Error, Equatable {
 
     /// Thrown when no account is found for the given identifier.
     case notFound
-    
+
     /// Thrown when loading accounts fails.
     case loadFailed
-    
+
     /// Thrown when archiving an account fails.
     case archiveFailed
 
     /// Returns a human-readable description of the error.
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .nameTooShort:
             return "Le nom du compte doit contenir au moins 2 caractères."

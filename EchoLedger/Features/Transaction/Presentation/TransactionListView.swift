@@ -30,7 +30,7 @@ struct TransactionListView: View {
                                     let name = item.category.icon
                                     Image(systemName: name)
                                         .frame(width: 32)
-                                    
+
                                     VStack(alignment: .leading) {
                                         Text(item.label)
                                             .font(.body)
@@ -38,9 +38,9 @@ struct TransactionListView: View {
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
-                                    
+
                                     Spacer()
-                                    
+
                                     Text(item.totalAmount.toEuro)
                                         .foregroundStyle(item.isExpense ? Color.primary : Color.green)
                                         .fontWeight(item.isExpense ? .regular : .semibold)

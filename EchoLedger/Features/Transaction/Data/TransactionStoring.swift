@@ -8,7 +8,8 @@
 import Foundation
 
 /// Concrete implementation of TransactionProviding.
-/// Orchestrates local and remote persistence for the Transaction feature.
+/// Orchestrates local and remote persistence for the Transaction feature
+/// Local storage is always used for reads — data is kept up to date via SyncManager.
 final class TransactionStoring: TransactionProviding {
 
     private let local: TransactionLocalSource
@@ -48,7 +49,7 @@ final class TransactionStoring: TransactionProviding {
     /// - Throws: A local persistence error if the local update fails.
     func update(_ transaction: Transaction) async throws {
         try local.update(transaction)
-        try? await remote.update(transaction, userId: userId)
+        try await remote.update(transaction, userId: userId)
     }
 
     /// Deletes a transaction and its splits from local storage, then attempts a remote delete.
@@ -56,6 +57,6 @@ final class TransactionStoring: TransactionProviding {
     /// - Throws: A local persistence error if the local delete fails.
     func delete(by id: UUID) async throws {
         try local.delete(by: id)
-        try? await remote.delete(id: id, userId: userId)
+        try await remote.delete(id: id, userId: userId)
     }
 }
