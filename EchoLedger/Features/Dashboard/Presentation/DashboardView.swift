@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-import Toasty
 
 /// Displays the main dashboard with global balance, recent transactions, and sync status.
 struct DashboardView: View {
 
     let coordinator: AppCoordinator
     @Environment(DIContainer.self) private var container
-    @State private var showProfile = false
 
     var body: some View {
         NavigationStack {
@@ -39,19 +37,6 @@ struct DashboardView: View {
                             .background(Color.orange.opacity(0.15))
                             .clipShape(Capsule())
                     }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showProfile = true
-                    } label: {
-                        Image(systemName: "person.circle")
-                            .font(.system(size: 18))
-                    }
-                }
-            }
-            .sheet(isPresented: $showProfile) {
-                ToastyContainer(manager: container.toasty) {
-                    UserProfileView(viewModel: coordinator.makeUserProfileViewModel())
                 }
             }
         }

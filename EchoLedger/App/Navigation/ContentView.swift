@@ -11,51 +11,81 @@ struct ContentView: View {
 
     @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
+    @State private var selectedTab: AppTab = .dashboard
+    @State private var userProfileViewModel: UserProfileViewModel
+
+    init(coordinator: AppCoordinator) {
+        self.coordinator = coordinator
+        self._userProfileViewModel = State(initialValue: coordinator.makeUserProfileViewModel())
+    }
 
     var body: some View {
-        Group {
-            TabView {
-                DashboardView(coordinator: coordinator)
-                    .tabItem { Label("Tableau de bord", systemImage: "chart.pie") }
+        TabView(selection: $selectedTab) {
+            DashboardView(coordinator: coordinator)
+                .tabItem { Label("", systemImage: "chart.pie") }
+                .tag(AppTab.dashboard)
 
-                TransactionListView(coordinator: coordinator)
-                    .tabItem { Label("Transactions", systemImage: "list.bullet") }
+            TransactionListView(coordinator: coordinator)
+                .tabItem { Label("", systemImage: "list.bullet") }
+                .tag(AppTab.transactions)
 
-                AccountListView(coordinator: coordinator)
-                    .tabItem { Label("Comptes", systemImage: "building.columns") }
-            }
-            .overlay(alignment: .bottom) {
+            Color.clear
+                .tabItem { Label("", systemImage: "") }
+                .tag(AppTab.add)
+                .disabled(true)
+
+            AccountListView(coordinator: coordinator)
+                .tabItem { Label("", systemImage: "building.columns") }
+                .tag(AppTab.accounts)
+
+            UserProfileView(viewModel: userProfileViewModel)
+                .tabItem { Label("", systemImage: "person.circle") }
+                .tag(AppTab.profile)
+        }
+        .overlay(alignment: .bottom) {
+            ZStack {
                 Button {
                     coordinator.transactionListViewModel.showAddTransaction = true
                 } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 56, height: 56)
-                        .background(Color(.systemBackground))
-                        .clipShape(Circle())
-                }
-                .padding(.bottom, 24)
-            }
-
-            .sheet(
-                isPresented: Binding(
-                    get: { coordinator.transactionListViewModel.showAddTransaction },
-                    set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
-                )
-            ) {
-                TransactionFormView(
-                    viewModel: coordinator.makeTransactionFormViewModel()
-                )
-            }
-            .onChange(of: coordinator.transactionListViewModel.showAddTransaction) {
-                if !coordinator.transactionListViewModel.showAddTransaction {
-                    Task {
-                        await coordinator.transactionListViewModel.load()
-                    }
+                    Image(systemName: "plus")
+                        .font(.title.weight(.bold))
+                        .foregroundStyle(.white)
+                        .frame(width: 52, height: 52)
+                        .background(
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .background(
+                                    Circle().fill(Color.accentColor)
+                                )
+                        )
+                        .shadow(radius: 6)
                 }
             }
         }
+        .sheet(
+            isPresented: Binding(
+                get: { coordinator.transactionListViewModel.showAddTransaction },
+                set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
+            )
+        ) {
+            TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
+        }
+        .onChange(of: selectedTab) { old, new in
+            if new == .add {
+                selectedTab = old
+                coordinator.transactionListViewModel.showAddTransaction = true
+            }
+        }
+        .onChange(of: coordinator.transactionListViewModel.showAddTransaction) {
+            if !coordinator.transactionListViewModel.showAddTransaction {
+                Task { await coordinator.transactionListViewModel.load() }
+            }
+        }
     }
+}
+
+private enum AppTab: Hashable {
+    case dashboard, transactions, add, accounts, profile
 }
 
 #Preview {
