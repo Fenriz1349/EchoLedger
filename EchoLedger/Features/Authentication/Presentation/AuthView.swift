@@ -114,9 +114,7 @@ struct AuthView: View {
             if viewModel.isLoading {
                 ZStack {
                     Color.black.opacity(0.4).ignoresSafeArea()
-                    ProgressView()
-                        .tint(.white)
-                        .scaleEffect(1.5)
+                    EchoLedgerLoader().frame(width: 80, height: 80)
                 }
             }
         }

@@ -19,7 +19,7 @@ struct AccountListView: View {
         NavigationStack {
             Group {
                 if coordinator.accountListViewModel.isLoading {
-                    ProgressView()
+                    EchoLedgerLoader().frame(width: 80, height: 80)
                 } else if coordinator.accountListViewModel.institutionsWithAccounts.isEmpty {
                     Text("Aucun compte — ajoutez-en un avec le bouton +")
                         .foregroundStyle(.secondary)

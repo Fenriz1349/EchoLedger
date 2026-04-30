@@ -18,7 +18,7 @@ struct TransactionListView: View {
         NavigationStack {
             Group {
                 if coordinator.transactionListViewModel.isLoading {
-                    ProgressView()
+                    EchoLedgerLoader().frame(width: 80, height: 80)
                 } else if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")
                         .foregroundStyle(.secondary)

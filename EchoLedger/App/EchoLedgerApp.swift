@@ -28,6 +28,7 @@ struct EchoLedgerApp: App {
     @State private var container: DIContainer?
     @State private var coordinator: AppCoordinator?
     @StateObject private var toasty = ToastyManager()
+    @State private var isResolving = true
 
     private let authStoring = AuthStoring(
         local: AuthLocalSource(),
@@ -39,13 +40,18 @@ struct EchoLedgerApp: App {
         WindowGroup {
             ToastyContainer(manager: toasty) {
                 Group {
-                    if let coordinator, let container {
+                    if isResolving {
+                        LoadingView()
+                    } else if let coordinator, let container {
                         ContentView(coordinator: coordinator)
                             .environment(container)
+                            .transition(.opacity)
                     } else {
                         AuthView(authStoring: authStoring, toasty: toasty, onAuthSuccess: buildApp)
+                            .transition(.opacity)
                     }
                 }
+                .animation(.easeOut(duration: 0.3), value: isResolving)
                 .task { await resolveExistingSession() }
                 .environmentObject(toasty)
             }
@@ -55,6 +61,7 @@ struct EchoLedgerApp: App {
     /// Attempts to restore an existing session from local storage at launch.
     /// If an anonymous session has exceeded 7 days, deletes it and shows an expiration message.
     private func resolveExistingSession() async {
+        defer { isResolving = false }
         let resolve = ResolveSession(repository: authStoring)
         guard let session = await resolve.execute() else { return }
 

@@ -21,7 +21,8 @@ struct AddInstitutionFormView: View {
                 text: $viewModel.name,
                 type: .alphaNumber,
                 validator: { $0.trimmingCharacters(in: .whitespaces).count >= 2 },
-                errorMessage: "Le nom doit contenir au moins 2 caractères"
+                errorMessage: "Le nom doit contenir au moins 2 caractères",
+                colors: .echo
             )
 
             Picker("Categorie", selection: $viewModel.category) {

@@ -33,6 +33,7 @@ struct AuthFormContent: View {
                     type: .lettersOnly,
                     errorMessage: "Le prénom est requis.",
                     validationState: $firstNameState,
+                    colors: .echo,
                     showErrorOnlyWhenTriggered: false
                 )
                 CustomTextField(
@@ -41,6 +42,7 @@ struct AuthFormContent: View {
                     type: .lettersOnly,
                     errorMessage: "Le nom est requis.",
                     validationState: $lastNameState,
+                    colors: .echo,
                     showErrorOnlyWhenTriggered: false
                 )
             }
@@ -50,6 +52,7 @@ struct AuthFormContent: View {
                 type: .email,
                 errorMessage: "Adresse email invalide.",
                 validationState: $emailState,
+                colors: .echo,
                 showErrorOnlyWhenTriggered: false
             )
             CustomTextField(
@@ -58,6 +61,7 @@ struct AuthFormContent: View {
                 type: .password,
                 errorMessage: AuthError.weakPassword.errorDescription,
                 validationState: $passwordState,
+                colors: .echo,
                 showErrorOnlyWhenTriggered: false
             )
             if isSignUp {
@@ -67,6 +71,7 @@ struct AuthFormContent: View {
                     type: .password,
                     errorMessage: AuthError.passwordsDoNotMatch.errorDescription,
                     validationState: $confirmPasswordState,
+                    colors: .echo,
                     showErrorOnlyWhenTriggered: false
                 )
             }

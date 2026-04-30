@@ -22,6 +22,7 @@ struct UserProfileFormView: View {
                 type: .lettersOnly,
                 errorMessage: "Le prénom est requis.",
                 validationState: $viewModel.firstNameEditState,
+                colors: .echo,
                 showErrorOnlyWhenTriggered: false
             )
             CustomTextField(
@@ -31,6 +32,7 @@ struct UserProfileFormView: View {
                 type: .lettersOnly,
                 errorMessage: "Le nom est requis.",
                 validationState: $viewModel.lastNameEditState,
+                colors: .echo,
                 showErrorOnlyWhenTriggered: false
             )
         }

@@ -197,6 +197,7 @@ final class UserProfileViewModel {
                 lastName: linkLastName
             )
             authSession = session
+            user = User(id: session.userId, displayName: "\(linkFirstName)|\(linkLastName)", email: linkEmail)
             onSessionUpdated(session)
             toasty.showSuccess("Compte créé avec succès.")
         } catch {

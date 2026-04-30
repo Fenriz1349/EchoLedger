@@ -163,6 +163,9 @@
 		68EF99E62FA344A100FEBC1A /* ExpireAnonymousSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */; };
 		68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */; };
 		68EF99EF2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EA2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift */; };
+		68EF99F12FA383B200FEBC1A /* EchoLedgerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */; };
+		68EF99F32FA383EB00FEBC1A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F22FA383EB00FEBC1A /* LoadingView.swift */; };
+		68EF99F62FA3863400FEBC1A /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F52FA3863400FEBC1A /* Color+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -331,6 +334,9 @@
 		68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAnonymousSession.swift; sourceTree = "<group>"; };
 		68EF99EA2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAnonymousSessionTests.swift; sourceTree = "<group>"; };
 		68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDouble.swift; sourceTree = "<group>"; };
+		68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerLoader.swift; sourceTree = "<group>"; };
+		68EF99F22FA383EB00FEBC1A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		68EF99F52FA3863400FEBC1A /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -876,6 +882,7 @@
 		685A1F082F5AEBA40009B885 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				68EF99F42FA3849200FEBC1A /* Loader */,
 				685A1F092F5AEBF50009B885 /* Sync */,
 				685A1F122F5AECE30009B885 /* Extensions */,
 			);
@@ -896,6 +903,7 @@
 			children = (
 				681B47042F7F9F27000CC7C4 /* String+Extension.swift */,
 				681B47062F7FA04F000CC7C4 /* Double+Extension.swift */,
+				68EF99F52FA3863400FEBC1A /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -915,6 +923,15 @@
 				68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		68EF99F42FA3849200FEBC1A /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */,
+				68EF99F22FA383EB00FEBC1A /* LoadingView.swift */,
+			);
+			path = Loader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1122,6 +1139,7 @@
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionCategory.swift in Sources */,
+				68EF99F12FA383B200FEBC1A /* EchoLedgerLoader.swift in Sources */,
 				683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */,
 				685A1EBC2F5AD8B10009B885 /* AppCoordinator.swift in Sources */,
 				684497282F7569C600337F74 /* AccountListView.swift in Sources */,
@@ -1129,6 +1147,7 @@
 				685A1EAB2F5ACF700009B885 /* AccountProviding.swift in Sources */,
 				683275F72F9B670600DA5796 /* LinkAnonymousAccount.swift in Sources */,
 				681B47072F7FA04F000CC7C4 /* Double+Extension.swift in Sources */,
+				68EF99F62FA3863400FEBC1A /* Color+Extension.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
 				683276072F9BB03A00DA5796 /* UserProfileView.swift in Sources */,
 				684497142F75380900337F74 /* PreviewData.swift in Sources */,
@@ -1183,6 +1202,7 @@
 				6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */,
 				683133A92F617951004AA5E4 /* GetTransactionsByCategory.swift in Sources */,
 				6807E57E2F922C340099DCE4 /* AuthLocalSource.swift in Sources */,
+				68EF99F32FA383EB00FEBC1A /* LoadingView.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
 				6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */,
