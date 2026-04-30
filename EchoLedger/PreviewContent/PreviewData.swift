@@ -22,7 +22,7 @@ enum PreviewData {
     // MARK: User
     static let user = User(
         id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
-        displayName: "Batman",
+        displayName: "Bruce|Wayne",
         email: "batman@echoledger.app"
     )
 

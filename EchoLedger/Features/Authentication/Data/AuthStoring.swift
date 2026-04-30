@@ -54,7 +54,7 @@ final class AuthStoring: AuthProviding {
     func createAccount(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
         let firebaseUID = try await remote.createAccount(email: email, password: password)
         let userId = UUID()
-        let user = User(id: userId, displayName: "\(firstName) \(lastName)", email: email)
+        let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
 
         do {
             try await userRemote.save(user, firebaseUID: firebaseUID)
@@ -105,15 +105,17 @@ final class AuthStoring: AuthProviding {
         }
     }
 
-    /// Links the anonymous Firebase account to a permanent email/password credential.
-    func linkAnonymousAccount(toEmail email: String, password: String) async throws -> AuthSession {
-        guard let userId = local.fetchUserId() else {
-            throw AuthError.noSessionFound
-        }
+    /// Links the anonymous Firebase account and creates the permanent user document.
+    func linkAnonymousAccount(toEmail email: String,
+                              password: String,
+                              firstName: String,
+                              lastName: String) async throws -> AuthSession {
+        guard let userId = local.fetchUserId() else { throw AuthError.noSessionFound }
         do {
             try await remote.linkAnonymousToEmail(email: email, password: password)
+            let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
             if let firebaseUID = Auth.auth().currentUser?.uid {
-                try await userRemote.linkFirebaseUID(firebaseUID, toUserId: userId)
+                try await userRemote.save(user, firebaseUID: firebaseUID)
             }
             return AuthSession(userId: userId, isAnonymous: false)
         } catch let error as AuthError {

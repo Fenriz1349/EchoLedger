@@ -61,6 +61,7 @@ struct EchoLedgerApp: App {
     }
 
     /// Assembles the full dependency graph and activates the main app for the given session.
+    /// Warms the local user cache so profile data is available without waiting for a manual sync.
     /// - Parameter session: The authenticated session to build from.
     private func buildApp(session: AuthSession) {
         let newContainer = DIContainer(
@@ -71,6 +72,7 @@ struct EchoLedgerApp: App {
         )
         container = newContainer
         coordinator = AppCoordinator(container: newContainer, onSignOut: resetToAuth)
+        Task { try? await newContainer.getCurrentUser.execute() }
     }
 
     /// Tears down the app state and returns to the authentication screen.

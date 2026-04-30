@@ -9,30 +9,32 @@ import Foundation
 
 /// Factory methods for creating ViewModels with their required dependencies.
 extension DIContainer {
+    
+    // MARK: - User
 
-    // MARK: - Transaction
-
-    /// Creates a TransactionListViewModel wired with all required use cases.
-    func makeTransactionListViewModel() -> TransactionListViewModel {
-        TransactionListViewModel(
+    /// Creates a UserProfileViewModel wired with all required dependencies.
+    /// - Parameters:
+    ///   - authSession: Overrides the container's session. Defaults to the container's current session.
+    ///   - onSignOut: Closure called after sign-out or account deletion.
+    ///   - onSessionUpdated: Closure called after anonymous account linking.
+    func makeUserProfileViewModel(
+        authSession: AuthSession? = nil,
+        onSignOut: @escaping () -> Void,
+        onSessionUpdated: @escaping (AuthSession) -> Void
+    ) -> UserProfileViewModel {
+        UserProfileViewModel(
             toasty: toasty,
-            getTransactions: getTransactions,
-            deleteTransaction: deleteTransaction,
-            userId: userId
-        )
-    }
-
-    /// Creates a TransactionFormViewModel. Pass an existing transaction to pre-fill the form for editing.
-    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
-        TransactionFormViewModel(
-            toasty: toasty,
-            addTransaction: addTransaction,
-            updateTransaction: updateTransaction,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getCurrentUser: getCurrentUser,
+            updateUser: updateUser,
+            signOut: signOut,
+            deleteAccount: deleteAccount,
+            linkAnonymousAccount: linkAnonymousAccount,
+            resetPassword: resetPassword,
+            userStoring: userStoring,
+            authSession: authSession ?? self.authSession,
             userId: userId,
-            addAccountFormViewModel: makeAccountFormViewModel(),
-            existingTransaction: existing
+            onSignOut: onSignOut,
+            onSessionUpdated: onSessionUpdated
         )
     }
 
@@ -59,6 +61,32 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             userId: userId,
             existingAccount: existing
+        )
+    }
+
+    // MARK: - Transaction
+
+    /// Creates a TransactionListViewModel wired with all required use cases.
+    func makeTransactionListViewModel() -> TransactionListViewModel {
+        TransactionListViewModel(
+            toasty: toasty,
+            getTransactions: getTransactions,
+            deleteTransaction: deleteTransaction,
+            userId: userId
+        )
+    }
+
+    /// Creates a TransactionFormViewModel. Pass an existing transaction to pre-fill the form for editing.
+    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
+        TransactionFormViewModel(
+            toasty: toasty,
+            addTransaction: addTransaction,
+            updateTransaction: updateTransaction,
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            userId: userId,
+            addAccountFormViewModel: makeAccountFormViewModel(),
+            existingTransaction: existing
         )
     }
 }

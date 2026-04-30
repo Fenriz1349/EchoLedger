@@ -22,20 +22,17 @@ final class UpdateUser {
     /// - Parameter input: The data required to update the user.
     /// - Throws: `UserError` if any business rule is violated.
     func execute(_ input: UpdateUserInput) async throws {
-        let trimmed = input.displayName.trimmingCharacters(in: .whitespaces)
-        guard trimmed.count >= 2 else {
-            throw UserError.nameTooShort
-        }
-        guard trimmed.count <= 50 else {
-            throw UserError.nameTooLong
-        }
-        guard input.email.contains("@") else {
-            throw UserError.invalidEmail
-        }
+        let firstName = input.firstName.trimmingCharacters(in: .whitespaces)
+        let lastName = input.lastName.trimmingCharacters(in: .whitespaces)
+        guard firstName.count >= 2 else { throw UserError.nameTooShort }
+        guard firstName.count <= 50 else { throw UserError.nameTooLong }
+        guard lastName.count >= 2 else { throw UserError.nameTooShort }
+        guard lastName.count <= 50 else { throw UserError.nameTooLong }
+        guard input.email.contains("@") else { throw UserError.invalidEmail }
 
         let updated = User(
             id: input.id,
-            displayName: trimmed,
+            displayName: "\(firstName)|\(lastName)",
             email: input.email,
             photoURL: input.photoURL
         )
