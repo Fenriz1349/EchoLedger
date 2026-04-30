@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             TabView {
-                DashboardView()
+                DashboardView(coordinator: coordinator)
                     .tabItem { Label("Tableau de bord", systemImage: "chart.pie") }
 
                 TransactionListView(coordinator: coordinator)

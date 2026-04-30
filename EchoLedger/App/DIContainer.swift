@@ -132,7 +132,7 @@ final class DIContainer {
         self.transactionLocalSource = transactionLocal
 
         // MARK: Storings
-        let userStore = UserStoring(local: userLocal, remote: userRemote)
+        let userStore = UserStoring(local: userLocal, remote: userRemote, userId: userId)
         let institutionStore = InstitutionStoring(local: institutionLocal,
                                                   remote: institutionRemote, userId: userId)
         let accountStore = AccountStoring(local: accountLocal,

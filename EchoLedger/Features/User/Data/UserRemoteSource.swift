@@ -56,6 +56,14 @@ final class UserRemoteSource {
         return UUID(uuidString: idString)
     }
 
+    /// Fetches a user document from Firestore by internal UUID.
+    /// - Parameter userId: The internal UUID of the user to fetch.
+    /// - Returns: The domain User, or nil if the document does not exist or cannot be decoded.
+    func fetchUser(id userId: UUID) async -> User? {
+        guard let data = try? await document(for: userId).getDocument().data() else { return nil }
+        return decode(data)
+    }
+
     /// Deletes the user document from Firestore.
     /// - Parameter userId: The identifier of the user to delete.
     func delete(userId: UUID) async throws {
@@ -63,6 +71,16 @@ final class UserRemoteSource {
     }
 
     // MARK: Private
+
+    private func decode(_ data: [String: Any]) -> User? {
+        guard
+            let idString = data["id"] as? String,
+            let id = UUID(uuidString: idString),
+            let displayName = data["displayName"] as? String,
+            let email = data["email"] as? String
+        else { return nil }
+        return User(id: id, displayName: displayName, email: email, photoURL: data["photoURL"] as? String)
+    }
 
     private func encode(_ user: User) -> [String: Any] {
         var data: [String: Any] = [

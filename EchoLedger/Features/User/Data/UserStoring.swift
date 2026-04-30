@@ -8,23 +8,35 @@
 import Foundation
 
 /// Concrete implementation of UserProviding.
-/// Reads from local storage only. Writes to local first, then remote.
+/// Reads from local storage, with a remote fallback if the local cache is empty.
+/// Writes to local first, then remote.
 final class UserStoring: UserProviding {
 
     private let local: UserLocalSource
     private let remote: UserRemoteSource
+    private let userId: UUID
 
     /// - Parameters:
     ///   - local: The local SwiftData data source.
     ///   - remote: The Firestore remote data source.
-    init(local: UserLocalSource, remote: UserRemoteSource) {
+    ///   - userId: The internal user identifier used for remote fallback.
+    init(local: UserLocalSource, remote: UserRemoteSource, userId: UUID) {
         self.local = local
         self.remote = remote
+        self.userId = userId
     }
 
     /// Fetches the current user from local storage.
+    /// Falls back to Firestore if the local cache is empty, then saves the result locally.
     func fetchCurrent() async throws -> User {
-        try local.fetchCurrent()
+        if let user = try? local.fetchCurrent() {
+            return user
+        }
+        guard let user = await remote.fetchUser(id: userId) else {
+            throw UserError.notFound
+        }
+        try local.save(user)
+        return user
     }
 
     /// Persists a new user to local storage only.

@@ -15,6 +15,11 @@ final class PreviewAuthStoring: AuthProviding {
     func signInAnonymously() async throws -> AuthSession { PreviewData.authSession }
     func signOut() async throws {}
     func deleteAccount() async throws {}
-    func linkAnonymousAccount(toEmail email: String, password: String) async throws -> AuthSession { PreviewData.authSession }
+    func linkAnonymousAccount(toEmail email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
+        PreviewData.authSession
+    }
     func resetPassword(email: String) async throws {}
+    func isAnonymousSessionExpired() -> Bool { false }
+    func anonymousDaysRemaining() -> Int? { 3 }
+    func expireAnonymousSession() async {}
 }

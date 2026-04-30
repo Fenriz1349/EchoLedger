@@ -54,7 +54,7 @@ final class AuthStoring: AuthProviding {
     func createAccount(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
         let firebaseUID = try await remote.createAccount(email: email, password: password)
         let userId = UUID()
-        let user = User(id: userId, displayName: "\(firstName) \(lastName)", email: email)
+        let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
 
         do {
             try await userRemote.save(user, firebaseUID: firebaseUID)
@@ -66,7 +66,7 @@ final class AuthStoring: AuthProviding {
         return AuthSession(userId: userId, isAnonymous: false)
     }
 
-    /// Signs in anonymously, reusing the local UUID if available.
+    /// Signs in anonymously, reusing the local UUID if available, and records the creation date.
     func signInAnonymously() async throws -> AuthSession {
         _ = try await remote.signInAnonymously()
 
@@ -76,6 +76,7 @@ final class AuthStoring: AuthProviding {
 
         let newId = UUID()
         local.saveUserId(newId)
+        local.saveAnonymousCreationDate()
         return AuthSession(userId: newId, isAnonymous: true)
     }
 
@@ -84,6 +85,7 @@ final class AuthStoring: AuthProviding {
         do {
             try remote.signOut()
             local.clearUserId()
+            local.clearAnonymousCreationDate()
         } catch {
             throw AuthError.signOutFailed
         }
@@ -98,6 +100,7 @@ final class AuthStoring: AuthProviding {
             try await userRemote.delete(userId: userId)
             try await remote.deleteCurrentUser()
             local.clearUserId()
+            local.clearAnonymousCreationDate()
         } catch let error as AuthError {
             throw error
         } catch {
@@ -105,15 +108,36 @@ final class AuthStoring: AuthProviding {
         }
     }
 
-    /// Links the anonymous Firebase account to a permanent email/password credential.
-    func linkAnonymousAccount(toEmail email: String, password: String) async throws -> AuthSession {
-        guard let userId = local.fetchUserId() else {
-            throw AuthError.noSessionFound
-        }
+    /// Returns true if the anonymous session was created more than 7 days ago.
+    func isAnonymousSessionExpired() -> Bool {
+        local.isAnonymousSessionExpired()
+    }
+
+    /// Returns the number of days remaining in the anonymous demo session, or nil if no date is stored.
+    func anonymousDaysRemaining() -> Int? {
+        local.anonymousDaysRemaining()
+    }
+
+    /// Deletes the Firebase anonymous account and Firestore data, then clears the local session.
+    func expireAnonymousSession() async {
+        guard let userId = local.fetchUserId() else { return }
+        try? await userRemote.delete(userId: userId)
+        try? await remote.deleteCurrentUser()
+        local.clearUserId()
+        local.clearAnonymousCreationDate()
+    }
+
+    /// Links the anonymous Firebase account and creates the permanent user document.
+    func linkAnonymousAccount(toEmail email: String,
+                              password: String,
+                              firstName: String,
+                              lastName: String) async throws -> AuthSession {
+        guard let userId = local.fetchUserId() else { throw AuthError.noSessionFound }
         do {
             try await remote.linkAnonymousToEmail(email: email, password: password)
+            let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
             if let firebaseUID = Auth.auth().currentUser?.uid {
-                try await userRemote.linkFirebaseUID(firebaseUID, toUserId: userId)
+                try await userRemote.save(user, firebaseUID: firebaseUID)
             }
             return AuthSession(userId: userId, isAnonymous: false)
         } catch let error as AuthError {

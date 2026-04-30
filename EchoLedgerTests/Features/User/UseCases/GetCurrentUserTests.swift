@@ -30,11 +30,11 @@ final class GetCurrentUserTests: XCTestCase {
     // MARK: Tests
     /// Verifies that the current user is returned when one exists.
     func test_execute_userExists_returnsUser() async throws {
-        let user = User(displayName: "Fen", email: "fen@test.com")
+        let user = User(displayName: "Bruce|Wayne", email: "batman@gotham.com")
         try await repository.save(user)
         let result = try await useCase.execute()
-        let resultName = result.displayName
-        XCTAssertEqual(resultName, "Fen")
+        XCTAssertEqual(result.firstName, "Bruce")
+        XCTAssertEqual(result.lastName, "Wayne")
     }
 
     /// Verifies that notFound is thrown when no user is authenticated.

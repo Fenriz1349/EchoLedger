@@ -28,16 +28,25 @@ final class AppCoordinator {
         self.accountListViewModel = container.makeAccountListViewModel()
     }
 
-    /// - Parameter existing: An optional transaction to pre-fill the form for editing.
-    /// - Returns: A configured TransactionFormViewModel.
-    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
-        container.makeTransactionFormViewModel(existing: existing)
+    /// Creates a UserProfileViewModel with sign-out and session-update callbacks.
+    /// - Returns: A configured UserProfileViewModel.
+    func makeUserProfileViewModel() -> UserProfileViewModel {
+        container.makeUserProfileViewModel(
+            onSignOut: { [weak self] in self?.signOut() },
+            onSessionUpdated: { [weak self] session in self?.updateSession(session) }
+        )
     }
 
     /// - Parameter existing: An optional account to pre-fill the form for editing.
     /// - Returns: A configured AccountFormViewModel.
     func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {
         container.makeAccountFormViewModel(existing: existing)
+    }
+
+    /// - Parameter existing: An optional transaction to pre-fill the form for editing.
+    /// - Returns: A configured TransactionFormViewModel.
+    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
+        container.makeTransactionFormViewModel(existing: existing)
     }
 
     /// Updates the current auth session, used after linking an anonymous account.

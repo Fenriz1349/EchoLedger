@@ -65,11 +65,43 @@ struct PreviewHelpers {
         try? context.save()
     }
 
+    /// Seeds the preview user into SwiftData.
+    private static func seedUser() {
+        let context = container.modelContainer.mainContext
+        let id = PreviewData.user.id
+        let descriptor = FetchDescriptor<UserModel>(predicate: #Predicate { $0.id == id })
+        guard (try? context.fetch(descriptor))?.isEmpty != false else { return }
+        let model = UserModel(
+            id: PreviewData.user.id,
+            displayName: PreviewData.user.displayName,
+            email: PreviewData.user.email,
+            photoURL: PreviewData.user.photoURL
+        )
+        context.insert(model)
+        try? context.save()
+    }
+
     /// Creates a preview AppCoordinator with seeded data.
     static var appCoordinator: AppCoordinator {
+        seedUser()
         seedInstitutionsAndAccounts()
         seedTransactions()
         return AppCoordinator(container: container, onSignOut: {})
+    }
+
+    /// - Returns: A UserProfileViewModel with the preview user pre-seeded in SwiftData.
+    static func makeUserProfileViewModel(
+        isAnonymous: Bool = false,
+        onSignOut: @escaping () -> Void = {},
+        onSessionUpdated: @escaping (AuthSession) -> Void = { _ in }
+    ) -> UserProfileViewModel {
+        seedUser()
+        let session = AuthSession(userId: PreviewData.user.id, isAnonymous: isAnonymous)
+        return container.makeUserProfileViewModel(
+            authSession: session,
+            onSignOut: onSignOut,
+            onSessionUpdated: onSessionUpdated
+        )
     }
 
     /// - Returns: An AccountFormViewModel seeded with preview institutions and accounts.
