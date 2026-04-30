@@ -11,7 +11,6 @@ import SwiftUI
 struct UserProfileView: View {
 
     @Bindable var viewModel: UserProfileViewModel
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -36,12 +35,6 @@ struct UserProfileView: View {
                 .padding(.vertical, 24)
             }
             .navigationTitle("Mon profil")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fermer") { dismiss() }
-                }
-            }
             .overlay {
                 if viewModel.isLoading {
                     ZStack {
