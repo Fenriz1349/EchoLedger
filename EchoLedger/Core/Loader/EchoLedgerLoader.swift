@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+/// Animated logo mark: bars reveal one by one, then loop as a continuous sine wave.
 struct EchoLedgerLoader: View {
 
+    /// Bar heights (relative to maxH) and colors, left to right.
     private let bars: [(height: CGFloat, color: Color)] = [
         (0.38, Color(hex: "#3D2060")),
         (0.58, Color(hex: "#4E2A7A")),
@@ -22,44 +24,56 @@ struct EchoLedgerLoader: View {
     ]
 
     @State private var visible: [Bool] = Array(repeating: false, count: 9)
+    @State private var waveStart: Date? = nil
 
     var body: some View {
-        GeometryReader { geo in
-            let maxH = geo.size.height * 0.45
-            let barW = geo.size.width / CGFloat(bars.count * 2 - 1)
-            let axisY = geo.size.height / 2
+        // TimelineView is paused during the reveal phase to avoid unnecessary redraws
+        TimelineView(.animation(minimumInterval: 1 / 60, paused: waveStart == nil)) { timeline in
+            GeometryReader { geo in
+                let maxH = geo.size.height * 0.44
+                // 9 bars + 8 gaps + 1 margin slot on each side = 19 slots total
+                let barW = geo.size.width / CGFloat(bars.count * 2 + 1)
+                let elapsed = waveStart.map { timeline.date.timeIntervalSince($0) } ?? 0
 
-            ZStack {
-                RoundedRectangle(cornerRadius: geo.size.width * 0.22)
-                    .fill(Color(hex: "#120D1F"))
+                ZStack {
+                    RoundedRectangle(cornerRadius: geo.size.width * 0.22)
+                        .fill(Color(hex: "#120D1F"))
 
-                HStack(spacing: barW) {
-                    ForEach(bars.indices, id: \.self) { i in
-                        let h = maxH * bars[i].height
-                        let col = bars[i].color
+                    HStack(spacing: barW) {
+                        ForEach(bars.indices, id: \.self) { i in
+                            let baseH = maxH * bars[i].height
+                            // Wave factor: oscillates between 0.65 and 1.0 with per-bar phase offset
+                            let wave = waveStart != nil
+                                ? 0.65 + 0.35 * sin(elapsed * 2.5 + Double(i) * 0.7)
+                                : 1.0
+                            let h = visible[i] ? baseH * wave : 0
+                            let col = bars[i].color
 
-                        VStack(spacing: 0) {
-                            // Barre haute
-                            Capsule()
-                                .fill(col)
-                                .frame(width: barW, height: visible[i] ? h : 0)
+                            VStack(spacing: 0) {
+                                // Main bar anchored at bottom, grows upward
+                                Capsule()
+                                    .fill(col)
+                                    .frame(width: barW, height: h)
+                                    .frame(width: barW, height: maxH, alignment: .bottom)
 
-                            // Barre basse (reflet)
-                            Capsule()
-                                .fill(col.opacity(0.28))
-                                .frame(width: barW, height: visible[i] ? h : 0)
+                                // Reflection anchored at top, grows downward
+                                Capsule()
+                                    .fill(col.opacity(0.28))
+                                    .frame(width: barW, height: h)
+                                    .frame(width: barW, height: maxH, alignment: .top)
+                            }
                         }
-                        .frame(height: maxH * 2, alignment: .center)
                     }
                 }
-                .padding(.horizontal, barW)
             }
         }
         .onAppear { startAnimation() }
     }
 
-    func startAnimation() {
+    /// Reveals bars one by one with a spring, then starts the infinite sine wave.
+    private func startAnimation() {
         visible = Array(repeating: false, count: bars.count)
+        waveStart = nil
 
         for i in bars.indices {
             withAnimation(
@@ -69,9 +83,14 @@ struct EchoLedgerLoader: View {
                 visible[i] = true
             }
         }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(bars.count) * 0.08 + 0.5) {
+            waveStart = Date()
+        }
     }
 }
 
 #Preview {
     EchoLedgerLoader()
+        .frame(width: 120, height: 120)
 }
