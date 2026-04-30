@@ -30,6 +30,8 @@ enum AuthError: Error, Equatable, LocalizedError {
     case deletionFailed
     /// Thrown when the password reset email fails to send.
     case resetPasswordFailed
+    /// Thrown when an anonymous demo session has exceeded its 7-day validity period.
+    case sessionExpired
 
     var errorDescription: String? {
         switch self {
@@ -43,6 +45,7 @@ enum AuthError: Error, Equatable, LocalizedError {
         case .accountLinkingFailed: return "La migration du compte démo a échoué."
         case .deletionFailed:       return "La suppression du compte a échoué."
         case .resetPasswordFailed: return "L'envoi de l'email de réinitialisation a échoué."
+        case .sessionExpired:      return "Votre session démo a expiré après 7 jours. Créez un compte pour sauvegarder vos données."
         }
     }
 }

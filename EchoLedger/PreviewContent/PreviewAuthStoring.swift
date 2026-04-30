@@ -19,4 +19,7 @@ final class PreviewAuthStoring: AuthProviding {
         PreviewData.authSession
     }
     func resetPassword(email: String) async throws {}
+    func isAnonymousSessionExpired() -> Bool { false }
+    func anonymousDaysRemaining() -> Int? { 3 }
+    func expireAnonymousSession() async {}
 }

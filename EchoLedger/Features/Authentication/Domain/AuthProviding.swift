@@ -52,4 +52,13 @@ protocol AuthProviding {
     /// Sends a password reset email to the given address.
     /// - Parameter email: The email address of the account to reset.
     func resetPassword(email: String) async throws
+
+    /// Returns true if the current anonymous session was created more than 7 days ago.
+    func isAnonymousSessionExpired() -> Bool
+
+    /// Returns the number of days remaining in the anonymous demo session, or nil if not anonymous.
+    func anonymousDaysRemaining() -> Int?
+
+    /// Deletes the Firebase anonymous account and Firestore data, then clears local session state.
+    func expireAnonymousSession() async
 }

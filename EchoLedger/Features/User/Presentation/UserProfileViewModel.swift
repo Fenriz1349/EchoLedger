@@ -41,6 +41,7 @@ final class UserProfileViewModel {
 
     // MARK: Computed
     var isAnonymous: Bool { authSession.isAnonymous }
+    let daysRemainingInDemo: Int?
 
     var isLinkFormValid: Bool {
         !linkFirstName.trimmingCharacters(in: .whitespaces).isEmpty &&
@@ -74,6 +75,7 @@ final class UserProfileViewModel {
     ///   - userStoring: User repository for local cascade deletion.
     ///   - authSession: The current authentication session.
     ///   - userId: The internal user identifier.
+    ///   - daysRemainingInDemo: Number of days left in the demo session, nil if not anonymous.
     ///   - onSignOut: Closure called after sign-out or account deletion.
     ///   - onSessionUpdated: Closure called after anonymous account linking.
     init(
@@ -87,6 +89,7 @@ final class UserProfileViewModel {
         userStoring: UserProviding,
         authSession: AuthSession,
         userId: UUID,
+        daysRemainingInDemo: Int?,
         onSignOut: @escaping () -> Void,
         onSessionUpdated: @escaping (AuthSession) -> Void
     ) {
@@ -100,6 +103,7 @@ final class UserProfileViewModel {
         self.userStoring = userStoring
         self.authSession = authSession
         self.userId = userId
+        self.daysRemainingInDemo = daysRemainingInDemo
         self.onSignOut = onSignOut
         self.onSessionUpdated = onSessionUpdated
     }

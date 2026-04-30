@@ -22,7 +22,8 @@ extension DIContainer {
         onSignOut: @escaping () -> Void,
         onSessionUpdated: @escaping (AuthSession) -> Void
     ) -> UserProfileViewModel {
-        UserProfileViewModel(
+        let session = authSession ?? self.authSession
+        return UserProfileViewModel(
             toasty: toasty,
             getCurrentUser: getCurrentUser,
             updateUser: updateUser,
@@ -31,8 +32,9 @@ extension DIContainer {
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             userStoring: userStoring,
-            authSession: authSession ?? self.authSession,
+            authSession: session,
             userId: userId,
+            daysRemainingInDemo: session.isAnonymous ? authStoring.anonymousDaysRemaining() : nil,
             onSignOut: onSignOut,
             onSessionUpdated: onSessionUpdated
         )

@@ -17,10 +17,15 @@ struct UserProfileAnonymousSectionView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            VStack(spacing: 4) {
+            VStack(spacing: 6) {
                 Text("Mode démo")
                     .font(.headline)
-                Text("Vos données ne sont pas sauvegardées sur un compte permanent.")
+                if let days = viewModel.daysRemainingInDemo {
+                    Text("Il vous reste \(days) jour\(days > 1 ? "s" : "").")
+                        .font(.subheadline.bold())
+                        .foregroundColor(.orange)
+                }
+                Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. Créez un compte pour y accéder depuis n'importe où.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)

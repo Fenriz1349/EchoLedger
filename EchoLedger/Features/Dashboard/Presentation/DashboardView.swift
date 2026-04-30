@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Toasty
 
 /// Displays the main dashboard with global balance, recent transactions, and sync status.
 struct DashboardView: View {
@@ -27,6 +28,18 @@ struct DashboardView: View {
             }
             .navigationTitle("Tableau de bord")
             .toolbar {
+                if container.authSession.isAnonymous {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("Démo")
+                            .font(.caption.bold())
+                            .foregroundColor(.orange)
+                            .fixedSize()
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(Color.orange.opacity(0.15))
+                            .clipShape(Capsule())
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showProfile = true
@@ -37,7 +50,9 @@ struct DashboardView: View {
                 }
             }
             .sheet(isPresented: $showProfile) {
-                UserProfileView(viewModel: coordinator.makeUserProfileViewModel())
+                ToastyContainer(manager: container.toasty) {
+                    UserProfileView(viewModel: coordinator.makeUserProfileViewModel())
+                }
             }
         }
     }

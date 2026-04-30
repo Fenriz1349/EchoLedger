@@ -53,11 +53,20 @@ struct EchoLedgerApp: App {
     }
 
     /// Attempts to restore an existing session from local storage at launch.
+    /// If an anonymous session has exceeded 7 days, deletes it and shows an expiration message.
     private func resolveExistingSession() async {
         let resolve = ResolveSession(repository: authStoring)
-        if let session = await resolve.execute() {
-            buildApp(session: session)
+        guard let session = await resolve.execute() else { return }
+
+        if session.isAnonymous {
+            let expire = ExpireAnonymousSession(repository: authStoring)
+            if await expire.execute() {
+                toasty.showInfo(AuthError.sessionExpired.errorDescription ?? "")
+                return
+            }
         }
+
+        buildApp(session: session)
     }
 
     /// Assembles the full dependency graph and activates the main app for the given session.
