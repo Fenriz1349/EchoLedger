@@ -10,13 +10,13 @@ import SwiftUI
 /// A picker allowing the user to select one account from a list of available accounts.
 struct AccountPickerView: View {
 
-    @Binding var selectedAccount: Account?
+    @Binding var selectedAccountId: UUID
     let availableAccounts: [Account]
 
     var body: some View {
-        Picker("Compte", selection: $selectedAccount) {
+        Picker("Compte", selection: $selectedAccountId) {
             ForEach(availableAccounts, id: \.id) { account in
-                Text(account.name).tag(Optional(account))
+                Text(account.name).tag(account.id)
             }
         }
     }
@@ -25,7 +25,7 @@ struct AccountPickerView: View {
 #Preview {
     Form {
         AccountPickerView(
-            selectedAccount: .constant(PreviewData.accountCourant),
+            selectedAccountId: .constant(PreviewData.accountCourant.id),
             availableAccounts: PreviewData.accounts
         )
     }

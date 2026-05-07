@@ -9,6 +9,7 @@ import Foundation
 import Toasty
 
 /// Manages form state and submission logic for creating or editing a transaction.
+/// The transaction total is always derived from the sum of splits — there is no separate amount field.
 @MainActor
 @Observable
 final class TransactionFormViewModel {
@@ -23,40 +24,37 @@ final class TransactionFormViewModel {
 
     // MARK: Form State
     var existingTransaction: Transaction?
-    var amount: String = ""
-    var label: String = ""
     var isExpense: Bool = true
     var category: TransactionCategory = .other
+    var date: Date = Date()
+    var label: String = ""
     var splits: [TransactionSplit] = []
     var showAddAccountForm = false
     let addAccountFormViewModel: AccountFormViewModel
 
     // MARK: UI State
     var availableAccounts: [Account] = []
-    var accountNames: [UUID: String] = [:]
-    var selectedAccount: Account?
     var isLoading = false
     var errorMessage: String?
     var isSuccess = false
+
+    /// The sum of all split amounts — used as the transaction total on submit.
+    var totalAmount: Double {
+        splits.map(\.amount).reduce(0, +)
+    }
+
+    /// The first available account not already used by an existing split.
+    var nextAvailableAccount: Account? {
+        let usedIds = Set(splits.map(\.accountId))
+        return availableAccounts.first { !usedIds.contains($0.id) }
+    }
 
     // MARK: Computed
 
     /// Returns true if the form is ready to be submitted.
     var isValid: Bool {
-        guard let total = amount.toDouble, total > 0 else { return false }
-        if splits.count == 1 { return true }
-        return !splits.isEmpty && splitsMatchTotal
-    }
-
-    /// Returns true if the sum of all splits equals the total amount.
-    var splitsMatchTotal: Bool {
-        guard let total = amount.toDouble else { return false }
-        return splits.map(\.amount).reduce(0, +) == total
-    }
-
-    /// Returns the remaining amount not yet allocated to a split.
-    var remainingAmount: Double {
-        (amount.toDouble ?? 0) - splits.map(\.amount).reduce(0, +)
+        guard !splits.isEmpty, totalAmount > 0 else { return false }
+        return Set(splits.map(\.accountId)).count == splits.count
     }
 
     /// Returns the trimmed label, falling back to the category name if empty.
@@ -98,7 +96,7 @@ final class TransactionFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all available accounts sorted alphabetically and builds the name lookup.
+    /// Loads all available accounts. In create mode, initialises the first split automatically.
     func loadAccounts() async {
         do {
             let institutions = try await getInstitutions.execute(for: userId)
@@ -111,9 +109,8 @@ final class TransactionFormViewModel {
                 result.append(contentsOf: accounts)
             }
             availableAccounts = result
-            selectedAccount = availableAccounts.first
-            if existingTransaction == nil, let account = selectedAccount, splits.isEmpty {
-                addSplit(for: account)
+            if existingTransaction == nil, let first = result.first {
+                addSplit(for: first)
             }
         } catch {
             toasty.showError(error)
@@ -123,17 +120,16 @@ final class TransactionFormViewModel {
     /// Populates form fields from an existing transaction for editing.
     /// - Parameter transaction: The transaction whose values will pre-fill the form.
     private func prefillTransaction(with transaction: Transaction) {
-        amount = String(transaction.totalAmount)
         label = transaction.label
         isExpense = transaction.isExpense
         category = transaction.category
         splits = transaction.splits
+        date = transaction.date
     }
 
-    /// Adds a new split for the given account with the remaining amount.
+    /// Adds a new split for the given account with a zero amount.
     func addSplit(for account: Account) {
-        let splitAmount = splits.isEmpty ? (amount.toDouble ?? 0) : remainingAmount
-        splits.append(TransactionSplit(accountId: account.id, amount: splitAmount))
+        splits.append(TransactionSplit(accountId: account.id, amount: 0))
     }
 
     /// Removes a split at the given index.
@@ -143,16 +139,14 @@ final class TransactionFormViewModel {
 
     /// Validates and submits the transaction.
     func submit() async {
-        guard let total = amount.toDouble, total > 0 else {
+        guard totalAmount > 0 else {
             errorMessage = TransactionError.invalidTotalAmount.localizedDescription
             return
         }
-
         guard !splits.isEmpty else {
             errorMessage = TransactionError.missingSplits.localizedDescription
             return
         }
-
         guard Set(splits.map(\.accountId)).count == splits.count else {
             errorMessage = TransactionError.redundantSplitsAccounts.localizedDescription
             return
@@ -161,31 +155,31 @@ final class TransactionFormViewModel {
         isLoading = true
         errorMessage = nil
 
-        if splits.count == 1 {
-            splits[0] = TransactionSplit(accountId: splits[0].accountId, amount: total)
-        }
-
         do {
             if let existingTransaction {
-                let input = UpdateTransactionInput(id: existingTransaction.id,
-                                                   userId: userId,
-                                                   label: trimmedLabel,
-                                                   date: Date(),
-                                                   totalAmount: total,
-                                                   note: nil,
-                                                   isExpense: isExpense,
-                                                   category: category,
-                                                   splits: splits)
+                let input = UpdateTransactionInput(
+                    id: existingTransaction.id,
+                    userId: userId,
+                    label: trimmedLabel,
+                    date: date,
+                    totalAmount: totalAmount,
+                    note: nil,
+                    isExpense: isExpense,
+                    category: category,
+                    splits: splits
+                )
                 try await updateTransaction.execute(input)
             } else {
-                let input = AddTransactionInput(userId: userId,
-                                                label: trimmedLabel,
-                                                date: Date(),
-                                                totalAmount: total,
-                                                note: nil,
-                                                isExpense: isExpense,
-                                                category: category,
-                                                splits: splits)
+                let input = AddTransactionInput(
+                    userId: userId,
+                    label: trimmedLabel,
+                    date: date,
+                    totalAmount: totalAmount,
+                    note: nil,
+                    isExpense: isExpense,
+                    category: category,
+                    splits: splits
+                )
                 try await addTransaction.execute(input)
             }
             isSuccess = true
