@@ -14,14 +14,23 @@ import Toasty
 final class AccountListViewModel {
 
     var accounts: [Account] = []
+    var archivedAccounts: [Account] = []
     var institutions: [Institution] = []
     var isLoading = false
 
-    /// Returns institutions paired with their non-empty account lists, for grouped display.
+    /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
-            let accountsForInstitution = accounts.filter { $0.institutionId == institution.id }
-            return accountsForInstitution.isEmpty ? nil : (institution, accountsForInstitution)
+            let active = accounts.filter { $0.institutionId == institution.id }
+            return active.isEmpty ? nil : (institution, active)
+        }
+    }
+
+    /// Returns institutions paired with their archived accounts, for the collapsible section.
+    var institutionsWithArchivedAccounts: [(institution: Institution, accounts: [Account])] {
+        institutions.compactMap { institution in
+            let archived = archivedAccounts.filter { $0.institutionId == institution.id }
+            return archived.isEmpty ? nil : (institution, archived)
         }
     }
 
@@ -57,14 +66,18 @@ final class AccountListViewModel {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
 
-            var allAccounts: [Account] = []
+            var allActive: [Account] = []
+            var allArchived: [Account] = []
 
             for institution in institutions {
-                let accounts = try await getAccounts.execute(for: institution.id)
-                allAccounts.append(contentsOf: accounts)
+                let active = try await getAccounts.execute(for: institution.id, filter: .active)
+                let archived = try await getAccounts.execute(for: institution.id, filter: .archived)
+                allActive.append(contentsOf: active)
+                allArchived.append(contentsOf: archived)
             }
 
-            self.accounts = allAccounts
+            self.accounts = allActive
+            self.archivedAccounts = allArchived
         } catch {
             toasty.showError(error)
         }

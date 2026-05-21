@@ -30,7 +30,6 @@ struct ContentView: View {
                 .tag(AppTab.transactions)
 
             Color.clear
-                .tabItem { Label("", systemImage: "") }
                 .tag(AppTab.add)
                 .disabled(true)
 

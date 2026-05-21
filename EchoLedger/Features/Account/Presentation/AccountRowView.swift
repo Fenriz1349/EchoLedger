@@ -12,7 +12,7 @@ struct AccountRowView: View {
 
     let account: Account
     let onEdit: () -> Void
-    let onArchive: () -> Void
+    let onArchive: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -24,10 +24,12 @@ struct AccountRowView: View {
                 .font(.caption)
         }
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                onArchive()
-            } label: {
-                Label("Archiver", systemImage: "trash")
+            if let onArchive {
+                Button(role: .destructive) {
+                    onArchive()
+                } label: {
+                    Label("Archiver", systemImage: "trash")
+                }
             }
         }
         .swipeActions(edge: .trailing) {

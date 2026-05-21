@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
+import CustomLabels
 
-/// Displays accounts grouped by institution, with navigation to detail and swipe actions for edit and archive.
+/// Displays accounts grouped by institution, with an add button and a collapsible archived section.
 struct AccountListView: View {
 
-    @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
-    @State private var selectedAccount: Account?
     @State private var sheet: AccountSheet?
 
     var body: some View {
@@ -20,23 +19,32 @@ struct AccountListView: View {
             Group {
                 if coordinator.accountListViewModel.isLoading {
                     EchoLedgerLoader().frame(width: 80, height: 80)
-                } else if coordinator.accountListViewModel.institutionsWithAccounts.isEmpty {
-                    Text("Aucun compte — ajoutez-en un avec le bouton +")
-                        .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.accountListViewModel.institutionsWithAccounts,
-                                id: \.institution.id) { item in
-                            Section(item.institution.name) {
-                                ForEach(item.accounts) { account in
-                                    NavigationLink(value: account) {
-                                        AccountRowView(
-                                            account: account,
-                                            onEdit: { sheet = .edit(account) },
-                                            onArchive: { Task { await coordinator.accountListViewModel
-                                                .archive(account) } }
-                                        )
-                                    }
+                        AccountGroupList(
+                            items: coordinator.accountListViewModel.institutionsWithAccounts,
+                            onEdit: { sheet = .edit($0) },
+                            onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } }
+                        )
+
+                        Section {
+                            Button { sheet = .add } label: {
+                                CustomButtonLabel(iconLeading: "plus", message: "Ajouter un compte", color: .accentColor, isSelected: true)
+                            }
+                            .buttonStyle(.plain)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+                        }
+
+                        if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
+                            Section {
+                                DisclosureGroup("Comptes archivés (\(coordinator.accountListViewModel.archivedAccounts.count))") {
+                                    AccountGroupList(
+                                        items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
+                                        onEdit: { sheet = .edit($0) },
+                                        onArchive: nil
+                                    )
                                 }
                             }
                         }
@@ -44,15 +52,6 @@ struct AccountListView: View {
                 }
             }
             .navigationTitle("Comptes")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        sheet = .add
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
             .navigationDestination(for: Account.self) { account in
                 AccountDetailView(account: account, coordinator: coordinator)
                     .onDisappear {
@@ -62,13 +61,9 @@ struct AccountListView: View {
             .sheet(item: $sheet) { sheet in
                 switch sheet {
                 case .add:
-                    AccountFormView(
-                        viewModel: container.makeAccountFormViewModel()
-                    )
+                    AccountFormView(viewModel: coordinator.makeAccountFormViewModel())
                 case .edit(let account):
-                    AccountFormView(
-                        viewModel: container.makeAccountFormViewModel(existing: account)
-                    )
+                    AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: account))
                 }
             }
             .onChange(of: sheet) {

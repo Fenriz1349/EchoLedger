@@ -54,7 +54,7 @@ struct AccountDetailView: View {
                     } label: {
                         CustomButtonLabel(
                             iconLeading: "trash",
-                            message: "Supprimer",
+                            message: "Archiver",
                             color: .red
                         )
                     }
