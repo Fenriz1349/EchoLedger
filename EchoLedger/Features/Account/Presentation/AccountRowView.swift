@@ -11,23 +11,26 @@ import SwiftUI
 struct AccountRowView: View {
 
     let account: Account
+    let balance: Double
     let onEdit: () -> Void
-    let onArchive: () -> Void
+    let onArchive: (() -> Void)?
 
     var body: some View {
         HStack {
             Image(systemName: account.category.icon)
             Text(account.name)
             Spacer()
-            Text(account.category.name)
-                .foregroundStyle(.secondary)
-                .font(.caption)
+            Text(balance.toEuro)
+                .foregroundStyle(balance >= 0 ? Color.green : Color.red)
+                .fontWeight(balance >= 0 ? .regular : .semibold)
         }
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                onArchive()
-            } label: {
-                Label("Archiver", systemImage: "trash")
+            if let onArchive {
+                Button(role: .destructive) {
+                    onArchive()
+                } label: {
+                    Label("Archiver", systemImage: "trash")
+                }
             }
         }
         .swipeActions(edge: .trailing) {
@@ -44,6 +47,7 @@ struct AccountRowView: View {
 #Preview {
     AccountRowView(
         account: PreviewData.accountCourant,
+        balance: 1250.50,
         onEdit: {},
         onArchive: {}
     )

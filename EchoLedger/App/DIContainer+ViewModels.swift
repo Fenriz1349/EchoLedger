@@ -49,6 +49,8 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
+            unarchiveAccount: unarchiveAccount,
+            getAccountBalance: getAccountBalance,
             userId: userId
         )
     }
@@ -63,6 +65,20 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             userId: userId,
             existingAccount: existing
+        )
+    }
+
+    /// Creates an AccountDetailViewModel for a given account.
+    func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {
+        AccountDetailViewModel(
+            account: account,
+            toasty: toasty,
+            getTransactions: getTransactions,
+            getAccountBalance: getAccountBalance,
+            archiveAccount: archiveAccount,
+            unarchiveAccount: unarchiveAccount,
+            deleteTransaction: deleteTransaction,
+            userId: userId
         )
     }
 

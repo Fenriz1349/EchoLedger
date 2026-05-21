@@ -8,72 +8,118 @@
 import SwiftUI
 import CustomLabels
 
-/// Shows the full details of an account, with actions to edit or archive it.
+/// Shows the full details of an account: balance, recent transactions, charts, and archive toggle.
 struct AccountDetailView: View {
 
-    let account: Account
+    @State private var viewModel: AccountDetailViewModel
     let coordinator: AppCoordinator
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
+    @State private var editTransaction: Transaction?
 
-    /// Always reflects the latest version of the account from the ViewModel.
-    /// Falls back to the initial value if the account is not yet reloaded.
-    private var currentAccount: Account {
-        coordinator.accountListViewModel.accounts.first { $0.id == account.id } ?? account
+    init(account: Account, coordinator: AppCoordinator) {
+        self.coordinator = coordinator
+        _viewModel = State(wrappedValue: coordinator.makeAccountDetailViewModel(account: account))
     }
 
     var body: some View {
-        List {
-            Section("Informations") {
-                LabeledContent("Nom", value: currentAccount.name)
-                HStack {
-                    Text("Catégorie")
-                    Spacer()
-                    Label(currentAccount.category.name, systemImage: currentAccount.category.icon)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            Section {
-                HStack(spacing: 12) {
-                    Button {
-                        showEditForm = true
-                    } label: {
-                        CustomButtonLabel(
-                            iconLeading: "pencil",
-                            message: "Modifier",
-                            color: .blue
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    Button {
-                        Task {
-                            await coordinator.accountListViewModel.archive(currentAccount)
-                            dismiss()
+        Group {
+            if viewModel.isLoading {
+                EchoLedgerLoader().frame(width: 80, height: 80)
+            } else {
+                List {
+                    // MARK: Balance
+                    Section("Solde") {
+                        HStack {
+                            Text(viewModel.balance.toEuro)
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(viewModel.balance >= 0 ? Color.green : Color.red)
+                            Spacer()
+                            Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
+                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
                         }
-                    } label: {
-                        CustomButtonLabel(
-                            iconLeading: "trash",
-                            message: "Supprimer",
-                            color: .red
+                    }
+
+                    // MARK: Archive toggle
+                    HStack {
+                        Toggle("Compte \(viewModel.isArchived ?  "archivé" : "actif")", isOn: Binding<Bool>(
+                            get: { viewModel.isArchived },
+                            set: { newValue in
+                                if newValue {
+                                    viewModel.showArchiveAlert = true
+                                } else {
+                                    Task { await viewModel.unarchive() }
+                                }
+                            }
+                        ))
+                        .tint(.red)
+                        
+                        Button { showEditForm = true } label: {
+                            CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
+                    }
+
+                    // MARK: Charts
+                    if !viewModel.expenseChartData.isEmpty {
+                        Section {
+                            ExpensePieChartView(data: viewModel.expenseChartData)
+                        }
+                    }
+
+                    if !viewModel.incomeChartData.isEmpty {
+                        Section {
+                            IncomePieChartView(data: viewModel.incomeChartData)
+                        }
+                    }
+                    
+                    // MARK: Recent transactions
+                    if !viewModel.recentTransactions.isEmpty {
+                        RecentTransactionsView(
+                            transactionsList: viewModel.recentTransactions,
+                            onEdit: { editTransaction = $0 },
+                            onDelete: { transaction in Task { await viewModel.delete(transaction) } }
                         )
                     }
-                    .buttonStyle(.plain)
                 }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
-                .padding(.horizontal)
             }
         }
-        .navigationTitle(currentAccount.name)
+        .navigationTitle(viewModel.account.name)
         .navigationBarTitleDisplayMode(.inline)
+        .alert("Archiver ce compte ?", isPresented: $viewModel.showArchiveAlert) {
+            Button("Archiver", role: .destructive) {
+                Task { await viewModel.archive() }
+            }
+            Button("Annuler", role: .cancel) {}
+        } message: {
+            Text("Le compte sera masqué de la liste principale. Les transactions existantes restent accessibles.")
+        }
+        .navigationDestination(for: Transaction.self) { transaction in
+            TransactionDetailView(transaction: transaction, coordinator: coordinator)
+        }
         .sheet(isPresented: $showEditForm) {
-            AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: currentAccount))
+            AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: viewModel.account))
+        }
+        .sheet(item: $editTransaction) { transaction in
+            TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
         }
         .onChange(of: showEditForm) {
             if !showEditForm {
-                Task { await coordinator.accountListViewModel.load() }
+                Task { await viewModel.load() }
             }
+        }
+        .onChange(of: editTransaction) {
+            if editTransaction == nil {
+                Task { await viewModel.load() }
+            }
+        }
+        .task {
+            await viewModel.load()
         }
     }
 }
