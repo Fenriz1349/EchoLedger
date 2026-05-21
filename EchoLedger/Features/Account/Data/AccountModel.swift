@@ -18,19 +18,22 @@ final class AccountModel {
     var name: String
     var category: String
     var isArchived: Bool
+    var updatedAt: Date?
 
     /// Creates a new AccountModel from primitive values.
     init(id: UUID = UUID(),
          institutionId: UUID,
          name: String,
          category: String,
-         isArchived: Bool = false
+         isArchived: Bool = false,
+         updatedAt: Date? = nil
     ) {
         self.id = id
         self.institutionId = institutionId
         self.name = name
         self.category = category
         self.isArchived = isArchived
+        self.updatedAt = updatedAt
     }
 
     /// Converts this SwiftData model to a Domain Account entity.
@@ -41,7 +44,8 @@ final class AccountModel {
             institutionId: institutionId,
             name: name,
             category: accountCategory,
-            isArchived: isArchived
+            isArchived: isArchived,
+            updatedAt: updatedAt
         )
     }
 
@@ -51,5 +55,6 @@ final class AccountModel {
         self.name = account.name
         self.category = account.category.rawValue
         self.isArchived = account.isArchived
+        self.updatedAt = account.updatedAt
     }
 }
