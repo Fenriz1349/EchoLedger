@@ -62,7 +62,7 @@ final class TransactionListViewModel {
             toasty.showError(error)
         }
     }
-    
+
     /// Resolves the account name for each split of a transaction and stores them in `accountNames`.
     func loadAccountNames(for transaction: Transaction) async {
         for split in transaction.splits {

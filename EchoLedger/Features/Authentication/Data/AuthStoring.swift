@@ -68,13 +68,15 @@ final class AuthStoring: AuthProviding {
 
     /// Signs in anonymously, reusing the local UUID if available, and records the creation date.
     func signInAnonymously() async throws -> AuthSession {
-        _ = try await remote.signInAnonymously()
+        let firebaseUID = try await remote.signInAnonymously()
 
         if let existingId = local.fetchUserId() {
             return AuthSession(userId: existingId, isAnonymous: true)
         }
 
         let newId = UUID()
+        let anonymousUser = User(id: newId, displayName: "Anonyme", email: "")
+        try? await userRemote.save(anonymousUser, firebaseUID: firebaseUID)
         local.saveUserId(newId)
         local.saveAnonymousCreationDate()
         return AuthSession(userId: newId, isAnonymous: true)
