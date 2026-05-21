@@ -37,6 +37,12 @@ final class AppCoordinator {
         )
     }
 
+    /// - Parameter account: The account to display in detail.
+    /// - Returns: A configured AccountDetailViewModel.
+    func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {
+        container.makeAccountDetailViewModel(account: account)
+    }
+
     /// - Parameter existing: An optional account to pre-fill the form for editing.
     /// - Returns: A configured AccountFormViewModel.
     func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {

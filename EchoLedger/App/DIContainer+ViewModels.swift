@@ -68,6 +68,20 @@ extension DIContainer {
         )
     }
 
+    /// Creates an AccountDetailViewModel for a given account.
+    func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {
+        AccountDetailViewModel(
+            account: account,
+            toasty: toasty,
+            getTransactions: getTransactions,
+            getAccountBalance: getAccountBalance,
+            archiveAccount: archiveAccount,
+            unarchiveAccount: unarchiveAccount,
+            deleteTransaction: deleteTransaction,
+            userId: userId
+        )
+    }
+
     // MARK: - Transaction
 
     /// Creates a TransactionListViewModel wired with all required use cases.

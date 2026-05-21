@@ -17,46 +17,19 @@ struct TransactionListView: View {
         NavigationStack {
             Group {
                 if coordinator.transactionListViewModel.isLoading {
-                    EchoLedgerLoader().frame(width: 80, height: 80)
+                    EchoLedgerLoader()
+                        .frame(width: 80, height: 80)
                 } else if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.transactionListViewModel.transactions, id: \.id) { item in
-                            NavigationLink(value: item) {
-                                HStack {
-                                    let name = item.category.icon
-                                    Image(systemName: name)
-                                        .frame(width: 32)
-
-                                    VStack(alignment: .leading) {
-                                        Text(item.label)
-                                            .font(.body)
-                                        Text(item.date.formatted(date: .abbreviated, time: .omitted))
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-
-                                    Spacer()
-
-                                    Text(item.totalAmount.toEuro)
-                                        .foregroundStyle(item.isExpense ? Color.primary : Color.green)
-                                        .fontWeight(item.isExpense ? .regular : .semibold)
-                                }
-                            }
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task { await coordinator.transactionListViewModel.delete(item) }
-                                } label: {
-                                    Label("Supprimer", systemImage: "trash")
-                                }
-                                Button {
-                                    editTransaction = item
-                                } label: {
-                                    Label("Modifier", systemImage: "pencil")
-                                }
-                            }
+                        ForEach(coordinator.transactionListViewModel.transactions) { transaction in
+                            TransactionRowView(
+                                transaction: transaction,
+                                onEdit: { editTransaction = transaction },
+                                onDelete: { Task { await coordinator.transactionListViewModel.delete(transaction) } }
+                            )
                         }
                     }
                     .refreshable {

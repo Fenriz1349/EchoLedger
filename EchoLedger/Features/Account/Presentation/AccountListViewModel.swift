@@ -39,6 +39,7 @@ final class AccountListViewModel {
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
+    private let unarchiveAccount: UnarchiveAccount
     private let getAccountBalance: GetAccountBalance
     private let userId: UUID
 
@@ -47,6 +48,7 @@ final class AccountListViewModel {
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - archiveAccount: UseCase for archiving an account.
+    ///   - unarchiveAccount: UseCase for restoring an archived account.
     ///   - getAccountBalance: UseCase for computing an account balance.
     ///   - userId: The identifier of the current user.
     init(
@@ -54,12 +56,14 @@ final class AccountListViewModel {
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         archiveAccount: ArchiveAccount,
+        unarchiveAccount: UnarchiveAccount,
         getAccountBalance: GetAccountBalance,
         userId: UUID) {
             self.toasty = toasty
             self.getInstitutions = getInstitutions
             self.getAccounts = getAccounts
             self.archiveAccount = archiveAccount
+            self.unarchiveAccount = unarchiveAccount
             self.getAccountBalance = getAccountBalance
             self.userId = userId
         }
@@ -102,6 +106,16 @@ final class AccountListViewModel {
     func archive(_ account: Account) async {
         do {
             try await archiveAccount.execute(id: account.id)
+            await load()
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Restores an archived account to active status and reloads the list.
+    func unarchive(_ account: Account) async {
+        do {
+            try await unarchiveAccount.execute(id: account.id)
             await load()
         } catch {
             toasty.showError(error)
