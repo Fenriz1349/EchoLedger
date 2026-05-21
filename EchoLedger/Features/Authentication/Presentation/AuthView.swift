@@ -90,7 +90,9 @@ struct AuthView: View {
                     viewModel.isSignUp.toggle()
                 } label: {
                     CustomButtonLabel(
-                        message: viewModel.isSignUp ? "Déjà un compte ? Se connecter" : "Pas encore de compte ? Créer un compte",
+                        message: viewModel.isSignUp
+                        ? "Déjà un compte ? Se connecter"
+                        : "Pas encore de compte ? Créer un compte",
                         color: .accentColor,
                         isSelected: false
                     )

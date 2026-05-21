@@ -25,6 +25,9 @@ final class LinkAnonymousAccount {
     ///   - lastName: The user's last name.
     /// - Returns: An updated non-anonymous `AuthSession`.
     func execute(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
-        try await repository.linkAnonymousAccount(toEmail: email, password: password, firstName: firstName, lastName: lastName)
+        try await repository.linkAnonymousAccount(toEmail: email,
+                                                  password: password,
+                                                  firstName: firstName,
+                                                  lastName: lastName)
     }
 }

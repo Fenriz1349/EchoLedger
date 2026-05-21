@@ -9,7 +9,7 @@ import Foundation
 
 /// Factory methods for creating ViewModels with their required dependencies.
 extension DIContainer {
-    
+
     // MARK: - User
 
     /// Creates a UserProfileViewModel wired with all required dependencies.

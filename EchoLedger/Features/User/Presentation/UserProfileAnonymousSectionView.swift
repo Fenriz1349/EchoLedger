@@ -25,7 +25,8 @@ struct UserProfileAnonymousSectionView: View {
                         .font(.subheadline.bold())
                         .foregroundColor(.orange)
                 }
-                Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. Créez un compte pour y accéder depuis n'importe où.")
+                Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. "
+                   + "Créez un compte pour y accéder depuis n'importe où.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)

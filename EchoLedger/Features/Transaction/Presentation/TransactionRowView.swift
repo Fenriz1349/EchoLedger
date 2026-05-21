@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// A single list row displaying a transaction with a NavigationLink and swipe actions for edit and delete.
 struct TransactionRowView: View {
-    
+
     let transaction: Transaction
     let onEdit: () -> Void
-    let onDelete: (() -> Void)
+    let onDelete: () -> Void
 
     var body: some View {
         NavigationLink(value: transaction) {

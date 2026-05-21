@@ -15,7 +15,7 @@ final class AuthDouble: AuthProviding {
     // MARK: Stub Values
     var sessionToReturn = AuthSession(userId: UUID(), isAnonymous: false)
     var isExpired = false
-    var daysRemaining: Int? = nil
+    var daysRemaining: Int?
 
     // MARK: Spy Properties
     /// Tracks whether expireAnonymousSession() was called.
@@ -42,7 +42,10 @@ final class AuthDouble: AuthProviding {
         return sessionToReturn
     }
 
-    func createAccount(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
+    func createAccount(email: String,
+                       password: String,
+                       firstName: String,
+                       lastName: String) async throws -> AuthSession {
         if let error = errorToThrow { throw error }
         return sessionToReturn
     }
@@ -62,7 +65,10 @@ final class AuthDouble: AuthProviding {
         didCallDeleteAccount = true
     }
 
-    func linkAnonymousAccount(toEmail email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
+    func linkAnonymousAccount(toEmail email: String,
+                              password: String,
+                              firstName: String,
+                              lastName: String) async throws -> AuthSession {
         if let error = errorToThrow { throw error }
         return sessionToReturn
     }

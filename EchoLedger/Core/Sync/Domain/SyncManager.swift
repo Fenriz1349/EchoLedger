@@ -39,111 +39,12 @@ final class SyncManager: SyncManagerProtocol {
     }
 
     /// Bidirectional sync with last-write-wins conflict resolution and lastSyncDate-based delete detection.
-    /// - Local-only record, updatedAt > pivot (or no pivot) → push to remote
-    /// - Local-only record, updatedAt ≤ pivot → deleted on remote → delete locally
-    /// - Remote-only record, updatedAt > pivot (or no pivot) → pull to local
-    /// - Remote-only record, updatedAt ≤ pivot → deleted locally → delete on remote
-    /// - Both sides → most recent updatedAt wins
-    /// - Accounts are never hard-deleted (archived instead), so delete logic is skipped for them.
     /// No-ops if a sync is already in progress. Cancels after 15 seconds.
     func sync() async {
         guard status != .syncing else { return }
         status = .syncing
-        let pivot = lastSyncDate
 
-        let uid = userId
-        let instRemote = institutionRemote
-        let accRemote = accountRemote
-        let txRemote = transactionRemote
-        let instLocal = institutionLocal
-        let accLocal = accountLocal
-        let txLocal = transactionLocal
-
-        let workTask = Task {
-            // MARK: 1 — Fetch remote
-            let remoteInstitutions = try await instRemote.fetchAll(for: uid)
-            let remoteAccounts     = try await accRemote.fetchAll(for: uid)
-            let remoteTransactions = try await txRemote.fetchAll(for: uid)
-
-            let remoteInstMap  = Dictionary(uniqueKeysWithValues: remoteInstitutions.map { ($0.id, $0) })
-            let remoteAccMap   = Dictionary(uniqueKeysWithValues: remoteAccounts.map { ($0.id, $0) })
-            let remoteTransMap = Dictionary(uniqueKeysWithValues: remoteTransactions.map { ($0.id, $0) })
-
-            // MARK: 2 — Fetch local
-            let localInstitutions = (try? instLocal.fetchAll(for: uid)) ?? []
-            var localAccounts: [Account] = []
-            for inst in localInstitutions {
-                localAccounts += (try? accLocal.fetchAll(for: inst.id)) ?? []
-            }
-            let localTransactions = (try? txLocal.fetchAll(for: uid)) ?? []
-
-            // MARK: 3 — Resolve local records
-            for local in localInstitutions {
-                if let remote = remoteInstMap[local.id] {
-                    if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
-                        try await instRemote.update(local, userId: uid)
-                    } else {
-                        try instLocal.upsert(remote)
-                    }
-                } else if let pivot, let updAt = local.updatedAt, updAt <= pivot {
-                    try? instLocal.delete(by: local.id)
-                } else {
-                    try await instRemote.save(local, userId: uid)
-                }
-            }
-
-            for local in localAccounts {
-                if let remote = remoteAccMap[local.id] {
-                    if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
-                        try await accRemote.update(local, userId: uid)
-                    } else {
-                        try accLocal.upsert(remote)
-                    }
-                } else {
-                    try await accRemote.save(local, userId: uid)
-                }
-            }
-
-            for local in localTransactions {
-                if let remote = remoteTransMap[local.id] {
-                    if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
-                        try await txRemote.update(local, userId: uid)
-                    } else {
-                        try txLocal.upsert(remote)
-                    }
-                } else if let pivot, let updAt = local.updatedAt, updAt <= pivot {
-                    try? txLocal.delete(by: local.id)
-                } else {
-                    try await txRemote.save(local, userId: uid)
-                }
-            }
-
-            // MARK: 4 — Resolve remote-only records
-            let localInstIds  = Set(localInstitutions.map(\.id))
-            let localAccIds   = Set(localAccounts.map(\.id))
-            let localTransIds = Set(localTransactions.map(\.id))
-
-            for remote in remoteInstitutions where !localInstIds.contains(remote.id) {
-                if let pivot, let updAt = remote.updatedAt, updAt <= pivot {
-                    try await instRemote.delete(id: remote.id, userId: uid)
-                } else {
-                    try instLocal.upsert(remote)
-                }
-            }
-
-            for remote in remoteAccounts where !localAccIds.contains(remote.id) {
-                try accLocal.upsert(remote)
-            }
-
-            for remote in remoteTransactions where !localTransIds.contains(remote.id) {
-                if let pivot, let updAt = remote.updatedAt, updAt <= pivot {
-                    try await txRemote.delete(id: remote.id, userId: uid)
-                } else {
-                    try txLocal.upsert(remote)
-                }
-            }
-        }
-
+        let workTask = Task { try await performSync(pivot: lastSyncDate) }
         let timeoutTask = Task {
             try await Task.sleep(for: .seconds(15))
             workTask.cancel()
@@ -163,6 +64,132 @@ final class SyncManager: SyncManagerProtocol {
             status = .failure(error.localizedDescription)
         }
     }
+
+    // MARK: - Orchestration
+
+    private func performSync(pivot: Date?) async throws {
+        let remoteInstitutions = try await institutionRemote.fetchAll(for: userId)
+        let remoteAccounts     = try await accountRemote.fetchAll(for: userId)
+        let remoteTransactions = try await transactionRemote.fetchAll(for: userId)
+
+        let localInstitutions  = (try? institutionLocal.fetchAll(for: userId)) ?? []
+        let localAccounts      = localInstitutions.flatMap { (try? accountLocal.fetchAll(for: $0.id)) ?? [] }
+        let localTransactions  = (try? transactionLocal.fetchAll(for: userId)) ?? []
+
+        let remoteInstMap  = Dictionary(uniqueKeysWithValues: remoteInstitutions.map { ($0.id, $0) })
+        let remoteAccMap   = Dictionary(uniqueKeysWithValues: remoteAccounts.map { ($0.id, $0) })
+        let remoteTransMap = Dictionary(uniqueKeysWithValues: remoteTransactions.map { ($0.id, $0) })
+
+        try await syncLocalInstitutions(localInstitutions, remoteMap: remoteInstMap, pivot: pivot)
+        try await syncLocalAccounts(localAccounts, remoteMap: remoteAccMap)
+        try await syncLocalTransactions(localTransactions, remoteMap: remoteTransMap, pivot: pivot)
+
+        let localInstIds  = Set(localInstitutions.map(\.id))
+        let localAccIds   = Set(localAccounts.map(\.id))
+        let localTransIds = Set(localTransactions.map(\.id))
+
+        try await syncRemoteOnlyInstitutions(remoteInstitutions, localIds: localInstIds, pivot: pivot)
+        syncRemoteOnlyAccounts(remoteAccounts, localIds: localAccIds)
+        try await syncRemoteOnlyTransactions(remoteTransactions, localIds: localTransIds, pivot: pivot)
+    }
+
+    // MARK: - Local → Remote
+
+    private func syncLocalInstitutions(
+        _ locals: [Institution],
+        remoteMap: [UUID: Institution],
+        pivot: Date?
+    ) async throws {
+        for local in locals {
+            if let remote = remoteMap[local.id] {
+                if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
+                    try await institutionRemote.update(local, userId: userId)
+                } else {
+                    try institutionLocal.upsert(remote)
+                }
+            } else if let pivot, let updatedAt = local.updatedAt, updatedAt <= pivot {
+                try? institutionLocal.delete(by: local.id)
+            } else {
+                try await institutionRemote.save(local, userId: userId)
+            }
+        }
+    }
+
+    private func syncLocalAccounts(
+        _ locals: [Account],
+        remoteMap: [UUID: Account]
+    ) async throws {
+        for local in locals {
+            if let remote = remoteMap[local.id] {
+                if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
+                    try await accountRemote.update(local, userId: userId)
+                } else {
+                    try accountLocal.upsert(remote)
+                }
+            } else {
+                try await accountRemote.save(local, userId: userId)
+            }
+        }
+    }
+
+    private func syncLocalTransactions(
+        _ locals: [Transaction],
+        remoteMap: [UUID: Transaction],
+        pivot: Date?
+    ) async throws {
+        for local in locals {
+            if let remote = remoteMap[local.id] {
+                if SyncManager.localWins(local.updatedAt, remote.updatedAt) {
+                    try await transactionRemote.update(local, userId: userId)
+                } else {
+                    try transactionLocal.upsert(remote)
+                }
+            } else if let pivot, let updatedAt = local.updatedAt, updatedAt <= pivot {
+                try? transactionLocal.delete(by: local.id)
+            } else {
+                try await transactionRemote.save(local, userId: userId)
+            }
+        }
+    }
+
+    // MARK: - Remote → Local
+
+    private func syncRemoteOnlyInstitutions(
+        _ remotes: [Institution],
+        localIds: Set<UUID>,
+        pivot: Date?
+    ) async throws {
+        for remote in remotes where !localIds.contains(remote.id) {
+            if let pivot, let updatedAt = remote.updatedAt, updatedAt <= pivot {
+                try await institutionRemote.delete(id: remote.id, userId: userId)
+            } else {
+                try institutionLocal.upsert(remote)
+            }
+        }
+    }
+
+    /// Accounts are never hard-deleted (archived instead) — just pull missing ones locally.
+    private func syncRemoteOnlyAccounts(_ remotes: [Account], localIds: Set<UUID>) {
+        for remote in remotes where !localIds.contains(remote.id) {
+            try? accountLocal.upsert(remote)
+        }
+    }
+
+    private func syncRemoteOnlyTransactions(
+        _ remotes: [Transaction],
+        localIds: Set<UUID>,
+        pivot: Date?
+    ) async throws {
+        for remote in remotes where !localIds.contains(remote.id) {
+            if let pivot, let updatedAt = remote.updatedAt, updatedAt <= pivot {
+                try await transactionRemote.delete(id: remote.id, userId: userId)
+            } else {
+                try transactionLocal.upsert(remote)
+            }
+        }
+    }
+
+    // MARK: - Helpers
 
     /// Returns true if the local version should overwrite the remote version.
     /// Local wins when its updatedAt is strictly more recent.

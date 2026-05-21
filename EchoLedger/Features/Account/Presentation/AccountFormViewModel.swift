@@ -127,7 +127,7 @@ final class AccountFormViewModel {
         } catch let error as AccountError {
             toasty.showError(error)
         } catch {
-            toasty.showError("Une erreur est survenue" as! Error)
+            toasty.showError("Une erreur est survenue")
         }
         isLoading = false
     }

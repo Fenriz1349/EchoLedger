@@ -39,7 +39,7 @@ final class AuthViewModel {
     private let signInAnonymouslyUseCase: SignInAnonymously
     private let resetPasswordUseCase: ResetPassword
     let onAuthSuccess: (AuthSession) -> Void
-    
+
     /// Returns true when all required fields are filled and valid.
     var isFormValid: Bool {
         let base = Validators.isValidEmail(email) && Validators.isStrongPassword(password)

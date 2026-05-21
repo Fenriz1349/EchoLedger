@@ -28,7 +28,7 @@ struct AccountGroupList: View {
                             account: account,
                             balance: balances[account.id] ?? 0,
                             onEdit: { onEdit(account) },
-                            onArchive: onArchive.map { fn in { fn(account) } }
+                            onArchive: onArchive.map { archive in { archive(account) } }
                         )
                     }
                 }

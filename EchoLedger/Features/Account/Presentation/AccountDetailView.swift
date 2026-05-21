@@ -55,7 +55,7 @@ struct AccountDetailView: View {
                             }
                         ))
                         .tint(.red)
-                        
+
                         Button { showEditForm = true } label: {
                             CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
                         }
@@ -77,7 +77,7 @@ struct AccountDetailView: View {
                             IncomePieChartView(data: viewModel.incomeChartData)
                         }
                     }
-                    
+
                     // MARK: Recent transactions
                     if !viewModel.recentTransactions.isEmpty {
                         RecentTransactionsView(

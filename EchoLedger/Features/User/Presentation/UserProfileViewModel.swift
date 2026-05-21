@@ -150,9 +150,16 @@ final class UserProfileViewModel {
         isLoading = true
         defer { isLoading = false }
         do {
-            let input = UpdateUserInput(id: currentUser.id, firstName: trimmedFirst, lastName: trimmedLast, email: currentUser.email, photoURL: currentUser.photoURL)
+            let input = UpdateUserInput(id: currentUser.id,
+                                        firstName: trimmedFirst,
+                                        lastName: trimmedLast,
+                                        email: currentUser.email,
+                                        photoURL: currentUser.photoURL)
             try await updateUserUseCase.execute(input)
-            user = User(id: currentUser.id, displayName: "\(trimmedFirst)|\(trimmedLast)", email: currentUser.email, photoURL: currentUser.photoURL)
+            user = User(id: currentUser.id,
+                        displayName: "\(trimmedFirst)|\(trimmedLast)",
+                        email: currentUser.email,
+                        photoURL: currentUser.photoURL)
             isEditing = false
             toasty.showSuccess("Profil mis à jour.")
         } catch {

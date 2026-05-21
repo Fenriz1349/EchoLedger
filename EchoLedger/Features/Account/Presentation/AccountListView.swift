@@ -30,7 +30,10 @@ struct AccountListView: View {
 
                         Section {
                             Button { sheet = .add } label: {
-                                CustomButtonLabel(iconLeading: "plus", message: "Ajouter un compte", color: .accentColor, isSelected: true)
+                                CustomButtonLabel(iconLeading: "plus",
+                                                  message: "Ajouter un compte",
+                                                  color: .accentColor,
+                                                  isSelected: true)
                             }
                             .buttonStyle(.plain)
                             .listRowBackground(Color.clear)
@@ -40,7 +43,8 @@ struct AccountListView: View {
 
                         if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
                             Section {
-                                DisclosureGroup("Comptes archivés (\(coordinator.accountListViewModel.archivedAccounts.count))") {
+                                let count = coordinator.accountListViewModel.archivedAccounts.count
+                                DisclosureGroup("Comptes archivés (\(count))") {
                                     AccountGroupList(
                                         items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
                                         balances: coordinator.accountListViewModel.balances,

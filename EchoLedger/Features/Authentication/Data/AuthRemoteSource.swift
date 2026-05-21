@@ -81,7 +81,7 @@ final class AuthRemoteSource {
     func signOut() throws {
         try Auth.auth().signOut()
     }
-    
+
     /// Sends a Firebase password reset email to the given address.
     /// - Parameter email: The email address of the account to reset.
     func resetPassword(email: String) async throws {

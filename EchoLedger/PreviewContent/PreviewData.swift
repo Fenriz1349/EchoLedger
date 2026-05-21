@@ -11,10 +11,10 @@ import Toasty
 /// Provides static sample data for SwiftUI previews.
 /// Never used in production code.
 enum PreviewData {
-    
+
     // MARK: Toasty
     static let toasty = ToastyManager()
-    
+
     // MARK: - Auth
     static let authSession = AuthSession(userId: user.id, isAnonymous: false)
     static let authStoring: AuthProviding = PreviewAuthStoring()
