@@ -183,10 +183,8 @@ final class TransactionFormViewModel {
                 try await addTransaction.execute(input)
             }
             isSuccess = true
-        } catch let error as TransactionError {
-            toasty.showError(error)
         } catch {
-            toasty.showError("Une erreur est survenue" as! any Error)
+            toasty.showError(error)
         }
         isLoading = false
     }

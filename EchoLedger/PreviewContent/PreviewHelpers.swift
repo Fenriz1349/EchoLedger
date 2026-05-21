@@ -163,6 +163,7 @@ struct PreviewHelpers {
             toasty: container.toasty,
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
+            getAccount: container.getAccount,
             userId: container.userId
         )
     }
