@@ -98,7 +98,8 @@ final class TransactionRemoteSource {
             note: data["note"] as? String,
             isExpense: isExpense,
             category: category,
-            splits: splitsData.compactMap { decodeSplit($0) }
+            splits: splitsData.compactMap { decodeSplit($0) },
+            updatedAt: (data["updatedAt"] as? Timestamp)?.dateValue()
         )
     }
 
@@ -120,7 +121,7 @@ final class TransactionRemoteSource {
     /// - Parameter transaction: The transaction to encode.
     /// - Returns: A dictionary representation of the transaction including embedded splits.
     private func encode(_ transaction: Transaction) -> [String: Any] {
-        [
+        var data: [String: Any] = [
             "id": transaction.id.uuidString,
             "userId": transaction.userId.uuidString,
             "label": transaction.label,
@@ -137,5 +138,9 @@ final class TransactionRemoteSource {
                 ] as [String: Any]
             }
         ]
+        if let updatedAt = transaction.updatedAt {
+            data["updatedAt"] = Timestamp(date: updatedAt)
+        }
+        return data
     }
 }

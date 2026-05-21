@@ -46,7 +46,8 @@ final class AddTransaction {
             note: input.note,
             isExpense: input.isExpense,
             category: input.category,
-            splits: input.splits
+            splits: input.splits,
+            updatedAt: Date()
         )
         try await repository.save(transaction)
     }

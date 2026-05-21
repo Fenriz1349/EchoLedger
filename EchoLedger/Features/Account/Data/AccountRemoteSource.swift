@@ -117,8 +117,14 @@ final class AccountRemoteSource {
             let isArchived = data["isArchived"] as? Bool
         else { return nil }
 
-        return Account(id: id, institutionId: institutionId, name: name,
-                       category: category, isArchived: isArchived)
+        return Account(
+            id: id,
+            institutionId: institutionId,
+            name: name,
+            category: category,
+            isArchived: isArchived,
+            updatedAt: (data["updatedAt"] as? Timestamp)?.dateValue()
+        )
     }
 
     // MARK: Private
@@ -127,12 +133,16 @@ final class AccountRemoteSource {
     /// - Parameter account: The account to encode.
     /// - Returns: A dictionary representation of the account.
     private func encode(_ account: Account) -> [String: Any] {
-        [
+        var data: [String: Any] = [
             "id": account.id.uuidString,
             "institutionId": account.institutionId.uuidString,
             "name": account.name,
             "category": account.category.rawValue,
             "isArchived": account.isArchived
         ]
+        if let updatedAt = account.updatedAt {
+            data["updatedAt"] = Timestamp(date: updatedAt)
+        }
+        return data
     }
 }

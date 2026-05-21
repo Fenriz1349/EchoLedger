@@ -38,7 +38,8 @@ final class UpdateAccount {
             id: input.id,
             institutionId: input.institutionId,
             name: trimmed,
-            category: input.category
+            category: input.category,
+            updatedAt: Date()
         )
         try await repository.update(updated)
     }

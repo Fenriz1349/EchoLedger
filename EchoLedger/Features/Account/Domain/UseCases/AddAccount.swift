@@ -44,7 +44,8 @@ final class AddAccount {
         let account = Account(
             institutionId: institutionId,
             name: trimmed,
-            category: category
+            category: category,
+            updatedAt: Date()
         )
         try await repository.save(account)
     }
