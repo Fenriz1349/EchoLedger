@@ -49,6 +49,7 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
+            getAccountBalance: getAccountBalance,
             userId: userId
         )
     }

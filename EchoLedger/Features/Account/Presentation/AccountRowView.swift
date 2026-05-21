@@ -11,6 +11,7 @@ import SwiftUI
 struct AccountRowView: View {
 
     let account: Account
+    let balance: Double
     let onEdit: () -> Void
     let onArchive: (() -> Void)?
 
@@ -19,9 +20,9 @@ struct AccountRowView: View {
             Image(systemName: account.category.icon)
             Text(account.name)
             Spacer()
-            Text(account.category.name)
-                .foregroundStyle(.secondary)
-                .font(.caption)
+            Text(balance.toEuro)
+                .foregroundStyle(balance >= 0 ? Color.green : Color.red)
+                .fontWeight(balance >= 0 ? .regular : .semibold)
         }
         .swipeActions(edge: .trailing) {
             if let onArchive {
@@ -46,6 +47,7 @@ struct AccountRowView: View {
 #Preview {
     AccountRowView(
         account: PreviewData.accountCourant,
+        balance: 1250.50,
         onEdit: {},
         onArchive: {}
     )

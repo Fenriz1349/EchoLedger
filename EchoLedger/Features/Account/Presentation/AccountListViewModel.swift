@@ -16,6 +16,7 @@ final class AccountListViewModel {
     var accounts: [Account] = []
     var archivedAccounts: [Account] = []
     var institutions: [Institution] = []
+    var balances: [UUID: Double] = [:]
     var isLoading = false
 
     /// Returns institutions paired with their active accounts, for grouped display.
@@ -38,23 +39,28 @@ final class AccountListViewModel {
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
+    private let getAccountBalance: GetAccountBalance
     private let userId: UUID
 
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
+    ///   - archiveAccount: UseCase for archiving an account.
+    ///   - getAccountBalance: UseCase for computing an account balance.
     ///   - userId: The identifier of the current user.
     init(
         toasty: ToastyManager,
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         archiveAccount: ArchiveAccount,
+        getAccountBalance: GetAccountBalance,
         userId: UUID) {
             self.toasty = toasty
             self.getInstitutions = getInstitutions
             self.getAccounts = getAccounts
             self.archiveAccount = archiveAccount
+            self.getAccountBalance = getAccountBalance
             self.userId = userId
         }
 
@@ -78,6 +84,13 @@ final class AccountListViewModel {
 
             self.accounts = allActive
             self.archivedAccounts = allArchived
+
+            var newBalances: [UUID: Double] = [:]
+            for account in allActive + allArchived {
+                newBalances[account.id] = (try? await getAccountBalance.execute(
+                    accountId: account.id, userId: userId)) ?? 0
+            }
+            self.balances = newBalances
         } catch {
             toasty.showError(error)
         }

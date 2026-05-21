@@ -23,6 +23,7 @@ struct AccountListView: View {
                     List {
                         AccountGroupList(
                             items: coordinator.accountListViewModel.institutionsWithAccounts,
+                            balances: coordinator.accountListViewModel.balances,
                             onEdit: { sheet = .edit($0) },
                             onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } }
                         )
@@ -42,6 +43,7 @@ struct AccountListView: View {
                                 DisclosureGroup("Comptes archivés (\(coordinator.accountListViewModel.archivedAccounts.count))") {
                                     AccountGroupList(
                                         items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
+                                        balances: coordinator.accountListViewModel.balances,
                                         onEdit: { sheet = .edit($0) },
                                         onArchive: nil
                                     )
