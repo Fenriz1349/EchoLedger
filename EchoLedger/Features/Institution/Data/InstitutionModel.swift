@@ -18,6 +18,7 @@ final class InstitutionModel {
     var name: String
     var category: String
     var logoURL: String?
+    var updatedAt: Date?
 
     /// Creates a new InstitutionModel from a Domain Institution entity.
     init(
@@ -25,13 +26,15 @@ final class InstitutionModel {
         userId: UUID,
         name: String,
         category: String,
-        logoURL: String? = nil
+        logoURL: String? = nil,
+        updatedAt: Date? = nil
     ) {
         self.id = id
         self.userId = userId
         self.name = name
         self.category = category
         self.logoURL = logoURL
+        self.updatedAt = updatedAt
     }
 
     // MARK: Mapping
@@ -43,7 +46,8 @@ final class InstitutionModel {
             userId: userId,
             name: name,
             category: institutionCategory,
-            logoURL: logoURL
+            logoURL: logoURL,
+            updatedAt: updatedAt
         )
     }
 
@@ -53,5 +57,6 @@ final class InstitutionModel {
         self.name = institution.name
         self.category = institution.category.rawValue
         self.logoURL = institution.logoURL
+        self.updatedAt = institution.updatedAt
     }
 }

@@ -26,10 +26,10 @@ final class UserStoring: UserProviding {
         self.userId = userId
     }
 
-    /// Fetches the current user from local storage.
-    /// Falls back to Firestore if the local cache is empty, then saves the result locally.
+    /// Fetches the current user from local storage, filtered by userId.
+    /// Falls back to Firestore if the local cache has no matching user, then saves the result locally.
     func fetchCurrent() async throws -> User {
-        if let user = try? local.fetchCurrent() {
+        if let user = try? local.fetchCurrent(by: userId) {
             return user
         }
         guard let user = await remote.fetchUser(id: userId) else {

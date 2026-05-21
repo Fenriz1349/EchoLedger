@@ -12,13 +12,14 @@ struct SplitRowView: View {
 
     @Binding var split: TransactionSplit
     let availableAccounts: [Account]
-    let onDelete: () -> Void
+    let onDelete: (() -> Void)?
 
     var body: some View {
         HStack {
-            TextField("Montant", value: $split.amount, format: .number)
+            TextField("0,00", value: $split.amount, format: .number)
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
+
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts, id: \.id) { account in
                     Text(account.name).tag(account.id)
@@ -26,15 +27,17 @@ struct SplitRowView: View {
             }
         }
         .swipeActions {
-            Button(role: .destructive) { onDelete() } label: {
-                Label("Supprimer", systemImage: "trash")
+            if let onDelete {
+                Button(role: .destructive, action: onDelete) {
+                    Label("Supprimer", systemImage: "trash")
+                }
             }
         }
     }
 }
 
 #Preview {
-    var split = TransactionSplit(accountId: PreviewData.accountCourant.id, amount: 30)
+    let split = TransactionSplit(accountId: PreviewData.accountCourant.id, amount: 30)
     return List {
         SplitRowView(
             split: .constant(split),

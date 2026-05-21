@@ -42,7 +42,8 @@ final class UpdateInstitution {
             userId: input.userId,
             name: trimmed,
             category: input.category,
-            logoURL: input.logoURL
+            logoURL: input.logoURL,
+            updatedAt: Date()
         )
         try await repository.update(updated)
     }

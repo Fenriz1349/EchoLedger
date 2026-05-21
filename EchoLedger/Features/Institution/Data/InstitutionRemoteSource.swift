@@ -77,13 +77,17 @@ final class InstitutionRemoteSource {
     // MARK: Private
 
     private func encode(_ institution: Institution) -> [String: Any] {
-        [
+        var data: [String: Any] = [
             "id": institution.id.uuidString,
             "userId": institution.userId.uuidString,
             "name": institution.name,
             "category": institution.category.rawValue,
             "logoURL": institution.logoURL as Any
         ]
+        if let updatedAt = institution.updatedAt {
+            data["updatedAt"] = Timestamp(date: updatedAt)
+        }
+        return data
     }
 
     private func decode(_ data: [String: Any]) -> Institution? {
@@ -102,7 +106,8 @@ final class InstitutionRemoteSource {
             userId: userId,
             name: name,
             category: category,
-            logoURL: data["logoURL"] as? String
+            logoURL: data["logoURL"] as? String,
+            updatedAt: (data["updatedAt"] as? Timestamp)?.dateValue()
         )
     }
 }

@@ -16,6 +16,8 @@ struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
     let name: String
     let category: AccountCategory
     let isArchived: Bool
+    /// Date of the last local modification. Nil for records created before sync was introduced.
+    let updatedAt: Date?
 
     /// Creates a new Account.
     /// - Parameters:
@@ -23,18 +25,21 @@ struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
     ///   - institutionId: The identifier of the institution this account belongs to.
     ///   - name: Human-readable name of the account (e.g. "Livret A").
     ///   - category: Category of the account.
-    ///   - isArchived: Bool to archive an account
+    ///   - isArchived: Bool to archive an account.
+    ///   - updatedAt: Last modification date. Nil for legacy records.
     init(
         id: UUID = UUID(),
         institutionId: UUID,
         name: String,
         category: AccountCategory,
-        isArchived: Bool = false
+        isArchived: Bool = false,
+        updatedAt: Date? = nil
     ) {
         self.id = id
         self.institutionId = institutionId
         self.name = name
         self.category = category
         self.isArchived = isArchived
+        self.updatedAt = updatedAt
     }
 }

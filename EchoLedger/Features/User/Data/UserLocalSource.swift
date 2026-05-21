@@ -22,12 +22,15 @@ final class UserLocalSource {
 
     // MARK: Read
 
-    /// Fetches the first user stored locally.
-    /// - Returns: The current local User domain entity.
-    func fetchCurrent() throws -> User {
-        let descriptor = FetchDescriptor<UserModel>()
-        let results = try context.fetch(descriptor)
-        guard let model = results.first else {
+    /// Fetches the user matching the given identifier from local storage.
+    /// - Parameter id: The internal UUID of the user to fetch.
+    /// - Returns: The matching local User domain entity.
+    func fetchCurrent(by id: UUID) throws -> User {
+        var descriptor = FetchDescriptor<UserModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        guard let model = try context.fetch(descriptor).first else {
             throw UserError.notFound
         }
         return model.toDomain()

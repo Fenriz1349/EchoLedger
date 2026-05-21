@@ -74,6 +74,7 @@ extension DIContainer {
             toasty: toasty,
             getTransactions: getTransactions,
             deleteTransaction: deleteTransaction,
+            getAccount: getAccount,
             userId: userId
         )
     }

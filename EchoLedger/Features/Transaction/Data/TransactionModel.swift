@@ -21,6 +21,7 @@ final class TransactionModel {
     var note: String?
     var isExpense: Bool
     var category: String
+    var updatedAt: Date?
 
     @Relationship(deleteRule: .cascade)
     var splits: [TransactionSplitModel]
@@ -33,7 +34,8 @@ final class TransactionModel {
          totalAmount: Double,
          note: String? = nil,
          isExpense: Bool,
-         category: String
+         category: String,
+         updatedAt: Date? = nil
     ) {
         self.id = id
         self.userId = userId
@@ -44,6 +46,7 @@ final class TransactionModel {
         self.isExpense = isExpense
         self.category = category
         self.splits = []
+        self.updatedAt = updatedAt
     }
 
     /// Converts this SwiftData model to a Domain Transaction entity.
@@ -58,7 +61,8 @@ final class TransactionModel {
             note: note,
             isExpense: isExpense,
             category: transactionCategory,
-            splits: splits.map { $0.toDomain() }
+            splits: splits.map { $0.toDomain() },
+            updatedAt: updatedAt
         )
     }
 
@@ -71,6 +75,7 @@ final class TransactionModel {
         self.note = transaction.note
         self.isExpense = transaction.isExpense
         self.category = transaction.category.rawValue
+        self.updatedAt = transaction.updatedAt
 
         splits.forEach { context.delete($0) }
         self.splits = transaction.splits.map {

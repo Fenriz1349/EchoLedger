@@ -14,16 +14,15 @@ struct TransactionFormContent: View {
 
     var body: some View {
         Section("Montant") {
-            TextField("0,00", text: $viewModel.amount)
-                .keyboardType(.decimalPad)
+            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
 
-            Toggle("Dépense", isOn: $viewModel.isExpense)
-
-            Picker("Categorie", selection: $viewModel.category) {
+            Picker("Catégorie", selection: $viewModel.category) {
                 ForEach(TransactionCategory.allCases, id: \.self) { category in
                     Label(category.name, systemImage: category.icon).tag(category)
                 }
             }
+
+            Toggle("Dépense", isOn: $viewModel.isExpense)
         }
 
         Section("Label") {
@@ -32,20 +31,41 @@ struct TransactionFormContent: View {
 
         Section("Compte") {
             if viewModel.availableAccounts.isEmpty {
-                Text("Aucun compte disponible").foregroundStyle(.secondary)
+                Text("Aucun comptes disponibles")
+                    .foregroundStyle(.secondary)
             } else {
-                AccountPickerView(
-                    selectedAccount: $viewModel.selectedAccount,
-                    availableAccounts: viewModel.availableAccounts
-                )
+                ForEach($viewModel.splits) { $split in
+                    SplitRowView(
+                        split: $split,
+                        availableAccounts: viewModel.availableAccounts,
+                        onDelete: viewModel.splits.count > 1 ? {
+                            if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
+                                viewModel.removeSplit(at: index)
+                            }
+                        } : nil
+                    )
+                }
+
+                if viewModel.splits.count > 1 {
+                    HStack {
+                        Text("Total")
+                        Spacer()
+                        Text(viewModel.totalAmount.toEuro)
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                }
+
                 Button {
-                    if let account = viewModel.selectedAccount {
+                    if let account = viewModel.nextAvailableAccount {
                         viewModel.addSplit(for: account)
                     }
                 } label: {
-                    Label("Ajouter un compte", systemImage: "plus")
+                    Label("Ajouter un split", systemImage: "plus")
                 }
+                .disabled(viewModel.nextAvailableAccount == nil)
             }
+
             Button {
                 withAnimation { viewModel.showAddAccountForm.toggle() }
             } label: {
@@ -68,23 +88,7 @@ struct TransactionFormContent: View {
                 }
         }
 
-        if viewModel.splits.count > 1 {
-            Section("Répartition") {
-                ForEach($viewModel.splits) { $split in
-                    SplitRowView(
-                        split: $split,
-                        availableAccounts: viewModel.availableAccounts,
-                        onDelete: {
-                            if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
-                                viewModel.removeSplit(at: index)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-
-        Section("Notes") {
+        Section("Photo") {
             Text("À venir")
                 .foregroundStyle(.secondary)
                 .font(.footnote)

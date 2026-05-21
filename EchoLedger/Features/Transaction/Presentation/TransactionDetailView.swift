@@ -16,6 +16,11 @@ struct TransactionDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
 
+    init(transaction: Transaction, coordinator: AppCoordinator) {
+        self.transaction = transaction
+        self.coordinator = coordinator
+    }
+
     private var currentTransaction: Transaction {
         coordinator.transactionListViewModel.transactions.first { $0.id == transaction.id } ?? transaction
     }
@@ -38,33 +43,30 @@ struct TransactionDetailView: View {
             if !currentTransaction.splits.isEmpty {
                 Section("Répartition") {
                     ForEach(currentTransaction.splits) { split in
-                        LabeledContent(split.id.uuidString, value: split.amount.toEuro)
+                        LabeledContent(
+                            coordinator.transactionListViewModel.accountNames[split.accountId] ?? "—",
+                            value: split.amount.toEuro
+                        )
                     }
                 }
             }
+
             Section {
                 HStack(spacing: 12) {
                     Button {
                         showEditForm = true
                     } label: {
-                        CustomButtonLabel(
-                            iconLeading: "pencil",
-                            message: "Modifier",
-                            color: .blue
-                        )
+                        CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
                     }
                     .buttonStyle(.plain)
+
                     Button {
                         Task {
                             await coordinator.transactionListViewModel.delete(currentTransaction)
                             dismiss()
                         }
                     } label: {
-                        CustomButtonLabel(
-                            iconLeading: "trash",
-                            message: "Supprimer",
-                            color: .red
-                        )
+                        CustomButtonLabel(iconLeading: "trash", message: "Supprimer", color: .red)
                     }
                     .buttonStyle(.plain)
                 }
@@ -75,6 +77,9 @@ struct TransactionDetailView: View {
         }
         .navigationTitle(currentTransaction.label)
         .navigationBarTitleDisplayMode(.inline)
+        .task(id: currentTransaction.id) {
+            await coordinator.transactionListViewModel.loadAccountNames(for: currentTransaction)
+        }
         .sheet(isPresented: $showEditForm) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: currentTransaction))
         }

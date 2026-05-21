@@ -16,6 +16,8 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     let name: String
     let category: InstitutionCategory
     let logoURL: String?
+    /// Date of the last local modification. Nil for records created before sync was introduced.
+    let updatedAt: Date?
 
     /// Creates a new Institution.
     /// - Parameters:
@@ -24,17 +26,20 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     ///   - name: Human-readable name of the institution (e.g. "Caisse d'Épargne").
     ///   - category: Category of the institution.
     ///   - logoURL: Optional URL string pointing to the institution's logo.
+    ///   - updatedAt: Last modification date. Nil for legacy records.
     init(
         id: UUID = UUID(),
         userId: UUID,
         name: String,
         category: InstitutionCategory,
-        logoURL: String? = nil
+        logoURL: String? = nil,
+        updatedAt: Date? = nil
     ) {
         self.id = id
         self.userId = userId
         self.name = name
         self.category = category
         self.logoURL = logoURL
+        self.updatedAt = updatedAt
     }
 }

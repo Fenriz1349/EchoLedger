@@ -31,6 +31,7 @@ struct AppEntryView: View {
                 if let coordinator, let container {
                     ContentView(coordinator: coordinator)
                         .environment(container)
+                        .id(container.userId)
                         .transition(.opacity)
                 }
             }
@@ -79,7 +80,10 @@ struct AppEntryView: View {
         )
         container = newContainer
         coordinator = AppCoordinator(container: newContainer, onSignOut: resetToAuth)
-        Task { try? await newContainer.getCurrentUser.execute() }
+        Task {
+            try? await newContainer.getCurrentUser.execute()
+            await newContainer.syncManager.sync()
+        }
     }
 
     /// Called on successful authentication from AuthView.
