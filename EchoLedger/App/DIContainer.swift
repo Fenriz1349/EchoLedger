@@ -76,6 +76,7 @@ final class DIContainer {
     let getAccount: GetAccount
     let updateAccount: UpdateAccount
     let archiveAccount: ArchiveAccount
+    let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
 
     // MARK: Use Cases — Transaction
@@ -179,6 +180,7 @@ final class DIContainer {
         self.getAccount = GetAccount(repository: accountStore)
         self.updateAccount = UpdateAccount(repository: accountStore)
         self.archiveAccount = ArchiveAccount(repository: accountStore)
+        self.unarchiveAccount = UnarchiveAccount(repository: accountStore)
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountStore,
             transactionRepository: transactionStore
