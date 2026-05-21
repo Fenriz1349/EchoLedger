@@ -5,6 +5,8 @@
 //  Created by Julien Cotte on 11/03/2026.
 //
 
+import SwiftUI
+
 /// Represents the category of a transaction.
 /// RawValue is used for Firebase and SwiftData persistence — never rename a case.
 enum TransactionCategory: String, CaseIterable, Codable {
@@ -62,6 +64,42 @@ enum TransactionCategory: String, CaseIterable, Codable {
         case .investment:     return "Investissement"
         case .other:          return "Autre"
         case .initialBalance: return "Solde initial"
+        }
+    }
+
+    /// Fixed color for charts. Avoids red and green — reserved for balance display.
+    var color: Color {
+        switch self {
+        // Daily — warm orange/brown tones
+        case .grocery:        return .orange
+        case .restaurant:     return Color(red: 0.95, green: 0.65, blue: 0.10) // amber
+        case .bar:            return .brown
+
+        // Transport — blue sky / cyan
+        case .transport:      return Color(red: 0.20, green: 0.65, blue: 0.90) // sky blue
+        case .car:            return .cyan
+
+        // Home & Life — deep indigo/purple/pink
+        case .rent:           return .indigo
+        case .utilities:      return Color(red: 0.40, green: 0.40, blue: 0.88) // periwinkle
+        case .health:         return .pink
+        case .education:      return .purple
+
+        // Leisure — vivid but not garish
+        case .leisure:        return Color(red: 0.65, green: 0.25, blue: 0.90) // violet
+        case .shopping:       return Color(red: 0.95, green: 0.42, blue: 0.18) // coral
+        case .travel:         return Color(red: 0.00, green: 0.72, blue: 0.72) // aqua
+        case .subscription:   return Color(red: 0.50, green: 0.32, blue: 0.78) // mauve
+
+        // Misc
+        case .gift:           return Color(red: 0.95, green: 0.38, blue: 0.65) // hot pink
+        case .other:          return .gray
+        case .initialBalance: return Color(white: 0.60)
+
+        // Income — cool blue/teal/mint
+        case .salary:         return .blue
+        case .social:         return .teal
+        case .investment:     return .mint
         }
     }
 
