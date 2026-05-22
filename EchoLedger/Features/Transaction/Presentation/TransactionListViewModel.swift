@@ -20,6 +20,7 @@ final class TransactionListViewModel {
 
     // MARK: Filters
 
+    var searchText: String = ""
     var selectedNature: TransactionNatureFilter = .all
     var selectedCategory: TransactionCategory? = nil
     var selectedAccountId: UUID? = nil
@@ -41,10 +42,10 @@ final class TransactionListViewModel {
         selectedAccountId = nil
     }
 
-    /// Transactions grouped and filtered by the active pickers.
+    /// Transactions grouped and filtered by the active pickers and search text.
     var listItems: [TransactionListItem] {
         TransactionListItem.group(transactions).filter { item in
-            passesNature(item) && passesCategory(item) && passesAccount(item)
+            passesNature(item) && passesCategory(item) && passesAccount(item) && passesSearch(item)
         }
     }
 
@@ -65,6 +66,15 @@ final class TransactionListViewModel {
         guard let category = selectedCategory else { return true }
         guard case .single(let t) = item else { return false }
         return t.category == category
+    }
+
+    private func passesSearch(_ item: TransactionListItem) -> Bool {
+        guard !searchText.isEmpty else { return true }
+        let query = searchText.lowercased()
+        switch item {
+        case .single(let t):    return t.label.lowercased().contains(query)
+        case .transfer(let tr): return tr.label.lowercased().contains(query)
+        }
     }
 
     private func passesAccount(_ item: TransactionListItem) -> Bool {

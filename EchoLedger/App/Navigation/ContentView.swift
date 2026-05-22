@@ -61,6 +61,7 @@ struct ContentView: View {
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
         .sheet(
             isPresented: Binding(
                 get: { coordinator.transactionListViewModel.showAddTransaction },

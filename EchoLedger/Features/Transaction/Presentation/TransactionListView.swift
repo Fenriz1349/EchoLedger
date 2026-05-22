@@ -55,6 +55,10 @@ struct TransactionListView: View {
                     }
                 }
             }
+            .searchable(
+                text: Bindable(coordinator.transactionListViewModel).searchText,
+                prompt: "Rechercher une transaction"
+            )
             .navigationTitle("Transactions")
             .navigationDestination(for: Transaction.self) { transaction in
                 TransactionDetailView(transaction: transaction, coordinator: coordinator)
