@@ -81,6 +81,8 @@ final class DIContainer {
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
+    let deleteTransfer: DeleteTransfer
+    let updateTransfer: UpdateTransfer
 
     // MARK: Use Cases — Transaction
     let addTransaction: AddTransaction
@@ -191,6 +193,8 @@ final class DIContainer {
 
         // MARK: Use Cases — Transfer
         self.transferBetweenAccounts = TransferBetweenAccounts(repository: transactionStore)
+        self.deleteTransfer = DeleteTransfer(repository: transactionStore)
+        self.updateTransfer = UpdateTransfer(repository: transactionStore)
 
         // MARK: Use Cases — Transaction
         self.addTransaction = AddTransaction(repository: transactionStore)
