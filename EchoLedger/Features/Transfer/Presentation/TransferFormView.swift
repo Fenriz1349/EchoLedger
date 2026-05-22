@@ -55,7 +55,7 @@ struct TransferFormView: View {
                             } label: {
                                 CustomButtonLabel(
                                     iconLeading: "arrow.left.arrow.right",
-                                    message: "Transférer",
+                                    message: viewModel.isEditing ? "Modifier le transfert" : "Transférer",
                                     color: .accentColor,
                                     isSelected: viewModel.isValid
                                 )
@@ -69,7 +69,7 @@ struct TransferFormView: View {
                     }
                 }
             }
-            .navigationTitle("Transfert")
+            .navigationTitle(viewModel.isEditing ? "Modifier le transfert" : "Transfert")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

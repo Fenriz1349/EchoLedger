@@ -15,9 +15,11 @@ struct TransferRowView: View {
     let income: Transaction
     let sourceName: String
     let destinationName: String
+    let onTap: () -> Void
     let onDelete: () -> Void
 
     var body: some View {
+        Button(action: onTap) {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 4) {
@@ -45,6 +47,8 @@ struct TransferRowView: View {
             Text(expense.totalAmount.toEuro)
                 .foregroundStyle(Color.primary)
         }
+        }
+        .buttonStyle(.plain)
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
                 onDelete()
@@ -63,6 +67,7 @@ struct TransferRowView: View {
                 income: PreviewData.transferIncome,
                 sourceName: PreviewData.accountCourant.name,
                 destinationName: PreviewData.accountLivret.name,
+                onTap: {},
                 onDelete: {}
             )
         }

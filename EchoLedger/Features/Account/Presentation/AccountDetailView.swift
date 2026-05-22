@@ -16,6 +16,8 @@ struct AccountDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
     @State private var editTransaction: Transaction?
+    @State private var selectedTransferExpense: Transaction?
+    @State private var selectedTransferIncome: Transaction?
 
     init(account: Account, coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -85,6 +87,10 @@ struct AccountDetailView: View {
                             accountNames: viewModel.accountNames,
                             onEdit: { editTransaction = $0 },
                             onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                            onTapTransfer: { expense, income in
+                                selectedTransferExpense = expense
+                                selectedTransferIncome = income
+                            },
                             onDeleteTransfer: { expense, income in Task { await viewModel.deleteTransfer(expense: expense, income: income) } }
                         )
                     }
@@ -117,6 +123,16 @@ struct AccountDetailView: View {
         }
         .onChange(of: editTransaction) {
             if editTransaction == nil {
+                Task { await viewModel.load() }
+            }
+        }
+        .sheet(item: $selectedTransferExpense) { expense in
+            if let income = selectedTransferIncome {
+                TransferDetailView(expense: expense, income: income, coordinator: coordinator)
+            }
+        }
+        .onChange(of: selectedTransferExpense) {
+            if selectedTransferExpense == nil {
                 Task { await viewModel.load() }
             }
         }

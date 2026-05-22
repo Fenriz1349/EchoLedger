@@ -14,6 +14,7 @@ struct RecentTransactionsView: View {
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
+    let onTapTransfer: (Transaction, Transaction) -> Void
     let onDeleteTransfer: (Transaction, Transaction) -> Void
 
     var body: some View {
@@ -24,6 +25,7 @@ struct RecentTransactionsView: View {
                     accountNames: accountNames,
                     onEdit: onEdit,
                     onDelete: onDelete,
+                    onTapTransfer: onTapTransfer,
                     onDeleteTransfer: onDeleteTransfer
                 )
             }
@@ -40,6 +42,7 @@ struct RecentTransactionsView: View {
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
+                onTapTransfer: { _, _ in },
                 onDeleteTransfer: { _, _ in }
             )
         }

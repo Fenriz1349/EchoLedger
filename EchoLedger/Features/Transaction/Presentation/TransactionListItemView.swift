@@ -15,6 +15,7 @@ struct TransactionListItemView: View {
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
+    let onTapTransfer: (Transaction, Transaction) -> Void
     let onDeleteTransfer: (Transaction, Transaction) -> Void
 
     var body: some View {
@@ -33,6 +34,7 @@ struct TransactionListItemView: View {
                 income: income,
                 sourceName: sourceName,
                 destinationName: destinationName,
+                onTap: { onTapTransfer(expense, income) },
                 onDelete: { onDeleteTransfer(expense, income) }
             )
         }
@@ -51,6 +53,7 @@ struct TransactionListItemView: View {
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
+                onTapTransfer: { _, _ in },
                 onDeleteTransfer: { _, _ in }
             )
             TransactionListItemView(
@@ -58,6 +61,7 @@ struct TransactionListItemView: View {
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
+                onTapTransfer: { _, _ in },
                 onDeleteTransfer: { _, _ in }
             )
         }

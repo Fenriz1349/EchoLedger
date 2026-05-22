@@ -12,6 +12,8 @@ struct TransactionListView: View {
 
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
+    @State private var selectedTransferExpense: Transaction?
+    @State private var selectedTransferIncome: Transaction?
 
     var body: some View {
         NavigationStack {
@@ -31,6 +33,10 @@ struct TransactionListView: View {
                                 onEdit: { editTransaction = $0 },
                                 onDelete: { transaction in
                                     Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                },
+                                onTapTransfer: { expense, income in
+                                    selectedTransferExpense = expense
+                                    selectedTransferIncome = income
                                 },
                                 onDeleteTransfer: { expense, income in
                                     Task { await coordinator.transactionListViewModel.deleteTransfer(expense: expense, income: income) }
@@ -57,6 +63,16 @@ struct TransactionListView: View {
             }
             .onChange(of: editTransaction) {
                 if editTransaction == nil {
+                    Task { await coordinator.transactionListViewModel.load() }
+                }
+            }
+            .sheet(item: $selectedTransferExpense) { expense in
+                if let income = selectedTransferIncome {
+                    TransferDetailView(expense: expense, income: income, coordinator: coordinator)
+                }
+            }
+            .onChange(of: selectedTransferExpense) {
+                if selectedTransferExpense == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }

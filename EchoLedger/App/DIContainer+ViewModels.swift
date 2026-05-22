@@ -98,14 +98,31 @@ extension DIContainer {
 
     // MARK: - Transfer
 
-    /// Creates a TransferFormViewModel wired with all required use cases.
-    func makeTransferFormViewModel() -> TransferFormViewModel {
+    /// Creates a TransferFormViewModel. Pass existing expense and income to pre-fill the form for editing.
+    func makeTransferFormViewModel(
+        existingExpense: Transaction? = nil,
+        existingIncome: Transaction? = nil
+    ) -> TransferFormViewModel {
         TransferFormViewModel(
             toasty: toasty,
             transferBetweenAccounts: transferBetweenAccounts,
+            updateTransfer: updateTransfer,
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
-            userId: userId
+            userId: userId,
+            existingExpense: existingExpense,
+            existingIncome: existingIncome
+        )
+    }
+
+    /// Creates a TransferDetailViewModel for a given transfer pair.
+    func makeTransferDetailViewModel(expense: Transaction, income: Transaction) -> TransferDetailViewModel {
+        TransferDetailViewModel(
+            expense: expense,
+            income: income,
+            toasty: toasty,
+            deleteTransfer: deleteTransfer,
+            getAccount: getAccount
         )
     }
 
