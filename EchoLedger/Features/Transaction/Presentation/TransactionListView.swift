@@ -25,21 +25,25 @@ struct TransactionListView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.transactionListViewModel.listItems) { item in
-                            TransactionListItemView(
-                                item: item,
-                                accountNames: coordinator.transactionListViewModel.accountNames,
-                                onEdit: { editTransaction = $0 },
-                                onDelete: { transaction in
-                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
-                                },
-                                onTapTransfer: { transfer in
-                                    selectedTransfer = transfer
-                                },
-                                onDeleteTransfer: { transfer in
-                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                        ForEach(coordinator.transactionListViewModel.sections) { section in
+                            Section(section.title) {
+                                ForEach(section.items) { item in
+                                    TransactionListItemView(
+                                        item: item,
+                                        accountNames: coordinator.transactionListViewModel.accountNames,
+                                        onEdit: { editTransaction = $0 },
+                                        onDelete: { transaction in
+                                            Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                        },
+                                        onTapTransfer: { transfer in
+                                            selectedTransfer = transfer
+                                        },
+                                        onDeleteTransfer: { transfer in
+                                            Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                                        }
+                                    )
                                 }
-                            )
+                            }
                         }
                     }
                     .refreshable {

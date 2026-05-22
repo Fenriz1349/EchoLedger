@@ -23,6 +23,46 @@ final class TransactionListViewModel {
         TransactionListItem.group(transactions)
     }
 
+    /// Transactions bucketed into time sections (today, this week, this month, then one per past month).
+    var sections: [TransactionSection] {
+        let calendar = Calendar.current
+        let now = Date()
+        var buckets: [String: (order: Int, items: [TransactionListItem])] = [:]
+
+        for item in listItems {
+            let date = item.date
+            let key: String
+            let order: Int
+
+            if calendar.isDateInToday(date) {
+                key = "Aujourd'hui"
+                order = 0
+            } else if calendar.isDate(date, equalTo: now, toGranularity: .weekOfYear) {
+                key = "Cette semaine"
+                order = 1
+            } else if calendar.isDate(date, equalTo: now, toGranularity: .month) {
+                key = "Ce mois"
+                order = 2
+            } else {
+                let comps = calendar.dateComponents([.year, .month], from: date)
+                let year = comps.year ?? 2000
+                let month = comps.month ?? 1
+                key = date.formatted(.dateTime.month(.wide).year()).capitalized
+                // Newer months get a lower order so they appear first after "Ce mois"
+                order = 3 + (3000 - year) * 12 + (12 - month)
+            }
+
+            if buckets[key] == nil {
+                buckets[key] = (order, [])
+            }
+            buckets[key]!.items.append(item)
+        }
+
+        return buckets
+            .map { TransactionSection(id: $0.key, title: $0.key, items: $0.value.items) }
+            .sorted { buckets[$0.id]!.order < buckets[$1.id]!.order }
+    }
+
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
     private let deleteTransaction: DeleteTransaction

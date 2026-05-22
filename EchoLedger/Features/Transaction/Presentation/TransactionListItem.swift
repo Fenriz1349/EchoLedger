@@ -7,6 +7,17 @@
 
 import Foundation
 
+// MARK: - TransactionSection
+
+/// A time-bucketed group of transaction list items for display.
+struct TransactionSection: Identifiable {
+    let id: String
+    let title: String
+    let items: [TransactionListItem]
+}
+
+// MARK: - TransactionListItem
+
 /// Represents a single row item in a transaction list.
 /// A `.transfer` groups the matching expense and income legs of an internal transfer.
 enum TransactionListItem: Identifiable {
@@ -18,6 +29,13 @@ enum TransactionListItem: Identifiable {
         switch self {
         case .single(let transaction): return transaction.id
         case .transfer(let transfer): return transfer.id
+        }
+    }
+
+    var date: Date {
+        switch self {
+        case .single(let transaction): return transaction.date
+        case .transfer(let transfer): return transfer.date
         }
     }
 
