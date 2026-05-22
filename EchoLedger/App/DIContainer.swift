@@ -79,6 +79,9 @@ final class DIContainer {
     let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
 
+    // MARK: Use Cases — Transfer
+    let transferBetweenAccounts: TransferBetweenAccounts
+
     // MARK: Use Cases — Transaction
     let addTransaction: AddTransaction
     let getTransactions: GetTransactions
@@ -185,6 +188,9 @@ final class DIContainer {
             accountRepository: accountStore,
             transactionRepository: transactionStore
         )
+
+        // MARK: Use Cases — Transfer
+        self.transferBetweenAccounts = TransferBetweenAccounts(repository: transactionStore)
 
         // MARK: Use Cases — Transaction
         self.addTransaction = AddTransaction(repository: transactionStore)
