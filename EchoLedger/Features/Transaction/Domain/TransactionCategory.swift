@@ -42,6 +42,7 @@ enum TransactionCategory: String, CaseIterable, Codable {
 
     case other
     case initialBalance
+    case transfer
 
     var name: String {
         switch self {
@@ -64,7 +65,14 @@ enum TransactionCategory: String, CaseIterable, Codable {
         case .investment:     return "Investissement"
         case .other:          return "Autre"
         case .initialBalance: return "Solde initial"
+        case .transfer:       return "Transfert"
         }
+    }
+
+    /// Whether this category should appear in expense/income charts and reports.
+    /// Transfers and initial balances are internal operations, not real financial events.
+    var isReportable: Bool {
+        self != .transfer && self != .initialBalance
     }
 
     /// Fixed color for charts. Avoids red and green — reserved for balance display.
@@ -95,6 +103,7 @@ enum TransactionCategory: String, CaseIterable, Codable {
         case .gift:           return Color(red: 0.95, green: 0.38, blue: 0.65) // hot pink
         case .other:          return .gray
         case .initialBalance: return Color(white: 0.60)
+        case .transfer:       return Color(white: 0.55)
 
         // Income — cool blue/teal/mint
         case .salary:         return .blue
@@ -124,6 +133,7 @@ enum TransactionCategory: String, CaseIterable, Codable {
         case .investment:     return "chart.line.uptrend.xyaxis"
         case .other:          return "ellipsis.circle"
         case .initialBalance: return "flag"
+        case .transfer:       return "arrow.left.arrow.right"
         }
     }
 }
