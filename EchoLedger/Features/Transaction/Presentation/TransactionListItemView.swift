@@ -15,8 +15,8 @@ struct TransactionListItemView: View {
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
-    let onTapTransfer: (Transaction, Transaction) -> Void
-    let onDeleteTransfer: (Transaction, Transaction) -> Void
+    let onTapTransfer: (Transfer) -> Void
+    let onDeleteTransfer: (Transfer) -> Void
 
     var body: some View {
         switch item {
@@ -26,16 +26,13 @@ struct TransactionListItemView: View {
                 onEdit: { onEdit(transaction) },
                 onDelete: { onDelete(transaction) }
             )
-        case .transfer(let expense, let income):
-            let sourceName = expense.splits.first.flatMap { accountNames[$0.accountId] } ?? "Compte source"
-            let destinationName = income.splits.first.flatMap { accountNames[$0.accountId] } ?? "Compte destination"
+        case .transfer(let transfer):
             TransferRowView(
-                expense: expense,
-                income: income,
-                sourceName: sourceName,
-                destinationName: destinationName,
-                onTap: { onTapTransfer(expense, income) },
-                onDelete: { onDeleteTransfer(expense, income) }
+                transfer: transfer,
+                sourceName: transfer.sourceName(from: accountNames),
+                destinationName: transfer.destinationName(from: accountNames),
+                onTap: { onTapTransfer(transfer) },
+                onDelete: { onDeleteTransfer(transfer) }
             )
         }
     }
@@ -49,20 +46,20 @@ struct TransactionListItemView: View {
     NavigationStack {
         List {
             TransactionListItemView(
-                item: .transfer(expense: PreviewData.transferExpense, income: PreviewData.transferIncome),
+                item: .transfer(Transfer(source: PreviewData.transferExpense, destination: PreviewData.transferIncome)),
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
-                onTapTransfer: { _, _ in },
-                onDeleteTransfer: { _, _ in }
+                onTapTransfer: { _ in },
+                onDeleteTransfer: { _ in }
             )
             TransactionListItemView(
                 item: .single(PreviewData.transactionCourses),
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
-                onTapTransfer: { _, _ in },
-                onDeleteTransfer: { _, _ in }
+                onTapTransfer: { _ in },
+                onDeleteTransfer: { _ in }
             )
         }
     }

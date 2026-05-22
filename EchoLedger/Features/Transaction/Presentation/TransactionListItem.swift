@@ -12,12 +12,12 @@ import Foundation
 enum TransactionListItem: Identifiable {
 
     case single(Transaction)
-    case transfer(expense: Transaction, income: Transaction)
+    case transfer(Transfer)
 
     var id: UUID {
         switch self {
         case .single(let transaction): return transaction.id
-        case .transfer(let expense, _): return expense.id
+        case .transfer(let transfer): return transfer.id
         }
     }
 
@@ -44,7 +44,7 @@ enum TransactionListItem: Identifiable {
                }) {
                 let expense = transaction.isExpense ? transaction : pair
                 let income = transaction.isExpense ? pair : transaction
-                result.append(.transfer(expense: expense, income: income))
+                result.append(.transfer(Transfer(source: expense, destination: income)))
                 usedIds.insert(transaction.id)
                 usedIds.insert(pair.id)
             } else {

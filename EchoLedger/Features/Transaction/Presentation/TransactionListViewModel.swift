@@ -71,11 +71,11 @@ final class TransactionListViewModel {
     }
 
     /// Deletes both legs of a transfer and removes them from the local list.
-    func deleteTransfer(expense: Transaction, income: Transaction) async {
+    func deleteTransfer(_ transfer: Transfer) async {
         do {
-            try await deleteTransaction.execute(id: expense.id)
-            try await deleteTransaction.execute(id: income.id)
-            transactions.removeAll { $0.id == expense.id || $0.id == income.id }
+            try await deleteTransaction.execute(id: transfer.source.id)
+            try await deleteTransaction.execute(id: transfer.destination.id)
+            transactions.removeAll { $0.id == transfer.source.id || $0.id == transfer.destination.id }
         } catch {
             toasty.showError(error)
         }

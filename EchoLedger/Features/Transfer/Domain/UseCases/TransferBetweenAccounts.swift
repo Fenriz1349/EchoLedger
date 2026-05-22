@@ -24,7 +24,7 @@ final class TransferBetweenAccounts {
     /// Executes the transfer by persisting both transactions.
     /// - Parameter input: The transfer parameters.
     /// - Throws: `TransactionError` if either save fails.
-    func execute(_ input: TransferInput) async throws {
+    func execute(_ input: TransferFormInput) async throws {
         let expense = Transaction(
             userId: input.userId,
             label: input.label,

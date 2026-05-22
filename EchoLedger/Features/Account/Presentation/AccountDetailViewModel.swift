@@ -17,7 +17,7 @@ final class AccountDetailViewModel {
     // MARK: State
 
     var balance: Double = 0
-    var recentTransactions: [Transaction] = []
+    var recentItems: [TransactionListItem] = []
     var accountNames: [UUID: String] = [:]
     var expenseChartData: [(category: TransactionCategory, total: Double)] = []
     var incomeChartData: [(category: TransactionCategory, total: Double)] = []
@@ -38,6 +38,7 @@ final class AccountDetailViewModel {
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
     private let deleteTransaction: DeleteTransaction
+    private let deleteTransferUseCase: DeleteTransfer
     private let userId: UUID
 
     // MARK: Init
@@ -51,6 +52,7 @@ final class AccountDetailViewModel {
     ///   - archiveAccount: UseCase for archiving the account.
     ///   - unarchiveAccount: UseCase for restoring the account.
     ///   - deleteTransaction: UseCase for deleting a transaction.
+    ///   - deleteTransfer: UseCase for deleting both legs of a transfer.
     ///   - userId: The identifier of the current user.
     init(
         account: Account,
@@ -61,6 +63,7 @@ final class AccountDetailViewModel {
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
         deleteTransaction: DeleteTransaction,
+        deleteTransfer: DeleteTransfer,
         userId: UUID
     ) {
         self.account = account
@@ -71,6 +74,7 @@ final class AccountDetailViewModel {
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
         self.deleteTransaction = deleteTransaction
+        self.deleteTransferUseCase = deleteTransfer
         self.userId = userId
     }
 
@@ -91,15 +95,31 @@ final class AccountDetailViewModel {
                 .filter { $0.splits.contains { $0.accountId == account.id } }
                 .sorted { $0.date > $1.date }
 
-            recentTransactions = Array(accountTransactions.prefix(5))
             expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense && $0.category.isReportable })
             incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense && $0.category.isReportable })
 
-            for transaction in recentTransactions where transaction.category == .transfer {
-                for split in transaction.splits {
-                    guard accountNames[split.accountId] == nil else { continue }
-                    if let resolved = try? await getAccount.execute(id: split.accountId) {
-                        accountNames[split.accountId] = resolved.name
+            // Group all transactions so transfer pairs are merged before filtering by account.
+            // Filtering account-only transactions before grouping would break pairing.
+            recentItems = TransactionListItem.group(allTransactions)
+                .filter { item in
+                    switch item {
+                    case .single(let t):
+                        return t.splits.contains { $0.accountId == account.id }
+                    case .transfer(let transfer):
+                        return transfer.source.splits.contains { $0.accountId == account.id }
+                            || transfer.destination.splits.contains { $0.accountId == account.id }
+                    }
+                }
+                .prefix(5)
+                .map { $0 }
+
+            for item in recentItems {
+                if case .transfer(let transfer) = item {
+                    for split in (transfer.source.splits + transfer.destination.splits) {
+                        guard accountNames[split.accountId] == nil else { continue }
+                        if let resolved = try? await getAccount.execute(id: split.accountId) {
+                            accountNames[split.accountId] = resolved.name
+                        }
                     }
                 }
             }
@@ -137,10 +157,9 @@ final class AccountDetailViewModel {
     }
 
     /// Deletes both legs of an internal transfer and reloads the data.
-    func deleteTransfer(expense: Transaction, income: Transaction) async {
+    func deleteTransfer(_ transfer: Transfer) async {
         do {
-            try await deleteTransaction.execute(id: expense.id)
-            try await deleteTransaction.execute(id: income.id)
+            try await deleteTransferUseCase.execute(transfer)
             await load()
         } catch {
             toasty.showError(error)

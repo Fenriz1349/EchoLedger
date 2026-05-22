@@ -1,5 +1,5 @@
 //
-//  TransferInput.swift
+//  TransferFormInput.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 22/05/2026.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Parameters required to execute an internal transfer between two accounts.
-struct TransferInput {
+struct TransferFormInput {
     /// The account money is taken from.
     let sourceAccountId: UUID
     /// The account money is sent to.

@@ -54,23 +54,16 @@ final class AppCoordinator {
         container.makeAccountFormViewModel(existing: existing)
     }
 
-    /// - Parameters:
-    ///   - existingExpense: The expense leg to edit. Nil for creation mode.
-    ///   - existingIncome: The income leg to edit. Nil for creation mode.
-    /// - Returns: A configured TransferFormViewModel.
-    func makeTransferFormViewModel(
-        existingExpense: Transaction? = nil,
-        existingIncome: Transaction? = nil
-    ) -> TransferFormViewModel {
-        container.makeTransferFormViewModel(existingExpense: existingExpense, existingIncome: existingIncome)
+    /// - Parameter transfer: The transfer to display.
+    /// - Returns: A configured TransferDetailViewModel.
+    func makeTransferDetailViewModel(transfer: Transfer) -> TransferDetailViewModel {
+        container.makeTransferDetailViewModel(transfer: transfer)
     }
 
-    /// - Parameters:
-    ///   - expense: The expense leg of the transfer.
-    ///   - income: The income leg of the transfer.
-    /// - Returns: A configured TransferDetailViewModel.
-    func makeTransferDetailViewModel(expense: Transaction, income: Transaction) -> TransferDetailViewModel {
-        container.makeTransferDetailViewModel(expense: expense, income: income)
+    /// - Parameter existing: An optional transfer to pre-fill the form for editing.
+    /// - Returns: A configured TransferFormViewModel.
+    func makeTransferFormViewModel(existing: Transfer? = nil) -> TransferFormViewModel {
+        container.makeTransferFormViewModel(existing: existing)
     }
 
     /// - Parameter existing: An optional transaction to pre-fill the form for editing.

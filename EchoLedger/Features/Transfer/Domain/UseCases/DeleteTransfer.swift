@@ -17,13 +17,11 @@ final class DeleteTransfer {
         self.repository = repository
     }
 
-    /// Deletes the expense and income transactions of a transfer.
-    /// - Parameters:
-    ///   - expenseId: The identifier of the expense leg (source account).
-    ///   - incomeId: The identifier of the income leg (destination account).
+    /// Deletes both legs of a transfer.
+    /// - Parameter transfer: The transfer whose expense and income legs will be deleted.
     /// - Throws: `TransactionError.notFound` if either transaction cannot be found.
-    func execute(expenseId: UUID, incomeId: UUID) async throws {
-        try await repository.delete(by: expenseId)
-        try await repository.delete(by: incomeId)
+    func execute(_ transfer: Transfer) async throws {
+        try await repository.delete(by: transfer.source.id)
+        try await repository.delete(by: transfer.destination.id)
     }
 }

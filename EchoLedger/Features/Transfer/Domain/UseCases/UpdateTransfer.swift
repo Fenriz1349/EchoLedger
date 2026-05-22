@@ -18,17 +18,16 @@ final class UpdateTransfer {
         self.repository = repository
     }
 
-    /// Updates the expense and income transactions of a transfer.
+    /// Updates both legs of an existing transfer with new values.
     /// - Parameters:
-    ///   - expenseId: The identifier of the expense leg to update.
-    ///   - incomeId: The identifier of the income leg to update.
+    ///   - transfer: The existing transfer whose legs will be updated.
     ///   - input: The new transfer parameters.
     /// - Throws: `TransactionError.invalidTotalAmount` if the amount is not strictly positive.
-    func execute(expenseId: UUID, incomeId: UUID, input: TransferInput) async throws {
+    func execute(_ transfer: Transfer, input: TransferFormInput) async throws {
         guard input.amount > 0 else { throw TransactionError.invalidTotalAmount }
 
         let updatedExpense = Transaction(
-            id: expenseId,
+            id: transfer.source.id,
             userId: input.userId,
             label: input.label,
             date: input.date,
@@ -39,7 +38,7 @@ final class UpdateTransfer {
             updatedAt: Date()
         )
         let updatedIncome = Transaction(
-            id: incomeId,
+            id: transfer.destination.id,
             userId: input.userId,
             label: input.label,
             date: input.date,

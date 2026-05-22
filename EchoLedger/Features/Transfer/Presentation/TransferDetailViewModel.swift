@@ -15,12 +15,10 @@ final class TransferDetailViewModel {
 
     // MARK: State
 
-    private(set) var expense: Transaction
-    private(set) var income: Transaction
-    var sourceName: String = ""
-    var destinationName: String = ""
-    var isLoading = false
-    var isDeleted = false
+    let transfer: Transfer
+    private(set) var sourceName: String = "—"
+    private(set) var destinationName: String = "—"
+    var showEditForm = false
     var showDeleteAlert = false
 
     // MARK: Dependencies
@@ -32,20 +30,17 @@ final class TransferDetailViewModel {
     // MARK: Init
 
     /// - Parameters:
-    ///   - expense: The expense leg of the transfer (source account).
-    ///   - income: The income leg of the transfer (destination account).
+    ///   - transfer: The transfer to display.
     ///   - toasty: Toaster to display messages to the user.
     ///   - deleteTransfer: UseCase for deleting both transfer legs.
     ///   - getAccount: UseCase for resolving account names from split identifiers.
     init(
-        expense: Transaction,
-        income: Transaction,
+        transfer: Transfer,
         toasty: ToastyManager,
         deleteTransfer: DeleteTransfer,
         getAccount: GetAccount
     ) {
-        self.expense = expense
-        self.income = income
+        self.transfer = transfer
         self.toasty = toasty
         self.deleteTransfer = deleteTransfer
         self.getAccount = getAccount
@@ -54,24 +49,21 @@ final class TransferDetailViewModel {
     // MARK: Actions
 
     /// Resolves the source and destination account names from the split identifiers.
-    func load() async {
-        isLoading = true
-        if let sourceId = expense.splits.first?.accountId,
+    func loadNames() async {
+        if let sourceId = transfer.source.splits.first?.accountId,
            let account = try? await getAccount.execute(id: sourceId) {
             sourceName = account.name
         }
-        if let destId = income.splits.first?.accountId,
-           let account = try? await getAccount.execute(id: destId) {
+        if let destinationId = transfer.destination.splits.first?.accountId,
+           let account = try? await getAccount.execute(id: destinationId) {
             destinationName = account.name
         }
-        isLoading = false
     }
 
     /// Deletes both legs of the transfer and signals the view to dismiss.
     func delete() async {
         do {
-            try await deleteTransfer.execute(expenseId: expense.id, incomeId: income.id)
-            isDeleted = true
+            try await deleteTransfer.execute(transfer)
         } catch {
             toasty.showError(error)
         }

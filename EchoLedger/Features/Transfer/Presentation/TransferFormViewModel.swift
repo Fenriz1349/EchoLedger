@@ -29,7 +29,7 @@ final class TransferFormViewModel {
     var isSuccess = false
 
     /// True when the form is editing an existing transfer.
-    var isEditing: Bool { existingExpense != nil }
+    var isEditing: Bool { existingTransfer != nil }
 
     /// True when the form has enough data to submit.
     var isValid: Bool {
@@ -45,8 +45,7 @@ final class TransferFormViewModel {
 
     // MARK: Existing Transfer (edit mode)
 
-    private let existingExpense: Transaction?
-    private let existingIncome: Transaction?
+    private let existingTransfer: Transfer?
 
     // MARK: Dependencies
 
@@ -66,8 +65,7 @@ final class TransferFormViewModel {
     ///   - getInstitutions: UseCase for fetching institutions.
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - userId: The identifier of the current user.
-    ///   - existingExpense: The expense leg to edit. Nil for creation mode.
-    ///   - existingIncome: The income leg to edit. Nil for creation mode.
+    ///   - existingTransfer: The transfer to edit. Nil for creation mode.
     init(
         toasty: ToastyManager,
         transferBetweenAccounts: TransferBetweenAccounts,
@@ -75,8 +73,7 @@ final class TransferFormViewModel {
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         userId: UUID,
-        existingExpense: Transaction? = nil,
-        existingIncome: Transaction? = nil
+        existingTransfer: Transfer? = nil
     ) {
         self.toasty = toasty
         self.transferBetweenAccounts = transferBetweenAccounts
@@ -84,13 +81,12 @@ final class TransferFormViewModel {
         self.getInstitutions = getInstitutions
         self.getAccounts = getAccounts
         self.userId = userId
-        self.existingExpense = existingExpense
-        self.existingIncome = existingIncome
+        self.existingTransfer = existingTransfer
 
-        if let expense = existingExpense {
-            self.amount = expense.totalAmount
-            self.date = expense.date
-            self.label = expense.label == "Transfert" ? "" : expense.label
+        if let transfer = existingTransfer {
+            self.amount = transfer.amount
+            self.date = transfer.date
+            self.label = transfer.label == "Transfert" ? "" : transfer.label
         }
     }
 
@@ -107,11 +103,9 @@ final class TransferFormViewModel {
             }
             availableAccounts = result
 
-            if let existingExpense {
-                sourceAccount = result.first { $0.id == existingExpense.splits.first?.accountId }
-            }
-            if let existingIncome {
-                destinationAccount = result.first { $0.id == existingIncome.splits.first?.accountId }
+            if let existingTransfer {
+                sourceAccount = result.first { $0.id == existingTransfer.source.splits.first?.accountId }
+                destinationAccount = result.first { $0.id == existingTransfer.destination.splits.first?.accountId }
             }
             if sourceAccount == nil { sourceAccount = result.first }
             if destinationAccount == nil { destinationAccount = result.dropFirst().first }
@@ -127,7 +121,7 @@ final class TransferFormViewModel {
               let destination = destinationAccount else { return }
 
         isLoading = true
-        let input = TransferInput(
+        let input = TransferFormInput(
             sourceAccountId: source.id,
             destinationAccountId: destination.id,
             amount: amount,
@@ -136,12 +130,8 @@ final class TransferFormViewModel {
             userId: userId
         )
         do {
-            if let existingExpense, let existingIncome {
-                try await updateTransfer.execute(
-                    expenseId: existingExpense.id,
-                    incomeId: existingIncome.id,
-                    input: input
-                )
+            if let existingTransfer {
+                try await updateTransfer.execute(existingTransfer, input: input)
             } else {
                 try await transferBetweenAccounts.execute(input)
             }

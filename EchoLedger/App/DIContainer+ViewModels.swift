@@ -79,6 +79,7 @@ extension DIContainer {
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
             deleteTransaction: deleteTransaction,
+            deleteTransfer: deleteTransfer,
             userId: userId
         )
     }
@@ -98,11 +99,18 @@ extension DIContainer {
 
     // MARK: - Transfer
 
-    /// Creates a TransferFormViewModel. Pass existing expense and income to pre-fill the form for editing.
-    func makeTransferFormViewModel(
-        existingExpense: Transaction? = nil,
-        existingIncome: Transaction? = nil
-    ) -> TransferFormViewModel {
+    /// Creates a TransferDetailViewModel for a given transfer.
+    func makeTransferDetailViewModel(transfer: Transfer) -> TransferDetailViewModel {
+        TransferDetailViewModel(
+            transfer: transfer,
+            toasty: toasty,
+            deleteTransfer: deleteTransfer,
+            getAccount: getAccount
+        )
+    }
+
+    /// Creates a TransferFormViewModel. Pass an existing transfer to pre-fill the form for editing.
+    func makeTransferFormViewModel(existing: Transfer? = nil) -> TransferFormViewModel {
         TransferFormViewModel(
             toasty: toasty,
             transferBetweenAccounts: transferBetweenAccounts,
@@ -110,19 +118,7 @@ extension DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts,
             userId: userId,
-            existingExpense: existingExpense,
-            existingIncome: existingIncome
-        )
-    }
-
-    /// Creates a TransferDetailViewModel for a given transfer pair.
-    func makeTransferDetailViewModel(expense: Transaction, income: Transaction) -> TransferDetailViewModel {
-        TransferDetailViewModel(
-            expense: expense,
-            income: income,
-            toasty: toasty,
-            deleteTransfer: deleteTransfer,
-            getAccount: getAccount
+            existingTransfer: existing
         )
     }
 

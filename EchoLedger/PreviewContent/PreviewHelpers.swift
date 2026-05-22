@@ -164,14 +164,6 @@ struct PreviewHelpers {
         return container.makeTransferFormViewModel()
     }
 
-    /// - Returns: A TransferDetailViewModel for the preview transfer pair.
-    static var transferDetailViewModel: TransferDetailViewModel {
-        seedInstitutionsAndAccounts()
-        return container.makeTransferDetailViewModel(
-            expense: PreviewData.transferExpense,
-            income: PreviewData.transferIncome
-        )
-    }
 
     /// - Returns: A TransactionListViewModel seeded with preview transactions.
     static func makeTransactionListViewModel() -> TransactionListViewModel {

@@ -16,8 +16,7 @@ struct AccountDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
     @State private var editTransaction: Transaction?
-    @State private var selectedTransferExpense: Transaction?
-    @State private var selectedTransferIncome: Transaction?
+    @State private var selectedTransfer: Transfer?
 
     init(account: Account, coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -81,17 +80,16 @@ struct AccountDetailView: View {
                     }
 
                     // MARK: Recent transactions
-                    if !viewModel.recentTransactions.isEmpty {
+                    if !viewModel.recentItems.isEmpty {
                         RecentTransactionsView(
-                            transactionsList: viewModel.recentTransactions,
+                            items: viewModel.recentItems,
                             accountNames: viewModel.accountNames,
                             onEdit: { editTransaction = $0 },
                             onDelete: { transaction in Task { await viewModel.delete(transaction) } },
-                            onTapTransfer: { expense, income in
-                                selectedTransferExpense = expense
-                                selectedTransferIncome = income
+                            onTapTransfer: { transfer in
+                                selectedTransfer = transfer
                             },
-                            onDeleteTransfer: { expense, income in Task { await viewModel.deleteTransfer(expense: expense, income: income) } }
+                            onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } }
                         )
                     }
                 }
@@ -126,13 +124,11 @@ struct AccountDetailView: View {
                 Task { await viewModel.load() }
             }
         }
-        .sheet(item: $selectedTransferExpense) { expense in
-            if let income = selectedTransferIncome {
-                TransferDetailView(expense: expense, income: income, coordinator: coordinator)
-            }
+        .sheet(item: $selectedTransfer) { transfer in
+            TransferDetailView(transfer: transfer, coordinator: coordinator)
         }
-        .onChange(of: selectedTransferExpense) {
-            if selectedTransferExpense == nil {
+        .onChange(of: selectedTransfer) {
+            if selectedTransfer == nil {
                 Task { await viewModel.load() }
             }
         }

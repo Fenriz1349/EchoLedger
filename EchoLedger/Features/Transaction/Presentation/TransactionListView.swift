@@ -12,8 +12,7 @@ struct TransactionListView: View {
 
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
-    @State private var selectedTransferExpense: Transaction?
-    @State private var selectedTransferIncome: Transaction?
+    @State private var selectedTransfer: Transfer?
 
     var body: some View {
         NavigationStack {
@@ -34,12 +33,11 @@ struct TransactionListView: View {
                                 onDelete: { transaction in
                                     Task { await coordinator.transactionListViewModel.delete(transaction) }
                                 },
-                                onTapTransfer: { expense, income in
-                                    selectedTransferExpense = expense
-                                    selectedTransferIncome = income
+                                onTapTransfer: { transfer in
+                                    selectedTransfer = transfer
                                 },
-                                onDeleteTransfer: { expense, income in
-                                    Task { await coordinator.transactionListViewModel.deleteTransfer(expense: expense, income: income) }
+                                onDeleteTransfer: { transfer in
+                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
                                 }
                             )
                         }
@@ -66,13 +64,11 @@ struct TransactionListView: View {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }
-            .sheet(item: $selectedTransferExpense) { expense in
-                if let income = selectedTransferIncome {
-                    TransferDetailView(expense: expense, income: income, coordinator: coordinator)
-                }
+            .sheet(item: $selectedTransfer) { transfer in
+                TransferDetailView(transfer: transfer, coordinator: coordinator)
             }
-            .onChange(of: selectedTransferExpense) {
-                if selectedTransferExpense == nil {
+            .onChange(of: selectedTransfer) {
+                if selectedTransfer == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }

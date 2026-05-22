@@ -8,18 +8,19 @@
 import SwiftUI
 
 /// Displays a short list of recent transactions for an account, inside a labeled section.
+/// Receives already-grouped `TransactionListItem`s so transfer pairs are never broken by account filtering.
 struct RecentTransactionsView: View {
 
-    let transactionsList: [Transaction]
+    let items: [TransactionListItem]
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
-    let onTapTransfer: (Transaction, Transaction) -> Void
-    let onDeleteTransfer: (Transaction, Transaction) -> Void
+    let onTapTransfer: (Transfer) -> Void
+    let onDeleteTransfer: (Transfer) -> Void
 
     var body: some View {
         Section("Dernières transactions") {
-            ForEach(TransactionListItem.group(transactionsList)) { item in
+            ForEach(items) { item in
                 TransactionListItemView(
                     item: item,
                     accountNames: accountNames,
@@ -35,15 +36,16 @@ struct RecentTransactionsView: View {
 
 #Preview {
     let accountNames: [UUID: String] = PreviewData.accounts.reduce(into: [:]) { $0[$1.id] = $1.name }
+    let items = TransactionListItem.group(PreviewData.transactions)
     NavigationStack {
         List {
             RecentTransactionsView(
-                transactionsList: PreviewData.transactions,
+                items: items,
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
-                onTapTransfer: { _, _ in },
-                onDeleteTransfer: { _, _ in }
+                onTapTransfer: { _ in },
+                onDeleteTransfer: { _ in }
             )
         }
     }
