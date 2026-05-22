@@ -173,6 +173,8 @@ struct PreviewHelpers {
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
             getAccount: container.getAccount,
+            getInstitutions: container.getInstitutions,
+            getAccounts: container.getAccounts,
             userId: container.userId
         )
     }

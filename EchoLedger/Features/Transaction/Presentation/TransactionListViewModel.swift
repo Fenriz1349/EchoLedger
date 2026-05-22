@@ -18,9 +18,64 @@ final class TransactionListViewModel {
     var accountNames: [UUID: String] = [:]
     var isLoading = false
 
-    /// Transactions grouped into display items — transfer pairs are merged into a single `.transfer` item.
+    // MARK: Filters
+
+    var selectedNature: TransactionNatureFilter = .all
+    var selectedCategory: TransactionCategory? = nil
+    var selectedAccountId: UUID? = nil
+    var availableAccounts: [Account] = []
+
+    var hasActiveFilters: Bool {
+        selectedNature != .all || selectedCategory != nil || selectedAccountId != nil
+    }
+
+    /// Categories present in the current transaction list, excluding internal ones.
+    var availableCategories: [TransactionCategory] {
+        let used = Set(transactions.map(\.category))
+        return TransactionCategory.allCases.filter { used.contains($0) && $0.isUserSelectable }
+    }
+
+    func resetFilters() {
+        selectedNature = .all
+        selectedCategory = nil
+        selectedAccountId = nil
+    }
+
+    /// Transactions grouped and filtered by the active pickers.
     var listItems: [TransactionListItem] {
-        TransactionListItem.group(transactions)
+        TransactionListItem.group(transactions).filter { item in
+            passesNature(item) && passesCategory(item) && passesAccount(item)
+        }
+    }
+
+    private func passesNature(_ item: TransactionListItem) -> Bool {
+        switch selectedNature {
+        case .all: return true
+        case .transfer: return { if case .transfer = item { return true }; return false }()
+        case .expense:
+            guard case .single(let t) = item else { return false }
+            return t.isExpense && t.category != .transfer
+        case .income:
+            guard case .single(let t) = item else { return false }
+            return !t.isExpense && t.category != .transfer
+        }
+    }
+
+    private func passesCategory(_ item: TransactionListItem) -> Bool {
+        guard let category = selectedCategory else { return true }
+        guard case .single(let t) = item else { return false }
+        return t.category == category
+    }
+
+    private func passesAccount(_ item: TransactionListItem) -> Bool {
+        guard let accountId = selectedAccountId else { return true }
+        switch item {
+        case .single(let t):
+            return t.splits.contains { $0.accountId == accountId }
+        case .transfer(let tr):
+            return tr.source.splits.contains { $0.accountId == accountId }
+                || tr.destination.splits.contains { $0.accountId == accountId }
+        }
     }
 
     /// Transactions bucketed into time sections (today, this week, this month, then one per past month).
@@ -67,30 +122,51 @@ final class TransactionListViewModel {
     private let getTransactions: GetTransactions
     private let deleteTransaction: DeleteTransaction
     private let getAccount: GetAccount
+    private let getInstitutions: GetInstitutions
+    private let getAccounts: GetAccounts
     private let userId: UUID
 
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
     ///   - getTransactions: UseCase for fetching all transactions.
-    ///   - deleteTransaction:UseCase for deleting one transaction..
+    ///   - deleteTransaction: UseCase for deleting one transaction.
+    ///   - getAccount: UseCase for resolving a single account name.
+    ///   - getInstitutions: UseCase for fetching institutions (used to load filter accounts).
+    ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - userId: The identifier of the current user.
     init(toasty: ToastyManager,
          getTransactions: GetTransactions,
          deleteTransaction: DeleteTransaction,
          getAccount: GetAccount,
+         getInstitutions: GetInstitutions,
+         getAccounts: GetAccounts,
          userId: UUID) {
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.deleteTransaction = deleteTransaction
         self.getAccount = getAccount
+        self.getInstitutions = getInstitutions
+        self.getAccounts = getAccounts
         self.userId = userId
     }
 
-    /// Loads all transactions for the current user and resolves account names for all splits.
+    /// Loads all transactions and available filter accounts for the current user.
     func load() async {
         isLoading = true
         do {
-            transactions = try await getTransactions.execute(for: userId)
+            async let transactionsResult = getTransactions.execute(for: userId)
+            async let institutionsResult = getInstitutions.execute(for: userId)
+
+            let (fetchedTransactions, institutions) = try await (transactionsResult, institutionsResult)
+            transactions = fetchedTransactions
+
+            var accounts: [Account] = []
+            for institution in institutions {
+                let institutionAccounts = try await getAccounts.execute(for: institution.id, filter: .all)
+                accounts.append(contentsOf: institutionAccounts)
+            }
+            availableAccounts = accounts.sorted { $0.name < $1.name }
+
             for transaction in transactions {
                 await loadAccountNames(for: transaction)
             }

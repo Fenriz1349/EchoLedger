@@ -46,6 +46,10 @@ struct TransactionListView: View {
                             }
                         }
                     }
+                    .contentMargins(.bottom, 72, for: .scrollContent)
+                    .overlay(alignment: .bottom) {
+                        TransactionFilterBar(viewModel: coordinator.transactionListViewModel)
+                    }
                     .refreshable {
                         await coordinator.transactionListViewModel.load()
                     }
