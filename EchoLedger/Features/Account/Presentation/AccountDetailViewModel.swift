@@ -87,8 +87,8 @@ final class AccountDetailViewModel {
                 .sorted { $0.date > $1.date }
 
             recentTransactions = Array(accountTransactions.prefix(5))
-            expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense })
-            incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense })
+            expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense && $0.category.isReportable })
+            incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense && $0.category.isReportable })
         } catch {
             toasty.showError(error)
         }

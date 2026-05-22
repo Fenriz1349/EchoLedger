@@ -13,6 +13,7 @@ struct AccountListView: View {
 
     let coordinator: AppCoordinator
     @State private var sheet: AccountSheet?
+    @State private var showTransferForm = false
 
     var body: some View {
         NavigationStack {
@@ -34,6 +35,17 @@ struct AccountListView: View {
                                                   message: "Ajouter un compte",
                                                   color: .accentColor,
                                                   isSelected: true)
+                            }
+                            .buttonStyle(.plain)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.horizontal)
+
+                            Button { showTransferForm = true } label: {
+                                CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
+                                                  message: "Effectuer un transfert",
+                                                  color: .accentColor,
+                                                  isSelected: false)
                             }
                             .buttonStyle(.plain)
                             .listRowBackground(Color.clear)
@@ -63,6 +75,14 @@ struct AccountListView: View {
                     .onDisappear {
                         Task { await coordinator.accountListViewModel.load() }
                     }
+            }
+            .sheet(isPresented: $showTransferForm) {
+                TransferFormView(viewModel: coordinator.makeTransferFormViewModel())
+            }
+            .onChange(of: showTransferForm) {
+                if !showTransferForm {
+                    Task { await coordinator.accountListViewModel.load() }
+                }
             }
             .sheet(item: $sheet) { sheet in
                 switch sheet {

@@ -95,6 +95,19 @@ extension DIContainer {
         )
     }
 
+    // MARK: - Transfer
+
+    /// Creates a TransferFormViewModel wired with all required use cases.
+    func makeTransferFormViewModel() -> TransferFormViewModel {
+        TransferFormViewModel(
+            toasty: toasty,
+            transferBetweenAccounts: transferBetweenAccounts,
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            userId: userId
+        )
+    }
+
     // MARK: - Transaction
 
     /// Creates a TransactionListViewModel wired with all required use cases.

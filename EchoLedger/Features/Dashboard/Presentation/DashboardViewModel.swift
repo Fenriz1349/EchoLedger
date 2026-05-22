@@ -74,8 +74,8 @@ final class DashboardViewModel {
                 .sorted { $0.balance > $1.balance }
 
             totalBalance = accountBalances.map(\.balance).reduce(0, +)
-            expenseChartData = chartData(from: transactions.filter { $0.isExpense })
-            incomeChartData = chartData(from: transactions.filter { !$0.isExpense })
+            expenseChartData = chartData(from: transactions.filter { $0.isExpense && $0.category.isReportable})
+            incomeChartData = chartData(from: transactions.filter { !$0.isExpense && $0.category.isReportable})
         } catch {
             toasty.showError(error)
         }
