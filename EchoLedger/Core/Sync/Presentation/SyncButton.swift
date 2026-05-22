@@ -13,9 +13,11 @@ struct SyncButton: View {
     var body: some View {
         HStack {
             if let date = syncManager.lastSyncDate {
-                Text("Sync : \(date.formatted(.relative(presentation: .named)))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                TimelineView(.everyMinute) { _ in
+                    Text("Sync : \(date.formatted(.relative(presentation: .named)))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer()
             Button {

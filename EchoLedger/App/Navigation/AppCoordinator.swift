@@ -12,8 +12,12 @@ import Foundation
 @Observable
 final class AppCoordinator {
 
+    let dashboardViewModel: DashboardViewModel
     let transactionListViewModel: TransactionListViewModel
     let accountListViewModel: AccountListViewModel
+
+    var syncManager: SyncManager { container.syncManager }
+    var authSession: AuthSession { container.authSession }
 
     private let container: DIContainer
     private let onSignOut: () -> Void
@@ -24,6 +28,7 @@ final class AppCoordinator {
     init(container: DIContainer, onSignOut: @escaping () -> Void) {
         self.container = container
         self.onSignOut = onSignOut
+        self.dashboardViewModel = container.makeDashboardViewModel()
         self.transactionListViewModel = container.makeTransactionListViewModel()
         self.accountListViewModel = container.makeAccountListViewModel()
     }

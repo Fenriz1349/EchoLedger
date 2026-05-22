@@ -7,26 +7,68 @@
 
 import SwiftUI
 
-/// Displays the main dashboard with global balance, recent transactions, and sync status.
+/// Displays the main dashboard: total balance, per-account breakdown, and expense/income charts.
 struct DashboardView: View {
 
     let coordinator: AppCoordinator
-    @Environment(DIContainer.self) private var container
 
     var body: some View {
         NavigationStack {
-            VStack {
-                SyncButton(syncManager: container.syncManager)
-                    .padding(.horizontal)
+            Group {
+                if coordinator.dashboardViewModel.isLoading {
+                    EchoLedgerLoader().frame(width: 80, height: 80)
+                } else {
+                    List {
+                        // MARK: Total balance
+                        Section {
+                            HStack {
+                                Text("Solde total")
+                                    .font(.headline)
+                                Spacer()
+                                Text(coordinator.dashboardViewModel.totalBalance.toEuro)
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(
+                                        coordinator.dashboardViewModel.totalBalance >= 0
+                                            ? Color.green : Color.red
+                                    )
+                            }
+                        }
 
-                Text("Tableau de bord — solde global et transactions récentes")
-                    .padding()
+                        // MARK: Per-account breakdown
+                        if !coordinator.dashboardViewModel.accountBalances.isEmpty {
+                            Section {
+                                AccountBalanceChartView(
+                                    items: coordinator.dashboardViewModel.accountBalances
+                                )
+                            }
+                        }
 
-                Spacer()
+                        // MARK: Expense chart
+                        if !coordinator.dashboardViewModel.expenseChartData.isEmpty {
+                            Section {
+                                ExpensePieChartView(data: coordinator.dashboardViewModel.expenseChartData)
+                            }
+                        }
+
+                        // MARK: Income chart
+                        if !coordinator.dashboardViewModel.incomeChartData.isEmpty {
+                            Section {
+                                IncomePieChartView(data: coordinator.dashboardViewModel.incomeChartData)
+                            }
+                        }
+                    }
+                    .refreshable {
+                        await coordinator.dashboardViewModel.load()
+                    }
+                }
             }
             .navigationTitle("Tableau de bord")
             .toolbar {
-                if container.authSession.isAnonymous {
+                ToolbarItem(placement: .topBarTrailing) {
+                    SyncButton(syncManager: coordinator.syncManager)
+                }
+                if coordinator.authSession.isAnonymous {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("Démo")
                             .font(.caption.bold())
@@ -38,6 +80,9 @@ struct DashboardView: View {
                             .clipShape(Capsule())
                     }
                 }
+            }
+            .task {
+                await coordinator.dashboardViewModel.load()
             }
         }
     }

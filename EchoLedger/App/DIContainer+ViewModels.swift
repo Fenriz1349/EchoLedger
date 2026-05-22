@@ -82,6 +82,19 @@ extension DIContainer {
         )
     }
 
+    // MARK: - Dashboard
+
+    /// Creates a DashboardViewModel wired with all required use cases.
+    func makeDashboardViewModel() -> DashboardViewModel {
+        DashboardViewModel(
+            toasty: toasty,
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            getTransactions: getTransactions,
+            userId: userId
+        )
+    }
+
     // MARK: - Transaction
 
     /// Creates a TransactionListViewModel wired with all required use cases.
