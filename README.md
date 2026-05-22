@@ -6,7 +6,7 @@
 ![SwiftData](https://img.shields.io/badge/Persistence-SwiftData-purple)
 ![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
-![Version](https://img.shields.io/badge/Version-0.2.0-blue)
+![Version](https://img.shields.io/badge/Version-0.4.0-blue)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
 A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, local persistence via **SwiftData**, and remote storage via **Firebase**.
@@ -33,8 +33,8 @@ The project follows a strict **Clean Architecture** with clear layer separation:
 
 ```
 Domain
-└── Entities (Transaction, Account, Institution, User)
-└── UseCases (AddTransaction, GetAccounts, ArchiveAccount, ...)
+└── Entities (Transaction, Account, Institution, User, Transfer)
+└── UseCases (AddTransaction, GetAccounts, ArchiveAccount, TransferBetweenAccounts, ...)
 └── Protocols (-Providing)
 
 Data
@@ -45,7 +45,7 @@ Data
 Presentation
 └── ViewModels (@Observable, @MainActor)
 └── Views (SwiftUI)
-└── Subviews (SplitRowView, AccountRowView, ...)
+└── Subviews (SplitRowView, AccountRowView, TransferRowView, ...)
 
 Core
 └── Sync (SyncManager — bidirectional, offline-first)
@@ -66,6 +66,7 @@ App
 | Local source | `TransactionLocalSource` |
 | Remote source | `TransactionRemoteSource` |
 | UseCase input | `AddTransactionInput` |
+| Form submission DTO | `TransferFormInput` |
 
 ---
 
@@ -77,6 +78,7 @@ App
 - **Institution** — financial institution (bank, insurance, etc.)
 - **Account** — bank account linked to an institution, archivable
 - **Transaction** — financial operation with amount distribution across multiple accounts via `TransactionSplit`
+- **Transfer** — internal transfer between two accounts, always composed of two linked `Transaction` objects (`source` debits, `destination` credits). Wraps the pair as a single identifiable domain entity with convenience methods `sourceName(from:)` and `destinationName(from:)` for display name resolution.
 
 ### Key Business Rules
 
@@ -85,6 +87,8 @@ App
 - Transactions referencing an archived account remain consistent
 - `GetAccounts` supports an `AccountFilter` (`.active`, `.archived`, `.all`)
 - Every record carries an `updatedAt: Date?` used for sync conflict resolution
+- Transfers are tagged `.transfer` on both legs and excluded from charts and reports (`isReportable`)
+- `TransactionListItem.group()` merges transfer pairs by matching label + amount + same day + opposite `isExpense` before display — grouping must happen on the full transaction set, never on account-filtered subsets
 
 ---
 
@@ -113,13 +117,23 @@ App
 - [x] Sync status UI (`SyncButton`) with error feedback and timeout (15s)
 - [x] Session management — restore existing session on launch, anonymous expiry
 
-### Phase 3 — Upcoming
+### Phase 3 — Accounts & Transfers (v0.4.0)
+
+- [x] Account detail view — balance, charts (expense/income by category), recent transactions
+- [x] Transfer between accounts — creates a linked expense + income pair tagged `.transfer`
+- [x] Transfer detail view — source/destination accounts, amount, date, description
+- [x] Transfer edit and delete — both legs updated or removed atomically
+- [x] `TransactionListItem` dispatcher — merges transfer pairs into a single row across all lists
+- [x] `TransactionListItemView` — single entry point for all list rendering, routes to `TransactionRowView` or `TransferRowView`
+- [x] Transfer grouping fix — grouping runs on the full transaction set before account filtering to ensure both legs are always visible
+- [x] Bug fix — `AccountModel.update(from:)` was not persisting `institutionId`, causing institution changes to revert on next launch
+- [x] Bug fix — `AccountFormViewModel` was not pre-selecting the correct institution in edit mode, silently moving accounts to the first institution in the list
+
+### Phase 4 — Upcoming
 
 - [ ] Dashboard with account balances and recent transactions
 - [ ] Archived accounts view with unarchive support
-- [ ] Account detail view
 - [ ] iPad layout support
-- [ ] Global alert system
 
 ---
 
@@ -194,11 +208,28 @@ EchoLedger/
 │   │   └── Presentation/
 │   │       ├── TransactionListView.swift
 │   │       ├── TransactionListViewModel.swift
+│   │       ├── TransactionListItem.swift
+│   │       ├── TransactionListItemView.swift
 │   │       ├── TransactionDetailView.swift
 │   │       ├── TransactionFormView.swift
 │   │       ├── TransactionFormViewModel.swift
 │   │       └── Subviews/
+│   │           ├── TransactionRowView.swift
 │   │           └── SplitRowView.swift
+│   ├── Transfer/
+│   │   ├── Domain/
+│   │   │   ├── Transfer.swift
+│   │   │   └── UseCases/
+│   │   │       ├── TransferFormInput.swift
+│   │   │       ├── TransferBetweenAccounts.swift
+│   │   │       ├── UpdateTransfer.swift
+│   │   │       └── DeleteTransfer.swift
+│   │   └── Presentation/
+│   │       ├── TransferDetailView.swift
+│   │       ├── TransferDetailViewModel.swift
+│   │       ├── TransferFormView.swift
+│   │       ├── TransferFormViewModel.swift
+│   │       └── TransferRowView.swift
 │   ├── Account/
 │   │   ├── Domain/
 │   │   │   ├── Account.swift
@@ -214,10 +245,13 @@ EchoLedger/
 │   │   └── Presentation/
 │   │       ├── AccountListView.swift
 │   │       ├── AccountListViewModel.swift
+│   │       ├── AccountDetailView.swift
+│   │       ├── AccountDetailViewModel.swift
 │   │       ├── AccountFormView.swift
 │   │       ├── AccountFormViewModel.swift
 │   │       └── Subviews/
-│   │           └── AccountRowView.swift
+│   │           ├── AccountRowView.swift
+│   │           └── RecentTransactionsView.swift
 │   ├── Institution/
 │   │   ├── Domain/
 │   │   │   ├── Institution.swift
