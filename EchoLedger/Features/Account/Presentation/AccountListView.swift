@@ -67,6 +67,9 @@ struct AccountListView: View {
                             }
                         }
                     }
+                    .refreshable {
+                        await coordinator.accountListViewModel.load()
+                    }
                 }
             }
             .navigationTitle("Comptes")

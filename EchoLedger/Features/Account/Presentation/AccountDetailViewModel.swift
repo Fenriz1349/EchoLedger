@@ -110,7 +110,7 @@ final class AccountDetailViewModel {
                             || transfer.destination.splits.contains { $0.accountId == account.id }
                     }
                 }
-                .prefix(5)
+                .prefix(10)
                 .map { $0 }
 
             for item in recentItems {
