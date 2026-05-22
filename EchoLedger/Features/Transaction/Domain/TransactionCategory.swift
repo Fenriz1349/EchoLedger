@@ -75,6 +75,12 @@ enum TransactionCategory: String, CaseIterable, Codable {
         self != .transfer && self != .initialBalance
     }
 
+    /// Whether this category can be manually selected by the user in a transaction form.
+    /// Transfers and initial balances are created via dedicated flows, not free-form entry.
+    var isUserSelectable: Bool {
+        self != .transfer && self != .initialBalance
+    }
+
     /// Fixed color for charts. Avoids red and green — reserved for balance display.
     var color: Color {
         switch self {

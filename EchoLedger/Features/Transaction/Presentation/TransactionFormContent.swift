@@ -17,7 +17,7 @@ struct TransactionFormContent: View {
             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
 
             Picker("Catégorie", selection: $viewModel.category) {
-                ForEach(TransactionCategory.allCases, id: \.self) { category in
+                ForEach(TransactionCategory.allCases.filter(\.isUserSelectable), id: \.self) { category in
                     Label(category.name, systemImage: category.icon).tag(category)
                 }
             }
