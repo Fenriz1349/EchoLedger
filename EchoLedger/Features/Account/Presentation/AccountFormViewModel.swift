@@ -97,6 +97,9 @@ final class AccountFormViewModel {
     func loadInstitutions() async {
         do {
             institutions = try await getInstitutions.execute(for: userId)
+            if let existing = existingAccount {
+                selectedInstitution = institutions.first { $0.id == existing.institutionId }
+            }
             if selectedInstitution == nil {
                 selectedInstitution = institutions.first
             }

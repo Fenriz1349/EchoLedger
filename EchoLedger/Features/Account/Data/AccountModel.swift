@@ -52,6 +52,7 @@ final class AccountModel {
     /// Updates this model's properties from a Domain Account entity.
     /// - Parameter account: The domain entity with updated values.
     func update(from account: Account) {
+        self.institutionId = account.institutionId
         self.name = account.name
         self.category = account.category.rawValue
         self.isArchived = account.isArchived
