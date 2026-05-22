@@ -164,7 +164,6 @@ struct PreviewHelpers {
         return container.makeTransferFormViewModel()
     }
 
-
     /// - Returns: A TransactionListViewModel seeded with preview transactions.
     static func makeTransactionListViewModel() -> TransactionListViewModel {
         seedTransactions()
@@ -173,6 +172,8 @@ struct PreviewHelpers {
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
             getAccount: container.getAccount,
+            getInstitutions: container.getInstitutions,
+            getAccounts: container.getAccounts,
             userId: container.userId
         )
     }

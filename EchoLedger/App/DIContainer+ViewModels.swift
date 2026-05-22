@@ -131,6 +131,8 @@ extension DIContainer {
             getTransactions: getTransactions,
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
             userId: userId
         )
     }
