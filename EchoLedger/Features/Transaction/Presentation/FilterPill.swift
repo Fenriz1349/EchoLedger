@@ -14,7 +14,7 @@ struct FilterPill: View {
 
     let label: String
     let isActive: Bool
-    var systemImage: String? = nil
+    var systemImage: String?
 
     var body: some View {
         HStack(spacing: 4) {

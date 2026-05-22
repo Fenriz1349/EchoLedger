@@ -103,8 +103,8 @@ final class AccountDetailViewModel {
             recentItems = TransactionListItem.group(allTransactions)
                 .filter { item in
                     switch item {
-                    case .single(let t):
-                        return t.splits.contains { $0.accountId == account.id }
+                    case .single(let transaction):
+                        return transaction.splits.contains { $0.accountId == account.id }
                     case .transfer(let transfer):
                         return transfer.source.splits.contains { $0.accountId == account.id }
                             || transfer.destination.splits.contains { $0.accountId == account.id }

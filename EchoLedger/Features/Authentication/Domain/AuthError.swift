@@ -35,27 +35,27 @@ enum AuthError: Error, Equatable, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .signInFailed:        
+        case .signInFailed:
             return "La connexion a échoué. Veuillez réessayer."
-        case .signOutFailed:     
+        case .signOutFailed:
             return "La déconnexion a échoué."
-        case .noSessionFound:     
+        case .noSessionFound:
             return "Aucune session active."
-        case .emailAlreadyInUse:  
+        case .emailAlreadyInUse:
             return "Cette adresse email est déjà utilisée."
-        case .weakPassword:       
+        case .weakPassword:
             return "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial."
-        case .invalidCredentials: 
+        case .invalidCredentials:
             return "Email ou mot de passe incorrect."
-        case .passwordsDoNotMatch:  
+        case .passwordsDoNotMatch:
             return "Les mots de passe ne correspondent pas."
         case .accountLinkingFailed:
             return "La migration du compte démo a échoué."
-        case .deletionFailed:     
+        case .deletionFailed:
             return "La suppression du compte a échoué."
-        case .resetPasswordFailed: 
+        case .resetPasswordFailed:
             return "L'envoi de l'email de réinitialisation a échoué."
-        case .sessionExpired:    
+        case .sessionExpired:
             return "Votre session démo a expiré après 7 jours. Créez un compte pour sauvegarder vos données."
         }
     }

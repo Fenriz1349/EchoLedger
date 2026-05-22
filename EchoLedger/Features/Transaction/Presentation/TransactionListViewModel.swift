@@ -22,8 +22,8 @@ final class TransactionListViewModel {
 
     var searchText: String = ""
     var selectedNature: TransactionNatureFilter = .all
-    var selectedCategory: TransactionCategory? = nil
-    var selectedAccountId: UUID? = nil
+    var selectedCategory: TransactionCategory?
+    var selectedAccountId: UUID?
     var availableAccounts: [Account] = []
 
     var hasActiveFilters: Bool {
@@ -54,37 +54,37 @@ final class TransactionListViewModel {
         case .all: return true
         case .transfer: return { if case .transfer = item { return true }; return false }()
         case .expense:
-            guard case .single(let t) = item else { return false }
-            return t.isExpense && t.category != .transfer
+            guard case .single(let transaction) = item else { return false }
+            return transaction.isExpense && transaction.category != .transfer
         case .income:
-            guard case .single(let t) = item else { return false }
-            return !t.isExpense && t.category != .transfer
+            guard case .single(let transaction) = item else { return false }
+            return !transaction.isExpense && transaction.category != .transfer
         }
     }
 
     private func passesCategory(_ item: TransactionListItem) -> Bool {
         guard let category = selectedCategory else { return true }
-        guard case .single(let t) = item else { return false }
-        return t.category == category
+        guard case .single(let transaction) = item else { return false }
+        return transaction.category == category
     }
 
     private func passesSearch(_ item: TransactionListItem) -> Bool {
         guard !searchText.isEmpty else { return true }
         let query = searchText.lowercased()
         switch item {
-        case .single(let t):    return t.label.lowercased().contains(query)
-        case .transfer(let tr): return tr.label.lowercased().contains(query)
+        case .single(let transaction):  return transaction.label.lowercased().contains(query)
+        case .transfer(let transfer):   return transfer.label.lowercased().contains(query)
         }
     }
 
     private func passesAccount(_ item: TransactionListItem) -> Bool {
         guard let accountId = selectedAccountId else { return true }
         switch item {
-        case .single(let t):
-            return t.splits.contains { $0.accountId == accountId }
-        case .transfer(let tr):
-            return tr.source.splits.contains { $0.accountId == accountId }
-                || tr.destination.splits.contains { $0.accountId == accountId }
+        case .single(let transaction):
+            return transaction.splits.contains { $0.accountId == accountId }
+        case .transfer(let transfer):
+            return transfer.source.splits.contains { $0.accountId == accountId }
+                || transfer.destination.splits.contains { $0.accountId == accountId }
         }
     }
 
@@ -109,9 +109,9 @@ final class TransactionListViewModel {
                 key = "Ce mois"
                 order = 2
             } else {
-                let comps = calendar.dateComponents([.year, .month], from: date)
-                let year = comps.year ?? 2000
-                let month = comps.month ?? 1
+                let dateComponents = calendar.dateComponents([.year, .month], from: date)
+                let year = dateComponents.year ?? 2000
+                let month = dateComponents.month ?? 1
                 key = date.formatted(.dateTime.month(.wide).year()).capitalized
                 // Newer months get a lower order so they appear first after "Ce mois"
                 order = 3 + (3000 - year) * 12 + (12 - month)
