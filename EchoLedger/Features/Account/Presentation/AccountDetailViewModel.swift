@@ -18,6 +18,7 @@ final class AccountDetailViewModel {
 
     var balance: Double = 0
     var recentTransactions: [Transaction] = []
+    var accountNames: [UUID: String] = [:]
     var expenseChartData: [(category: TransactionCategory, total: Double)] = []
     var incomeChartData: [(category: TransactionCategory, total: Double)] = []
     var isLoading = false
@@ -33,6 +34,7 @@ final class AccountDetailViewModel {
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
     private let getAccountBalance: GetAccountBalance
+    private let getAccount: GetAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
     private let deleteTransaction: DeleteTransaction
@@ -45,6 +47,7 @@ final class AccountDetailViewModel {
     ///   - toasty: Toaster to display messages to the user.
     ///   - getTransactions: UseCase for fetching all user transactions.
     ///   - getAccountBalance: UseCase for computing the account balance.
+    ///   - getAccount: UseCase for resolving account names (used for transfer rows).
     ///   - archiveAccount: UseCase for archiving the account.
     ///   - unarchiveAccount: UseCase for restoring the account.
     ///   - deleteTransaction: UseCase for deleting a transaction.
@@ -54,6 +57,7 @@ final class AccountDetailViewModel {
         toasty: ToastyManager,
         getTransactions: GetTransactions,
         getAccountBalance: GetAccountBalance,
+        getAccount: GetAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
         deleteTransaction: DeleteTransaction,
@@ -63,6 +67,7 @@ final class AccountDetailViewModel {
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.getAccountBalance = getAccountBalance
+        self.getAccount = getAccount
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
         self.deleteTransaction = deleteTransaction
@@ -89,6 +94,15 @@ final class AccountDetailViewModel {
             recentTransactions = Array(accountTransactions.prefix(5))
             expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense && $0.category.isReportable })
             incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense && $0.category.isReportable })
+
+            for transaction in recentTransactions where transaction.category == .transfer {
+                for split in transaction.splits {
+                    guard accountNames[split.accountId] == nil else { continue }
+                    if let resolved = try? await getAccount.execute(id: split.accountId) {
+                        accountNames[split.accountId] = resolved.name
+                    }
+                }
+            }
         } catch {
             toasty.showError(error)
         }
@@ -116,6 +130,17 @@ final class AccountDetailViewModel {
     func delete(_ transaction: Transaction) async {
         do {
             try await deleteTransaction.execute(id: transaction.id)
+            await load()
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Deletes both legs of an internal transfer and reloads the data.
+    func deleteTransfer(expense: Transaction, income: Transaction) async {
+        do {
+            try await deleteTransaction.execute(id: expense.id)
+            try await deleteTransaction.execute(id: income.id)
             await load()
         } catch {
             toasty.showError(error)

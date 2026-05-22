@@ -24,11 +24,17 @@ struct TransactionListView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.transactionListViewModel.transactions) { transaction in
-                            TransactionRowView(
-                                transaction: transaction,
-                                onEdit: { editTransaction = transaction },
-                                onDelete: { Task { await coordinator.transactionListViewModel.delete(transaction) } }
+                        ForEach(coordinator.transactionListViewModel.listItems) { item in
+                            TransactionListItemView(
+                                item: item,
+                                accountNames: coordinator.transactionListViewModel.accountNames,
+                                onEdit: { editTransaction = $0 },
+                                onDelete: { transaction in
+                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                },
+                                onDeleteTransfer: { expense, income in
+                                    Task { await coordinator.transactionListViewModel.deleteTransfer(expense: expense, income: income) }
+                                }
                             )
                         }
                     }

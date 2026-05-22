@@ -18,6 +18,11 @@ final class TransactionListViewModel {
     var accountNames: [UUID: String] = [:]
     var isLoading = false
 
+    /// Transactions grouped into display items — transfer pairs are merged into a single `.transfer` item.
+    var listItems: [TransactionListItem] {
+        TransactionListItem.group(transactions)
+    }
+
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
     private let deleteTransaction: DeleteTransaction
@@ -41,12 +46,14 @@ final class TransactionListViewModel {
         self.userId = userId
     }
 
-    /// Loads all transactions for the current user.
+    /// Loads all transactions for the current user and resolves account names for all splits.
     func load() async {
         isLoading = true
-
         do {
             transactions = try await getTransactions.execute(for: userId)
+            for transaction in transactions {
+                await loadAccountNames(for: transaction)
+            }
         } catch {
             toasty.showError(error)
         }
@@ -58,6 +65,17 @@ final class TransactionListViewModel {
         do {
             try await deleteTransaction.execute(id: transaction.id)
             transactions.removeAll { $0.id == transaction.id }
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Deletes both legs of a transfer and removes them from the local list.
+    func deleteTransfer(expense: Transaction, income: Transaction) async {
+        do {
+            try await deleteTransaction.execute(id: expense.id)
+            try await deleteTransaction.execute(id: income.id)
+            transactions.removeAll { $0.id == expense.id || $0.id == income.id }
         } catch {
             toasty.showError(error)
         }

@@ -75,6 +75,7 @@ extension DIContainer {
             toasty: toasty,
             getTransactions: getTransactions,
             getAccountBalance: getAccountBalance,
+            getAccount: getAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
             deleteTransaction: deleteTransaction,

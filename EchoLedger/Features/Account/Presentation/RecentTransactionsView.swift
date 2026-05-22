@@ -11,16 +11,20 @@ import SwiftUI
 struct RecentTransactionsView: View {
 
     let transactionsList: [Transaction]
+    let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
+    let onDeleteTransfer: (Transaction, Transaction) -> Void
 
     var body: some View {
         Section("Dernières transactions") {
-            ForEach(transactionsList) { transaction in
-                TransactionRowView(
-                    transaction: transaction,
-                    onEdit: { onEdit(transaction) },
-                    onDelete: { onDelete(transaction) }
+            ForEach(TransactionListItem.group(transactionsList)) { item in
+                TransactionListItemView(
+                    item: item,
+                    accountNames: accountNames,
+                    onEdit: onEdit,
+                    onDelete: onDelete,
+                    onDeleteTransfer: onDeleteTransfer
                 )
             }
         }
@@ -28,12 +32,15 @@ struct RecentTransactionsView: View {
 }
 
 #Preview {
+    let accountNames: [UUID: String] = PreviewData.accounts.reduce(into: [:]) { $0[$1.id] = $1.name }
     NavigationStack {
         List {
             RecentTransactionsView(
                 transactionsList: PreviewData.transactions,
+                accountNames: accountNames,
                 onEdit: { _ in },
-                onDelete: { _ in }
+                onDelete: { _ in },
+                onDeleteTransfer: { _, _ in }
             )
         }
     }

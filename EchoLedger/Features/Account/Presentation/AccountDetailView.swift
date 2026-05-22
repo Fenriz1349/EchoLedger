@@ -82,8 +82,10 @@ struct AccountDetailView: View {
                     if !viewModel.recentTransactions.isEmpty {
                         RecentTransactionsView(
                             transactionsList: viewModel.recentTransactions,
+                            accountNames: viewModel.accountNames,
                             onEdit: { editTransaction = $0 },
-                            onDelete: { transaction in Task { await viewModel.delete(transaction) } }
+                            onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                            onDeleteTransfer: { expense, income in Task { await viewModel.deleteTransfer(expense: expense, income: income) } }
                         )
                     }
                 }
