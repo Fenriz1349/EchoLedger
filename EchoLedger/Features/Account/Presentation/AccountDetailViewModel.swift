@@ -17,7 +17,8 @@ final class AccountDetailViewModel {
     // MARK: State
 
     var balance: Double = 0
-    var recentTransactions: [Transaction] = []
+    var recentItems: [TransactionListItem] = []
+    var accountNames: [UUID: String] = [:]
     var expenseChartData: [(category: TransactionCategory, total: Double)] = []
     var incomeChartData: [(category: TransactionCategory, total: Double)] = []
     var isLoading = false
@@ -33,9 +34,11 @@ final class AccountDetailViewModel {
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
     private let getAccountBalance: GetAccountBalance
+    private let getAccount: GetAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
     private let deleteTransaction: DeleteTransaction
+    private let deleteTransferUseCase: DeleteTransfer
     private let userId: UUID
 
     // MARK: Init
@@ -45,27 +48,33 @@ final class AccountDetailViewModel {
     ///   - toasty: Toaster to display messages to the user.
     ///   - getTransactions: UseCase for fetching all user transactions.
     ///   - getAccountBalance: UseCase for computing the account balance.
+    ///   - getAccount: UseCase for resolving account names (used for transfer rows).
     ///   - archiveAccount: UseCase for archiving the account.
     ///   - unarchiveAccount: UseCase for restoring the account.
     ///   - deleteTransaction: UseCase for deleting a transaction.
+    ///   - deleteTransfer: UseCase for deleting both legs of a transfer.
     ///   - userId: The identifier of the current user.
     init(
         account: Account,
         toasty: ToastyManager,
         getTransactions: GetTransactions,
         getAccountBalance: GetAccountBalance,
+        getAccount: GetAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
         deleteTransaction: DeleteTransaction,
+        deleteTransfer: DeleteTransfer,
         userId: UUID
     ) {
         self.account = account
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.getAccountBalance = getAccountBalance
+        self.getAccount = getAccount
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
         self.deleteTransaction = deleteTransaction
+        self.deleteTransferUseCase = deleteTransfer
         self.userId = userId
     }
 
@@ -86,9 +95,34 @@ final class AccountDetailViewModel {
                 .filter { $0.splits.contains { $0.accountId == account.id } }
                 .sorted { $0.date > $1.date }
 
-            recentTransactions = Array(accountTransactions.prefix(5))
-            expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense })
-            incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense })
+            expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense && $0.category.isReportable })
+            incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense && $0.category.isReportable })
+
+            // Group all transactions so transfer pairs are merged before filtering by account.
+            // Filtering account-only transactions before grouping would break pairing.
+            recentItems = TransactionListItem.group(allTransactions)
+                .filter { item in
+                    switch item {
+                    case .single(let t):
+                        return t.splits.contains { $0.accountId == account.id }
+                    case .transfer(let transfer):
+                        return transfer.source.splits.contains { $0.accountId == account.id }
+                            || transfer.destination.splits.contains { $0.accountId == account.id }
+                    }
+                }
+                .prefix(10)
+                .map { $0 }
+
+            for item in recentItems {
+                if case .transfer(let transfer) = item {
+                    for split in (transfer.source.splits + transfer.destination.splits) {
+                        guard accountNames[split.accountId] == nil else { continue }
+                        if let resolved = try? await getAccount.execute(id: split.accountId) {
+                            accountNames[split.accountId] = resolved.name
+                        }
+                    }
+                }
+            }
         } catch {
             toasty.showError(error)
         }
@@ -116,6 +150,16 @@ final class AccountDetailViewModel {
     func delete(_ transaction: Transaction) async {
         do {
             try await deleteTransaction.execute(id: transaction.id)
+            await load()
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Deletes both legs of an internal transfer and reloads the data.
+    func deleteTransfer(_ transfer: Transfer) async {
+        do {
+            try await deleteTransferUseCase.execute(transfer)
             await load()
         } catch {
             toasty.showError(error)

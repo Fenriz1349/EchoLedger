@@ -53,6 +53,18 @@
 		681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */; };
 		681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */; };
 		681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */; };
+		6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
+		6824DC9D2FC036E0007375C0 /* TransferFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */; };
+		6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */; };
+		6824DCA22FC03704007375C0 /* TransferFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA12FC03704007375C0 /* TransferFormView.swift */; };
+		6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA32FC03E05007375C0 /* TransactionListItemView.swift */; };
+		6824DCA62FC03E25007375C0 /* TransferRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA52FC03E25007375C0 /* TransferRowView.swift */; };
+		6824DCA82FC04023007375C0 /* TransactionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA72FC04023007375C0 /* TransactionListItem.swift */; };
+		6824DCAA2FC04952007375C0 /* DeleteTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA92FC04952007375C0 /* DeleteTransfer.swift */; };
+		6824DCAC2FC0495C007375C0 /* UpdateTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAB2FC0495C007375C0 /* UpdateTransfer.swift */; };
+		6824DCAE2FC049D0007375C0 /* TransferDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAD2FC049D0007375C0 /* TransferDetailViewModel.swift */; };
+		6824DCB02FC049D9007375C0 /* TransferDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAF2FC049D9007375C0 /* TransferDetailView.swift */; };
+		6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB12FC04F81007375C0 /* Transfer.swift */; };
 		682C6C4E2FBF1E3D00AE9F62 /* AccountGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C4D2FBF1E3500AE9F62 /* AccountGroupList.swift */; };
 		682C6C512FBF301F00AE9F62 /* ExpensePieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C502FBF301F00AE9F62 /* ExpensePieChartView.swift */; };
 		682C6C532FBF302900AE9F62 /* IncomePieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */; };
@@ -237,6 +249,18 @@
 		681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionTests.swift; sourceTree = "<group>"; };
 		681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsTests.swift; sourceTree = "<group>"; };
 		681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransactionTests.swift; sourceTree = "<group>"; };
+		6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccounts.swift; sourceTree = "<group>"; };
+		6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormInput.swift; sourceTree = "<group>"; };
+		6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormViewModel.swift; sourceTree = "<group>"; };
+		6824DCA12FC03704007375C0 /* TransferFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormView.swift; sourceTree = "<group>"; };
+		6824DCA32FC03E05007375C0 /* TransactionListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListItemView.swift; sourceTree = "<group>"; };
+		6824DCA52FC03E25007375C0 /* TransferRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRowView.swift; sourceTree = "<group>"; };
+		6824DCA72FC04023007375C0 /* TransactionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListItem.swift; sourceTree = "<group>"; };
+		6824DCA92FC04952007375C0 /* DeleteTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransfer.swift; sourceTree = "<group>"; };
+		6824DCAB2FC0495C007375C0 /* UpdateTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransfer.swift; sourceTree = "<group>"; };
+		6824DCAD2FC049D0007375C0 /* TransferDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferDetailViewModel.swift; sourceTree = "<group>"; };
+		6824DCAF2FC049D9007375C0 /* TransferDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferDetailView.swift; sourceTree = "<group>"; };
+		6824DCB12FC04F81007375C0 /* Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		682C6C4D2FBF1E3500AE9F62 /* AccountGroupList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountGroupList.swift; sourceTree = "<group>"; };
 		682C6C502FBF301F00AE9F62 /* ExpensePieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensePieChartView.swift; sourceTree = "<group>"; };
 		682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomePieChartView.swift; sourceTree = "<group>"; };
@@ -510,6 +534,47 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		6824DC972FC036AE007375C0 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				6824DC982FC036C5007375C0 /* Domain */,
+				6824DC9E2FC036EA007375C0 /* Presentation */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
+		6824DC982FC036C5007375C0 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				6824DCB12FC04F81007375C0 /* Transfer.swift */,
+				6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */,
+				6824DC992FC036CF007375C0 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		6824DC992FC036CF007375C0 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */,
+				6824DCAB2FC0495C007375C0 /* UpdateTransfer.swift */,
+				6824DCA92FC04952007375C0 /* DeleteTransfer.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		6824DC9E2FC036EA007375C0 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */,
+				6824DCA12FC03704007375C0 /* TransferFormView.swift */,
+				6824DCA52FC03E25007375C0 /* TransferRowView.swift */,
+				6824DCAD2FC049D0007375C0 /* TransferDetailViewModel.swift */,
+				6824DCAF2FC049D9007375C0 /* TransferDetailView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		682C6C4F2FBF301700AE9F62 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +674,8 @@
 				681B47082F7FEB60000CC7C4 /* SplitRowView.swift */,
 				683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */,
 				682C6C5C2FBF394F00AE9F62 /* TransactionRowView.swift */,
+				6824DCA72FC04023007375C0 /* TransactionListItem.swift */,
+				6824DCA32FC03E05007375C0 /* TransactionListItemView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -844,6 +911,7 @@
 				685A1E9C2F5ACF700009B885 /* Institution */,
 				685A1E902F5ACF700009B885 /* Account */,
 				685A1EA12F5ACF700009B885 /* Transaction */,
+				6824DC972FC036AE007375C0 /* Transfer */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1128,6 +1196,7 @@
 				682C6C512FBF301F00AE9F62 /* ExpensePieChartView.swift in Sources */,
 				685A1ECC2F5AD9990009B885 /* UserStoring.swift in Sources */,
 				6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */,
+				6824DCAE2FC049D0007375C0 /* TransferDetailViewModel.swift in Sources */,
 				68000F652F76886B00B30EB6 /* TransactionFormViewModel.swift in Sources */,
 				685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */,
 				6813E81D2F6D919D00344774 /* GetAccountBalance.swift in Sources */,
@@ -1145,6 +1214,7 @@
 				683133AB2F617970004AA5E4 /* GetTransactionsByDateRange.swift in Sources */,
 				680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */,
 				685A1ED02F5AD9AA0009B885 /* UserRemoteSource.swift in Sources */,
+				6824DCA82FC04023007375C0 /* TransactionListItem.swift in Sources */,
 				684497242F75699100337F74 /* DashboardView.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
@@ -1163,6 +1233,7 @@
 				685A1EA92F5ACF700009B885 /* GetAccount.swift in Sources */,
 				684497422F75848000337F74 /* AccountListViewModel.swift in Sources */,
 				6807E5752F922BFF0099DCE4 /* AuthSession.swift in Sources */,
+				6824DCAA2FC04952007375C0 /* DeleteTransfer.swift in Sources */,
 				6807E5732F922BF50099DCE4 /* AuthError.swift in Sources */,
 				6807E57C2F922C290099DCE4 /* SignOut.swift in Sources */,
 				68000F672F768FF000B30EB6 /* TransactionListViewModel.swift in Sources */,
@@ -1175,6 +1246,9 @@
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
+				6824DCB02FC049D9007375C0 /* TransferDetailView.swift in Sources */,
+				6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */,
+				6824DC9D2FC036E0007375C0 /* TransferFormInput.swift in Sources */,
 				6844973D2F7579A500337F74 /* AccountFormViewModel.swift in Sources */,
 				681B470B2F7FEDB0000CC7C4 /* AccountPickerView.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
@@ -1189,6 +1263,7 @@
 				683275F72F9B670600DA5796 /* LinkAnonymousAccount.swift in Sources */,
 				681B47072F7FA04F000CC7C4 /* Double+Extension.swift in Sources */,
 				68EF99F62FA3863400FEBC1A /* Color+Extension.swift in Sources */,
+				6824DCAC2FC0495C007375C0 /* UpdateTransfer.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
 				683276072F9BB03A00DA5796 /* UserProfileView.swift in Sources */,
 				684497142F75380900337F74 /* PreviewData.swift in Sources */,
@@ -1208,6 +1283,7 @@
 				683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,
+				6824DCA62FC03E25007375C0 /* TransferRowView.swift in Sources */,
 				682C6C4E2FBF1E3D00AE9F62 /* AccountGroupList.swift in Sources */,
 				681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */,
 				68000F6A2F76D14500B30EB6 /* DIContainer+ViewModels.swift in Sources */,
@@ -1222,9 +1298,12 @@
 				683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */,
 				683275F52F9B66F500DA5796 /* DeleteAccount.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
+				6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */,
 				68EF99E12FA335C300FEBC1A /* UserProfileFormView.swift in Sources */,
 				68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */,
 				682C6C612FBF570800AE9F62 /* AccountBalanceChartView.swift in Sources */,
+				6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */,
+				6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */,
 				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */,
 				68EF99E42FA335C300FEBC1A /* UserProfileAccountActionsView.swift in Sources */,
 				682C6C572FBF305500AE9F62 /* AccountDetailViewModel.swift in Sources */,
@@ -1236,6 +1315,7 @@
 				685A1EE82F5AE9A80009B885 /* AccountLocalSource.swift in Sources */,
 				685A1EC22F5AD95B0009B885 /* UserProviding.swift in Sources */,
 				6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */,
+				6824DCA22FC03704007375C0 /* TransferFormView.swift in Sources */,
 				683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */,
 				685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */,
 				685A1EB22F5ACF700009B885 /* ArchiveAccount.swift in Sources */,

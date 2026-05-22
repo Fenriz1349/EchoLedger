@@ -54,6 +54,18 @@ final class AppCoordinator {
         container.makeAccountFormViewModel(existing: existing)
     }
 
+    /// - Parameter transfer: The transfer to display.
+    /// - Returns: A configured TransferDetailViewModel.
+    func makeTransferDetailViewModel(transfer: Transfer) -> TransferDetailViewModel {
+        container.makeTransferDetailViewModel(transfer: transfer)
+    }
+
+    /// - Parameter existing: An optional transfer to pre-fill the form for editing.
+    /// - Returns: A configured TransferFormViewModel.
+    func makeTransferFormViewModel(existing: Transfer? = nil) -> TransferFormViewModel {
+        container.makeTransferFormViewModel(existing: existing)
+    }
+
     /// - Parameter existing: An optional transaction to pre-fill the form for editing.
     /// - Returns: A configured TransactionFormViewModel.
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {

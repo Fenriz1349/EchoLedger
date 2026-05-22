@@ -12,6 +12,7 @@ struct TransactionListView: View {
 
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
+    @State private var selectedTransfer: Transfer?
 
     var body: some View {
         NavigationStack {
@@ -24,11 +25,20 @@ struct TransactionListView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     List {
-                        ForEach(coordinator.transactionListViewModel.transactions) { transaction in
-                            TransactionRowView(
-                                transaction: transaction,
-                                onEdit: { editTransaction = transaction },
-                                onDelete: { Task { await coordinator.transactionListViewModel.delete(transaction) } }
+                        ForEach(coordinator.transactionListViewModel.listItems) { item in
+                            TransactionListItemView(
+                                item: item,
+                                accountNames: coordinator.transactionListViewModel.accountNames,
+                                onEdit: { editTransaction = $0 },
+                                onDelete: { transaction in
+                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                },
+                                onTapTransfer: { transfer in
+                                    selectedTransfer = transfer
+                                },
+                                onDeleteTransfer: { transfer in
+                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                                }
                             )
                         }
                     }
@@ -51,6 +61,14 @@ struct TransactionListView: View {
             }
             .onChange(of: editTransaction) {
                 if editTransaction == nil {
+                    Task { await coordinator.transactionListViewModel.load() }
+                }
+            }
+            .sheet(item: $selectedTransfer) { transfer in
+                TransferDetailView(transfer: transfer, coordinator: coordinator)
+            }
+            .onChange(of: selectedTransfer) {
+                if selectedTransfer == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }

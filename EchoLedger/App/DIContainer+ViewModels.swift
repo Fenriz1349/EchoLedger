@@ -75,9 +75,11 @@ extension DIContainer {
             toasty: toasty,
             getTransactions: getTransactions,
             getAccountBalance: getAccountBalance,
+            getAccount: getAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
             deleteTransaction: deleteTransaction,
+            deleteTransfer: deleteTransfer,
             userId: userId
         )
     }
@@ -92,6 +94,31 @@ extension DIContainer {
             getAccounts: getAccounts,
             getTransactions: getTransactions,
             userId: userId
+        )
+    }
+
+    // MARK: - Transfer
+
+    /// Creates a TransferDetailViewModel for a given transfer.
+    func makeTransferDetailViewModel(transfer: Transfer) -> TransferDetailViewModel {
+        TransferDetailViewModel(
+            transfer: transfer,
+            toasty: toasty,
+            deleteTransfer: deleteTransfer,
+            getAccount: getAccount
+        )
+    }
+
+    /// Creates a TransferFormViewModel. Pass an existing transfer to pre-fill the form for editing.
+    func makeTransferFormViewModel(existing: Transfer? = nil) -> TransferFormViewModel {
+        TransferFormViewModel(
+            toasty: toasty,
+            transferBetweenAccounts: transferBetweenAccounts,
+            updateTransfer: updateTransfer,
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            userId: userId,
+            existingTransfer: existing
         )
     }
 

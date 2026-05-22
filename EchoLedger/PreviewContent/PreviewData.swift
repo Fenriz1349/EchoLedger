@@ -142,10 +142,39 @@ enum PreviewData {
         ]
     )
 
+    // MARK: Transfers
+    static let transferExpense = Transaction(
+        id: UUID(uuidString: "00000000-0000-0000-0000-000000000040")!,
+        userId: user.id,
+        label: "Virement Livret A",
+        date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+        totalAmount: 300,
+        isExpense: true,
+        category: .transfer,
+        splits: [
+            TransactionSplit(accountId: accountCourant.id, amount: 300)
+        ]
+    )
+
+    static let transferIncome = Transaction(
+        id: UUID(uuidString: "00000000-0000-0000-0000-000000000041")!,
+        userId: user.id,
+        label: "Virement Livret A",
+        date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+        totalAmount: 300,
+        isExpense: false,
+        category: .transfer,
+        splits: [
+            TransactionSplit(accountId: accountLivret.id, amount: 300)
+        ]
+    )
+
     static let transactions: [Transaction] = [
         transactionSalaire,
         transactionRestaurant,
         transactionCourses,
-        transactionVirement
+        transactionVirement,
+        transferExpense,
+        transferIncome
     ]
 }

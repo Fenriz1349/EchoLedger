@@ -158,6 +158,13 @@ struct PreviewHelpers {
         )
     }
 
+    /// - Returns: A TransferFormViewModel seeded with preview institutions and accounts.
+    static var transferFormViewModel: TransferFormViewModel {
+        seedInstitutionsAndAccounts()
+        return container.makeTransferFormViewModel()
+    }
+
+
     /// - Returns: A TransactionListViewModel seeded with preview transactions.
     static func makeTransactionListViewModel() -> TransactionListViewModel {
         seedTransactions()
