@@ -34,6 +34,7 @@ final class TransactionFormViewModel {
 
     // MARK: UI State
     var availableAccounts: [Account] = []
+    var institutionNames: [UUID: String] = [:]
     var isLoading = false
     var errorMessage: String?
     var isSuccess = false
@@ -96,19 +97,25 @@ final class TransactionFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all available accounts. In create mode, initialises the first split automatically.
+    /// Loads all available accounts and resolves their institution names.
+    /// In create mode, initialises the first split automatically.
     func loadAccounts() async {
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             var result: [Account] = []
+            var resolvedInstitutionNames: [UUID: String] = [:]
             for institution in institutions {
                 let accounts = try await getAccounts.execute(
                     for: institution.id,
                     filter: existingTransaction == nil ? .active : .all
                 )
+                for account in accounts {
+                    resolvedInstitutionNames[account.id] = institution.name
+                }
                 result.append(contentsOf: accounts)
             }
             availableAccounts = result
+            institutionNames = resolvedInstitutionNames
             if existingTransaction == nil, let first = result.first {
                 addSplit(for: first)
             }

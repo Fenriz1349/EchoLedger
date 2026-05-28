@@ -43,10 +43,15 @@ struct TransactionDetailView: View {
             if !currentTransaction.splits.isEmpty {
                 Section("Répartition") {
                     ForEach(currentTransaction.splits) { split in
-                        LabeledContent(
-                            coordinator.transactionListViewModel.accountNames[split.accountId] ?? "—",
-                            value: split.amount.toEuro
-                        )
+                        Section("Répartition") {
+                            ForEach(currentTransaction.splits) { split in
+                                SplitRowView(
+                                    amount: split.amount,
+                                    accountName: coordinator.transactionListViewModel.accountNames[split.accountId],
+                                    institutionName: coordinator.transactionListViewModel.institutionNames[split.accountId]
+                                )
+                            }
+                        }
                     }
                 }
             }

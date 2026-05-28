@@ -35,6 +35,6 @@ struct AccountFormView: View {
 }
 
 #Preview {
-    AccountFormView(viewModel: PreviewHelpers.makeccountFormViewModel())
+    AccountFormView(viewModel: PreviewHelpers.makeAccountFormViewModel())
         .environment(PreviewHelpers.container)
 }

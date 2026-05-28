@@ -30,6 +30,14 @@ protocol InstitutionProviding {
     /// - Parameter institution: The institution with updated values.
     func update(_ institution: Institution) async throws
 
+    /// Archives an institution by marking it as inactive.
+    /// - Parameter id: The unique identifier of the institution to archive.
+    func archive(by id: UUID) async throws
+
+    /// Restores an archived institution to active status.
+    /// - Parameter id: The unique identifier of the institution to unarchive.
+    func unarchive(by id: UUID) async throws
+
     /// Deletes an institution and all its associated accounts.
     /// - Parameter id: The unique identifier of the institution to delete.
     func delete(by id: UUID) async throws

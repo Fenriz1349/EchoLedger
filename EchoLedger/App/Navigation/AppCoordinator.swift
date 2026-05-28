@@ -48,6 +48,17 @@ final class AppCoordinator {
         container.makeAccountDetailViewModel(account: account)
     }
 
+    /// - Parameters:
+    ///   - existing: An optional institution to pre-fill the form for editing.
+    ///   - onAdd: Callback invoked with the newly created institution in creation mode.
+    /// - Returns: A configured InstitutionFormViewModel.
+    func makeInstitutionFormViewModel(
+        existing: Institution? = nil,
+        onAdd: @escaping (Institution) -> Void = { _ in }
+    ) -> InstitutionFormViewModel {
+        container.makeInstitutionFormViewModel(existing: existing, onAdd: onAdd)
+    }
+
     /// - Parameter existing: An optional account to pre-fill the form for editing.
     /// - Returns: A configured AccountFormViewModel.
     func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {

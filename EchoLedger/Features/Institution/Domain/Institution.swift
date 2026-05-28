@@ -16,6 +16,8 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     let name: String
     let category: InstitutionCategory
     let logoURL: String?
+    /// Whether this institution has been archived by the user.
+    let isArchived: Bool
     /// Date of the last local modification. Nil for records created before sync was introduced.
     let updatedAt: Date?
 
@@ -26,6 +28,7 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
     ///   - name: Human-readable name of the institution (e.g. "Caisse d'Épargne").
     ///   - category: Category of the institution.
     ///   - logoURL: Optional URL string pointing to the institution's logo.
+    ///   - isArchived: Whether the institution is archived. Defaults to false.
     ///   - updatedAt: Last modification date. Nil for legacy records.
     init(
         id: UUID = UUID(),
@@ -33,6 +36,7 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
         name: String,
         category: InstitutionCategory,
         logoURL: String? = nil,
+        isArchived: Bool = false,
         updatedAt: Date? = nil
     ) {
         self.id = id
@@ -40,6 +44,7 @@ struct Institution: Identifiable, Equatable, Codable, Sendable, Hashable {
         self.name = name
         self.category = category
         self.logoURL = logoURL
+        self.isArchived = isArchived
         self.updatedAt = updatedAt
     }
 }

@@ -32,17 +32,19 @@ final class UpdateInstitution {
         guard trimmed.count <= 50 else {
             throw InstitutionError.nameTooLong
         }
-        let existing = try await repository.fetchAll(for: input.userId)
-        guard !existing.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }) else {
+        let allInstitutions = try await repository.fetchAll(for: input.userId)
+        guard !allInstitutions.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }) else {
             throw InstitutionError.duplicateName
         }
 
+        let current = try await repository.fetch(by: input.id)
         let updated = Institution(
             id: input.id,
             userId: input.userId,
             name: trimmed,
             category: input.category,
             logoURL: input.logoURL,
+            isArchived: current.isArchived,
             updatedAt: Date()
         )
         try await repository.update(updated)

@@ -43,6 +43,28 @@ final class InstitutionRemoteSource {
             .setData(data, merge: true)
     }
 
+    /// Archives an institution in Firestore by setting `isArchived` to true.
+    /// - Parameters:
+    ///   - id: The identifier of the institution to archive.
+    ///   - userId: The identifier of the owning user.
+    /// - Throws: A Firestore error if the write fails.
+    func archive(id: UUID, userId: UUID) async throws {
+        try await collection(for: userId)
+            .document(id.uuidString)
+            .setData(["isArchived": true, "updatedAt": Timestamp(date: Date())], merge: true)
+    }
+
+    /// Unarchives an institution in Firestore by setting `isArchived` to false.
+    /// - Parameters:
+    ///   - id: The identifier of the institution to unarchive.
+    ///   - userId: The identifier of the owning user.
+    /// - Throws: A Firestore error if the write fails.
+    func unarchive(id: UUID, userId: UUID) async throws {
+        try await collection(for: userId)
+            .document(id.uuidString)
+            .setData(["isArchived": false, "updatedAt": Timestamp(date: Date())], merge: true)
+    }
+
     /// Deletes an institution from Firestore.
     /// - Parameters:
     ///   - id: The identifier of the institution to delete.
@@ -82,7 +104,8 @@ final class InstitutionRemoteSource {
             "userId": institution.userId.uuidString,
             "name": institution.name,
             "category": institution.category.rawValue,
-            "logoURL": institution.logoURL as Any
+            "logoURL": institution.logoURL as Any,
+            "isArchived": institution.isArchived
         ]
         if let updatedAt = institution.updatedAt {
             data["updatedAt"] = Timestamp(date: updatedAt)
@@ -107,6 +130,7 @@ final class InstitutionRemoteSource {
             name: name,
             category: category,
             logoURL: data["logoURL"] as? String,
+            isArchived: data["isArchived"] as? Bool ?? false,
             updatedAt: (data["updatedAt"] as? Timestamp)?.dateValue()
         )
     }

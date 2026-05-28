@@ -16,6 +16,7 @@ final class TransactionListViewModel {
     var showAddTransaction = false
     var transactions: [Transaction] = []
     var accountNames: [UUID: String] = [:]
+    var institutionNames: [UUID: String] = [:]
     var isLoading = false
 
     // MARK: Filters
@@ -171,11 +172,16 @@ final class TransactionListViewModel {
             transactions = fetchedTransactions
 
             var accounts: [Account] = []
+            var resolvedInstitutionNames: [UUID: String] = [:]
             for institution in institutions {
                 let institutionAccounts = try await getAccounts.execute(for: institution.id, filter: .all)
+                for account in institutionAccounts {
+                    resolvedInstitutionNames[account.id] = institution.name
+                }
                 accounts.append(contentsOf: institutionAccounts)
             }
             availableAccounts = accounts.sorted { $0.name < $1.name }
+            institutionNames = resolvedInstitutionNames
 
             for transaction in transactions {
                 await loadAccountNames(for: transaction)

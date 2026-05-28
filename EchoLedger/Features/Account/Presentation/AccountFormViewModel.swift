@@ -30,9 +30,9 @@ final class AccountFormViewModel {
     private let toasty: ToastyManager
     private let addAccount: AddAccount
     private let updateAccount: UpdateAccount
-    private let addInstitution: AddInstitution
     private let getInstitutions: GetInstitutions
     private let userId: UUID
+    let addInstitutionFormViewModel: InstitutionFormViewModel
 
     // MARK: Computed
     /// Returns true if the form is ready to be submitted.
@@ -41,45 +41,38 @@ final class AccountFormViewModel {
         selectedInstitution != nil
     }
 
-    /// Returns a pre-configured AddInstitutionFormViewModel wired to this ViewModel.
-    var addInstitutionFormViewModel: AddInstitutionFormViewModel {
-        AddInstitutionFormViewModel(
-            toasty: toasty,
-            addInstitution: addInstitution,
-            getInstitutions: getInstitutions,
-            userId: userId,
-            onAdd: { [weak self] institution in
-                self?.institutions.append(institution)
-                self?.selectedInstitution = institution
-                self?.showAddInstitutionForm = false
-            }
-        )
-    }
-
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
     ///   - addAccount: UseCase for creating a new account.
-    ///   - updateAccount: UseCase for updating  an account.
-    ///   - addInstitution: UseCase for creating a new institution inline.
+    ///   - updateAccount: UseCase for updating an account.
     ///   - getInstitutions: UseCase for fetching available institutions.
+    ///   - addInstitutionFormViewModel: Pre-configured ViewModel for the inline institution creation form.
     ///   - userId: The identifier of the current user.
+    ///   - existingAccount: The account to edit. Nil for creation mode.
     init(
         toasty: ToastyManager,
         addAccount: AddAccount,
         updateAccount: UpdateAccount,
-        addInstitution: AddInstitution,
         getInstitutions: GetInstitutions,
+        addInstitutionFormViewModel: InstitutionFormViewModel,
         userId: UUID,
         existingAccount: Account? = nil
     ) {
         self.toasty = toasty
         self.addAccount = addAccount
         self.updateAccount = updateAccount
-        self.addInstitution = addInstitution
         self.getInstitutions = getInstitutions
+        self.addInstitutionFormViewModel = addInstitutionFormViewModel
         self.userId = userId
         self.existingAccount = existingAccount
+
+        addInstitutionFormViewModel.onAdd = { [weak self] institution in
+            self?.institutions.append(institution)
+            self?.selectedInstitution = institution
+            self?.showAddInstitutionForm = false
+        }
+
         if let existing = existingAccount {
             prefill(with: existing)
         }

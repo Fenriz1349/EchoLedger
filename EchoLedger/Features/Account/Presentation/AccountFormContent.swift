@@ -58,7 +58,7 @@ struct AccountFormContent: View {
                 }
 
                 if viewModel.showAddInstitutionForm {
-                    AddInstitutionFormView(viewModel: viewModel.addInstitutionFormViewModel)
+                    InstitutionFormContent(viewModel: viewModel.addInstitutionFormViewModel)
                         .listRowInsets(EdgeInsets())
                         .onChange(of: viewModel.addInstitutionFormViewModel.isSuccess) {
                             if viewModel.addInstitutionFormViewModel.isSuccess {
@@ -95,6 +95,6 @@ struct AccountFormContent: View {
 
 #Preview {
     Form {
-        AccountFormContent(viewModel: PreviewHelpers.makeccountFormViewModel())
+        AccountFormContent(viewModel: PreviewHelpers.makeAccountFormViewModel())
     }
 }

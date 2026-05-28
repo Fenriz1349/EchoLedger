@@ -14,6 +14,7 @@ struct AccountListView: View {
     let coordinator: AppCoordinator
     @State private var sheet: AccountSheet?
     @State private var showTransferForm = false
+    @State private var editInstitution: Institution?
 
     var body: some View {
         NavigationStack {
@@ -26,7 +27,8 @@ struct AccountListView: View {
                             items: coordinator.accountListViewModel.institutionsWithAccounts,
                             balances: coordinator.accountListViewModel.balances,
                             onEdit: { sheet = .edit($0) },
-                            onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } }
+                            onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
+                            onEditInstitution: { editInstitution = $0 }
                         )
 
                         Section {
@@ -61,7 +63,8 @@ struct AccountListView: View {
                                         items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
                                         balances: coordinator.accountListViewModel.balances,
                                         onEdit: { sheet = .edit($0) },
-                                        onArchive: nil
+                                        onArchive: nil,
+                                        onEditInstitution: { editInstitution = $0 }
                                     )
                                 }
                             }
@@ -97,6 +100,14 @@ struct AccountListView: View {
             }
             .onChange(of: sheet) {
                 if sheet == nil {
+                    Task { await coordinator.accountListViewModel.load() }
+                }
+            }
+            .sheet(item: $editInstitution) { institution in
+                InstitutionFormView(viewModel: coordinator.makeInstitutionFormViewModel(existing: institution))
+            }
+            .onChange(of: editInstitution) {
+                if editInstitution == nil {
                     Task { await coordinator.accountListViewModel.load() }
                 }
             }

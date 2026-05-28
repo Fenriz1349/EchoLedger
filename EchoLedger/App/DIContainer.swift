@@ -68,6 +68,8 @@ final class DIContainer {
     let getInstitutions: GetInstitutions
     let getInstitution: GetInstitution
     let updateInstitution: UpdateInstitution
+    let archiveInstitution: ArchiveInstitution
+    let unarchiveInstitution: UnarchiveInstitution
     let deleteInstitution: DeleteInstitution
 
     // MARK: Use Cases — Account
@@ -177,6 +179,10 @@ final class DIContainer {
         self.getInstitutions = GetInstitutions(repository: institutionStore)
         self.getInstitution = GetInstitution(repository: institutionStore)
         self.updateInstitution = UpdateInstitution(repository: institutionStore)
+        self.archiveInstitution = ArchiveInstitution(institutionRepository: institutionStore,
+                                                     accountRepository: accountStore)
+        self.unarchiveInstitution = UnarchiveInstitution(institutionRepository: institutionStore,
+                                                         accountRepository: accountStore)
         self.deleteInstitution = DeleteInstitution(repository: institutionStore)
 
         // MARK: Use Cases — Account
@@ -185,7 +191,8 @@ final class DIContainer {
         self.getAccount = GetAccount(repository: accountStore)
         self.updateAccount = UpdateAccount(repository: accountStore)
         self.archiveAccount = ArchiveAccount(repository: accountStore)
-        self.unarchiveAccount = UnarchiveAccount(repository: accountStore)
+        self.unarchiveAccount = UnarchiveAccount(accountRepository: accountStore,
+                                                  institutionRepository: institutionStore)
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountStore,
             transactionRepository: transactionStore

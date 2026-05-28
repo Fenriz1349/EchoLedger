@@ -58,7 +58,8 @@ final class InstitutionLocalSource {
             userId: institution.userId,
             name: institution.name,
             category: institution.category.rawValue,
-            logoURL: institution.logoURL
+            logoURL: institution.logoURL,
+            isArchived: institution.isArchived
         )
         context.insert(model)
         try context.save()
@@ -76,6 +77,36 @@ final class InstitutionLocalSource {
             throw InstitutionError.notFound
         }
         model.update(from: institution)
+        try context.save()
+    }
+
+    /// Marks an institution as archived locally.
+    /// - Parameter id: The internal UUID of the institution to archive.
+    func archive(by id: UUID) throws {
+        var descriptor = FetchDescriptor<InstitutionModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        guard let model = try context.fetch(descriptor).first else {
+            throw InstitutionError.notFound
+        }
+        model.isArchived = true
+        model.updatedAt = Date()
+        try context.save()
+    }
+
+    /// Marks an institution as active (removes archived status) locally.
+    /// - Parameter id: The internal UUID of the institution to unarchive.
+    func unarchive(by id: UUID) throws {
+        var descriptor = FetchDescriptor<InstitutionModel>(
+            predicate: #Predicate { $0.id == id }
+        )
+        descriptor.fetchLimit = 1
+        guard let model = try context.fetch(descriptor).first else {
+            throw InstitutionError.notFound
+        }
+        model.isArchived = false
+        model.updatedAt = Date()
         try context.save()
     }
 
@@ -100,7 +131,6 @@ final class InstitutionLocalSource {
 
     /// Inserts a new institution locally if it does not exist, or updates it if it does.
     /// - Parameter institution: The domain Institution to insert or update.
-    /// - Throws: A SwiftData error if the operation fails.
     func upsert(_ institution: Institution) throws {
         let id = institution.id
         var descriptor = FetchDescriptor<InstitutionModel>(
@@ -115,7 +145,8 @@ final class InstitutionLocalSource {
                 userId: institution.userId,
                 name: institution.name,
                 category: institution.category.rawValue,
-                logoURL: institution.logoURL
+                logoURL: institution.logoURL,
+                isArchived: institution.isArchived
             ))
         }
         try context.save()

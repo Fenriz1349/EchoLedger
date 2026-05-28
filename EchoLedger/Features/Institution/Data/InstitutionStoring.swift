@@ -37,24 +37,30 @@ final class InstitutionStoring: InstitutionProviding {
     }
 
     /// Persists a new institution to local storage, then attempts a remote save.
-    /// - Parameter institution: The institution to save.
-    /// - Throws: A local persistence error if the local save fails.
     func save(_ institution: Institution) async throws {
         try local.save(institution)
         try await remote.save(institution, userId: userId)
     }
 
     /// Updates an existing institution in local storage, then attempts a remote update.
-    /// - Parameter institution: The institution with updated values.
-    /// - Throws: A local persistence error if the local update fails.
     func update(_ institution: Institution) async throws {
         try local.update(institution)
         try await remote.update(institution, userId: userId)
     }
 
+    /// Archives an institution locally, then remotely.
+    func archive(by id: UUID) async throws {
+        try local.archive(by: id)
+        try await remote.archive(id: id, userId: userId)
+    }
+
+    /// Restores an archived institution to active status locally, then remotely.
+    func unarchive(by id: UUID) async throws {
+        try local.unarchive(by: id)
+        try await remote.unarchive(id: id, userId: userId)
+    }
+
     /// Deletes an institution from local storage, then attempts a remote delete.
-    /// - Parameter id: The unique identifier of the institution to delete.
-    /// - Throws: A local persistence error if the local delete fails.
     func delete(by id: UUID) async throws {
         try local.delete(by: id)
         try await remote.delete(id: id, userId: userId)

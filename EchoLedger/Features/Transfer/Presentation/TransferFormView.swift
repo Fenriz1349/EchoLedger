@@ -25,13 +25,23 @@ struct TransferFormView: View {
                             Picker("De", selection: $viewModel.sourceAccount) {
                                 Text("—").tag(Optional<Account>.none)
                                 ForEach(viewModel.availableAccounts) { account in
-                                    Text(account.name).tag(Optional(account))
+                                    if let institutionName = viewModel.institutionNames[account.id] {
+                                        (Text(account.name) + Text(" • \(institutionName)").font(.caption).foregroundStyle(.secondary))
+                                            .tag(Optional(account))
+                                    } else {
+                                        Text(account.name).tag(Optional(account))
+                                    }
                                 }
                             }
                             Picker("Vers", selection: $viewModel.destinationAccount) {
                                 Text("—").tag(Optional<Account>.none)
                                 ForEach(viewModel.availableAccounts) { account in
-                                    Text(account.name).tag(Optional(account))
+                                    if let institutionName = viewModel.institutionNames[account.id] {
+                                        (Text(account.name) + Text(" • \(institutionName)").font(.caption).foregroundStyle(.secondary))
+                                            .tag(Optional(account))
+                                    } else {
+                                        Text(account.name).tag(Optional(account))
+                                    }
                                 }
                             }
                         }

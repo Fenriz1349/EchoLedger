@@ -40,6 +40,26 @@ extension DIContainer {
         )
     }
 
+    // MARK: - Institution
+
+    /// Creates an InstitutionFormViewModel. Pass an existing institution to pre-fill for editing.
+    func makeInstitutionFormViewModel(
+        existing: Institution? = nil,
+        onAdd: @escaping (Institution) -> Void = { _ in }
+    ) -> InstitutionFormViewModel {
+        InstitutionFormViewModel(
+            toasty: toasty,
+            addInstitution: addInstitution,
+            updateInstitution: updateInstitution,
+            archiveInstitution: archiveInstitution,
+            unarchiveInstitution: unarchiveInstitution,
+            getInstitutions: getInstitutions,
+            userId: userId,
+            existingInstitution: existing,
+            onAdd: onAdd
+        )
+    }
+
     // MARK: - Account
 
     /// Creates an AccountListViewModel wired with all required use cases.
@@ -61,8 +81,8 @@ extension DIContainer {
             toasty: toasty,
             addAccount: addAccount,
             updateAccount: updateAccount,
-            addInstitution: addInstitution,
             getInstitutions: getInstitutions,
+            addInstitutionFormViewModel: makeInstitutionFormViewModel(),
             userId: userId,
             existingAccount: existing
         )
