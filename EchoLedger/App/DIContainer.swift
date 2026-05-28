@@ -95,6 +95,11 @@ final class DIContainer {
     let getTransactionsByCategory: GetTransactionsByCategory
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
+    // MARK: Use Cases — Photo
+    let uploadTransactionPhoto: UploadTransactionPhoto
+    let uploadAvatarPhoto: UploadAvatarPhoto
+    let deletePhoto: DeletePhoto
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies.
@@ -211,5 +216,19 @@ final class DIContainer {
         self.deleteTransaction = DeleteTransaction(repository: transactionStore)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
+
+        // MARK: Use Cases — Photo
+        let photoSource = PhotoRemoteSource()
+        self.uploadTransactionPhoto = UploadTransactionPhoto(
+            photoSource: photoSource,
+            transactionRepository: transactionStore,
+            userId: userId
+        )
+        self.uploadAvatarPhoto = UploadAvatarPhoto(
+            photoSource: photoSource,
+            userRepository: userStore,
+            userId: userId
+        )
+        self.deletePhoto = DeletePhoto(photoSource: photoSource)
     }
 }

@@ -21,6 +21,7 @@ final class TransactionModel {
     var note: String?
     var isExpense: Bool
     var category: String
+    var photoURL: String?
     var updatedAt: Date?
 
     @Relationship(deleteRule: .cascade)
@@ -62,6 +63,7 @@ final class TransactionModel {
             isExpense: isExpense,
             category: transactionCategory,
             splits: splits.map { $0.toDomain() },
+            photoURL: photoURL,
             updatedAt: updatedAt
         )
     }
@@ -75,6 +77,7 @@ final class TransactionModel {
         self.note = transaction.note
         self.isExpense = transaction.isExpense
         self.category = transaction.category.rawValue
+        self.photoURL = transaction.photoURL
         self.updatedAt = transaction.updatedAt
 
         splits.forEach { context.delete($0) }

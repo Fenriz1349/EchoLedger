@@ -22,6 +22,8 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
     let isExpense: Bool
     let category: TransactionCategory
     let splits: [TransactionSplit]
+    /// URL of the photo attached to this transaction (receipt, invoice, etc.). Nil if no photo.
+    let photoURL: String?
     /// Date of the last local modification. Nil for records created before sync was introduced.
     let updatedAt: Date?
 
@@ -46,6 +48,7 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
          isExpense: Bool,
          category: TransactionCategory,
          splits: [TransactionSplit],
+         photoURL: String? = nil,
          updatedAt: Date? = nil
     ) {
         self.id = id
@@ -57,6 +60,7 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
         self.isExpense = isExpense
         self.category = category
         self.splits = splits
+        self.photoURL = photoURL
         self.updatedAt = updatedAt
     }
 }

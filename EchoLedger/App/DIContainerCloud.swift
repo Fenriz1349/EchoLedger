@@ -80,6 +80,11 @@ final class DIContainer {
     let getTransactionsByCategory: GetTransactionsByCategory
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
+    // MARK: Use Cases — Photo
+    let uploadTransactionPhoto: UploadTransactionPhoto
+    let uploadAvatarPhoto: UploadAvatarPhoto
+    let deletePhoto: DeletePhoto
+
     // MARK: Init
 
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
@@ -149,5 +154,19 @@ final class DIContainer {
         self.deleteTransaction = DeleteTransaction(repository: transactionCloud)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionCloud)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionCloud)
+
+        // MARK: Use Cases — Photo
+        let photoSource = PhotoRemoteSource()
+        self.uploadTransactionPhoto = UploadTransactionPhoto(
+            photoSource: photoSource,
+            transactionRepository: transactionCloud,
+            userId: userId
+        )
+        self.uploadAvatarPhoto = UploadAvatarPhoto(
+            photoSource: photoSource,
+            userRepository: userCloud,
+            userId: userId
+        )
+        self.deletePhoto = DeletePhoto(photoSource: photoSource)
     }
 }
