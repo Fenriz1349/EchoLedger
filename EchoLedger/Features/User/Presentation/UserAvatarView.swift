@@ -20,6 +20,7 @@ struct UserAvatarView: View {
 
     @State private var showOptions = false
     @State private var showCamera = false
+    @State private var showPhotosPicker = false
     @State private var selectedPhotoItem: PhotosPickerItem?
 
     var body: some View {
@@ -33,13 +34,7 @@ struct UserAvatarView: View {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 Button("Prendre une photo") { showCamera = true }
             }
-            PhotosPicker(
-                selection: $selectedPhotoItem,
-                matching: .images,
-                photoLibrary: .shared()
-            ) {
-                Text("Choisir dans la bibliothèque")
-            }
+            Button("Choisir dans la bibliothèque") { showPhotosPicker = true }
             if onRemove != nil {
                 Button("Supprimer la photo", role: .destructive) { onRemove?() }
             }
@@ -47,6 +42,7 @@ struct UserAvatarView: View {
         .sheet(isPresented: $showCamera) {
             CameraPickerView(onImageSelected: onImageSelected)
         }
+        .photosPicker(isPresented: $showPhotosPicker, selection: $selectedPhotoItem, matching: .images)
         .onChange(of: selectedPhotoItem) { _, item in
             Task {
                 guard let rawData = try? await item?.loadTransferable(type: Data.self),
