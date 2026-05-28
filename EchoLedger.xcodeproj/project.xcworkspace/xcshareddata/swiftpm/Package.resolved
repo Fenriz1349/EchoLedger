@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Fenriz1349/CustomLabels",
       "state" : {
-        "revision" : "306be150fea73994da8ea634206119af24054ae8",
-        "version" : "1.0.0"
+        "branch" : "main",
+        "revision" : "8e54ea837792efc49abd976bd0787abd02aa024d"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Fenriz1349/Toasty",
       "state" : {
-        "revision" : "ee0ca2c71525beb9596fb7eb93619e1802840e8e",
-        "version" : "1.1.0"
+        "branch" : "main",
+        "revision" : "ee0ca2c71525beb9596fb7eb93619e1802840e8e"
       }
     }
   ],
