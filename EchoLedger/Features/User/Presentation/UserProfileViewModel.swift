@@ -37,6 +37,7 @@ final class UserProfileViewModel {
     var isLoading: Bool = false
     var isEditing: Bool = false
     var showDeleteAlert: Bool = false
+    var isUploadingAvatar: Bool = false
     private(set) var authSession: AuthSession
 
     // MARK: Computed
@@ -59,10 +60,21 @@ final class UserProfileViewModel {
     private let deleteAccountUseCase: DeleteAccount
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
+    private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
+    private let getUserPhotoUseCase: GetUserPhoto
     private let userStoring: UserProviding
     private let userId: UUID
     let onSignOut: () -> Void
     let onSessionUpdated: (AuthSession) -> Void
+
+    // MARK: Computed
+
+    var avatarDocument: DocumentResult {
+        guard let currentUser = user else {
+            return DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar)
+        }
+        return getUserPhotoUseCase.execute(user: currentUser)
+    }
 
     /// - Parameters:
     ///   - toasty: The shared toast notification manager.
@@ -86,6 +98,8 @@ final class UserProfileViewModel {
         deleteAccount: DeleteAccount,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
+        uploadAvatarPhoto: UploadAvatarPhoto,
+        getUserPhoto: GetUserPhoto,
         userStoring: UserProviding,
         authSession: AuthSession,
         userId: UUID,
@@ -100,6 +114,8 @@ final class UserProfileViewModel {
         self.deleteAccountUseCase = deleteAccount
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
+        self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
+        self.getUserPhotoUseCase = getUserPhoto
         self.userStoring = userStoring
         self.authSession = authSession
         self.userId = userId
@@ -207,6 +223,40 @@ final class UserProfileViewModel {
             user = User(id: session.userId, displayName: "\(linkFirstName)|\(linkLastName)", email: linkEmail)
             onSessionUpdated(session)
             toasty.showSuccess("Compte créé avec succès.")
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Uploads new avatar data to Firebase Storage and refreshes the user profile.
+    func uploadAvatar(data: Data) async {
+        isUploadingAvatar = true
+        defer { isUploadingAvatar = false }
+        do {
+            _ = try await uploadAvatarPhotoUseCase.execute(data: data)
+            await load()
+            toasty.showSuccess("Photo mise à jour.")
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Removes the current avatar by setting photoURL to nil.
+    func removeAvatar() async {
+        guard let currentUser = user else { return }
+        isUploadingAvatar = true
+        defer { isUploadingAvatar = false }
+        do {
+            let input = UpdateUserInput(
+                id: currentUser.id,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName,
+                email: currentUser.email,
+                photoURL: nil
+            )
+            try await updateUserUseCase.execute(input)
+            await load()
+            toasty.showSuccess("Photo supprimée.")
         } catch {
             toasty.showError(error)
         }

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+
+  <!-- Pas de background — géré par UserAvatarView en SwiftUI -->
+
+  <!--
+    BARRE CENTRALE CONTINUE — bar5
+    Relie tête et épaules (seule barre continue).
+  -->
+  <rect x="243" y="5"   width="27" height="375" rx="14" fill="#8B50CC"/>
+
+  <!--
+    SEGMENTS TÊTE
+    Barres 4&6 : y=19→185  (menton arrondi, plus longues que les joues)
+    Barres 3&7 : y=81→160  (joues)
+  -->
+  <rect x="189" y="19"  width="27" height="166" rx="14" fill="#A06AE0"/>
+  <rect x="297" y="19"  width="27" height="166" rx="14" fill="#A06AE0"/>
+  <rect x="135" y="81"  width="27" height="79"  rx="14" fill="#B880F0"/>
+  <rect x="351" y="81"  width="27" height="79"  rx="14" fill="#B880F0"/>
+
+  <!--
+    SEGMENTS ÉPAULE — 9 barres présentes, bar5 déjà dessinée
+  -->
+  <rect x="189" y="265" width="27" height="115" rx="14" fill="#A06AE0"/>
+  <rect x="297" y="265" width="27" height="115" rx="14" fill="#A06AE0"/>
+  <rect x="135" y="265" width="27" height="115" rx="14" fill="#B880F0"/>
+  <rect x="351" y="265" width="27" height="115" rx="14" fill="#B880F0"/>
+  <rect x="81"  y="280" width="27" height="100" rx="14" fill="#C898FA"/>
+  <rect x="405" y="280" width="27" height="100" rx="14" fill="#C898FA"/>
+  <rect x="27"  y="310" width="27" height="70"  rx="14" fill="#D4AAFF"/>
+  <rect x="459" y="310" width="27" height="70"  rx="14" fill="#D4AAFF"/>
+
+  <!-- Ligne de sol -->
+  <line x1="0" y1="380" x2="512" y2="380" stroke="white" stroke-width="1.5" opacity="0.2"/>
+
+  <!--
+    REFLET — segments épaule uniquement, 28% opacité
+  -->
+  <rect x="243" y="380" width="27" height="375" rx="14" fill="#8B50CC" opacity="0.28"/>
+  <rect x="189" y="380" width="27" height="115" rx="14" fill="#A06AE0" opacity="0.28"/>
+  <rect x="297" y="380" width="27" height="115" rx="14" fill="#A06AE0" opacity="0.28"/>
+  <rect x="135" y="380" width="27" height="115" rx="14" fill="#B880F0" opacity="0.28"/>
+  <rect x="351" y="380" width="27" height="115" rx="14" fill="#B880F0" opacity="0.28"/>
+  <rect x="81"  y="380" width="27" height="100" rx="14" fill="#C898FA" opacity="0.28"/>
+  <rect x="405" y="380" width="27" height="100" rx="14" fill="#C898FA" opacity="0.28"/>
+  <rect x="27"  y="380" width="27" height="70"  rx="14" fill="#D4AAFF" opacity="0.28"/>
+  <rect x="459" y="380" width="27" height="70"  rx="14" fill="#D4AAFF" opacity="0.28"/>
+
+</svg>

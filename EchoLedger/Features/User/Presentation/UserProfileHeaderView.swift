@@ -11,12 +11,18 @@ import SwiftUI
 struct UserProfileHeaderView: View {
 
     let user: User
+    let avatarDocument: DocumentResult
+    let onImageSelected: (Data) -> Void
+    let onRemoveAvatar: () -> Void
 
     var body: some View {
         VStack(spacing: 8) {
-            Image(systemName: "person.circle.fill")
-                .font(.system(size: 64))
-                .foregroundColor(.accentColor)
+            UserAvatarView(
+                document: avatarDocument,
+                size: 140,
+                onImageSelected: onImageSelected,
+                onRemove: onRemoveAvatar
+            )
 
             Text("\(user.firstName) \(user.lastName)")
                 .font(.title2.bold())
@@ -29,5 +35,10 @@ struct UserProfileHeaderView: View {
 }
 
 #Preview {
-    UserProfileHeaderView(user: PreviewData.user)
+    UserProfileHeaderView(
+        user: PreviewData.user,
+        avatarDocument: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
+        onImageSelected: { _ in },
+        onRemoveAvatar: {}
+    )
 }

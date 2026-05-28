@@ -31,6 +31,8 @@ extension DIContainer {
             deleteAccount: deleteAccount,
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
+            uploadAvatarPhoto: uploadAvatarPhoto,
+            getUserPhoto: getUserPhoto,
             userStoring: userStoring,
             authSession: session,
             userId: userId,

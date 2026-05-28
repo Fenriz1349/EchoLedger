@@ -24,7 +24,7 @@ struct SyncButton: View {
                 Task { await syncManager.sync() }
             } label: {
                 if syncManager.status == .syncing {
-                    ProgressView()
+                    EchoLedgerLoader()
                 } else {
                     Image(systemName: "arrow.clockwise")
                 }

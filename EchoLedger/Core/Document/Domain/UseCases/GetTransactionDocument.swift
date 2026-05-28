@@ -16,10 +16,11 @@ final class GetTransactionDocument {
         let attachmentType: AttachmentType? = transaction.attachmentContentType.map { mime in
             mime == "application/pdf" ? .pdf : .image
         }
+        let placeholder: DocumentPlaceholder = attachmentType == .pdf ? .document : .photo
         return DocumentResult(
             urlString: transaction.attachmentURL,
             attachmentType: attachmentType,
-            placeholder: .document
+            placeholder: placeholder
         )
     }
 }

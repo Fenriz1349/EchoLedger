@@ -11,7 +11,9 @@ import Foundation
 enum DocumentPlaceholder {
     /// Silhouette icon for user avatars.
     case avatar
-    /// Document/receipt icon for transaction attachments.
+    /// Photo icon for transaction image attachments.
+    case photo
+    /// Document/receipt icon for transaction PDF attachments.
     case document
 }
 
