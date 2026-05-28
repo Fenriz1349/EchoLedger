@@ -25,6 +25,7 @@ final class TransferFormViewModel {
     // MARK: UI State
 
     var availableAccounts: [Account] = []
+    var institutionNames: [UUID: String] = [:]
     var isLoading = false
     var isSuccess = false
 
@@ -92,16 +93,22 @@ final class TransferFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all active accounts available for transfer, pre-selecting existing accounts in edit mode.
+    /// Loads all active accounts available for transfer, resolves their institution names,
+    /// and pre-selects existing accounts in edit mode.
     func loadAccounts() async {
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             var result: [Account] = []
+            var resolvedInstitutionNames: [UUID: String] = [:]
             for institution in institutions {
                 let accounts = try await getAccounts.execute(for: institution.id, filter: .active)
+                for account in accounts {
+                    resolvedInstitutionNames[account.id] = institution.name
+                }
                 result.append(contentsOf: accounts)
             }
             availableAccounts = result
+            institutionNames = resolvedInstitutionNames
 
             if let existingTransfer {
                 sourceAccount = result.first { $0.id == existingTransfer.source.splits.first?.accountId }
@@ -113,6 +120,7 @@ final class TransferFormViewModel {
             toasty.showError(error)
         }
     }
+
 
     /// Validates and submits the transfer (create or update).
     func submit() async {

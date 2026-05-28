@@ -2,47 +2,49 @@
 //  SplitRowView.swift
 //  EchoLedger
 //
-//  Created by Julien Cotte on 03/04/2026.
+//  Created by Julien Cotte on 28/05/2026.
 //
 
 import SwiftUI
 
-/// A single editable row representing one split of a transaction across an account.
+/// Displays one split of a transaction: account name on the left (with institution in caption below),
+/// and the split amount aligned to the right.
 struct SplitRowView: View {
 
-    @Binding var split: TransactionSplit
-    let availableAccounts: [Account]
-    let onDelete: (() -> Void)?
+    let amount: Double
+    let accountName: String?
+    let institutionName: String?
 
     var body: some View {
         HStack {
-            TextField("0,00", value: $split.amount, format: .number)
-                .keyboardType(.decimalPad)
-                .frame(width: 80)
-
-            Picker("", selection: $split.accountId) {
-                ForEach(availableAccounts, id: \.id) { account in
-                    Text(account.name).tag(account.id)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(accountName ?? "—")
+                if let institutionName {
+                    Text(institutionName)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
-        }
-        .swipeActions {
-            if let onDelete {
-                Button(role: .destructive, action: onDelete) {
-                    Label("Supprimer", systemImage: "trash")
-                }
-            }
+            Spacer()
+            Text(amount.toEuro)
+                .foregroundStyle(.secondary)
         }
     }
 }
 
 #Preview {
-    let split = TransactionSplit(accountId: PreviewData.accountCourant.id, amount: 30)
-    return List {
-        SplitRowView(
-            split: .constant(split),
-            availableAccounts: PreviewData.accounts,
-            onDelete: {}
-        )
+    List {
+        Section("Répartition") {
+            SplitRowView(
+                amount: 45.00,
+                accountName: "Compte courant",
+                institutionName: "BNP Paribas"
+            )
+            SplitRowView(
+                amount: 20.00,
+                accountName: "Livret A",
+                institutionName: nil
+            )
+        }
     }
 }
