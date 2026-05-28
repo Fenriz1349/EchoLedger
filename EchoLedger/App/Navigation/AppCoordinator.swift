@@ -16,7 +16,9 @@ final class AppCoordinator {
     let transactionListViewModel: TransactionListViewModel
     let accountListViewModel: AccountListViewModel
 
+    #if !CLOUD_TARGET
     var syncManager: SyncManager { container.syncManager }
+    #endif
     var authSession: AuthSession { container.authSession }
 
     private let container: DIContainer

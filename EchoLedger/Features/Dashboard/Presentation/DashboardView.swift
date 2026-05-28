@@ -66,7 +66,17 @@ struct DashboardView: View {
             .navigationTitle("Tableau de bord")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
+                    #if CLOUD_TARGET
+                    Button {
+                        Task {
+                            await coordinator.dashboardViewModel.load()
+                        }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    #else
                     SyncButton(syncManager: coordinator.syncManager)
+                    #endif
                 }
                 if coordinator.authSession.isAnonymous {
                     ToolbarItem(placement: .topBarLeading) {

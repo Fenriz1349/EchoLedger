@@ -102,6 +102,155 @@
 		683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C72FC82F8800CA6761 /* ArchiveInstitution.swift */; };
 		683820CA2FC82FA200CA6761 /* UnarchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C92FC82FA200CA6761 /* UnarchiveInstitution.swift */; };
 		683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820CB2FC830DC00CA6761 /* InstitutionFormView.swift */; };
+		683820D82FC8432000CA6761 /* GetCurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC62F5AD97D0009B885 /* GetCurrentUser.swift */; };
+		683820D92FC8432000CA6761 /* ExpensePieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C502FBF301F00AE9F62 /* ExpensePieChartView.swift */; };
+		683820DC2FC8432000CA6761 /* TransferDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAD2FC049D0007375C0 /* TransferDetailViewModel.swift */; };
+		683820DD2FC8432000CA6761 /* TransactionFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68000F642F76886B00B30EB6 /* TransactionFormViewModel.swift */; };
+		683820DE2FC8432000CA6761 /* UpdateTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EFA2F5AEB1C0009B885 /* UpdateTransaction.swift */; };
+		683820DF2FC8432000CA6761 /* SplitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C52FC823BA00CA6761 /* SplitRowView.swift */; };
+		683820E02FC8432000CA6761 /* GetAccountBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E81C2F6D919D00344774 /* GetAccountBalance.swift */; };
+		683820E12FC8432000CA6761 /* AccountFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C909C2F892B2800CE2A6D /* AccountFormContent.swift */; };
+		683820E22FC8432000CA6761 /* AddInstitutionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497192F753DA100337F74 /* AddInstitutionInput.swift */; };
+		683820E32FC8432000CA6761 /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8182F6D568900344774 /* UserRemote.swift */; };
+		683820E42FC8432000CA6761 /* GetAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E81A2F6D913200344774 /* GetAccounts.swift */; };
+		683820E52FC8432000CA6761 /* SyncMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0A2F5AEBFC0009B885 /* SyncMetadata.swift */; };
+		683820E62FC8432000CA6761 /* TransactionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF32F5AEAF40009B885 /* TransactionError.swift */; };
+		683820E82FC8432000CA6761 /* UpdateAccountInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844971F2F753EBE00337F74 /* UpdateAccountInput.swift */; };
+		683820E92FC8432000CA6761 /* TransactionFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB52FC081F2007375C0 /* TransactionFilterBar.swift */; };
+		683820EA2FC8432000CA6761 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5E2FBF54ED00AE9F62 /* DashboardViewModel.swift */; };
+		683820EB2FC8432000CA6761 /* GetTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF82F5AEB0E0009B885 /* GetTransactions.swift */; };
+		683820EC2FC8432000CA6761 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
+		683820ED2FC8432000CA6761 /* GetTransactionsByDateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133AA2F617970004AA5E4 /* GetTransactionsByDateRange.swift */; };
+		683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F9CAB2F646F750014193B /* GetInstitution.swift */; };
+		683820EF2FC8432000CA6761 /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ECF2F5AD9AA0009B885 /* UserRemoteSource.swift */; };
+		683820F02FC8432000CA6761 /* TransactionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA72FC04023007375C0 /* TransactionListItem.swift */; };
+		683820F12FC8432000CA6761 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497232F75699100337F74 /* DashboardView.swift */; };
+		683820F22FC8432000CA6761 /* DeleteTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EFC2F5AEB240009B885 /* DeleteTransaction.swift */; };
+		683820F32FC8432000CA6761 /* UpdateInstitutionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844971B2F753DB700337F74 /* UpdateInstitutionInput.swift */; };
+		683820F42FC8432000CA6761 /* AuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5812F922C450099DCE4 /* AuthStoring.swift */; };
+		683820F52FC8432000CA6761 /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
+		683820F62FC8432000CA6761 /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683276012F9BA22200DA5796 /* ResetPassword.swift */; };
+		683820F72FC8432000CA6761 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
+		683820F82FC8432000CA6761 /* SplitFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47082F7FEB60000CC7C4 /* SplitFormView.swift */; };
+		683820FA2FC8432000CA6761 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497252F7569AA00337F74 /* TransactionListView.swift */; };
+		683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
+		683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497152F753D4F00337F74 /* AddTransactionInput.swift */; };
+		683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E892F5ACF700009B885 /* UpdateAccount.swift */; };
+		683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED82F5AE6D70009B885 /* DeleteInstitution.swift */; };
+		683821002FC8432000CA6761 /* GetAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E882F5ACF700009B885 /* GetAccount.swift */; };
+		683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497412F75848000337F74 /* AccountListViewModel.swift */; };
+		683821022FC8432000CA6761 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5742F922BFF0099DCE4 /* AuthSession.swift */; };
+		683821032FC8432000CA6761 /* DeleteTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA92FC04952007375C0 /* DeleteTransfer.swift */; };
+		683821042FC8432000CA6761 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5722F922BF50099DCE4 /* AuthError.swift */; };
+		683821052FC8432000CA6761 /* SignOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57B2F922C290099DCE4 /* SignOut.swift */; };
+		683821062FC8432000CA6761 /* TransactionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68000F662F768FF000B30EB6 /* TransactionListViewModel.swift */; };
+		683821072FC8432000CA6761 /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
+		683821082FC8432000CA6761 /* ExpireAnonymousSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */; };
+		683821092FC8432000CA6761 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5C2FBF394F00AE9F62 /* TransactionRowView.swift */; };
+		6838210A2FC8432000CA6761 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */; };
+		6838210B2FC8432000CA6761 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FD2F9B7A2D00DA5796 /* AuthView.swift */; };
+		6838210C2FC8432000CA6761 /* InstitutionFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497362F75743F00337F74 /* InstitutionFormContent.swift */; };
+		6838210D2FC8432000CA6761 /* InstitutionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820CB2FC830DC00CA6761 /* InstitutionFormView.swift */; };
+		6838210E2FC8432000CA6761 /* UpdateUserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844971D2F753DD600337F74 /* UpdateUserInput.swift */; };
+		6838210F2FC8432000CA6761 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC32F5AD9640009B885 /* UserError.swift */; };
+		683821102FC8432000CA6761 /* FilterPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB72FC083E6007375C0 /* FilterPill.swift */; };
+		683821122FC8432000CA6761 /* TransferDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAF2FC049D9007375C0 /* TransferDetailView.swift */; };
+		683821132FC8432000CA6761 /* TransferFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */; };
+		683821142FC8432000CA6761 /* TransferFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */; };
+		683821152FC8432000CA6761 /* AccountFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973C2F7579A500337F74 /* AccountFormViewModel.swift */; };
+		683821162FC8432000CA6761 /* AccountPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B470A2F7FEDB0000CC7C4 /* AccountPickerView.swift */; };
+		683821172FC8432000CA6761 /* SyncManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */; };
+		683821192FC8432000CA6761 /* InstitutionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E9A2F5ACF700009B885 /* InstitutionCategory.swift */; };
+		6838211A2FC8432000CA6761 /* EchoLedgerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */; };
+		6838211B2FC8432000CA6761 /* PreviewAuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */; };
+		6838211C2FC8432000CA6761 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EBB2F5AD8B10009B885 /* AppCoordinator.swift */; };
+		6838211D2FC8432000CA6761 /* AccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497272F7569C600337F74 /* AccountListView.swift */; };
+		6838211E2FC8432000CA6761 /* SyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0C2F5AEC050009B885 /* SyncStatus.swift */; };
+		6838211F2FC8432000CA6761 /* AccountProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E842F5ACF700009B885 /* AccountProviding.swift */; };
+		683821202FC8432000CA6761 /* LinkAnonymousAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */; };
+		683821212FC8432000CA6761 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47062F7FA04F000CC7C4 /* Double+Extension.swift */; };
+		683821222FC8432000CA6761 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F52FA3863400FEBC1A /* Color+Extension.swift */; };
+		683821232FC8432000CA6761 /* UpdateTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCAB2FC0495C007375C0 /* UpdateTransfer.swift */; };
+		683821242FC8432000CA6761 /* InstitutionRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EDE2F5AE6F90009B885 /* InstitutionRemoteSource.swift */; };
+		683821252FC8432000CA6761 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683276062F9BB03A00DA5796 /* UserProfileView.swift */; };
+		683821262FC8432000CA6761 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497132F75380900337F74 /* PreviewData.swift */; };
+		683821272FC8432000CA6761 /* TransactionRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F022F5AEB700009B885 /* TransactionRemoteSource.swift */; };
+		683821282FC8432000CA6761 /* ResolveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5792F922C210099DCE4 /* ResolveSession.swift */; };
+		683821292FC8432000CA6761 /* UpdateInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1ED62F5AE6CF0009B885 /* UpdateInstitution.swift */; };
+		6838212A2FC8432000CA6761 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EBF2F5AD9510009B885 /* User.swift */; };
+		6838212B2FC8432000CA6761 /* SignInWithEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */; };
+		6838212D2FC8432000CA6761 /* AccountError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E822F5ACF700009B885 /* AccountError.swift */; };
+		6838212E2FC8432000CA6761 /* TransactionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497292F7569D800337F74 /* TransactionFormView.swift */; };
+		6838212F2FC8432000CA6761 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E9E2F5ACF700009B885 /* Transaction.swift */; };
+		683821302FC8432000CA6761 /* AddAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E862F5ACF700009B885 /* AddAccount.swift */; };
+		683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
+		683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF12F5AEAEC0009B885 /* TransactionProviding.swift */; };
+		683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5A2FBF367100AE9F62 /* RecentTransactionsView.swift */; };
+		683821342FC8432000CA6761 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateAccount.swift */; };
+		683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C72FC82F8800CA6761 /* ArchiveInstitution.swift */; };
+		683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497172F753D8100337F74 /* UpdateTransactionInput.swift */; };
+		683821382FC8432000CA6761 /* TransferRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA52FC03E25007375C0 /* TransferRowView.swift */; };
+		683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C4D2FBF1E3500AE9F62 /* AccountGroupList.swift */; };
+		6838213A2FC8432000CA6761 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47042F7F9F27000CC7C4 /* String+Extension.swift */; };
+		6838213B2FC8432000CA6761 /* DIContainer+ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68000F692F76D14500B30EB6 /* DIContainer+ViewModels.swift */; };
+		6838213C2FC8432000CA6761 /* SyncError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5852F926C0D0099DCE4 /* SyncError.swift */; };
+		6838213D2FC8432000CA6761 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F72FA3968500FEBC1A /* AppEntryView.swift */; };
+		6838213E2FC8432000CA6761 /* AuthProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5762F922C090099DCE4 /* AuthProviding.swift */; };
+		683821412FC8432000CA6761 /* AuthFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FF2F9BA04400DA5796 /* AuthFormContent.swift */; };
+		683821422FC8432000CA6761 /* AuthRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57F2F922C3D0099DCE4 /* AuthRemoteSource.swift */; };
+		683821432FC8432000CA6761 /* AccountCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E8D2F5ACF700009B885 /* AccountCategory.swift */; };
+		683821442FC8432000CA6761 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
+		683821452FC8432000CA6761 /* DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteAccount.swift */; };
+		683821462FC8432000CA6761 /* AddInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E952F5ACF700009B885 /* AddInstitution.swift */; };
+		683821472FC8432000CA6761 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA32FC03E05007375C0 /* TransactionListItemView.swift */; };
+		683821482FC8432000CA6761 /* UserProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */; };
+		683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
+		6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */; };
+		6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
+		6838214C2FC8432000CA6761 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB12FC04F81007375C0 /* Transfer.swift */; };
+		6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
+		6838214E2FC8432000CA6761 /* UserProfileAccountActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileAccountActionsView.swift */; };
+		6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C562FBF305500AE9F62 /* AccountDetailViewModel.swift */; };
+		683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C542FBF304300AE9F62 /* UnarchiveAccount.swift */; };
+		683821512FC8432000CA6761 /* AccountFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFBF2F87833F0019F634 /* AccountFilter.swift */; };
+		683821522FC8432000CA6761 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683276042F9BB02800DA5796 /* UserProfileViewModel.swift */; };
+		683821532FC8432000CA6761 /* AddTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF62F5AEB070009B885 /* AddTransaction.swift */; };
+		683821562FC8432000CA6761 /* UserProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC12F5AD95B0009B885 /* UserProviding.swift */; };
+		683821572FC8432000CA6761 /* AccountRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFC12F878BF50019F634 /* AccountRowView.swift */; };
+		683821582FC8432000CA6761 /* TransferFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA12FC03704007375C0 /* TransferFormView.swift */; };
+		683821592FC8432000CA6761 /* GetTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A62F617913004AA5E4 /* GetTransaction.swift */; };
+		6838215A2FC8432000CA6761 /* GetInstitutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E962F5ACF700009B885 /* GetInstitutions.swift */; };
+		6838215B2FC8432000CA6761 /* ArchiveAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E872F5ACF700009B885 /* ArchiveAccount.swift */; };
+		6838215D2FC8432000CA6761 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E7E2F5ACF700009B885 /* ContentView.swift */; };
+		6838215E2FC8432000CA6761 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E8C2F5ACF700009B885 /* Account.swift */; };
+		6838215F2FC8432000CA6761 /* AccountFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973E2F757AC400337F74 /* AccountFormView.swift */; };
+		683821602FC8432000CA6761 /* UpdateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EC82F5AD9860009B885 /* UpdateUser.swift */; };
+		683821612FC8432000CA6761 /* TransactionSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EEF2F5AEA9F0009B885 /* TransactionSplit.swift */; };
+		683821622FC8432000CA6761 /* UnarchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C92FC82FA200CA6761 /* UnarchiveInstitution.swift */; };
+		683821632FC8432000CA6761 /* TransactionNatureFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB32FC081DB007375C0 /* TransactionNatureFilter.swift */; };
+		683821642FC8432000CA6761 /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A42F61736A004AA5E4 /* TransactionCategory.swift */; };
+		683821652FC8432000CA6761 /* IncomePieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */; };
+		683821672FC8432000CA6761 /* GetTransactionsByCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A82F617951004AA5E4 /* GetTransactionsByCategory.swift */; };
+		683821682FC8432000CA6761 /* AuthLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57D2F922C340099DCE4 /* AuthLocalSource.swift */; };
+		683821692FC8432000CA6761 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99F22FA383EB00FEBC1A /* LoadingView.swift */; };
+		6838216B2FC8432000CA6761 /* Institution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E992F5ACF700009B885 /* Institution.swift */; };
+		6838216D2FC8432000CA6761 /* InstitutionFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497382F75760600337F74 /* InstitutionFormViewModel.swift */; };
+		6838216E2FC8432000CA6761 /* TransactionFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C909A2F892A3200CE2A6D /* TransactionFormContent.swift */; };
+		6838216F2FC8432000CA6761 /* AccountRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EE92F5AEA1D0009B885 /* AccountRemoteSource.swift */; };
+		683821712FC8432000CA6761 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D52FC8432000CA6761 /* Toasty */; };
+		683821722FC8432000CA6761 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 683820CE2FC8432000CA6761 /* CustomTextFields */; };
+		683821732FC8432000CA6761 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D02FC8432000CA6761 /* FirebaseAuth */; };
+		683821742FC8432000CA6761 /* CustomLabels in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D32FC8432000CA6761 /* CustomLabels */; };
+		683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D22FC8432000CA6761 /* FirebaseFirestore */; };
+		683821772FC8432000CA6761 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA32F5ACF700009B885 /* Assets.xcassets */; };
+		683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA42F5ACF700009B885 /* Localizable.xcstrings */; };
+		683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
+		683821892FC8492A00CA6761 /* DIContainerCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821882FC8492A00CA6761 /* DIContainerCloud.swift */; };
+		6838218B2FC8493F00CA6761 /* UserCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821862FC8491000CA6761 /* UserCloudStoring.swift */; };
+		6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */; };
+		6838218D2FC8495200CA6761 /* AccountCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821822FC848EC00CA6761 /* AccountCloudStoring.swift */; };
+		6838218E2FC8495B00CA6761 /* TransactionCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821842FC848FC00CA6761 /* TransactionCloudStoring.swift */; };
+		683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */; };
 		683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
 		683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
@@ -305,6 +454,14 @@
 		683820C72FC82F8800CA6761 /* ArchiveInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveInstitution.swift; sourceTree = "<group>"; };
 		683820C92FC82FA200CA6761 /* UnarchiveInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnarchiveInstitution.swift; sourceTree = "<group>"; };
 		683820CB2FC830DC00CA6761 /* InstitutionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionFormView.swift; sourceTree = "<group>"; };
+		6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedgerCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6838217E2FC8432000CA6761 /* EchoLedger copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "EchoLedger copy-Info.plist"; path = "/Users/juliencotte/Documents/DevOpenClassrooms/EchoLedger/EchoLedger copy-Info.plist"; sourceTree = "<absolute>"; };
+		683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionCloudStoring.swift; sourceTree = "<group>"; };
+		683821822FC848EC00CA6761 /* AccountCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCloudStoring.swift; sourceTree = "<group>"; };
+		683821842FC848FC00CA6761 /* TransactionCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCloudStoring.swift; sourceTree = "<group>"; };
+		683821862FC8491000CA6761 /* UserCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCloudStoring.swift; sourceTree = "<group>"; };
+		683821882FC8492A00CA6761 /* DIContainerCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainerCloud.swift; sourceTree = "<group>"; };
+		6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpersCloud.swift; sourceTree = "<group>"; };
 		683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
@@ -402,6 +559,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683821702FC8432000CA6761 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				683821712FC8432000CA6761 /* Toasty in Frameworks */,
+				683821722FC8432000CA6761 /* CustomTextFields in Frameworks */,
+				683821732FC8432000CA6761 /* FirebaseAuth in Frameworks */,
+				683821742FC8432000CA6761 /* CustomLabels in Frameworks */,
+				683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +841,7 @@
 			children = (
 				684497132F75380900337F74 /* PreviewData.swift */,
 				6844973A2F7576B500337F74 /* PreviewHelpers.swift */,
+				6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */,
 				683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */,
 			);
 			path = PreviewContent;
@@ -751,6 +921,8 @@
 				683133BA2F61A1D3004AA5E4 /* EchoLedgerTests */,
 				681B47002F7F9138000CC7C4 /* EchoLedger.app */,
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
+				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
+				6838217E2FC8432000CA6761 /* EchoLedger copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -783,6 +955,7 @@
 			children = (
 				6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */,
 				685A1EBD2F5AD9350009B885 /* DIContainer.swift */,
+				683821882FC8492A00CA6761 /* DIContainerCloud.swift */,
 				68000F692F76D14500B30EB6 /* DIContainer+ViewModels.swift */,
 				685A1E7F2F5ACF700009B885 /* Navigation */,
 			);
@@ -821,6 +994,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1EE52F5AE9A10009B885 /* AccountStoring.swift */,
+				683821822FC848EC00CA6761 /* AccountCloudStoring.swift */,
 				6868A6702F6D9D2C0038A612 /* AccountModel.swift */,
 				685A1EE72F5AE9A80009B885 /* AccountLocalSource.swift */,
 				685A1EE92F5AEA1D0009B885 /* AccountRemoteSource.swift */,
@@ -870,6 +1044,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1EDA2F5AE6E60009B885 /* InstitutionStoring.swift */,
+				683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */,
 				6868A66E2F6D9D000038A612 /* InstitutionModel.swift */,
 				685A1EDC2F5AE6ED0009B885 /* InstitutionLocalSource.swift */,
 				685A1EDE2F5AE6F90009B885 /* InstitutionRemoteSource.swift */,
@@ -905,6 +1080,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1EFE2F5AEB2F0009B885 /* TransactionStoring.swift */,
+				683821842FC848FC00CA6761 /* TransactionCloudStoring.swift */,
 				6868A6742F6D9D5A0038A612 /* TransactionModel.swift */,
 				6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */,
 				685A1F002F5AEB680009B885 /* TransactionLocalSource.swift */,
@@ -981,6 +1157,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1ECB2F5AD9990009B885 /* UserStoring.swift */,
+				683821862FC8491000CA6761 /* UserCloudStoring.swift */,
 				6868A66C2F6D9CC90038A612 /* UserModel.swift */,
 				685A1ECD2F5AD9A20009B885 /* UserLocalSource.swift */,
 				6813E8182F6D568900344774 /* UserRemote.swift */,
@@ -1084,6 +1261,30 @@
 			productReference = 681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		683820CD2FC8432000CA6761 /* EchoLedgerCloud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6838217A2FC8432000CA6761 /* Build configuration list for PBXNativeTarget "EchoLedgerCloud" */;
+			buildPhases = (
+				683820D72FC8432000CA6761 /* Sources */,
+				683821702FC8432000CA6761 /* Frameworks */,
+				683821762FC8432000CA6761 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EchoLedgerCloud;
+			packageProductDependencies = (
+				683820CE2FC8432000CA6761 /* CustomTextFields */,
+				683820D02FC8432000CA6761 /* FirebaseAuth */,
+				683820D22FC8432000CA6761 /* FirebaseFirestore */,
+				683820D32FC8432000CA6761 /* CustomLabels */,
+				683820D52FC8432000CA6761 /* Toasty */,
+			);
+			productName = EchoLedger;
+			productReference = 6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */;
+			productType = "com.apple.product-type.application";
+		};
 		6857E3C22F51AB4200913E12 /* EchoLedger */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6857E3CE2F51AB4400913E12 /* Build configuration list for PBXNativeTarget "EchoLedger" */;
@@ -1149,6 +1350,7 @@
 			targets = (
 				6857E3C22F51AB4200913E12 /* EchoLedger */,
 				683133AF2F61A1A8004AA5E4 /* EchoLedgerTests */,
+				683820CD2FC8432000CA6761 /* EchoLedgerCloud */,
 			);
 		};
 /* End PBXProject section */
@@ -1158,6 +1360,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683821762FC8432000CA6761 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
+				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
+				683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,6 +1418,154 @@
 				6813E8352F6D96E300344774 /* UpdateUserTests.swift in Sources */,
 				6813E8232F6D961300344774 /* UserDouble.swift in Sources */,
 				684497222F75410C00337F74 /* TestHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683820D72FC8432000CA6761 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				683820D82FC8432000CA6761 /* GetCurrentUser.swift in Sources */,
+				683820D92FC8432000CA6761 /* ExpensePieChartView.swift in Sources */,
+				683820DC2FC8432000CA6761 /* TransferDetailViewModel.swift in Sources */,
+				683820DD2FC8432000CA6761 /* TransactionFormViewModel.swift in Sources */,
+				683820DE2FC8432000CA6761 /* UpdateTransaction.swift in Sources */,
+				683820DF2FC8432000CA6761 /* SplitRowView.swift in Sources */,
+				683820E02FC8432000CA6761 /* GetAccountBalance.swift in Sources */,
+				683820E12FC8432000CA6761 /* AccountFormContent.swift in Sources */,
+				683820E22FC8432000CA6761 /* AddInstitutionInput.swift in Sources */,
+				683820E32FC8432000CA6761 /* UserRemote.swift in Sources */,
+				683820E42FC8432000CA6761 /* GetAccounts.swift in Sources */,
+				683820E52FC8432000CA6761 /* SyncMetadata.swift in Sources */,
+				683820E62FC8432000CA6761 /* TransactionError.swift in Sources */,
+				683820E82FC8432000CA6761 /* UpdateAccountInput.swift in Sources */,
+				683820E92FC8432000CA6761 /* TransactionFilterBar.swift in Sources */,
+				683820EA2FC8432000CA6761 /* DashboardViewModel.swift in Sources */,
+				683820EB2FC8432000CA6761 /* GetTransactions.swift in Sources */,
+				683820EC2FC8432000CA6761 /* EchoLedgerApp.swift in Sources */,
+				683820ED2FC8432000CA6761 /* GetTransactionsByDateRange.swift in Sources */,
+				683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */,
+				683820EF2FC8432000CA6761 /* UserRemoteSource.swift in Sources */,
+				683820F02FC8432000CA6761 /* TransactionListItem.swift in Sources */,
+				683820F12FC8432000CA6761 /* DashboardView.swift in Sources */,
+				683820F22FC8432000CA6761 /* DeleteTransaction.swift in Sources */,
+				683820F32FC8432000CA6761 /* UpdateInstitutionInput.swift in Sources */,
+				683820F42FC8432000CA6761 /* AuthStoring.swift in Sources */,
+				683820F52FC8432000CA6761 /* AccountSheet.swift in Sources */,
+				683820F62FC8432000CA6761 /* ResetPassword.swift in Sources */,
+				683820F72FC8432000CA6761 /* InstitutionError.swift in Sources */,
+				683820F82FC8432000CA6761 /* SplitFormView.swift in Sources */,
+				683820FA2FC8432000CA6761 /* TransactionListView.swift in Sources */,
+				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
+				683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */,
+				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
+				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
+				683821002FC8432000CA6761 /* GetAccount.swift in Sources */,
+				683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */,
+				683821022FC8432000CA6761 /* AuthSession.swift in Sources */,
+				683821032FC8432000CA6761 /* DeleteTransfer.swift in Sources */,
+				683821042FC8432000CA6761 /* AuthError.swift in Sources */,
+				683821052FC8432000CA6761 /* SignOut.swift in Sources */,
+				6838218D2FC8495200CA6761 /* AccountCloudStoring.swift in Sources */,
+				683821062FC8432000CA6761 /* TransactionListViewModel.swift in Sources */,
+				683821072FC8432000CA6761 /* AccountDetailView.swift in Sources */,
+				683821082FC8432000CA6761 /* ExpireAnonymousSession.swift in Sources */,
+				683821092FC8432000CA6761 /* TransactionRowView.swift in Sources */,
+				6838210A2FC8432000CA6761 /* AuthViewModel.swift in Sources */,
+				6838210B2FC8432000CA6761 /* AuthView.swift in Sources */,
+				6838210C2FC8432000CA6761 /* InstitutionFormContent.swift in Sources */,
+				6838210D2FC8432000CA6761 /* InstitutionFormView.swift in Sources */,
+				6838210E2FC8432000CA6761 /* UpdateUserInput.swift in Sources */,
+				6838210F2FC8432000CA6761 /* UserError.swift in Sources */,
+				683821102FC8432000CA6761 /* FilterPill.swift in Sources */,
+				683821122FC8432000CA6761 /* TransferDetailView.swift in Sources */,
+				683821132FC8432000CA6761 /* TransferFormViewModel.swift in Sources */,
+				683821142FC8432000CA6761 /* TransferFormInput.swift in Sources */,
+				683821152FC8432000CA6761 /* AccountFormViewModel.swift in Sources */,
+				683821162FC8432000CA6761 /* AccountPickerView.swift in Sources */,
+				683821172FC8432000CA6761 /* SyncManagerProtocol.swift in Sources */,
+				683821192FC8432000CA6761 /* InstitutionCategory.swift in Sources */,
+				6838211A2FC8432000CA6761 /* EchoLedgerLoader.swift in Sources */,
+				6838211B2FC8432000CA6761 /* PreviewAuthStoring.swift in Sources */,
+				6838211C2FC8432000CA6761 /* AppCoordinator.swift in Sources */,
+				6838211D2FC8432000CA6761 /* AccountListView.swift in Sources */,
+				6838211E2FC8432000CA6761 /* SyncStatus.swift in Sources */,
+				6838211F2FC8432000CA6761 /* AccountProviding.swift in Sources */,
+				683821202FC8432000CA6761 /* LinkAnonymousAccount.swift in Sources */,
+				683821212FC8432000CA6761 /* Double+Extension.swift in Sources */,
+				683821222FC8432000CA6761 /* Color+Extension.swift in Sources */,
+				683821232FC8432000CA6761 /* UpdateTransfer.swift in Sources */,
+				683821242FC8432000CA6761 /* InstitutionRemoteSource.swift in Sources */,
+				683821252FC8432000CA6761 /* UserProfileView.swift in Sources */,
+				683821262FC8432000CA6761 /* PreviewData.swift in Sources */,
+				683821892FC8492A00CA6761 /* DIContainerCloud.swift in Sources */,
+				683821272FC8432000CA6761 /* TransactionRemoteSource.swift in Sources */,
+				683821282FC8432000CA6761 /* ResolveSession.swift in Sources */,
+				683821292FC8432000CA6761 /* UpdateInstitution.swift in Sources */,
+				6838212A2FC8432000CA6761 /* User.swift in Sources */,
+				6838212B2FC8432000CA6761 /* SignInWithEmail.swift in Sources */,
+				6838212D2FC8432000CA6761 /* AccountError.swift in Sources */,
+				6838212E2FC8432000CA6761 /* TransactionFormView.swift in Sources */,
+				6838212F2FC8432000CA6761 /* Transaction.swift in Sources */,
+				683821302FC8432000CA6761 /* AddAccount.swift in Sources */,
+				683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */,
+				683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */,
+				683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */,
+				683821342FC8432000CA6761 /* CreateAccount.swift in Sources */,
+				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
+				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
+				683821382FC8432000CA6761 /* TransferRowView.swift in Sources */,
+				683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */,
+				6838213A2FC8432000CA6761 /* String+Extension.swift in Sources */,
+				6838213B2FC8432000CA6761 /* DIContainer+ViewModels.swift in Sources */,
+				6838213C2FC8432000CA6761 /* SyncError.swift in Sources */,
+				6838213D2FC8432000CA6761 /* AppEntryView.swift in Sources */,
+				6838213E2FC8432000CA6761 /* AuthProviding.swift in Sources */,
+				683821412FC8432000CA6761 /* AuthFormContent.swift in Sources */,
+				683821422FC8432000CA6761 /* AuthRemoteSource.swift in Sources */,
+				683821432FC8432000CA6761 /* AccountCategory.swift in Sources */,
+				683821442FC8432000CA6761 /* TransactionDetailView.swift in Sources */,
+				683821452FC8432000CA6761 /* DeleteAccount.swift in Sources */,
+				683821462FC8432000CA6761 /* AddInstitution.swift in Sources */,
+				683821472FC8432000CA6761 /* TransactionListItemView.swift in Sources */,
+				683821482FC8432000CA6761 /* UserProfileFormView.swift in Sources */,
+				683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */,
+				6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */,
+				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
+				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
+				6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */,
+				6838214E2FC8432000CA6761 /* UserProfileAccountActionsView.swift in Sources */,
+				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
+				683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */,
+				6838218B2FC8493F00CA6761 /* UserCloudStoring.swift in Sources */,
+				683821512FC8432000CA6761 /* AccountFilter.swift in Sources */,
+				683821522FC8432000CA6761 /* UserProfileViewModel.swift in Sources */,
+				683821532FC8432000CA6761 /* AddTransaction.swift in Sources */,
+				683821562FC8432000CA6761 /* UserProviding.swift in Sources */,
+				683821572FC8432000CA6761 /* AccountRowView.swift in Sources */,
+				683821582FC8432000CA6761 /* TransferFormView.swift in Sources */,
+				683821592FC8432000CA6761 /* GetTransaction.swift in Sources */,
+				6838215A2FC8432000CA6761 /* GetInstitutions.swift in Sources */,
+				6838215B2FC8432000CA6761 /* ArchiveAccount.swift in Sources */,
+				6838218E2FC8495B00CA6761 /* TransactionCloudStoring.swift in Sources */,
+				6838215D2FC8432000CA6761 /* ContentView.swift in Sources */,
+				6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */,
+				6838215E2FC8432000CA6761 /* Account.swift in Sources */,
+				6838215F2FC8432000CA6761 /* AccountFormView.swift in Sources */,
+				683821602FC8432000CA6761 /* UpdateUser.swift in Sources */,
+				683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */,
+				683821612FC8432000CA6761 /* TransactionSplit.swift in Sources */,
+				683821622FC8432000CA6761 /* UnarchiveInstitution.swift in Sources */,
+				683821632FC8432000CA6761 /* TransactionNatureFilter.swift in Sources */,
+				683821642FC8432000CA6761 /* TransactionCategory.swift in Sources */,
+				683821652FC8432000CA6761 /* IncomePieChartView.swift in Sources */,
+				683821672FC8432000CA6761 /* GetTransactionsByCategory.swift in Sources */,
+				683821682FC8432000CA6761 /* AuthLocalSource.swift in Sources */,
+				683821692FC8432000CA6761 /* LoadingView.swift in Sources */,
+				6838216B2FC8432000CA6761 /* Institution.swift in Sources */,
+				6838216D2FC8432000CA6761 /* InstitutionFormViewModel.swift in Sources */,
+				6838216E2FC8432000CA6761 /* TransactionFormContent.swift in Sources */,
+				6838216F2FC8432000CA6761 /* AccountRemoteSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1421,6 +1781,76 @@
 			};
 			name = Release;
 		};
+		6838217B2FC8432000CA6761 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F435NP2676;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EchoLedger copy-Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG CLOUD_TARGET";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6838217C2FC8432000CA6761 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F435NP2676;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "EchoLedger copy-Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = CLOUD_TARGET;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		6857E3CC2F51AB4400913E12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1622,6 +2052,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		6838217A2FC8432000CA6761 /* Build configuration list for PBXNativeTarget "EchoLedgerCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6838217B2FC8432000CA6761 /* Debug */,
+				6838217C2FC8432000CA6761 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6857E3BE2F51AB4200913E12 /* Build configuration list for PBXProject "EchoLedger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1649,6 +2088,38 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.11.0;
+			};
+		};
+		683820CF2FC8432000CA6761 /* XCRemoteSwiftPackageReference "CustomTextFields" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Fenriz1349/CustomTextFields";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		683820D12FC8432000CA6761 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
+		683820D42FC8432000CA6761 /* XCRemoteSwiftPackageReference "CustomLabels" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Fenriz1349/CustomLabels";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		683820D62FC8432000CA6761 /* XCRemoteSwiftPackageReference "Toasty" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Fenriz1349/Toasty";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		6844972F2F756E0B00337F74 /* XCRemoteSwiftPackageReference "CustomLabels" */ = {
@@ -1687,6 +2158,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6813E8122F6D51ED00344774 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		683820CE2FC8432000CA6761 /* CustomTextFields */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 683820CF2FC8432000CA6761 /* XCRemoteSwiftPackageReference "CustomTextFields" */;
+			productName = CustomTextFields;
+		};
+		683820D02FC8432000CA6761 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 683820D12FC8432000CA6761 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		683820D22FC8432000CA6761 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 683820D12FC8432000CA6761 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		683820D32FC8432000CA6761 /* CustomLabels */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 683820D42FC8432000CA6761 /* XCRemoteSwiftPackageReference "CustomLabels" */;
+			productName = CustomLabels;
+		};
+		683820D52FC8432000CA6761 /* Toasty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 683820D62FC8432000CA6761 /* XCRemoteSwiftPackageReference "Toasty" */;
+			productName = Toasty;
 		};
 		684497302F756E0B00337F74 /* CustomLabels */ = {
 			isa = XCSwiftPackageProductDependency;

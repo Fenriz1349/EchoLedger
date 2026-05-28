@@ -82,7 +82,9 @@ struct AppEntryView: View {
         coordinator = AppCoordinator(container: newContainer, onSignOut: resetToAuth)
         Task {
             try? await newContainer.getCurrentUser.execute()
+            #if !CLOUD_TARGET
             await newContainer.syncManager.sync()
+            #endif
         }
     }
 
