@@ -18,7 +18,7 @@ final class InstitutionModel {
     var name: String
     var category: String
     var logoURL: String?
-    var isArchived: Bool
+    var isArchived: Bool?
     var updatedAt: Date?
 
     /// Creates a new InstitutionModel from a Domain Institution entity.
@@ -28,7 +28,7 @@ final class InstitutionModel {
         name: String,
         category: String,
         logoURL: String? = nil,
-        isArchived: Bool = false,
+        isArchived: Bool? = false,
         updatedAt: Date? = nil
     ) {
         self.id = id
@@ -50,7 +50,7 @@ final class InstitutionModel {
             name: name,
             category: institutionCategory,
             logoURL: logoURL,
-            isArchived: isArchived,
+            isArchived: isArchived ?? false,
             updatedAt: updatedAt
         )
     }

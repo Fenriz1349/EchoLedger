@@ -11,12 +11,17 @@ import SwiftUI
 /// When `onArchive` is provided, the archive swipe action is shown.
 /// When `onArchive` is nil (archived accounts), only edit is available.
 /// The section header shows the institution name and the sum of its account balances.
+/// Displays accounts grouped by institution, each row wrapped in a NavigationLink.
+/// The institution name in the section header is tappable to open the edit form.
+/// When `onArchive` is provided, the archive swipe action is shown.
+/// When `onArchive` is nil (archived accounts), only edit is available.
 struct AccountGroupList: View {
 
     let items: [(institution: Institution, accounts: [Account])]
     let balances: [UUID: Double]
     let onEdit: (Account) -> Void
     let onArchive: ((Account) -> Void)?
+    let onEditInstitution: (Institution) -> Void
 
     var body: some View {
         ForEach(items, id: \.institution.id) { item in
@@ -34,7 +39,12 @@ struct AccountGroupList: View {
                 }
             } header: {
                 HStack {
-                    Text(item.institution.name)
+                    Button {
+                        onEditInstitution(item.institution)
+                    } label: {
+                        Text(item.institution.name)
+                            .foregroundStyle(.primary)
+                    }
                     if item.accounts.count > 1 {
                         Spacer()
                         Text(total.toEuro)
