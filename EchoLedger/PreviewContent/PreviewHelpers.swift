@@ -27,7 +27,8 @@ struct PreviewHelpers {
                 id: institution.id,
                 userId: institution.userId,
                 name: institution.name,
-                category: institution.category.rawValue
+                category: institution.category.rawValue,
+                isArchived: institution.isArchived
             )
             context.insert(model)
         }
@@ -105,29 +106,23 @@ struct PreviewHelpers {
     }
 
     /// - Returns: An AccountFormViewModel seeded with preview institutions and accounts.
-    static func makeccountFormViewModel() -> AccountFormViewModel {
+    static func makeAccountFormViewModel(existing: Account? = nil) -> AccountFormViewModel {
         seedInstitutionsAndAccounts()
-        return AccountFormViewModel(
-            toasty: container.toasty,
-            addAccount: container.addAccount,
-            updateAccount: container.updateAccount,
-            addInstitution: container.addInstitution,
-            getInstitutions: container.getInstitutions,
-            userId: container.userId
-        )
+        return container.makeAccountFormViewModel(existing: existing)
     }
 
     /// - Parameter onAdd: Callback invoked when an institution is created. Defaults to a no-op.
-    /// - Returns: An AddInstitutionFormViewModel wired to the preview container.
+    /// - Returns: An InstitutionFormViewModel in creation mode.
     static func makeAddInstitutionFormViewModel(onAdd: @escaping (Institution) -> Void = { _ in })
-    -> AddInstitutionFormViewModel {
-        return AddInstitutionFormViewModel(
-            toasty: container.toasty,
-            addInstitution: container.addInstitution,
-            getInstitutions: container.getInstitutions,
-            userId: container.userId,
-            onAdd: onAdd
-        )
+    -> InstitutionFormViewModel {
+        container.makeInstitutionFormViewModel(onAdd: onAdd)
+    }
+
+    /// - Parameter existing: An optional institution to pre-fill the form for editing.
+    /// - Returns: An InstitutionFormViewModel wired to the preview container.
+    static func makeInstitutionFormViewModel(existing: Institution? = nil) -> InstitutionFormViewModel {
+        seedInstitutionsAndAccounts()
+        return container.makeInstitutionFormViewModel(existing: existing)
     }
 
     /// - Returns: An AccountListViewModel seeded with preview institutions and accounts.
