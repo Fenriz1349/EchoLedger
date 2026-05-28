@@ -95,10 +95,12 @@ final class DIContainer {
     let getTransactionsByCategory: GetTransactionsByCategory
     let getTransactionsByDateRange: GetTransactionsByDateRange
 
-    // MARK: Use Cases — Photo
-    let uploadTransactionPhoto: UploadTransactionPhoto
+    // MARK: Use Cases — Document
+    let uploadTransactionDocument: UploadTransactionDocument
     let uploadAvatarPhoto: UploadAvatarPhoto
-    let deletePhoto: DeletePhoto
+    let deleteDocument: DeleteDocument
+    let getTransactionDocument: GetTransactionDocument
+    let getUserPhoto: GetUserPhoto
 
     // MARK: Init
 
@@ -217,18 +219,20 @@ final class DIContainer {
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
 
-        // MARK: Use Cases — Photo
-        let photoSource = PhotoRemoteSource()
-        self.uploadTransactionPhoto = UploadTransactionPhoto(
-            photoSource: photoSource,
+        // MARK: Use Cases — Document
+        let documentSource = DocumentRemoteSource()
+        self.uploadTransactionDocument = UploadTransactionDocument(
+            documentSource: documentSource,
             transactionRepository: transactionStore,
             userId: userId
         )
         self.uploadAvatarPhoto = UploadAvatarPhoto(
-            photoSource: photoSource,
+            documentSource: documentSource,
             userRepository: userStore,
             userId: userId
         )
-        self.deletePhoto = DeletePhoto(photoSource: photoSource)
+        self.deleteDocument = DeleteDocument(documentSource: documentSource)
+        self.getTransactionDocument = GetTransactionDocument()
+        self.getUserPhoto = GetUserPhoto()
     }
 }

@@ -22,23 +22,13 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
     let isExpense: Bool
     let category: TransactionCategory
     let splits: [TransactionSplit]
-    /// URL of the photo attached to this transaction (receipt, invoice, etc.). Nil if no photo.
-    let photoURL: String?
+    /// URL of the attachment (photo or PDF) linked to this transaction. Nil if no attachment.
+    let attachmentURL: String?
+    /// Standard MIME type of the attachment (e.g. "image/jpeg", "application/pdf"). Nil if no attachment.
+    let attachmentContentType: String?
     /// Date of the last local modification. Nil for records created before sync was introduced.
     let updatedAt: Date?
 
-    /// Creates a new Transaction.
-    /// - Parameters:
-    ///   - id: Unique identifier. Defaults to a new UUID.
-    ///   - userId: The identifier of the User this transaction belongs to.
-    ///   - label: Human-readable name for the transaction.
-    ///   - date: Date the transaction occurred.
-    ///   - totalAmount: Always positive. Use isExpense to determine direction.
-    ///   - note: Optional additional information.
-    ///   - isExpense: True if this is an expense, false if it is income.
-    ///   - category: Category of the transaction.
-    ///   - splits: Ventilation of the total amount across accounts. Must not be empty.
-    ///   - updatedAt: Last modification date. Nil for legacy records.
     init(id: UUID = UUID(),
          userId: UUID,
          label: String,
@@ -48,7 +38,8 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
          isExpense: Bool,
          category: TransactionCategory,
          splits: [TransactionSplit],
-         photoURL: String? = nil,
+         attachmentURL: String? = nil,
+         attachmentContentType: String? = nil,
          updatedAt: Date? = nil
     ) {
         self.id = id
@@ -60,7 +51,8 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
         self.isExpense = isExpense
         self.category = category
         self.splits = splits
-        self.photoURL = photoURL
+        self.attachmentURL = attachmentURL
+        self.attachmentContentType = attachmentContentType
         self.updatedAt = updatedAt
     }
 }

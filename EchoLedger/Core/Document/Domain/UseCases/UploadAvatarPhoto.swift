@@ -11,14 +11,14 @@ import Foundation
 /// and updates the user's photoURL in the repository.
 final class UploadAvatarPhoto {
 
-    private let photoSource: PhotoRemoteSource
+    private let documentSource: DocumentRemoteSource
     private let userRepository: UserProviding
     private let userId: UUID
 
-    init(photoSource: PhotoRemoteSource,
+    init(documentSource: DocumentRemoteSource,
          userRepository: UserProviding,
          userId: UUID) {
-        self.photoSource = photoSource
+        self.documentSource = documentSource
         self.userRepository = userRepository
         self.userId = userId
     }
@@ -26,7 +26,7 @@ final class UploadAvatarPhoto {
     /// - Parameter data: The image data to upload.
     /// - Returns: The download URL string of the uploaded avatar.
     func execute(data: Data) async throws -> String {
-        let url = try await photoSource.uploadAvatarPhoto(data, userId: userId)
+        let url = try await documentSource.uploadAvatarPhoto(data, userId: userId)
         let currentUser = try await userRepository.fetchCurrent()
         let updated = User(
             id: currentUser.id,
