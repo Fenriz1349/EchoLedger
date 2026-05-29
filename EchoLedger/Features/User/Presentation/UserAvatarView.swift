@@ -48,6 +48,7 @@ struct UserAvatarView: View {
                 guard let rawData = try? await item?.loadTransferable(type: Data.self),
                       let image = UIImage(data: rawData),
                       let jpegData = image.jpegData(compressionQuality: 0.8) else { return }
+                selectedPhotoItem = nil
                 onImageSelected(jpegData)
             }
         }
