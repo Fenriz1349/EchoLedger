@@ -134,6 +134,7 @@ struct PreviewHelpers {
             getAccounts: container.getAccounts,
             archiveAccount: container.archiveAccount,
             unarchiveAccount: container.unarchiveAccount,
+            deleteAccount: container.deleteAccount,
             getAccountBalance: container.getAccountBalance,
             userId: container.userId
         )

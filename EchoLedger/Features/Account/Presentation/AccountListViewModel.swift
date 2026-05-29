@@ -18,6 +18,8 @@ final class AccountListViewModel {
     var institutions: [Institution] = []
     var balances: [UUID: Double] = [:]
     var isLoading = false
+    var showDeleteAlert = false
+    var accountToDelete: Account?
 
     /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
@@ -40,6 +42,7 @@ final class AccountListViewModel {
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
+    private let deleteAccount: DeleteAccount
     private let getAccountBalance: GetAccountBalance
     private let userId: UUID
 
@@ -49,6 +52,7 @@ final class AccountListViewModel {
     ///   - getAccounts: UseCase for fetching accounts per institution.
     ///   - archiveAccount: UseCase for archiving an account.
     ///   - unarchiveAccount: UseCase for restoring an archived account.
+    ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - getAccountBalance: UseCase for computing an account balance.
     ///   - userId: The identifier of the current user.
     init(
@@ -57,6 +61,7 @@ final class AccountListViewModel {
         getAccounts: GetAccounts,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
+        deleteAccount: DeleteAccount,
         getAccountBalance: GetAccountBalance,
         userId: UUID) {
             self.toasty = toasty
@@ -64,6 +69,7 @@ final class AccountListViewModel {
             self.getAccounts = getAccounts
             self.archiveAccount = archiveAccount
             self.unarchiveAccount = unarchiveAccount
+            self.deleteAccount = deleteAccount
             self.getAccountBalance = getAccountBalance
             self.userId = userId
         }
@@ -117,6 +123,17 @@ final class AccountListViewModel {
         do {
             try await unarchiveAccount.execute(id: account.id)
             await load()
+        } catch {
+            toasty.showError(error)
+        }
+    }
+
+    /// Permanently deletes the account and all its linked transactions.
+    func delete(_ account: Account) async {
+        do {
+            try await deleteAccount.execute(id: account.id)
+            await load()
+            toasty.showSuccess("Compte supprimé.")
         } catch {
             toasty.showError(error)
         }

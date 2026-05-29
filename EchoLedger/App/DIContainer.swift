@@ -55,7 +55,7 @@ final class DIContainer {
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
-    let deleteAccount: DeleteAccount
+    let deleteUserAccount: DeleteUserAccount
     let linkAnonymousAccount: LinkAnonymousAccount
     let resetPassword: ResetPassword
 
@@ -81,6 +81,7 @@ final class DIContainer {
     let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
+    let deleteAccount: DeleteAccount
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -174,7 +175,7 @@ final class DIContainer {
 
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteAccount = DeleteAccount(repository: authStoring)
+        self.deleteUserAccount = DeleteUserAccount(repository: authStoring)
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 
@@ -191,7 +192,6 @@ final class DIContainer {
                                                      accountRepository: accountStore)
         self.unarchiveInstitution = UnarchiveInstitution(institutionRepository: institutionStore,
                                                          accountRepository: accountStore)
-        self.deleteInstitution = DeleteInstitution(repository: institutionStore)
 
         // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountStore)
@@ -208,6 +208,16 @@ final class DIContainer {
         self.getAccountsWithInstitution = GetAccountsWithInstitution(
             getInstitutions: getInstitutions,
             getAccounts: getAccounts
+        )
+        self.deleteAccount = DeleteAccount(
+            accountRepository: accountStore,
+            transactionRepository: transactionStore,
+            userId: userId
+        )
+        self.deleteInstitution = DeleteInstitution(
+            repository: institutionStore,
+            getAccounts: getAccounts,
+            deleteAccount: deleteAccount
         )
 
         // MARK: Use Cases — Transfer

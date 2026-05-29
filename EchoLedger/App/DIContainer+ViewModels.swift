@@ -28,7 +28,7 @@ extension DIContainer {
             getCurrentUser: getCurrentUser,
             updateUser: updateUser,
             signOut: signOut,
-            deleteAccount: deleteAccount,
+            deleteUserAccount: deleteUserAccount,
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             uploadAvatarPhoto: uploadAvatarPhoto,
@@ -55,6 +55,7 @@ extension DIContainer {
             updateInstitution: updateInstitution,
             archiveInstitution: archiveInstitution,
             unarchiveInstitution: unarchiveInstitution,
+            deleteInstitution: deleteInstitution,
             getInstitutions: getInstitutions,
             userId: userId,
             existingInstitution: existing,
@@ -72,6 +73,7 @@ extension DIContainer {
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
+            deleteAccount: deleteAccount,
             getAccountBalance: getAccountBalance,
             userId: userId
         )

@@ -61,4 +61,10 @@ final class AccountStoring: AccountProviding {
         try local.update(account)
         try await remote.update(account, userId: userId)
     }
+
+    /// Permanently deletes an account from local storage and Firestore.
+    func delete(by id: UUID) async throws {
+        try local.delete(by: id)
+        try await remote.delete(id: id, userId: userId)
+    }
 }

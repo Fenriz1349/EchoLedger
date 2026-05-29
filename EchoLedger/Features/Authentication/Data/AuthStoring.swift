@@ -97,7 +97,7 @@ final class AuthStoring: AuthProviding {
     }
 
     /// Deletes the Firestore user document, the Firebase Auth account, and clears the local session.
-    func deleteAccount() async throws {
+    func deleteUserAccount() async throws {
         guard let userId = local.fetchUserId() else {
             throw AuthError.noSessionFound
         }

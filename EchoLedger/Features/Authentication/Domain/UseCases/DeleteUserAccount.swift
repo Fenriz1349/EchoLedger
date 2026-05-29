@@ -1,5 +1,5 @@
 //
-//  DeleteAccount.swift
+//  DeleteUserAccount.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 24/04/2026.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Permanently deletes the current user account and all associated remote data.
-final class DeleteAccount {
+final class DeleteUserAccount {
 
     private let repository: AuthProviding
 
@@ -19,6 +19,6 @@ final class DeleteAccount {
 
     /// Executes the account deletion.
     func execute() async throws {
-        try await repository.deleteAccount()
+        try await repository.deleteUserAccount()
     }
 }
