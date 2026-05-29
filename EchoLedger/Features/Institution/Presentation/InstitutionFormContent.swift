@@ -47,28 +47,39 @@ struct InstitutionFormContent: View {
             .disabled(!viewModel.isValid || viewModel.isLoading)
 
             if viewModel.isEditing {
-                Button {
-                    if viewModel.isArchived {
-                        Task { await viewModel.unarchive() }
-                    } else {
-                        viewModel.showArchiveAlert = true
+                Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(
+                    get: { viewModel.isArchived },
+                    set: { isArchived in
+                        Task {
+                            if isArchived {
+                                await viewModel.archive()
+                            } else {
+                                await viewModel.unarchive()
+                            }
+                        }
                     }
+                ))
+                .disabled(viewModel.isLoading)
+                .padding(.horizontal, 4)
+
+                Button(role: .destructive) {
+                    viewModel.showDeleteAlert = true
                 } label: {
                     CustomButtonLabel(
-                        iconLeading: viewModel.isArchived ? "tray.and.arrow.up" : "archivebox",
-                        message: viewModel.isArchived ? "Désarchiver l'établissement" : "Archiver l'établissement",
-                        color: viewModel.isArchived ? .blue : .orange,
+                        iconLeading: "trash",
+                        message: "Supprimer l'établissement",
+                        color: .red,
                         isSelected: false
                     )
                 }
                 .disabled(viewModel.isLoading)
-                .alert("Archiver l'établissement ?", isPresented: $viewModel.showArchiveAlert) {
-                    Button("Archiver", role: .destructive) {
-                        Task { await viewModel.archive() }
+                .alert("Supprimer l'établissement ?", isPresented: $viewModel.showDeleteAlert) {
+                    Button("Supprimer", role: .destructive) {
+                        Task { await viewModel.delete() }
                     }
                     Button("Annuler", role: .cancel) {}
                 } message: {
-                    Text("Tous les comptes de cet établissement seront également archivés.")
+                    Text("L'établissement, tous ses comptes et toutes les transactions associées seront définitivement supprimés. Cette action est irréversible.")
                 }
             }
 

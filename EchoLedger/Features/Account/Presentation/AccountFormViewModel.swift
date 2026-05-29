@@ -22,14 +22,22 @@ final class AccountFormViewModel {
     var existingAccount: Account?
     var institutions: [Institution] = []
     var showAddInstitutionForm = false
+    var showDeleteAlert = false
     var errorMessage: String?
     var isLoading = false
     var isSuccess = false
+
+    // MARK: Computed
+    var isEditing: Bool { existingAccount != nil }
+    var isArchived: Bool { existingAccount?.isArchived ?? false }
 
     // MARK: Dependencies
     private let toasty: ToastyManager
     private let addAccount: AddAccount
     private let updateAccount: UpdateAccount
+    private let archiveAccount: ArchiveAccount
+    private let unarchiveAccount: UnarchiveAccount
+    private let deleteAccount: DeleteAccount
     private let getInstitutions: GetInstitutions
     private let userId: UUID
     let addInstitutionFormViewModel: InstitutionFormViewModel
@@ -46,6 +54,9 @@ final class AccountFormViewModel {
     ///   - toasty: Toaster to display message to user.
     ///   - addAccount: UseCase for creating a new account.
     ///   - updateAccount: UseCase for updating an account.
+    ///   - archiveAccount: UseCase for archiving an account.
+    ///   - unarchiveAccount: UseCase for restoring an archived account.
+    ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - getInstitutions: UseCase for fetching available institutions.
     ///   - addInstitutionFormViewModel: Pre-configured ViewModel for the inline institution creation form.
     ///   - userId: The identifier of the current user.
@@ -54,6 +65,9 @@ final class AccountFormViewModel {
         toasty: ToastyManager,
         addAccount: AddAccount,
         updateAccount: UpdateAccount,
+        archiveAccount: ArchiveAccount,
+        unarchiveAccount: UnarchiveAccount,
+        deleteAccount: DeleteAccount,
         getInstitutions: GetInstitutions,
         addInstitutionFormViewModel: InstitutionFormViewModel,
         userId: UUID,
@@ -62,6 +76,9 @@ final class AccountFormViewModel {
         self.toasty = toasty
         self.addAccount = addAccount
         self.updateAccount = updateAccount
+        self.archiveAccount = archiveAccount
+        self.unarchiveAccount = unarchiveAccount
+        self.deleteAccount = deleteAccount
         self.getInstitutions = getInstitutions
         self.addInstitutionFormViewModel = addInstitutionFormViewModel
         self.userId = userId
@@ -99,6 +116,59 @@ final class AccountFormViewModel {
         } catch {
             toasty.showError(error)
         }
+    }
+
+    /// Archives the account and shows a confirmation toast.
+    func archive() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await archiveAccount.execute(id: existing.id)
+            existingAccount = Account(
+                id: existing.id,
+                institutionId: existing.institutionId,
+                name: existing.name,
+                category: existing.category,
+                isArchived: true
+            )
+            toasty.showSuccess("Compte archivé.")
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
+    /// Restores the account and shows a confirmation toast.
+    func unarchive() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await unarchiveAccount.execute(id: existing.id)
+            existingAccount = Account(
+                id: existing.id,
+                institutionId: existing.institutionId,
+                name: existing.name,
+                category: existing.category,
+                isArchived: false
+            )
+            toasty.showSuccess("Compte désarchivé.")
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
+    /// Permanently deletes the account and all its linked transactions.
+    func delete() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await deleteAccount.execute(id: existing.id)
+            isSuccess = true
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
     }
 
     /// Validates and creates / update an account for the selected institution.

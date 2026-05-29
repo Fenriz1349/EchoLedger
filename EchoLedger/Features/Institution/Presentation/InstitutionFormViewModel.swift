@@ -134,6 +134,7 @@ final class InstitutionFormViewModel {
         isLoading = true
         do {
             try await archiveInstitution.execute(id: existing.id)
+            toasty.showSuccess("Établissement archivé.")
             isSuccess = true
         } catch {
             toasty.showError(error)
@@ -147,6 +148,7 @@ final class InstitutionFormViewModel {
         isLoading = true
         do {
             try await unarchiveInstitution.execute(id: existing.id)
+            toasty.showSuccess("Établissement désarchivé.")
             isSuccess = true
         } catch {
             toasty.showError(error)

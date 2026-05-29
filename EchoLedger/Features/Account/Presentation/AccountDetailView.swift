@@ -43,29 +43,6 @@ struct AccountDetailView: View {
                         }
                     }
 
-                    // MARK: Archive toggle
-                    HStack {
-                        Toggle("Compte \(viewModel.isArchived ?  "archivé" : "actif")", isOn: Binding<Bool>(
-                            get: { viewModel.isArchived },
-                            set: { newValue in
-                                if newValue {
-                                    viewModel.showArchiveAlert = true
-                                } else {
-                                    Task { await viewModel.unarchive() }
-                                }
-                            }
-                        ))
-                        .tint(.red)
-
-                        Button { showEditForm = true } label: {
-                            CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
-                        }
-                        .buttonStyle(.plain)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.horizontal)
-                    }
-
                     // MARK: Charts
                     if !viewModel.expenseChartData.isEmpty {
                         Section {
@@ -97,6 +74,13 @@ struct AccountDetailView: View {
         }
         .navigationTitle(viewModel.account.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showEditForm = true } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+        }
         .alert("Archiver ce compte ?", isPresented: $viewModel.showArchiveAlert) {
             Button("Archiver", role: .destructive) {
                 Task { await viewModel.archive() }
@@ -133,6 +117,7 @@ struct AccountDetailView: View {
             }
         }
         .task {
+            viewModel.onNotFound = { dismiss() }
             await viewModel.load()
         }
     }

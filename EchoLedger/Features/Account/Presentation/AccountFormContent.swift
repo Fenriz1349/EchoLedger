@@ -72,9 +72,7 @@ struct AccountFormContent: View {
                 Task { await viewModel.submit() }
             } label: {
                 CustomButtonLabel(
-                    message: viewModel.existingAccount == nil
-                    ? "Ajouter le compte"
-                    : "Modifier le compte",
+                    message: viewModel.existingAccount == nil ? "Ajouter le compte" : "Modifier le compte",
                     color: .accentColor,
                     isSelected: viewModel.isValid
                 )
@@ -86,6 +84,39 @@ struct AccountFormContent: View {
                     Text(errorMessage)
                         .foregroundStyle(.red)
                         .font(.footnote)
+                }
+            }
+
+            if viewModel.isEditing {
+                Section {
+                    Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(
+                        get: { viewModel.isArchived },
+                        set: { isArchived in
+                            Task {
+                                if isArchived {
+                                    await viewModel.archive()
+                                } else {
+                                    await viewModel.unarchive()
+                                }
+                            }
+                        }
+                    ))
+                    .disabled(viewModel.isLoading)
+
+                    Button(role: .destructive) {
+                        viewModel.showDeleteAlert = true
+                    } label: {
+                        Label("Supprimer le compte", systemImage: "trash")
+                    }
+                    .disabled(viewModel.isLoading)
+                    .alert("Supprimer le compte ?", isPresented: $viewModel.showDeleteAlert) {
+                        Button("Supprimer", role: .destructive) {
+                            Task { await viewModel.delete() }
+                        }
+                        Button("Annuler", role: .cancel) {}
+                    } message: {
+                        Text("Le compte et toutes ses transactions seront définitivement supprimés. Cette action est irréversible.")
+                    }
                 }
             }
         }
