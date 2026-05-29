@@ -88,6 +88,7 @@ extension DIContainer {
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
             deleteAccount: deleteAccount,
+            addTransaction: addTransaction,
             getInstitutions: getInstitutions,
             addInstitutionFormViewModel: makeInstitutionFormViewModel(),
             userId: userId,

@@ -34,6 +34,19 @@ struct AccountFormContent: View {
                 }
             }
 
+            if viewModel.existingAccount == nil {
+                Section("Solde initial") {
+                    HStack {
+                        Text(viewModel.isInitialBalanceExpense ? "-" : "")
+                        TextField("0,00€", text: $viewModel.initialBalanceText)
+                            .keyboardType(.decimalPad)
+                        Toggle("", isOn: $viewModel.isInitialBalanceExpense)
+                            .labelsHidden()
+                            .tint(.red)
+                    }
+                }
+            }
+
             Section("Établissement") {
                 if viewModel.institutions.isEmpty {
                     Text("Aucun établissement — créez-en un ci-dessous")

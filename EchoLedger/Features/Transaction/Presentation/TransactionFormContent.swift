@@ -14,15 +14,18 @@ struct TransactionFormContent: View {
 
     var body: some View {
         Section("Montant") {
-            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+            HStack {
+                DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
 
+                Toggle(viewModel.isExpense ? "Dépense" : "Revenue", isOn: $viewModel.isIncome)
+                    .tint(.green)
+                    .fixedSize()
+            }
             Picker("Catégorie", selection: $viewModel.category) {
-                ForEach(TransactionCategory.allCases.filter(\.isUserSelectable), id: \.self) { category in
+                ForEach(viewModel.categoryList, id: \.self) { category in
                     Label(category.name, systemImage: category.icon).tag(category)
                 }
             }
-
-            Toggle("Dépense", isOn: $viewModel.isExpense)
         }
 
         Section("Label") {

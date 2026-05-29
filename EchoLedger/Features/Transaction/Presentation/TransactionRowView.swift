@@ -32,7 +32,7 @@ struct TransactionRowView: View {
             Spacer()
 
             Text(transaction.totalAmount.toEuro)
-                .foregroundStyle(transaction.isExpense ? Color.primary : Color.green)
+                .foregroundStyle(transaction.color)
                 .fontWeight(transaction.isExpense ? .regular : .semibold)
         }
         }

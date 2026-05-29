@@ -23,12 +23,14 @@ final class AddAccount {
     ///   - institutionId: The identifier of the institution this account belongs to.
     ///   - name: Name of the account. Must be between 2 and 50 characters.
     ///   - category: Category of the account.
+    /// - Returns: The newly created account.
     /// - Throws: `AccountError` if any business rule is violated.
+    @discardableResult
     func execute(
         institutionId: UUID,
         name: String,
         category: AccountCategory
-    ) async throws {
+    ) async throws -> Account {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         guard trimmed.count >= 2 else {
             throw AccountError.nameTooShort
@@ -48,5 +50,6 @@ final class AddAccount {
             updatedAt: Date()
         )
         try await repository.save(account)
+        return account
     }
 }

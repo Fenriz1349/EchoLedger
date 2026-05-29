@@ -14,15 +14,23 @@ struct SplitFormView: View {
     let availableAccounts: [AccountDisplayItem]
     let onDelete: (() -> Void)?
 
+    @State private var amountText = ""
+
     var body: some View {
         HStack {
-            TextField("0,00", value: $split.amount, format: .number)
+            TextField("0,00€", text: $amountText)
                 .keyboardType(.decimalPad)
-                .frame(width: 80)
+                .onAppear {
+                    amountText = split.amount == 0 ? "": String(split.amount)
+                }
+                .onChange(of: amountText) { _, newValue in
+                    split.amount = newValue.toDouble
+                }
 
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts) { item in
-                    Text(item.displayLabel).tag(item.account.id)
+                    Text(item.displayLabel)
+                        .tag(item.account.id)
                 }
             }
         }

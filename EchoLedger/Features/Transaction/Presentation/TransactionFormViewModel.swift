@@ -61,6 +61,19 @@ final class TransactionFormViewModel {
         label.trimmingCharacters(in: .whitespaces).isEmpty ? category.name : label
     }
 
+    /// Returns only initialBalance for Account creation Transaction or isUserSelectable TransactionCategory
+    var categoryList: [TransactionCategory] {
+        existingTransaction?.category == .initialBalance
+        ? [.initialBalance]
+        : TransactionCategory.allCases.filter { $0.isUserSelectable }
+    }
+
+    /// Reverse isExpense for UI
+    var isIncome: Bool {
+        get { !isExpense }
+        set { isExpense = !newValue }
+    }
+
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.

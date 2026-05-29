@@ -17,6 +17,8 @@ final class AccountFormViewModel {
     var name = ""
     var category: AccountCategory = .checking
     var selectedInstitution: Institution?
+    var initialBalanceText: String = ""
+    var isInitialBalanceExpense: Bool = false
 
     // MARK: UI State
     var existingAccount: Account?
@@ -38,6 +40,7 @@ final class AccountFormViewModel {
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
     private let deleteAccount: DeleteAccount
+    private let addTransaction: AddTransaction
     private let getInstitutions: GetInstitutions
     private let userId: UUID
     let addInstitutionFormViewModel: InstitutionFormViewModel
@@ -49,6 +52,12 @@ final class AccountFormViewModel {
         selectedInstitution != nil
     }
 
+    /// Reverse isExpense for UI
+    var isIncome: Bool {
+        get { !isInitialBalanceExpense }
+        set { isInitialBalanceExpense = !newValue }
+    }
+
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
@@ -57,6 +66,7 @@ final class AccountFormViewModel {
     ///   - archiveAccount: UseCase for archiving an account.
     ///   - unarchiveAccount: UseCase for restoring an archived account.
     ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
+    ///   - addTransaction: UseCase for creating the initial balance transaction.
     ///   - getInstitutions: UseCase for fetching available institutions.
     ///   - addInstitutionFormViewModel: Pre-configured ViewModel for the inline institution creation form.
     ///   - userId: The identifier of the current user.
@@ -68,6 +78,7 @@ final class AccountFormViewModel {
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
         deleteAccount: DeleteAccount,
+        addTransaction: AddTransaction,
         getInstitutions: GetInstitutions,
         addInstitutionFormViewModel: InstitutionFormViewModel,
         userId: UUID,
@@ -79,6 +90,7 @@ final class AccountFormViewModel {
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
         self.deleteAccount = deleteAccount
+        self.addTransaction = addTransaction
         self.getInstitutions = getInstitutions
         self.addInstitutionFormViewModel = addInstitutionFormViewModel
         self.userId = userId
@@ -187,7 +199,23 @@ final class AccountFormViewModel {
                 )
                 try await updateAccount.execute(input)
             } else {
-                try await addAccount.execute(institutionId: institution.id, name: name, category: category)
+                let account = try await addAccount.execute(
+                    institutionId: institution.id,
+                    name: name,
+                    category: category
+                )
+                let amount = initialBalanceText.toDouble
+                let input = AddTransactionInput(
+                    userId: userId,
+                    label: "Solde initial",
+                    date: Date(),
+                    totalAmount: amount,
+                    note: nil,
+                    isExpense: isInitialBalanceExpense,
+                    category: .initialBalance,
+                    splits: [TransactionSplit(accountId: account.id, amount: amount)]
+                )
+                try await addTransaction.execute(input)
             }
             isSuccess = true
         } catch let error as AccountError {
