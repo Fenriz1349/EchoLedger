@@ -19,15 +19,21 @@ struct UserProfileView: View {
                     if viewModel.isAnonymous {
                         UserProfileAnonymousSectionView(viewModel: viewModel)
                     } else if let user = viewModel.user {
-                        UserProfileHeaderView(user: user)
+                        UserProfileHeaderView(
+                            user: user,
+                            avatarDocument: viewModel.avatarDocument,
+                            onImageSelected: { data in Task { await viewModel.uploadAvatar(data: data) } },
+                            onRemoveAvatar: { Task { await viewModel.removeAvatar() } }
+                        )
                         if viewModel.isEditing {
                             Divider()
                             UserProfileFormView(viewModel: viewModel)
                         }
                         Divider()
-                        UserProfileAccountActionsView(viewModel: viewModel)
+                        UserProfileActionsView(viewModel: viewModel)
                     } else {
-                        ProgressView()
+                        EchoLedgerLoader()
+                            .frame(width: 160, height: 160)
                             .padding(.top, 60)
                     }
                 }
@@ -36,10 +42,11 @@ struct UserProfileView: View {
             }
             .navigationTitle("Mon profil")
             .overlay {
-                if viewModel.isLoading {
+                if viewModel.isLoading || viewModel.isUploadingAvatar {
                     ZStack {
                         Color.black.opacity(0.4).ignoresSafeArea()
-                        ProgressView().tint(.white).scaleEffect(1.5)
+                        EchoLedgerLoader()
+                            .frame(width: 80, height: 80)
                     }
                 }
             }
@@ -57,7 +64,9 @@ struct UserProfileView: View {
 }
 
 #Preview("Logged in") {
-    UserProfileView(viewModel: PreviewHelpers.makeUserProfileViewModel())
+    let viewModel = PreviewHelpers.makeUserProfileViewModel()
+    viewModel.user = PreviewData.user
+    return UserProfileView(viewModel: viewModel)
         .environment(PreviewHelpers.container)
 }
 

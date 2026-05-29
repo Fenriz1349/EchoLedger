@@ -4,5 +4,9 @@
 <dict>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>EchoLedger utilise la caméra pour vos photos de profil et pièces jointes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>EchoLedger accède à votre bibliothèque pour vos photos de profil et pièces jointes.</string>
 </dict>
 </plist>

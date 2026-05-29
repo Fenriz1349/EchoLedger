@@ -209,7 +209,7 @@
 		6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
 		6838214C2FC8432000CA6761 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB12FC04F81007375C0 /* Transfer.swift */; };
 		6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
-		6838214E2FC8432000CA6761 /* UserProfileAccountActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileAccountActionsView.swift */; };
+		6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C562FBF305500AE9F62 /* AccountDetailViewModel.swift */; };
 		683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C542FBF304300AE9F62 /* UnarchiveAccount.swift */; };
 		683821512FC8432000CA6761 /* AccountFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFBF2F87833F0019F634 /* AccountFilter.swift */; };
@@ -251,6 +251,34 @@
 		6838218D2FC8495200CA6761 /* AccountCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821822FC848EC00CA6761 /* AccountCloudStoring.swift */; };
 		6838218E2FC8495B00CA6761 /* TransactionCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821842FC848FC00CA6761 /* TransactionCloudStoring.swift */; };
 		683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */; };
+		683821972FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */; };
+		683821982FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */; };
+		6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */; };
+		6838219B2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */; };
+		6838219D2FC8683C00CA6761 /* DeletePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeletePhoto.swift */; };
+		6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeletePhoto.swift */; };
+		683821A02FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */; };
+		683821A12FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */; };
+		683821A42FC8695000CA6761 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 683821A32FC8695000CA6761 /* FirebaseStorage */; };
+		683821A62FC8695C00CA6761 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 683821A52FC8695C00CA6761 /* FirebaseStorage */; };
+		683821A82FC86BF700CA6761 /* AttachmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821A72FC86BF700CA6761 /* AttachmentType.swift */; };
+		683821A92FC86BF700CA6761 /* AttachmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821A72FC86BF700CA6761 /* AttachmentType.swift */; };
+		683821AB2FC86C5300CA6761 /* DocumentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821AA2FC86C5300CA6761 /* DocumentResult.swift */; };
+		683821AC2FC86C5300CA6761 /* DocumentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821AA2FC86C5300CA6761 /* DocumentResult.swift */; };
+		683821AE2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821AD2FC86C6B00CA6761 /* GetUserPhoto.swift */; };
+		683821AF2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821AD2FC86C6B00CA6761 /* GetUserPhoto.swift */; };
+		683821B12FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B02FC86C8600CA6761 /* GetTransactionDocument.swift */; };
+		683821B22FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B02FC86C8600CA6761 /* GetTransactionDocument.swift */; };
+		683821B42FC8841400CA6761 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B32FC8841400CA6761 /* UserAvatarView.swift */; };
+		683821B52FC8841400CA6761 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B32FC8841400CA6761 /* UserAvatarView.swift */; };
+		683821B82FC8844400CA6761 /* CameraPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B72FC8844400CA6761 /* CameraPickerView.swift */; };
+		683821B92FC8844400CA6761 /* CameraPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821B72FC8844400CA6761 /* CameraPickerView.swift */; };
+		683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821BA2FC8874200CA6761 /* AvatarCircleView.swift */; };
+		683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821BA2FC8874200CA6761 /* AvatarCircleView.swift */; };
+		683821BE2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */; };
+		683821BF2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */; };
+		683821C12FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */; };
+		683821C22FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */; };
 		683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
 		683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
@@ -336,7 +364,7 @@
 		68EF99E12FA335C300FEBC1A /* UserProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
-		68EF99E42FA335C300FEBC1A /* UserProfileAccountActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileAccountActionsView.swift */; };
+		68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		68EF99E62FA344A100FEBC1A /* ExpireAnonymousSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */; };
 		68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */; };
 		68EF99EF2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EA2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift */; };
@@ -462,6 +490,19 @@
 		683821862FC8491000CA6761 /* UserCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCloudStoring.swift; sourceTree = "<group>"; };
 		683821882FC8492A00CA6761 /* DIContainerCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainerCloud.swift; sourceTree = "<group>"; };
 		6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpersCloud.swift; sourceTree = "<group>"; };
+		683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTransactionPhoto.swift; sourceTree = "<group>"; };
+		683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarPhoto.swift; sourceTree = "<group>"; };
+		6838219C2FC8683C00CA6761 /* DeletePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePhoto.swift; sourceTree = "<group>"; };
+		6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRemoteSource.swift; sourceTree = "<group>"; };
+		683821A72FC86BF700CA6761 /* AttachmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentType.swift; sourceTree = "<group>"; };
+		683821AA2FC86C5300CA6761 /* DocumentResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentResult.swift; sourceTree = "<group>"; };
+		683821AD2FC86C6B00CA6761 /* GetUserPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPhoto.swift; sourceTree = "<group>"; };
+		683821B02FC86C8600CA6761 /* GetTransactionDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionDocument.swift; sourceTree = "<group>"; };
+		683821B32FC8841400CA6761 /* UserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
+		683821B72FC8844400CA6761 /* CameraPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPickerView.swift; sourceTree = "<group>"; };
+		683821BA2FC8874200CA6761 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
+		683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditButtonView.swift; sourceTree = "<group>"; };
+		683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentPlaceholder+View.swift"; sourceTree = "<group>"; };
 		683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
@@ -541,7 +582,7 @@
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
-		68EF99DD2FA335C300FEBC1A /* UserProfileAccountActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAccountActionsView.swift; sourceTree = "<group>"; };
+		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousSectionView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFormView.swift; sourceTree = "<group>"; };
@@ -571,6 +612,7 @@
 				683821732FC8432000CA6761 /* FirebaseAuth in Frameworks */,
 				683821742FC8432000CA6761 /* CustomLabels in Frameworks */,
 				683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */,
+				683821A62FC8695C00CA6761 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +625,7 @@
 				6813E8142F6D51ED00344774 /* FirebaseAuth in Frameworks */,
 				684497312F756E0B00337F74 /* CustomLabels in Frameworks */,
 				6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */,
+				683821A42FC8695000CA6761 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,10 +871,69 @@
 			children = (
 				683276042F9BB02800DA5796 /* UserProfileViewModel.swift */,
 				683276062F9BB03A00DA5796 /* UserProfileView.swift */,
-				68EF99DD2FA335C300FEBC1A /* UserProfileAccountActionsView.swift */,
 				68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */,
+				683821B32FC8841400CA6761 /* UserAvatarView.swift */,
+				683821BA2FC8874200CA6761 /* AvatarCircleView.swift */,
+				683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */,
+				68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */,
 				68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */,
 				68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		683821922FC867FF00CA6761 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				683821942FC8680F00CA6761 /* Domain */,
+				683821932FC8680800CA6761 /* Data */,
+				683821B62FC8843800CA6761 /* Presentation */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
+		683821932FC8680800CA6761 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		683821942FC8680F00CA6761 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				683821A72FC86BF700CA6761 /* AttachmentType.swift */,
+				683821AA2FC86C5300CA6761 /* DocumentResult.swift */,
+				683821952FC8682000CA6761 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		683821952FC8682000CA6761 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */,
+				683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */,
+				683821AD2FC86C6B00CA6761 /* GetUserPhoto.swift */,
+				683821B02FC86C8600CA6761 /* GetTransactionDocument.swift */,
+				6838219C2FC8683C00CA6761 /* DeletePhoto.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		683821A22FC8695000CA6761 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		683821B62FC8843800CA6761 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				683821B72FC8844400CA6761 /* CameraPickerView.swift */,
+				683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -923,6 +1025,7 @@
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
 				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
 				6838217E2FC8432000CA6761 /* EchoLedger copy-Info.plist */,
+				683821A22FC8695000CA6761 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1185,6 +1288,7 @@
 		685A1F082F5AEBA40009B885 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				683821922FC867FF00CA6761 /* Document */,
 				682C6C4F2FBF301700AE9F62 /* Graphs */,
 				68EF99F42FA3849200FEBC1A /* Loader */,
 				685A1F092F5AEBF50009B885 /* Sync */,
@@ -1280,6 +1384,7 @@
 				683820D22FC8432000CA6761 /* FirebaseFirestore */,
 				683820D32FC8432000CA6761 /* CustomLabels */,
 				683820D52FC8432000CA6761 /* Toasty */,
+				683821A52FC8695C00CA6761 /* FirebaseStorage */,
 			);
 			productName = EchoLedger;
 			productReference = 6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */;
@@ -1304,6 +1409,7 @@
 				6813E8152F6D51ED00344774 /* FirebaseFirestore */,
 				684497302F756E0B00337F74 /* CustomLabels */,
 				684497332F756E4E00337F74 /* Toasty */,
+				683821A32FC8695000CA6761 /* FirebaseStorage */,
 			);
 			productName = EchoLedger;
 			productReference = 681B47002F7F9138000CC7C4 /* EchoLedger.app */;
@@ -1447,13 +1553,17 @@
 				683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */,
 				683820EF2FC8432000CA6761 /* UserRemoteSource.swift in Sources */,
 				683820F02FC8432000CA6761 /* TransactionListItem.swift in Sources */,
+				683821B52FC8841400CA6761 /* UserAvatarView.swift in Sources */,
 				683820F12FC8432000CA6761 /* DashboardView.swift in Sources */,
 				683820F22FC8432000CA6761 /* DeleteTransaction.swift in Sources */,
 				683820F32FC8432000CA6761 /* UpdateInstitutionInput.swift in Sources */,
 				683820F42FC8432000CA6761 /* AuthStoring.swift in Sources */,
+				683821A12FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */,
 				683820F52FC8432000CA6761 /* AccountSheet.swift in Sources */,
 				683820F62FC8432000CA6761 /* ResetPassword.swift in Sources */,
 				683820F72FC8432000CA6761 /* InstitutionError.swift in Sources */,
+				683821AC2FC86C5300CA6761 /* DocumentResult.swift in Sources */,
+				683821A82FC86BF700CA6761 /* AttachmentType.swift in Sources */,
 				683820F82FC8432000CA6761 /* SplitFormView.swift in Sources */,
 				683820FA2FC8432000CA6761 /* TransactionListView.swift in Sources */,
 				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
@@ -1478,6 +1588,7 @@
 				6838210E2FC8432000CA6761 /* UpdateUserInput.swift in Sources */,
 				6838210F2FC8432000CA6761 /* UserError.swift in Sources */,
 				683821102FC8432000CA6761 /* FilterPill.swift in Sources */,
+				683821B92FC8844400CA6761 /* CameraPickerView.swift in Sources */,
 				683821122FC8432000CA6761 /* TransferDetailView.swift in Sources */,
 				683821132FC8432000CA6761 /* TransferFormViewModel.swift in Sources */,
 				683821142FC8432000CA6761 /* TransferFormInput.swift in Sources */,
@@ -1513,7 +1624,9 @@
 				683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */,
 				683821342FC8432000CA6761 /* CreateAccount.swift in Sources */,
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
+				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
+				6838219D2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
 				683821382FC8432000CA6761 /* TransferRowView.swift in Sources */,
 				683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */,
 				6838213A2FC8432000CA6761 /* String+Extension.swift in Sources */,
@@ -1531,18 +1644,22 @@
 				683821482FC8432000CA6761 /* UserProfileFormView.swift in Sources */,
 				683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */,
 				6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */,
+				683821AF2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
 				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
 				6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */,
-				6838214E2FC8432000CA6761 /* UserProfileAccountActionsView.swift in Sources */,
+				6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */,
 				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
+				6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
 				683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */,
 				6838218B2FC8493F00CA6761 /* UserCloudStoring.swift in Sources */,
 				683821512FC8432000CA6761 /* AccountFilter.swift in Sources */,
+				683821972FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */,
 				683821522FC8432000CA6761 /* UserProfileViewModel.swift in Sources */,
 				683821532FC8432000CA6761 /* AddTransaction.swift in Sources */,
 				683821562FC8432000CA6761 /* UserProviding.swift in Sources */,
 				683821572FC8432000CA6761 /* AccountRowView.swift in Sources */,
+				683821B12FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */,
 				683821582FC8432000CA6761 /* TransferFormView.swift in Sources */,
 				683821592FC8432000CA6761 /* GetTransaction.swift in Sources */,
 				6838215A2FC8432000CA6761 /* GetInstitutions.swift in Sources */,
@@ -1552,6 +1669,7 @@
 				6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */,
 				6838215E2FC8432000CA6761 /* Account.swift in Sources */,
 				6838215F2FC8432000CA6761 /* AccountFormView.swift in Sources */,
+				683821BF2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */,
 				683821602FC8432000CA6761 /* UpdateUser.swift in Sources */,
 				683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */,
 				683821612FC8432000CA6761 /* TransactionSplit.swift in Sources */,
@@ -1564,6 +1682,7 @@
 				683821692FC8432000CA6761 /* LoadingView.swift in Sources */,
 				6838216B2FC8432000CA6761 /* Institution.swift in Sources */,
 				6838216D2FC8432000CA6761 /* InstitutionFormViewModel.swift in Sources */,
+				683821C22FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */,
 				6838216E2FC8432000CA6761 /* TransactionFormContent.swift in Sources */,
 				6838216F2FC8432000CA6761 /* AccountRemoteSource.swift in Sources */,
 			);
@@ -1573,10 +1692,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				683821982FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */,
 				685A1EC72F5AD97D0009B885 /* GetCurrentUser.swift in Sources */,
 				682C6C512FBF301F00AE9F62 /* ExpensePieChartView.swift in Sources */,
 				685A1ECC2F5AD9990009B885 /* UserStoring.swift in Sources */,
 				6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */,
+				683821BE2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */,
 				6824DCAE2FC049D0007375C0 /* TransferDetailViewModel.swift in Sources */,
 				68000F652F76886B00B30EB6 /* TransactionFormViewModel.swift in Sources */,
 				685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */,
@@ -1589,6 +1710,7 @@
 				685A1F0B2F5AEBFC0009B885 /* SyncMetadata.swift in Sources */,
 				685A1EF42F5AEAF40009B885 /* TransactionError.swift in Sources */,
 				685A1EDD2F5AE6ED0009B885 /* InstitutionLocalSource.swift in Sources */,
+				683821A02FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */,
 				684497202F753EBE00337F74 /* UpdateAccountInput.swift in Sources */,
 				6824DCB62FC081F2007375C0 /* TransactionFilterBar.swift in Sources */,
 				682C6C5F2FBF54ED00AE9F62 /* DashboardViewModel.swift in Sources */,
@@ -1599,12 +1721,14 @@
 				685A1ED02F5AD9AA0009B885 /* UserRemoteSource.swift in Sources */,
 				6824DCA82FC04023007375C0 /* TransactionListItem.swift in Sources */,
 				684497242F75699100337F74 /* DashboardView.swift in Sources */,
+				683821B22FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
 				6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */,
 				683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */,
 				683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
+				683821B82FC8844400CA6761 /* CameraPickerView.swift in Sources */,
 				681B47092F7FEB60000CC7C4 /* SplitFormView.swift in Sources */,
 				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
 				684497262F7569AA00337F74 /* TransactionListView.swift in Sources */,
@@ -1620,12 +1744,14 @@
 				6807E5732F922BF50099DCE4 /* AuthError.swift in Sources */,
 				6807E57C2F922C290099DCE4 /* SignOut.swift in Sources */,
 				68000F672F768FF000B30EB6 /* TransactionListViewModel.swift in Sources */,
+				683821AB2FC86C5300CA6761 /* DocumentResult.swift in Sources */,
 				683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */,
 				68EF99E62FA344A100FEBC1A /* ExpireAnonymousSession.swift in Sources */,
 				682C6C5D2FBF394F00AE9F62 /* TransactionRowView.swift in Sources */,
 				683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */,
 				683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */,
 				684497372F75743F00337F74 /* InstitutionFormContent.swift in Sources */,
+				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
@@ -1638,6 +1764,7 @@
 				681B470B2F7FEDB0000CC7C4 /* AccountPickerView.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
+				683821AE2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionCategory.swift in Sources */,
 				68EF99F12FA383B200FEBC1A /* EchoLedgerLoader.swift in Sources */,
 				683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */,
@@ -1665,6 +1792,7 @@
 				683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */,
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				682C6C5B2FBF367100AE9F62 /* RecentTransactionsView.swift in Sources */,
+				6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
 				683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
 				683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */,
@@ -1685,15 +1813,18 @@
 				683275F52F9B66F500DA5796 /* DeleteAccount.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
 				6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */,
+				683821B42FC8841400CA6761 /* UserAvatarView.swift in Sources */,
 				68EF99E12FA335C300FEBC1A /* UserProfileFormView.swift in Sources */,
 				68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */,
 				682C6C612FBF570800AE9F62 /* AccountBalanceChartView.swift in Sources */,
 				6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */,
 				6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */,
 				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */,
-				68EF99E42FA335C300FEBC1A /* UserProfileAccountActionsView.swift in Sources */,
+				68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */,
+				683821C12FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */,
 				682C6C572FBF305500AE9F62 /* AccountDetailViewModel.swift in Sources */,
 				682C6C552FBF304300AE9F62 /* UnarchiveAccount.swift in Sources */,
+				6838219B2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
 				6812CFC02F87833F0019F634 /* AccountFilter.swift in Sources */,
 				683276052F9BB02800DA5796 /* UserProfileViewModel.swift in Sources */,
 				685A1EF72F5AEB070009B885 /* AddTransaction.swift in Sources */,
@@ -1721,6 +1852,7 @@
 				68EF99F32FA383EB00FEBC1A /* LoadingView.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
+				683821A92FC86BF700CA6761 /* AttachmentType.swift in Sources */,
 				6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */,
 				684497392F75760600337F74 /* InstitutionFormViewModel.swift in Sources */,
 				683C909B2F892A3200CE2A6D /* TransactionFormContent.swift in Sources */,
@@ -2183,6 +2315,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 683820D62FC8432000CA6761 /* XCRemoteSwiftPackageReference "Toasty" */;
 			productName = Toasty;
+		};
+		683821A32FC8695000CA6761 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6813E8122F6D51ED00344774 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		683821A52FC8695C00CA6761 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6813E8122F6D51ED00344774 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		684497302F756E0B00337F74 /* CustomLabels */ = {
 			isa = XCSwiftPackageProductDependency;

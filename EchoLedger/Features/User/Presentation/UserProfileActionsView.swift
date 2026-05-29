@@ -1,5 +1,5 @@
 //
-//  UserProfileAccountActionsView.swift
+//  UserProfileActionsView.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 30/04/2026.
@@ -10,7 +10,7 @@ import CustomLabels
 
 /// Displays account action buttons: edit profile, sign out, and delete account.
 /// In edit mode, replaces the modifier button with save and cancel actions.
-struct UserProfileAccountActionsView: View {
+struct UserProfileActionsView: View {
 
     @Bindable var viewModel: UserProfileViewModel
 
@@ -65,13 +65,13 @@ struct UserProfileAccountActionsView: View {
 }
 
 #Preview("Default") {
-    UserProfileAccountActionsView(viewModel: PreviewHelpers.makeUserProfileViewModel())
+    UserProfileActionsView(viewModel: PreviewHelpers.makeUserProfileViewModel())
         .padding()
 }
 
 #Preview("Edit mode") {
     let viewModel = PreviewHelpers.makeUserProfileViewModel()
     viewModel.startEditing()
-    return UserProfileAccountActionsView(viewModel: viewModel)
+    return UserProfileActionsView(viewModel: viewModel)
         .padding()
 }
