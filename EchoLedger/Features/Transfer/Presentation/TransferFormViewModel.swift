@@ -24,8 +24,7 @@ final class TransferFormViewModel {
 
     // MARK: UI State
 
-    var availableAccounts: [Account] = []
-    var institutionNames: [UUID: String] = [:]
+    var availableAccounts: [AccountDisplayItem] = []
     var isLoading = false
     var isSuccess = false
 
@@ -53,8 +52,7 @@ final class TransferFormViewModel {
     private let toasty: ToastyManager
     private let transferBetweenAccounts: TransferBetweenAccounts
     private let updateTransfer: UpdateTransfer
-    private let getInstitutions: GetInstitutions
-    private let getAccounts: GetAccounts
+    private let getAccountsWithInstitution: GetAccountsWithInstitution
     private let userId: UUID
 
     // MARK: Init
@@ -71,16 +69,14 @@ final class TransferFormViewModel {
         toasty: ToastyManager,
         transferBetweenAccounts: TransferBetweenAccounts,
         updateTransfer: UpdateTransfer,
-        getInstitutions: GetInstitutions,
-        getAccounts: GetAccounts,
+        getAccountsWithInstitution: GetAccountsWithInstitution,
         userId: UUID,
         existingTransfer: Transfer? = nil
     ) {
         self.toasty = toasty
         self.transferBetweenAccounts = transferBetweenAccounts
         self.updateTransfer = updateTransfer
-        self.getInstitutions = getInstitutions
-        self.getAccounts = getAccounts
+        self.getAccountsWithInstitution = getAccountsWithInstitution
         self.userId = userId
         self.existingTransfer = existingTransfer
 
@@ -97,25 +93,15 @@ final class TransferFormViewModel {
     /// and pre-selects existing accounts in edit mode.
     func loadAccounts() async {
         do {
-            let institutions = try await getInstitutions.execute(for: userId)
-            var result: [Account] = []
-            var resolvedInstitutionNames: [UUID: String] = [:]
-            for institution in institutions {
-                let accounts = try await getAccounts.execute(for: institution.id, filter: .active)
-                for account in accounts {
-                    resolvedInstitutionNames[account.id] = institution.name
-                }
-                result.append(contentsOf: accounts)
-            }
-            availableAccounts = result
-            institutionNames = resolvedInstitutionNames
+            let items = try await getAccountsWithInstitution.execute(for: userId, filter: .active)
+            availableAccounts = items
 
             if let existingTransfer {
-                sourceAccount = result.first { $0.id == existingTransfer.source.splits.first?.accountId }
-                destinationAccount = result.first { $0.id == existingTransfer.destination.splits.first?.accountId }
+                sourceAccount = items.first { $0.account.id == existingTransfer.source.splits.first?.accountId }?.account
+                destinationAccount = items.first { $0.account.id == existingTransfer.destination.splits.first?.accountId }?.account
             }
-            if sourceAccount == nil { sourceAccount = result.first }
-            if destinationAccount == nil { destinationAccount = result.dropFirst().first }
+            if sourceAccount == nil { sourceAccount = items.first?.account }
+            if destinationAccount == nil { destinationAccount = items.dropFirst().first?.account }
         } catch {
             toasty.showError(error)
         }

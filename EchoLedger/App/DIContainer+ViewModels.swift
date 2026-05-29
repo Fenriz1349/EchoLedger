@@ -137,8 +137,7 @@ extension DIContainer {
             toasty: toasty,
             transferBetweenAccounts: transferBetweenAccounts,
             updateTransfer: updateTransfer,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId,
             existingTransfer: existing
         )
@@ -153,8 +152,7 @@ extension DIContainer {
             getTransactions: getTransactions,
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId
         )
     }
@@ -165,8 +163,7 @@ extension DIContainer {
             toasty: toasty,
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId,
             addAccountFormViewModel: makeAccountFormViewModel(),
             existingTransaction: existing

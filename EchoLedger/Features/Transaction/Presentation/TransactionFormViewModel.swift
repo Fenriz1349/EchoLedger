@@ -18,8 +18,7 @@ final class TransactionFormViewModel {
     private let toasty: ToastyManager
     private let addTransaction: AddTransaction
     private let updateTransaction: UpdateTransaction
-    private let getInstitutions: GetInstitutions
-    private let getAccounts: GetAccounts
+    private let getAccountsWithInstitution: GetAccountsWithInstitution
     private let userId: UUID
 
     // MARK: Form State
@@ -33,8 +32,7 @@ final class TransactionFormViewModel {
     let addAccountFormViewModel: AccountFormViewModel
 
     // MARK: UI State
-    var availableAccounts: [Account] = []
-    var institutionNames: [UUID: String] = [:]
+    var availableAccounts: [AccountDisplayItem] = []
     var isLoading = false
     var errorMessage: String?
     var isSuccess = false
@@ -47,7 +45,7 @@ final class TransactionFormViewModel {
     /// The first available account not already used by an existing split.
     var nextAvailableAccount: Account? {
         let usedIds = Set(splits.map(\.accountId))
-        return availableAccounts.first { !usedIds.contains($0.id) }
+        return availableAccounts.first { !usedIds.contains($0.account.id) }?.account
     }
 
     // MARK: Computed
@@ -75,8 +73,7 @@ final class TransactionFormViewModel {
         toasty: ToastyManager,
         addTransaction: AddTransaction,
         updateTransaction: UpdateTransaction,
-        getInstitutions: GetInstitutions,
-        getAccounts: GetAccounts,
+        getAccountsWithInstitution: GetAccountsWithInstitution,
         userId: UUID,
         addAccountFormViewModel: AccountFormViewModel,
         existingTransaction: Transaction? = nil
@@ -84,8 +81,7 @@ final class TransactionFormViewModel {
         self.toasty = toasty
         self.addTransaction = addTransaction
         self.updateTransaction = updateTransaction
-        self.getInstitutions = getInstitutions
-        self.getAccounts = getAccounts
+        self.getAccountsWithInstitution = getAccountsWithInstitution
         self.userId = userId
         self.existingTransaction = existingTransaction
         self.addAccountFormViewModel = addAccountFormViewModel
@@ -101,23 +97,11 @@ final class TransactionFormViewModel {
     /// In create mode, initialises the first split automatically.
     func loadAccounts() async {
         do {
-            let institutions = try await getInstitutions.execute(for: userId)
-            var result: [Account] = []
-            var resolvedInstitutionNames: [UUID: String] = [:]
-            for institution in institutions {
-                let accounts = try await getAccounts.execute(
-                    for: institution.id,
-                    filter: existingTransaction == nil ? .active : .all
-                )
-                for account in accounts {
-                    resolvedInstitutionNames[account.id] = institution.name
-                }
-                result.append(contentsOf: accounts)
-            }
-            availableAccounts = result
-            institutionNames = resolvedInstitutionNames
-            if existingTransaction == nil, let first = result.first {
-                addSplit(for: first)
+            let filter: AccountFilter = existingTransaction == nil ? .active : .all
+            let items = try await getAccountsWithInstitution.execute(for: userId, filter: filter)
+            availableAccounts = items
+            if existingTransaction == nil, let first = items.first {
+                addSplit(for: first.account)
             }
         } catch {
             toasty.showError(error)

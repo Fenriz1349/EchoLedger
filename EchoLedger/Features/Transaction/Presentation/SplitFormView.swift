@@ -11,8 +11,7 @@ import SwiftUI
 struct SplitFormView: View {
 
     @Binding var split: TransactionSplit
-    let availableAccounts: [Account]
-    let institutionNames: [UUID: String]
+    let availableAccounts: [AccountDisplayItem]
     let onDelete: (() -> Void)?
 
     var body: some View {
@@ -22,13 +21,8 @@ struct SplitFormView: View {
                 .frame(width: 80)
 
             Picker("", selection: $split.accountId) {
-                ForEach(availableAccounts, id: \.id) { account in
-                    if let institutionName = institutionNames[account.id] {
-                        Text("\(account.name) • \(institutionName)")
-                            .tag(account.id)
-                    } else {
-                        Text(account.name).tag(account.id)
-                    }
+                ForEach(availableAccounts) { item in
+                    Text(item.displayLabel).tag(item.account.id)
                 }
             }
         }
@@ -47,8 +41,8 @@ struct SplitFormView: View {
     return List {
         SplitFormView(
             split: .constant(split),
-            availableAccounts: PreviewData.accounts,
-            institutionNames: [PreviewData.accountCourant.id: PreviewData.institutionBNP.name],
+            availableAccounts: [AccountDisplayItem(account: PreviewData.accountCourant,
+                                                   institutionName: PreviewData.institutionBNP.name)],
             onDelete: {}
         )
     }

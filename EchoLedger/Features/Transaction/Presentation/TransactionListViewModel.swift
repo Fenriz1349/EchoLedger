@@ -25,7 +25,7 @@ final class TransactionListViewModel {
     var selectedNature: TransactionNatureFilter = .all
     var selectedCategory: TransactionCategory?
     var selectedAccountId: UUID?
-    var availableAccounts: [Account] = []
+    var availableAccounts: [AccountDisplayItem] = []
 
     var hasActiveFilters: Bool {
         selectedNature != .all || selectedCategory != nil || selectedAccountId != nil
@@ -133,8 +133,7 @@ final class TransactionListViewModel {
     private let getTransactions: GetTransactions
     private let deleteTransaction: DeleteTransaction
     private let getAccount: GetAccount
-    private let getInstitutions: GetInstitutions
-    private let getAccounts: GetAccounts
+    private let getAccountsWithInstitution: GetAccountsWithInstitution
     private let userId: UUID
 
     /// - Parameters:
@@ -142,22 +141,19 @@ final class TransactionListViewModel {
     ///   - getTransactions: UseCase for fetching all transactions.
     ///   - deleteTransaction: UseCase for deleting one transaction.
     ///   - getAccount: UseCase for resolving a single account name.
-    ///   - getInstitutions: UseCase for fetching institutions (used to load filter accounts).
-    ///   - getAccounts: UseCase for fetching accounts per institution.
+    ///   - getAccountsWithInstitution: UseCase for building the flat list of AccountDisplayItem.
     ///   - userId: The identifier of the current user.
     init(toasty: ToastyManager,
          getTransactions: GetTransactions,
          deleteTransaction: DeleteTransaction,
          getAccount: GetAccount,
-         getInstitutions: GetInstitutions,
-         getAccounts: GetAccounts,
+         getAccountsWithInstitution: GetAccountsWithInstitution,
          userId: UUID) {
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.deleteTransaction = deleteTransaction
         self.getAccount = getAccount
-        self.getInstitutions = getInstitutions
-        self.getAccounts = getAccounts
+        self.getAccountsWithInstitution = getAccountsWithInstitution
         self.userId = userId
     }
 
@@ -165,23 +161,11 @@ final class TransactionListViewModel {
     func load() async {
         isLoading = true
         do {
-            async let transactionsResult = getTransactions.execute(for: userId)
-            async let institutionsResult = getInstitutions.execute(for: userId)
+            transactions = try await getTransactions.execute(for: userId)
 
-            let (fetchedTransactions, institutions) = try await (transactionsResult, institutionsResult)
-            transactions = fetchedTransactions
-
-            var accounts: [Account] = []
-            var resolvedInstitutionNames: [UUID: String] = [:]
-            for institution in institutions {
-                let institutionAccounts = try await getAccounts.execute(for: institution.id, filter: .all)
-                for account in institutionAccounts {
-                    resolvedInstitutionNames[account.id] = institution.name
-                }
-                accounts.append(contentsOf: institutionAccounts)
-            }
-            availableAccounts = accounts.sorted { $0.name < $1.name }
-            institutionNames = resolvedInstitutionNames
+            let allItems = try await getAccountsWithInstitution.execute(for: userId, filter: .all)
+            availableAccounts = allItems.filter { !$0.account.isArchived }
+            institutionNames = Dictionary(uniqueKeysWithValues: allItems.map { ($0.account.id, $0.institutionName) })
 
             for transaction in transactions {
                 await loadAccountNames(for: transaction)

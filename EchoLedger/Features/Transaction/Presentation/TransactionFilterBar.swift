@@ -54,14 +54,14 @@ struct TransactionFilterBar: View {
             Menu {
                 Picker("Compte", selection: $viewModel.selectedAccountId) {
                     Text("Tous").tag(Optional<UUID>.none)
-                    ForEach(viewModel.availableAccounts) { account in
-                        Text(account.name).tag(Optional(account.id))
+                    ForEach(viewModel.availableAccounts) { item in
+                        Text(item.displayLabel).tag(Optional(item.account.id))
                     }
                 }
             } label: {
                 FilterPill(
                     label: viewModel.selectedAccountId
-                        .flatMap { id in viewModel.availableAccounts.first { $0.id == id }?.name }
+                        .flatMap { id in viewModel.availableAccounts.first { $0.id == id }?.account.name }
                         ?? "Compte",
                     isActive: viewModel.selectedAccountId != nil
                 )

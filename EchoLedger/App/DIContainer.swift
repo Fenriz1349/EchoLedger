@@ -80,6 +80,7 @@ final class DIContainer {
     let archiveAccount: ArchiveAccount
     let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
+    let getAccountsWithInstitution: GetAccountsWithInstitution
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -203,6 +204,10 @@ final class DIContainer {
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountStore,
             transactionRepository: transactionStore
+        )
+        self.getAccountsWithInstitution = GetAccountsWithInstitution(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts
         )
 
         // MARK: Use Cases — Transfer

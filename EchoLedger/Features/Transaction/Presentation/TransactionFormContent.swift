@@ -38,7 +38,6 @@ struct TransactionFormContent: View {
                     SplitFormView(
                         split: $split,
                         availableAccounts: viewModel.availableAccounts,
-                        institutionNames: viewModel.institutionNames,
                         onDelete: viewModel.splits.count > 1 ? {
                             if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
                                 viewModel.removeSplit(at: index)
