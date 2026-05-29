@@ -59,7 +59,8 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
 
 extension Transaction {
 
-    var color : Color {
+    /// Color to display in Transactions lists
+    var color: Color {
         if self.category == .initialBalance && self.isExpense {
             return .red
         } else if !self.isExpense {

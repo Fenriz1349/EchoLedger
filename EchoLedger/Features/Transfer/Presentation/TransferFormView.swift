@@ -25,14 +25,18 @@ struct TransferFormView: View {
                             Picker("De", selection: $viewModel.sourceAccount) {
                                 Text("—").tag(Optional<Account>.none)
                                 ForEach(viewModel.availableAccounts) { item in
-                                    (Text(item.account.name) + Text(" • \(item.institutionName)").font(.caption).foregroundStyle(.secondary))
+                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary))
                                         .tag(Optional(item.account))
                                 }
                             }
                             Picker("Vers", selection: $viewModel.destinationAccount) {
                                 Text("—").tag(Optional<Account>.none)
                                 ForEach(viewModel.availableAccounts) { item in
-                                    (Text(item.account.name) + Text(" • \(item.institutionName)").font(.caption).foregroundStyle(.secondary))
+                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary))
                                         .tag(Optional(item.account))
                                 }
                             }

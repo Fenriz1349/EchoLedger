@@ -18,7 +18,7 @@ final class TransferFormViewModel {
 
     var sourceAccount: Account?
     var destinationAccount: Account?
-    var amount: Double = 0
+    var amountText: String = ""
     var date: Date = Date()
     var label: String = ""
 
@@ -35,7 +35,7 @@ final class TransferFormViewModel {
     var isValid: Bool {
         guard let source = sourceAccount,
               let destination = destinationAccount else { return false }
-        return source.id != destination.id && amount > 0
+        return source.id != destination.id && amountText.toDouble > 0
     }
 
     private var trimmedLabel: String {
@@ -81,7 +81,7 @@ final class TransferFormViewModel {
         self.existingTransfer = existingTransfer
 
         if let transfer = existingTransfer {
-            self.amount = transfer.amount
+            self.amountText = String(transfer.amount)
             self.date = transfer.date
             self.label = transfer.label == "Transfert" ? "" : transfer.label
         }
@@ -97,8 +97,12 @@ final class TransferFormViewModel {
             availableAccounts = items
 
             if let existingTransfer {
-                sourceAccount = items.first { $0.account.id == existingTransfer.source.splits.first?.accountId }?.account
-                destinationAccount = items.first { $0.account.id == existingTransfer.destination.splits.first?.accountId }?.account
+                sourceAccount = items.first {
+                    $0.account.id == existingTransfer.source.splits.first?.accountId
+                }?.account
+                destinationAccount = items.first {
+                    $0.account.id == existingTransfer.destination.splits.first?.accountId
+                }?.account
             }
             if sourceAccount == nil { sourceAccount = items.first?.account }
             if destinationAccount == nil { destinationAccount = items.dropFirst().first?.account }
@@ -106,7 +110,6 @@ final class TransferFormViewModel {
             toasty.showError(error)
         }
     }
-
 
     /// Validates and submits the transfer (create or update).
     func submit() async {
@@ -118,7 +121,7 @@ final class TransferFormViewModel {
         let input = TransferFormInput(
             sourceAccountId: source.id,
             destinationAccountId: destination.id,
-            amount: amount,
+            amount: amountText.toDouble,
             date: date,
             label: trimmedLabel,
             userId: userId
