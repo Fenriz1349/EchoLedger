@@ -27,7 +27,8 @@ struct TransferFormView: View {
                                 ForEach(viewModel.availableAccounts) { item in
                                     (Text(item.account.name) + Text(" • \(item.institutionName)")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary))
+                                        .foregroundStyle(.secondary)
+                                    )
                                         .tag(Optional(item.account))
                                 }
                             }
@@ -36,7 +37,8 @@ struct TransferFormView: View {
                                 ForEach(viewModel.availableAccounts) { item in
                                     (Text(item.account.name) + Text(" • \(item.institutionName)")
                                         .font(.caption)
-                                        .foregroundStyle(.secondary))
+                                        .foregroundStyle(.secondary)
+                                    )
                                         .tag(Optional(item.account))
                                 }
                             }
@@ -44,9 +46,8 @@ struct TransferFormView: View {
 
                         Section("Montant") {
                             HStack {
-                                TextField("0,00", value: $viewModel.amount, format: .number)
+                                TextField("0,00€", text: $viewModel.amountText)
                                     .keyboardType(.decimalPad)
-                                Text("€").foregroundStyle(.secondary)
                             }
                             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                         }

@@ -63,15 +63,21 @@ final class TransactionFormViewModel {
 
     /// Returns only initialBalance for Account creation Transaction or isUserSelectable TransactionCategory
     var categoryList: [TransactionCategory] {
-        existingTransaction?.category == .initialBalance
-        ? [.initialBalance]
-        : TransactionCategory.allCases.filter { $0.isUserSelectable }
+        if existingTransaction?.category == .initialBalance {
+            return [.initialBalance]
+        }
+        return TransactionCategory.allCases.filter(\.isUserSelectable)
     }
 
     /// Reverse isExpense for UI
     var isIncome: Bool {
         get { !isExpense }
         set { isExpense = !newValue }
+    }
+
+    /// Return true only if there is an existingTransaction wich category is initialBalance
+    var isInitialBalance: Bool {
+        existingTransaction?.category == .initialBalance
     }
 
     // MARK: Init
@@ -112,7 +118,15 @@ final class TransactionFormViewModel {
         do {
             let filter: AccountFilter = existingTransaction == nil ? .active : .all
             let items = try await getAccountsWithInstitution.execute(for: userId, filter: filter)
-            availableAccounts = items
+
+            if isInitialBalance,
+               let accountId = splits.first?.accountId,
+               let matchingItem = items.first(where: { $0.account.id == accountId }) {
+                availableAccounts = [matchingItem]
+            } else {
+                availableAccounts = items
+            }
+
             if existingTransaction == nil, let first = items.first {
                 addSplit(for: first.account)
             }
