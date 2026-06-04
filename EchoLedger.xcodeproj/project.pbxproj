@@ -310,6 +310,8 @@
 		6844973D2F7579A500337F74 /* AccountFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973C2F7579A500337F74 /* AccountFormViewModel.swift */; };
 		6844973F2F757AC400337F74 /* AccountFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973E2F757AC400337F74 /* AccountFormView.swift */; };
 		684497422F75848000337F74 /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497412F75848000337F74 /* AccountListViewModel.swift */; };
+		68467C942FD19F4500144A84 /* DocumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68467C932FD19F4500144A84 /* DocumentError.swift */; };
+		68467C952FD19F4500144A84 /* DocumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68467C932FD19F4500144A84 /* DocumentError.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -535,6 +537,7 @@
 		6844973C2F7579A500337F74 /* AccountFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFormViewModel.swift; sourceTree = "<group>"; };
 		6844973E2F757AC400337F74 /* AccountFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFormView.swift; sourceTree = "<group>"; };
 		684497412F75848000337F74 /* AccountListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewModel.swift; sourceTree = "<group>"; };
+		68467C932FD19F4500144A84 /* DocumentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentError.swift; sourceTree = "<group>"; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		685A1E822F5ACF700009B885 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
@@ -914,6 +917,7 @@
 			children = (
 				683821A72FC86BF700CA6761 /* AttachmentType.swift */,
 				683821AA2FC86C5300CA6761 /* DocumentResult.swift */,
+				68467C932FD19F4500144A84 /* DocumentError.swift */,
 				683821952FC8682000CA6761 /* UseCases */,
 			);
 			path = Domain;
@@ -1582,6 +1586,7 @@
 				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
 				683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
+				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
 				683821002FC8432000CA6761 /* GetAccount.swift in Sources */,
 				683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */,
@@ -1772,6 +1777,7 @@
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */,
+				68467C952FD19F4500144A84 /* DocumentError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
 				6824DCB02FC049D9007375C0 /* TransferDetailView.swift in Sources */,
 				6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */,

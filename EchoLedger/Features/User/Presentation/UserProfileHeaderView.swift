@@ -14,6 +14,7 @@ struct UserProfileHeaderView: View {
     let avatarDocument: DocumentResult
     let onImageSelected: (Data) -> Void
     let onRemoveAvatar: () -> Void
+    let onEditBlocked: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 8) {
@@ -21,7 +22,8 @@ struct UserProfileHeaderView: View {
                 document: avatarDocument,
                 size: 140,
                 onImageSelected: onImageSelected,
-                onRemove: onRemoveAvatar
+                onRemove: onRemoveAvatar,
+                onEditBlocked: onEditBlocked
             )
 
             Text("\(user.firstName) \(user.lastName)")
@@ -39,6 +41,7 @@ struct UserProfileHeaderView: View {
         user: PreviewData.user,
         avatarDocument: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
         onImageSelected: { _ in },
-        onRemoveAvatar: {}
+        onRemoveAvatar: {},
+        onEditBlocked: nil
     )
 }

@@ -17,6 +17,7 @@ struct UserAvatarView: View {
     let size: CGFloat
     let onImageSelected: (Data) -> Void
     let onRemove: (() -> Void)?
+    let onEditBlocked: (() -> Void)?
 
     @State private var showOptions = false
     @State private var showCamera = false
@@ -27,7 +28,13 @@ struct UserAvatarView: View {
         ZStack(alignment: .bottomTrailing) {
             AvatarCircleView(document: document, size: size)
 
-            AvatarEditButtonView(size: size, onTap: { showOptions = true })
+            AvatarEditButtonView(size: size, onTap: {
+                if let onEditBlocked {
+                    onEditBlocked()
+                } else {
+                    showOptions = true
+                }
+            })
                 .offset(x: 6, y: 6)
         }
         .confirmationDialog("Photo de profil", isPresented: $showOptions) {
@@ -60,6 +67,7 @@ struct UserAvatarView: View {
         document: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
         size: 180,
         onImageSelected: { _ in },
-        onRemove: {}
+        onRemove: {},
+        onEditBlocked: nil
     )
 }

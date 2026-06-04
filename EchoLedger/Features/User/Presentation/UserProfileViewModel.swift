@@ -69,6 +69,11 @@ final class UserProfileViewModel {
 
     // MARK: Computed
 
+    /// Shows the simulator upload blocked message via toast.
+    func showSimulatorWarning() {
+        toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
+    }
+
     var avatarDocument: DocumentResult {
         guard let currentUser = user else {
             return DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar)

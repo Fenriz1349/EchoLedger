@@ -23,7 +23,8 @@ struct UserProfileView: View {
                             user: user,
                             avatarDocument: viewModel.avatarDocument,
                             onImageSelected: { data in Task { await viewModel.uploadAvatar(data: data) } },
-                            onRemoveAvatar: { Task { await viewModel.removeAvatar() } }
+                            onRemoveAvatar: { Task { await viewModel.removeAvatar() } },
+                            onEditBlocked: DocumentError.isSimulator ? { viewModel.showSimulatorWarning() } : nil
                         )
                         if viewModel.isEditing {
                             Divider()
