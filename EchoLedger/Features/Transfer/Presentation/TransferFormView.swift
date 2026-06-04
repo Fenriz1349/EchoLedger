@@ -24,33 +24,30 @@ struct TransferFormView: View {
                         Section("Comptes") {
                             Picker("De", selection: $viewModel.sourceAccount) {
                                 Text("—").tag(Optional<Account>.none)
-                                ForEach(viewModel.availableAccounts) { account in
-                                    if let institutionName = viewModel.institutionNames[account.id] {
-                                        (Text(account.name) + Text(" • \(institutionName)").font(.caption).foregroundStyle(.secondary))
-                                            .tag(Optional(account))
-                                    } else {
-                                        Text(account.name).tag(Optional(account))
-                                    }
+                                ForEach(viewModel.availableAccounts) { item in
+                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                    )
+                                        .tag(Optional(item.account))
                                 }
                             }
                             Picker("Vers", selection: $viewModel.destinationAccount) {
                                 Text("—").tag(Optional<Account>.none)
-                                ForEach(viewModel.availableAccounts) { account in
-                                    if let institutionName = viewModel.institutionNames[account.id] {
-                                        (Text(account.name) + Text(" • \(institutionName)").font(.caption).foregroundStyle(.secondary))
-                                            .tag(Optional(account))
-                                    } else {
-                                        Text(account.name).tag(Optional(account))
-                                    }
+                                ForEach(viewModel.availableAccounts) { item in
+                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                    )
+                                        .tag(Optional(item.account))
                                 }
                             }
                         }
 
                         Section("Montant") {
                             HStack {
-                                TextField("0,00", value: $viewModel.amount, format: .number)
+                                TextField("0,00€", text: $viewModel.amountText)
                                     .keyboardType(.decimalPad)
-                                Text("€").foregroundStyle(.secondary)
                             }
                             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                         }

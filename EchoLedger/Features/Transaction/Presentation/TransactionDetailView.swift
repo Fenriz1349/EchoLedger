@@ -52,32 +52,27 @@ struct TransactionDetailView: View {
                 }
             }
 
-            Section {
-                HStack(spacing: 12) {
-                    Button {
-                        showEditForm = true
-                    } label: {
-                        CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
-                    }
-                    .buttonStyle(.plain)
-
-                    Button {
-                        Task {
-                            await coordinator.transactionListViewModel.delete(currentTransaction)
-                            dismiss()
-                        }
-                    } label: {
-                        CustomButtonLabel(iconLeading: "trash", message: "Supprimer", color: .red)
-                    }
-                    .buttonStyle(.plain)
-                }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
-                .padding(.horizontal)
-            }
         }
         .navigationTitle(currentTransaction.label)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showEditForm = true } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(role: .destructive) {
+                    Task {
+                        await coordinator.transactionListViewModel.delete(currentTransaction)
+                        dismiss()
+                    }
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .tint(.red)
+            }
+        }
         .task(id: currentTransaction.id) {
             await coordinator.transactionListViewModel.loadAccountNames(for: currentTransaction)
         }

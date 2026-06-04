@@ -39,4 +39,8 @@ protocol AccountProviding {
     /// Updates an existing account.
     /// - Parameter account: The account with updated values.
     func update(_ account: Account) async throws
+
+    /// Permanently deletes an account by its identifier.
+    /// - Parameter id: The unique identifier of the account to delete.
+    func delete(by id: UUID) async throws
 }

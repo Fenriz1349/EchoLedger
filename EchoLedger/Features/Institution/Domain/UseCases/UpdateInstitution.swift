@@ -33,7 +33,9 @@ final class UpdateInstitution {
             throw InstitutionError.nameTooLong
         }
         let allInstitutions = try await repository.fetchAll(for: input.userId)
-        guard !allInstitutions.contains(where: { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }) else {
+        guard !allInstitutions.contains(where:
+                                            { $0.name.lowercased() == trimmed.lowercased() && $0.id != input.id }
+        ) else {
             throw InstitutionError.duplicateName
         }
 

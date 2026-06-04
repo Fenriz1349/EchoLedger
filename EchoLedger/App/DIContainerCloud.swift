@@ -40,7 +40,7 @@ final class DIContainer {
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
-    let deleteAccount: DeleteAccount
+    let deleteUserAccount: DeleteUserAccount
     let linkAnonymousAccount: LinkAnonymousAccount
     let resetPassword: ResetPassword
 
@@ -65,6 +65,8 @@ final class DIContainer {
     let archiveAccount: ArchiveAccount
     let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
+    let getAccountsWithInstitution: GetAccountsWithInstitution
+    let deleteAccount: DeleteAccount
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -111,7 +113,7 @@ final class DIContainer {
 
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteAccount = DeleteAccount(repository: authStoring)
+        self.deleteUserAccount = DeleteUserAccount(repository: authStoring)
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 
@@ -128,7 +130,6 @@ final class DIContainer {
                                                      accountRepository: accountCloud)
         self.unarchiveInstitution = UnarchiveInstitution(institutionRepository: institutionCloud,
                                                          accountRepository: accountCloud)
-        self.deleteInstitution = DeleteInstitution(repository: institutionCloud)
 
         // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountCloud)
@@ -141,6 +142,20 @@ final class DIContainer {
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountCloud,
             transactionRepository: transactionCloud
+        )
+        self.getAccountsWithInstitution = GetAccountsWithInstitution(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts
+        )
+        self.deleteAccount = DeleteAccount(
+            accountRepository: accountCloud,
+            transactionRepository: transactionCloud,
+            userId: userId
+        )
+        self.deleteInstitution = DeleteInstitution(
+            repository: institutionCloud,
+            getAccounts: getAccounts,
+            deleteAccount: deleteAccount
         )
 
         // MARK: Use Cases — Transfer

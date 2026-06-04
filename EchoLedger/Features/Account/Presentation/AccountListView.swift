@@ -45,7 +45,7 @@ struct AccountListView: View {
 
                             Button { showTransferForm = true } label: {
                                 CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
-                                                  message: "Effectuer un transfert",
+                                                  message: "Ajouter un transfert",
                                                   color: .accentColor,
                                                   isSelected: false)
                             }

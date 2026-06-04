@@ -42,6 +42,16 @@ final class AccountRemoteSource {
             .setData(encode(account), merge: true)
     }
 
+    /// Permanently deletes an account from Firestore.
+    /// - Parameters:
+    ///   - id: The unique identifier of the account to delete.
+    ///   - userId: The identifier of the owning user.
+    func delete(id: UUID, userId: UUID) async throws {
+        try await collection(for: userId)
+            .document(id.uuidString)
+            .delete()
+    }
+
     // MARK: Read
 
     /// Fetches all accounts belonging to a given institution from Firestore.

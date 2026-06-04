@@ -24,6 +24,7 @@ final class InstitutionFormViewModel {
     var isLoading = false
     var isSuccess = false
     var showArchiveAlert = false
+    var showDeleteAlert = false
 
     // MARK: Computed
 
@@ -41,6 +42,7 @@ final class InstitutionFormViewModel {
     private let updateInstitution: UpdateInstitution
     private let archiveInstitution: ArchiveInstitution
     private let unarchiveInstitution: UnarchiveInstitution
+    private let deleteInstitution: DeleteInstitution
     private let getInstitutions: GetInstitutions
     private let userId: UUID
     private let existingInstitution: Institution?
@@ -55,6 +57,7 @@ final class InstitutionFormViewModel {
     ///   - updateInstitution: UseCase for updating an existing institution.
     ///   - archiveInstitution: UseCase for archiving an institution and its accounts.
     ///   - unarchiveInstitution: UseCase for restoring an institution and its accounts.
+    ///   - deleteInstitution: UseCase for permanently deleting an institution and all its data.
     ///   - getInstitutions: UseCase for fetching institutions after creation.
     ///   - userId: The identifier of the current user.
     ///   - existingInstitution: The institution to edit. Nil for creation mode.
@@ -65,6 +68,7 @@ final class InstitutionFormViewModel {
         updateInstitution: UpdateInstitution,
         archiveInstitution: ArchiveInstitution,
         unarchiveInstitution: UnarchiveInstitution,
+        deleteInstitution: DeleteInstitution,
         getInstitutions: GetInstitutions,
         userId: UUID,
         existingInstitution: Institution? = nil,
@@ -75,6 +79,7 @@ final class InstitutionFormViewModel {
         self.updateInstitution = updateInstitution
         self.archiveInstitution = archiveInstitution
         self.unarchiveInstitution = unarchiveInstitution
+        self.deleteInstitution = deleteInstitution
         self.getInstitutions = getInstitutions
         self.userId = userId
         self.existingInstitution = existingInstitution
@@ -129,6 +134,7 @@ final class InstitutionFormViewModel {
         isLoading = true
         do {
             try await archiveInstitution.execute(id: existing.id)
+            toasty.showSuccess("Établissement archivé.")
             isSuccess = true
         } catch {
             toasty.showError(error)
@@ -142,6 +148,20 @@ final class InstitutionFormViewModel {
         isLoading = true
         do {
             try await unarchiveInstitution.execute(id: existing.id)
+            toasty.showSuccess("Établissement désarchivé.")
+            isSuccess = true
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
+    /// Permanently deletes the institution and all its accounts and transactions.
+    func delete() async {
+        guard let existing = existingInstitution else { return }
+        isLoading = true
+        do {
+            try await deleteInstitution.execute(id: existing.id)
             isSuccess = true
         } catch {
             toasty.showError(error)

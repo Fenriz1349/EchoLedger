@@ -23,6 +23,7 @@ final class AccountDetailViewModel {
     var incomeChartData: [(category: TransactionCategory, total: Double)] = []
     var isLoading = false
     var showArchiveAlert = false
+    var onNotFound: (() -> Void)?
 
     /// Current version of the account, updated after archive/unarchive.
     private(set) var account: Account
@@ -84,6 +85,9 @@ final class AccountDetailViewModel {
     func load() async {
         isLoading = true
         do {
+            // Verify the account still exists before loading its data
+            _ = try await getAccount.execute(id: account.id)
+
             async let balanceResult = getAccountBalance.execute(accountId: account.id, userId: userId)
             async let transactionsResult = getTransactions.execute(for: userId)
 
@@ -123,6 +127,8 @@ final class AccountDetailViewModel {
                     }
                 }
             }
+        } catch is AccountError {
+            onNotFound?()
         } catch {
             toasty.showError(error)
         }

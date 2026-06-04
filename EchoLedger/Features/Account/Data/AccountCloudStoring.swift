@@ -42,4 +42,8 @@ final class AccountCloudStoring: AccountProviding {
     func update(_ account: Account) async throws {
         try await remote.update(account, userId: userId)
     }
+
+    func delete(by id: UUID) async throws {
+        try await remote.delete(id: id, userId: userId)
+    }
 }

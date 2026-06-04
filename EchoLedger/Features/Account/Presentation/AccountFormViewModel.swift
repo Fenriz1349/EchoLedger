@@ -17,19 +17,30 @@ final class AccountFormViewModel {
     var name = ""
     var category: AccountCategory = .checking
     var selectedInstitution: Institution?
+    var initialBalanceText: String = ""
+    var isInitialBalanceExpense: Bool = false
 
     // MARK: UI State
     var existingAccount: Account?
     var institutions: [Institution] = []
     var showAddInstitutionForm = false
+    var showDeleteAlert = false
     var errorMessage: String?
     var isLoading = false
     var isSuccess = false
+
+    // MARK: Computed
+    var isEditing: Bool { existingAccount != nil }
+    var isArchived: Bool { existingAccount?.isArchived ?? false }
 
     // MARK: Dependencies
     private let toasty: ToastyManager
     private let addAccount: AddAccount
     private let updateAccount: UpdateAccount
+    private let archiveAccount: ArchiveAccount
+    private let unarchiveAccount: UnarchiveAccount
+    private let deleteAccount: DeleteAccount
+    private let addTransaction: AddTransaction
     private let getInstitutions: GetInstitutions
     private let userId: UUID
     let addInstitutionFormViewModel: InstitutionFormViewModel
@@ -41,11 +52,21 @@ final class AccountFormViewModel {
         selectedInstitution != nil
     }
 
+    /// Reverse isExpense for UI
+    var isIncome: Bool {
+        get { !isInitialBalanceExpense }
+        set { isInitialBalanceExpense = !newValue }
+    }
+
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
     ///   - addAccount: UseCase for creating a new account.
     ///   - updateAccount: UseCase for updating an account.
+    ///   - archiveAccount: UseCase for archiving an account.
+    ///   - unarchiveAccount: UseCase for restoring an archived account.
+    ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
+    ///   - addTransaction: UseCase for creating the initial balance transaction.
     ///   - getInstitutions: UseCase for fetching available institutions.
     ///   - addInstitutionFormViewModel: Pre-configured ViewModel for the inline institution creation form.
     ///   - userId: The identifier of the current user.
@@ -54,6 +75,10 @@ final class AccountFormViewModel {
         toasty: ToastyManager,
         addAccount: AddAccount,
         updateAccount: UpdateAccount,
+        archiveAccount: ArchiveAccount,
+        unarchiveAccount: UnarchiveAccount,
+        deleteAccount: DeleteAccount,
+        addTransaction: AddTransaction,
         getInstitutions: GetInstitutions,
         addInstitutionFormViewModel: InstitutionFormViewModel,
         userId: UUID,
@@ -62,6 +87,10 @@ final class AccountFormViewModel {
         self.toasty = toasty
         self.addAccount = addAccount
         self.updateAccount = updateAccount
+        self.archiveAccount = archiveAccount
+        self.unarchiveAccount = unarchiveAccount
+        self.deleteAccount = deleteAccount
+        self.addTransaction = addTransaction
         self.getInstitutions = getInstitutions
         self.addInstitutionFormViewModel = addInstitutionFormViewModel
         self.userId = userId
@@ -101,6 +130,59 @@ final class AccountFormViewModel {
         }
     }
 
+    /// Archives the account and shows a confirmation toast.
+    func archive() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await archiveAccount.execute(id: existing.id)
+            existingAccount = Account(
+                id: existing.id,
+                institutionId: existing.institutionId,
+                name: existing.name,
+                category: existing.category,
+                isArchived: true
+            )
+            toasty.showSuccess("Compte archivé.")
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
+    /// Restores the account and shows a confirmation toast.
+    func unarchive() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await unarchiveAccount.execute(id: existing.id)
+            existingAccount = Account(
+                id: existing.id,
+                institutionId: existing.institutionId,
+                name: existing.name,
+                category: existing.category,
+                isArchived: false
+            )
+            toasty.showSuccess("Compte désarchivé.")
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
+    /// Permanently deletes the account and all its linked transactions.
+    func delete() async {
+        guard let existing = existingAccount else { return }
+        isLoading = true
+        do {
+            try await deleteAccount.execute(id: existing.id)
+            isSuccess = true
+        } catch {
+            toasty.showError(error)
+        }
+        isLoading = false
+    }
+
     /// Validates and creates / update an account for the selected institution.
     func submit() async {
         guard let institution = selectedInstitution else { return }
@@ -117,7 +199,23 @@ final class AccountFormViewModel {
                 )
                 try await updateAccount.execute(input)
             } else {
-                try await addAccount.execute(institutionId: institution.id, name: name, category: category)
+                let account = try await addAccount.execute(
+                    institutionId: institution.id,
+                    name: name,
+                    category: category
+                )
+                let amount = initialBalanceText.toDouble
+                let input = AddTransactionInput(
+                    userId: userId,
+                    label: "Solde initial",
+                    date: Date(),
+                    totalAmount: amount,
+                    note: nil,
+                    isExpense: isInitialBalanceExpense,
+                    category: .initialBalance,
+                    splits: [TransactionSplit(accountId: account.id, amount: amount)]
+                )
+                try await addTransaction.execute(input)
             }
             isSuccess = true
         } catch let error as AccountError {

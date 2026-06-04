@@ -134,6 +134,7 @@ struct PreviewHelpers {
             getAccounts: container.getAccounts,
             archiveAccount: container.archiveAccount,
             unarchiveAccount: container.unarchiveAccount,
+            deleteAccount: container.deleteAccount,
             getAccountBalance: container.getAccountBalance,
             userId: container.userId
         )
@@ -146,8 +147,7 @@ struct PreviewHelpers {
             toasty: container.toasty,
             addTransaction: container.addTransaction,
             updateTransaction: container.updateTransaction,
-            getInstitutions: container.getInstitutions,
-            getAccounts: container.getAccounts,
+            getAccountsWithInstitution: container.getAccountsWithInstitution,
             userId: container.userId,
             addAccountFormViewModel: container.makeAccountFormViewModel()
         )
@@ -167,8 +167,7 @@ struct PreviewHelpers {
             getTransactions: container.getTransactions,
             deleteTransaction: container.deleteTransaction,
             getAccount: container.getAccount,
-            getInstitutions: container.getInstitutions,
-            getAccounts: container.getAccounts,
+            getAccountsWithInstitution: container.getAccountsWithInstitution,
             userId: container.userId
         )
     }

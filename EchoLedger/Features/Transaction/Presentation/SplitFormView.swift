@@ -11,24 +11,26 @@ import SwiftUI
 struct SplitFormView: View {
 
     @Binding var split: TransactionSplit
-    let availableAccounts: [Account]
-    let institutionNames: [UUID: String]
+    let availableAccounts: [AccountDisplayItem]
     let onDelete: (() -> Void)?
+
+    @State private var amountText = ""
 
     var body: some View {
         HStack {
-            TextField("0,00", value: $split.amount, format: .number)
+            TextField("0,00€", text: $amountText)
                 .keyboardType(.decimalPad)
-                .frame(width: 80)
+                .onAppear {
+                    amountText = split.amount == 0 ? "": String(split.amount)
+                }
+                .onChange(of: amountText) { _, newValue in
+                    split.amount = newValue.toDouble
+                }
 
             Picker("", selection: $split.accountId) {
-                ForEach(availableAccounts, id: \.id) { account in
-                    if let institutionName = institutionNames[account.id] {
-                        Text("\(account.name) • \(institutionName)")
-                            .tag(account.id)
-                    } else {
-                        Text(account.name).tag(account.id)
-                    }
+                ForEach(availableAccounts) { item in
+                    Text(item.displayLabel)
+                        .tag(item.account.id)
                 }
             }
         }
@@ -47,8 +49,8 @@ struct SplitFormView: View {
     return List {
         SplitFormView(
             split: .constant(split),
-            availableAccounts: PreviewData.accounts,
-            institutionNames: [PreviewData.accountCourant.id: PreviewData.institutionBNP.name],
+            availableAccounts: [AccountDisplayItem(account: PreviewData.accountCourant,
+                                                   institutionName: PreviewData.institutionBNP.name)],
             onDelete: {}
         )
     }

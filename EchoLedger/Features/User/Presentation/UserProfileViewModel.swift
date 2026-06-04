@@ -57,7 +57,7 @@ final class UserProfileViewModel {
     private let getCurrentUserUseCase: GetCurrentUser
     private let updateUserUseCase: UpdateUser
     private let signOutUseCase: SignOut
-    private let deleteAccountUseCase: DeleteAccount
+    private let deleteUserAccountUseCase: DeleteUserAccount
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
@@ -81,7 +81,7 @@ final class UserProfileViewModel {
     ///   - getCurrentUser: Use case to fetch the current user profile.
     ///   - updateUser: Use case to update the user profile.
     ///   - signOut: Use case to sign out.
-    ///   - deleteAccount: Use case to delete the account.
+    ///   - deleteUserAccount: Use case to delete the account.
     ///   - linkAnonymousAccount: Use case to link an anonymous account to a permanent one.
     ///   - resetPassword: Use case to send a password reset email.
     ///   - userStoring: User repository for local cascade deletion.
@@ -95,7 +95,7 @@ final class UserProfileViewModel {
         getCurrentUser: GetCurrentUser,
         updateUser: UpdateUser,
         signOut: SignOut,
-        deleteAccount: DeleteAccount,
+        deleteUserAccount: DeleteUserAccount,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
@@ -111,7 +111,7 @@ final class UserProfileViewModel {
         self.getCurrentUserUseCase = getCurrentUser
         self.updateUserUseCase = updateUser
         self.signOutUseCase = signOut
-        self.deleteAccountUseCase = deleteAccount
+        self.deleteUserAccountUseCase = deleteUserAccount
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
         self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
@@ -196,11 +196,11 @@ final class UserProfileViewModel {
     }
 
     /// Deletes the Firebase account, Firestore document, and local SwiftData data.
-    func deleteAccount() async {
+    func deleteUserAccount() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            try await deleteAccountUseCase.execute()
+            try await deleteUserAccountUseCase.execute()
             try await userStoring.delete(by: userId)
             onSignOut()
         } catch {

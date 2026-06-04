@@ -28,7 +28,7 @@ extension DIContainer {
             getCurrentUser: getCurrentUser,
             updateUser: updateUser,
             signOut: signOut,
-            deleteAccount: deleteAccount,
+            deleteUserAccount: deleteUserAccount,
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             uploadAvatarPhoto: uploadAvatarPhoto,
@@ -55,6 +55,7 @@ extension DIContainer {
             updateInstitution: updateInstitution,
             archiveInstitution: archiveInstitution,
             unarchiveInstitution: unarchiveInstitution,
+            deleteInstitution: deleteInstitution,
             getInstitutions: getInstitutions,
             userId: userId,
             existingInstitution: existing,
@@ -72,6 +73,7 @@ extension DIContainer {
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
+            deleteAccount: deleteAccount,
             getAccountBalance: getAccountBalance,
             userId: userId
         )
@@ -83,6 +85,10 @@ extension DIContainer {
             toasty: toasty,
             addAccount: addAccount,
             updateAccount: updateAccount,
+            archiveAccount: archiveAccount,
+            unarchiveAccount: unarchiveAccount,
+            deleteAccount: deleteAccount,
+            addTransaction: addTransaction,
             getInstitutions: getInstitutions,
             addInstitutionFormViewModel: makeInstitutionFormViewModel(),
             userId: userId,
@@ -137,8 +143,7 @@ extension DIContainer {
             toasty: toasty,
             transferBetweenAccounts: transferBetweenAccounts,
             updateTransfer: updateTransfer,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId,
             existingTransfer: existing
         )
@@ -153,8 +158,7 @@ extension DIContainer {
             getTransactions: getTransactions,
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId
         )
     }
@@ -165,8 +169,7 @@ extension DIContainer {
             toasty: toasty,
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
+            getAccountsWithInstitution: getAccountsWithInstitution,
             userId: userId,
             addAccountFormViewModel: makeAccountFormViewModel(),
             existingTransaction: existing

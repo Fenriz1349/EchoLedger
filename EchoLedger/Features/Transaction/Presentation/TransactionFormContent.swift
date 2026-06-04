@@ -14,15 +14,18 @@ struct TransactionFormContent: View {
 
     var body: some View {
         Section("Montant") {
-            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+            HStack {
+                DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
 
+                Toggle(viewModel.isExpense ? "Dépense" : "Revenue", isOn: $viewModel.isIncome)
+                    .tint(.green)
+                    .fixedSize()
+            }
             Picker("Catégorie", selection: $viewModel.category) {
-                ForEach(TransactionCategory.allCases.filter(\.isUserSelectable), id: \.self) { category in
+                ForEach(viewModel.categoryList, id: \.self) { category in
                     Label(category.name, systemImage: category.icon).tag(category)
                 }
             }
-
-            Toggle("Dépense", isOn: $viewModel.isExpense)
         }
 
         Section("Label") {
@@ -38,7 +41,6 @@ struct TransactionFormContent: View {
                     SplitFormView(
                         split: $split,
                         availableAccounts: viewModel.availableAccounts,
-                        institutionNames: viewModel.institutionNames,
                         onDelete: viewModel.splits.count > 1 ? {
                             if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
                                 viewModel.removeSplit(at: index)
@@ -56,24 +58,27 @@ struct TransactionFormContent: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 }
-
-                Button {
-                    if let account = viewModel.nextAvailableAccount {
-                        viewModel.addSplit(for: account)
+                if !viewModel.isInitialBalance {
+                    Button {
+                        if let account = viewModel.nextAvailableAccount {
+                            viewModel.addSplit(for: account)
+                        }
+                    } label: {
+                        Label("Ajouter un split", systemImage: "plus")
                     }
-                } label: {
-                    Label("Ajouter un split", systemImage: "plus")
+                    .disabled(viewModel.nextAvailableAccount == nil)
                 }
-                .disabled(viewModel.nextAvailableAccount == nil)
             }
 
-            Button {
-                withAnimation { viewModel.showAddAccountForm.toggle() }
-            } label: {
-                Label(
-                    viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
-                    systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
-                )
+            if !viewModel.isInitialBalance {
+                Button {
+                    withAnimation { viewModel.showAddAccountForm.toggle() }
+                } label: {
+                    Label(
+                        viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
+                        systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
+                    )
+                }
             }
         }
 
