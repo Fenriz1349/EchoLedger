@@ -6,7 +6,7 @@
 ![SwiftData](https://img.shields.io/badge/Persistence-SwiftData-purple)
 ![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
-![Version](https://img.shields.io/badge/Version-0.4.0-blue)
+![Version](https://img.shields.io/badge/Version-0.10.0-blue)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
 A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, local persistence via **SwiftData**, and remote storage via **Firebase**.
@@ -129,11 +129,25 @@ App
 - [x] Bug fix — `AccountModel.update(from:)` was not persisting `institutionId`, causing institution changes to revert on next launch
 - [x] Bug fix — `AccountFormViewModel` was not pre-selecting the correct institution in edit mode, silently moving accounts to the first institution in the list
 
-### Phase 4 — Upcoming
+### Phase 4 — Delete & Archive UX (v0.10.0)
+
+- [x] Delete functionality for bank accounts and institutions with cascade rules
+- [x] Unified archive/delete UI pattern — toggle for reversible archive, button+alert for destructive delete
+- [x] Document picker architecture for PDFs and photos (`DocumentPickerSection` ViewModifier)
+- [x] Delete user profile with complete data cleanup
+- [x] Proper error handling in app bootstrap with toast feedback
+- [x] Refactored `UserProfileViewModel` — user is non-optional, loaded before ViewModel creation
+- [x] Moved user loading from lazy (views) to eager (AppEntryView.buildApp)
+- [x] AppCoordinator owns `UserProfileViewModel` for proper lifecycle management
+- [x] Naming consistency — "Profile" throughout (DeleteUserProfile, CreateUserProfile, etc.)
+- [x] Toolbar icons for secondary actions (edit, delete) instead of large buttons
+
+### Phase 5 — Upcoming
 
 - [ ] Dashboard with account balances and recent transactions
 - [ ] Archived accounts view with unarchive support
 - [ ] iPad layout support
+- [ ] Transaction document attachments
 
 ---
 
