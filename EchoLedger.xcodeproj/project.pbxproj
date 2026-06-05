@@ -221,7 +221,7 @@
 		6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */; };
 		6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
 		6838214C2FC8432000CA6761 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB12FC04F81007375C0 /* Transfer.swift */; };
-		6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
+		6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
 		6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C562FBF305500AE9F62 /* AccountDetailViewModel.swift */; };
 		683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C542FBF304300AE9F62 /* UnarchiveAccount.swift */; };
@@ -377,7 +377,7 @@
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
-		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
+		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
 		68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		68EF99E62FA344A100FEBC1A /* ExpireAnonymousSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */; };
 		68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */; };
@@ -604,7 +604,7 @@
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
-		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousSectionView.swift; sourceTree = "<group>"; };
+		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFormContent.swift; sourceTree = "<group>"; };
 		68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAnonymousSession.swift; sourceTree = "<group>"; };
@@ -897,7 +897,7 @@
 				683821BA2FC8874200CA6761 /* AvatarCircleView.swift */,
 				683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */,
 				68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */,
-				68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */,
+				68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */,
 				68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */,
 			);
 			path = Presentation;
@@ -1679,7 +1679,7 @@
 				683821AF2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
 				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
-				6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */,
+				6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */,
 				6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */,
 				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
 				6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
@@ -1858,7 +1858,7 @@
 				682C6C612FBF570800AE9F62 /* AccountBalanceChartView.swift in Sources */,
 				6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */,
 				6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */,
-				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */,
+				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */,
 				68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */,
 				683821C12FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */,
 				682C6C572FBF305500AE9F62 /* AccountDetailViewModel.swift in Sources */,

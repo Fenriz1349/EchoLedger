@@ -15,9 +15,7 @@ struct UserProfileView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
-                if viewModel.isAnonymous {
-                    UserProfileAnonymousSectionView(viewModel: viewModel)
-                } else if let user = viewModel.user {
+                if let user = viewModel.user {
                     UserProfileHeaderView(
                         user: user,
                         avatarDocument: viewModel.avatarDocument,

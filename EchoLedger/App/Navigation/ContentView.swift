@@ -37,9 +37,15 @@ struct ContentView: View {
                 .tabItem { Label("", systemImage: "building.columns") }
                 .tag(AppTab.accounts)
 
-            UserProfileView(viewModel: userProfileViewModel)
-                .tabItem { Label("", systemImage: "person.circle") }
-                .tag(AppTab.profile)
+            if userProfileViewModel.isAnonymous {
+                UserProfileAnonymousView(viewModel: userProfileViewModel)
+                    .tabItem { Label("", systemImage: "person.circle") }
+                    .tag(AppTab.profile)
+            } else {
+                UserProfileView(viewModel: userProfileViewModel)
+                    .tabItem { Label("", systemImage: "person.circle") }
+                    .tag(AppTab.profile)
+            }
         }
         .overlay(alignment: .bottom) {
             ZStack {

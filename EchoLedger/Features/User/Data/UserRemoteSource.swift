@@ -30,7 +30,7 @@ final class UserRemoteSource {
     /// Updates an existing user document in Firestore. Does not overwrite the firebaseUID field.
     /// - Parameter user: The domain User with updated values.
     func update(_ user: User) async throws {
-        try await document(for: user.id).setData(encode(user), merge: true)
+        try await document(for: user.id).setData(encode(user, forMerge: true), merge: true)
     }
 
     /// Adds the Firebase UID to an existing user document. Used when linking an anonymous account.
@@ -82,14 +82,15 @@ final class UserRemoteSource {
         return User(id: id, displayName: displayName, email: email, photoURL: data["photoURL"] as? String)
     }
 
-    private func encode(_ user: User) -> [String: Any] {
+    private func encode(_ user: User, forMerge: Bool = false) -> [String: Any] {
         var data: [String: Any] = [
             "id": user.id.uuidString,
             "displayName": user.displayName,
-            "email": user.email,
-            "photoURL": user.photoURL as Any
+            "email": user.email
         ]
-        if user.photoURL == nil {
+        if let photoURL = user.photoURL {
+            data["photoURL"] = photoURL
+        } else if forMerge {
             data["photoURL"] = FieldValue.delete()
         }
         return data
