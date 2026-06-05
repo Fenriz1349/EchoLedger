@@ -40,7 +40,7 @@ final class DIContainer {
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
-    let deleteUserAccount: DeleteUserProfil
+    let deleteUserProfil: DeleteUserProfil
     let linkAnonymousAccount: LinkAnonymousAccount
     let resetPassword: ResetPassword
 
@@ -113,7 +113,7 @@ final class DIContainer {
 
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteUserAccount = DeleteUserProfil(repository: authStoring)
+        self.deleteUserProfil = DeleteUserProfil(repository: authStoring, userStoring: userCloud, userId: userId)
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 

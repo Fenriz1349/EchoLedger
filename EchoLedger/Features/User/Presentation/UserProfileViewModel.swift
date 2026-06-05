@@ -57,12 +57,11 @@ final class UserProfileViewModel {
     private let getCurrentUserUseCase: GetCurrentUser
     private let updateUserUseCase: UpdateUser
     private let signOutUseCase: SignOut
-    private let deleteUserAccountUseCase: DeleteUserProfil
+    private let deleteUserProfilUseCase: DeleteUserProfil
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
     private let getUserPhotoUseCase: GetUserPhoto
-    private let userStoring: UserProviding
     private let userId: UUID
     let onSignOut: () -> Void
     let onSessionUpdated: (AuthSession) -> Void
@@ -86,7 +85,7 @@ final class UserProfileViewModel {
     ///   - getCurrentUser: Use case to fetch the current user profile.
     ///   - updateUser: Use case to update the user profile.
     ///   - signOut: Use case to sign out.
-    ///   - deleteUserAccount: Use case to delete the account.
+    ///   - deleteUserProfil: Use case to delete the profil.
     ///   - linkAnonymousAccount: Use case to link an anonymous account to a permanent one.
     ///   - resetPassword: Use case to send a password reset email.
     ///   - userStoring: User repository for local cascade deletion.
@@ -100,7 +99,7 @@ final class UserProfileViewModel {
         getCurrentUser: GetCurrentUser,
         updateUser: UpdateUser,
         signOut: SignOut,
-        deleteUserAccount: DeleteUserProfil,
+        deleteUserProfil: DeleteUserProfil,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
@@ -116,12 +115,11 @@ final class UserProfileViewModel {
         self.getCurrentUserUseCase = getCurrentUser
         self.updateUserUseCase = updateUser
         self.signOutUseCase = signOut
-        self.deleteUserAccountUseCase = deleteUserAccount
+        self.deleteUserProfilUseCase = deleteUserProfil
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
         self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
         self.getUserPhotoUseCase = getUserPhoto
-        self.userStoring = userStoring
         self.authSession = authSession
         self.userId = userId
         self.daysRemainingInDemo = daysRemainingInDemo
@@ -203,12 +201,12 @@ final class UserProfileViewModel {
     }
 
     /// Deletes the Firebase account, Firestore document, and local SwiftData data.
-    func deleteUserAccount() async {
+    func deleteUserProfil() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            try await deleteUserAccountUseCase.execute()
-            try await userStoring.delete(by: userId)
+            try await deleteUserProfilUseCase.execute()
+            toasty.showSuccess("Compte supprimé.")
             onSignOut()
         } catch {
             toasty.showError(error)

@@ -38,7 +38,7 @@ protocol AuthProviding {
     func signOut() async throws
 
     /// Permanently deletes the current user account and all associated remote data.
-    func deleteUserAccount() async throws
+    func deleteUserProfil() async throws
 
     /// Links the current anonymous account to a permanent email/password account.
     /// - Parameters:

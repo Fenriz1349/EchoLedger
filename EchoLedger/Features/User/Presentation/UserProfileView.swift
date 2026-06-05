@@ -48,7 +48,7 @@ struct UserProfileView: View {
             }
             .alert("Supprimer le compte", isPresented: $viewModel.showDeleteAlert) {
                 Button("Supprimer", role: .destructive) {
-                    Task { await viewModel.deleteUserAccount() }
+                    Task { await viewModel.deleteUserProfil() }
                 }
                 Button("Annuler", role: .cancel) {}
             } message: {

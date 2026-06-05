@@ -11,14 +11,22 @@ import Foundation
 final class DeleteUserProfil {
 
     private let repository: AuthProviding
+    private let userStoring: UserProviding
+    private let userId: UUID
 
-    /// - Parameter repository: The authentication provider used to delete the account.
-    init(repository: AuthProviding) {
+    /// - Parameters:
+    ///   - repository: The authentication provider used to delete the account.
+    ///   - userStoring: The user data provider for deleting user data.
+    ///   - userId: The internal user identifier.
+    init(repository: AuthProviding, userStoring: UserProviding, userId: UUID) {
         self.repository = repository
+        self.userStoring = userStoring
+        self.userId = userId
     }
 
-    /// Executes the account deletion.
+    /// Deletes user data, Firebase Auth account, and clears the local session.
     func execute() async throws {
-        try await repository.deleteUserAccount()
+        try? await userStoring.delete(by: userId)
+        try await repository.deleteUserProfil()
     }
 }

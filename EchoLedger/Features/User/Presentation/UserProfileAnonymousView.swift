@@ -16,28 +16,28 @@ struct UserProfileAnonymousView: View {
     @Bindable var viewModel: UserProfileViewModel
 
     var body: some View {
-        NavigationStack{
-            VStack(spacing: 16) {
 
-                VStack(spacing: 6) {
-                    Text("Mode démo")
-                        .font(.headline)
-                    if let days = viewModel.daysRemainingInDemo {
-                        Text("Il vous reste \(days) jour\(days > 1 ? "s" : "").")
-                            .font(.subheadline.bold())
-                            .foregroundColor(.orange)
-                    }
-                    Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. "
-                         + "Créez un compte pour y accéder depuis n'importe où.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+        NavigationStack{
+            VStack(spacing: 6) {
+                Text("Mode démo")
+                    .font(.headline)
+                if let days = viewModel.daysRemainingInDemo {
+                    Text("Il vous reste \(days) jour\(days > 1 ? "s" : "").")
+                        .font(.subheadline.bold())
+                        .foregroundColor(.orange)
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.orange.opacity(0.1))
-                .cornerRadius(12)
-                
+                Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. "
+                     + "Créez un compte pour y accéder depuis n'importe où.")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.orange.opacity(0.1))
+            .cornerRadius(12)
+
+            Form {
                 Text("Créer un compte permanent")
                     .font(.headline)
                 
@@ -54,7 +54,7 @@ struct UserProfileAnonymousView: View {
                     passwordState: $viewModel.linkPasswordState,
                     confirmPasswordState: $viewModel.linkConfirmPasswordState
                 )
-                
+
                 Button {
                     Task { await viewModel.linkAccount() }
                 } label: {

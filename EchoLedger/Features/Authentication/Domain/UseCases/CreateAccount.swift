@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Creates a new permanent user account with email, password, and display name.
+/// Creates a new permanent user profil with email, password, and display name.
 final class CreateAccount {
 
     private let repository: AuthProviding
