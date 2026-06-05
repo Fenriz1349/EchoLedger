@@ -206,7 +206,7 @@ final class UserProfileViewModel {
         defer { isLoading = false }
         do {
             try await deleteUserProfilUseCase.execute()
-            toasty.showSuccess("Compte supprimé.")
+            toasty.showInfo("Compte supprimé.")
             onSignOut()
         } catch {
             toasty.showError(error)

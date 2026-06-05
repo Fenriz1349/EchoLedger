@@ -51,11 +51,11 @@ final class AuthStoring: AuthProviding {
     }
 
     /// Creates a Firebase Auth account, generates an internal UUID, and persists the user document.
-    func createAccount(email: String,
+    func createUserProfil(email: String,
                        password: String,
                        firstName: String,
                        lastName: String) async throws -> AuthSession {
-        let firebaseUID = try await remote.createAccount(email: email, password: password)
+        let firebaseUID = try await remote.createUserProfil(email: email, password: password)
         let userId = UUID()
         let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
 

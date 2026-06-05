@@ -42,7 +42,7 @@ final class AuthDouble: AuthProviding {
         return sessionToReturn
     }
 
-    func createAccount(email: String,
+    func createUserProfil(email: String,
                        password: String,
                        firstName: String,
                        lastName: String) async throws -> AuthSession {

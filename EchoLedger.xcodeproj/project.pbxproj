@@ -100,7 +100,7 @@
 		683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */; };
 		683133C82F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */; };
 		683275EF2F9B65E900DA5796 /* SignInWithEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */; };
-		683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateAccount.swift */; };
+		683275F12F9B660000DA5796 /* CreateUserProfil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateUserProfil.swift */; };
 		683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
 		683275F52F9B66F500DA5796 /* DeleteUserProfil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteUserProfil.swift */; };
 		683275F72F9B670600DA5796 /* LinkAnonymousAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */; };
@@ -199,7 +199,7 @@
 		683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
 		683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF12F5AEAEC0009B885 /* TransactionProviding.swift */; };
 		683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5A2FBF367100AE9F62 /* RecentTransactionsView.swift */; };
-		683821342FC8432000CA6761 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateAccount.swift */; };
+		683821342FC8432000CA6761 /* CreateUserProfil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateUserProfil.swift */; };
 		683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C72FC82F8800CA6761 /* ArchiveInstitution.swift */; };
 		683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497172F753D8100337F74 /* UpdateTransactionInput.swift */; };
 		683821382FC8432000CA6761 /* TransferRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA52FC03E25007375C0 /* TransferRowView.swift */; };
@@ -487,7 +487,7 @@
 		683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionTests.swift; sourceTree = "<group>"; };
 		683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByCategoryTests.swift; sourceTree = "<group>"; };
 		683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithEmail.swift; sourceTree = "<group>"; };
-		683275F02F9B660000DA5796 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
+		683275F02F9B660000DA5796 /* CreateUserProfil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserProfil.swift; sourceTree = "<group>"; };
 		683275F22F9B662F00DA5796 /* SignInAnonymously.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAnonymously.swift; sourceTree = "<group>"; };
 		683275F42F9B66F500DA5796 /* DeleteUserProfil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserProfil.swift; sourceTree = "<group>"; };
 		683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAnonymousAccount.swift; sourceTree = "<group>"; };
@@ -688,7 +688,7 @@
 			isa = PBXGroup;
 			children = (
 				6807E5792F922C210099DCE4 /* ResolveSession.swift */,
-				683275F02F9B660000DA5796 /* CreateAccount.swift */,
+				683275F02F9B660000DA5796 /* CreateUserProfil.swift */,
 				683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */,
 				683275F22F9B662F00DA5796 /* SignInAnonymously.swift */,
 				6807E57B2F922C290099DCE4 /* SignOut.swift */,
@@ -1654,7 +1654,7 @@
 				683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */,
 				683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */,
 				683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */,
-				683821342FC8432000CA6761 /* CreateAccount.swift in Sources */,
+				683821342FC8432000CA6761 /* CreateUserProfil.swift in Sources */,
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
 				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
@@ -1832,7 +1832,7 @@
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				682C6C5B2FBF367100AE9F62 /* RecentTransactionsView.swift in Sources */,
 				6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
-				683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */,
+				683275F12F9B660000DA5796 /* CreateUserProfil.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
 				683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */,
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,

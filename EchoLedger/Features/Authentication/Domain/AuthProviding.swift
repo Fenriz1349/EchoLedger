@@ -21,14 +21,14 @@ protocol AuthProviding {
     /// - Returns: An `AuthSession` for the authenticated user.
     func signInWithEmail(email: String, password: String) async throws -> AuthSession
 
-    /// Creates a new account with email, password, and display name.
+    /// Creates a new profil with email, password, and display name.
     /// - Parameters:
     ///   - email: The user's email address.
     ///   - password: The user's password.
     ///   - firstName: The user's first name.
     ///   - lastName: The user's last name.
     /// - Returns: An `AuthSession` for the newly created user.
-    func createAccount(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession
+    func createUserProfil(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession
 
     /// Signs in anonymously, creating a demo session without a permanent account.
     /// - Returns: An anonymous `AuthSession`.

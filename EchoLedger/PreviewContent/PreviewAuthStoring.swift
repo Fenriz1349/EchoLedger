@@ -11,7 +11,7 @@ import Foundation
 final class PreviewAuthStoring: AuthProviding {
     func resolveSession() async throws -> AuthSession { PreviewData.authSession }
     func signInWithEmail(email: String, password: String) async throws -> AuthSession { PreviewData.authSession }
-    func createAccount(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
+    func createUserProfil(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
         PreviewData.authSession
     }
     func signInAnonymously() async throws -> AuthSession { PreviewData.authSession }

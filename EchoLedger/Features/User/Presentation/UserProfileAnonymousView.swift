@@ -36,6 +36,13 @@ struct UserProfileAnonymousView: View {
             .frame(maxWidth: .infinity)
             .background(Color.orange.opacity(0.1))
             .cornerRadius(12)
+            
+            Button {
+                Task { await viewModel.signOut() }
+            } label: {
+                CustomButtonLabel(message: "Se déconnecter", color: .orange, isSelected: false)
+            }
+            .disabled(viewModel.isLoading)
 
             Form {
                 Text("Créer un compte permanent")
