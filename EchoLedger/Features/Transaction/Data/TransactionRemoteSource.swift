@@ -100,6 +100,7 @@ final class TransactionRemoteSource {
             category: category,
             splits: splitsData.compactMap { decodeSplit($0) },
             attachmentURL: data["attachmentURL"] as? String,
+            attachmentContentType: data["attachmentContentType"] as? String,
             updatedAt: (data["updatedAt"] as? Timestamp)?.dateValue()
         )
     }
@@ -141,6 +142,9 @@ final class TransactionRemoteSource {
         ]
         if let attachmentURL = transaction.attachmentURL {
             data["attachmentURL"] = attachmentURL
+        }
+        if let attachmentContentType = transaction.attachmentContentType {
+            data["attachmentContentType"] = attachmentContentType
         }
         if let updatedAt = transaction.updatedAt {
             data["updatedAt"] = Timestamp(date: updatedAt)

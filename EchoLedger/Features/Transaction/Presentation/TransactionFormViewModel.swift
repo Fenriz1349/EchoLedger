@@ -19,7 +19,9 @@ final class TransactionFormViewModel {
     private let addTransaction: AddTransaction
     private let updateTransaction: UpdateTransaction
     private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let uploadTransactionDocument: UploadTransactionDocument
     private let userId: UUID
+    private let authSession: AuthSession
 
     // MARK: Form State
     var existingTransaction: Transaction?
@@ -30,6 +32,10 @@ final class TransactionFormViewModel {
     var splits: [TransactionSplit] = []
     var showAddAccountForm = false
     let addAccountFormViewModel: AccountFormViewModel
+
+    // MARK: Attachment State
+    var selectedAttachmentData: Data?
+    var selectedAttachmentType: AttachmentType?
 
     // MARK: UI State
     var availableAccounts: [AccountDisplayItem] = []
@@ -80,6 +86,10 @@ final class TransactionFormViewModel {
         existingTransaction?.category == .initialBalance
     }
 
+    var isAnonymous: Bool {
+        authSession.isAnonymous
+    }
+
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
@@ -93,7 +103,9 @@ final class TransactionFormViewModel {
         addTransaction: AddTransaction,
         updateTransaction: UpdateTransaction,
         getAccountsWithInstitution: GetAccountsWithInstitution,
+        uploadTransactionDocument: UploadTransactionDocument,
         userId: UUID,
+        authSession: AuthSession,
         addAccountFormViewModel: AccountFormViewModel,
         existingTransaction: Transaction? = nil
     ) {
@@ -101,7 +113,9 @@ final class TransactionFormViewModel {
         self.addTransaction = addTransaction
         self.updateTransaction = updateTransaction
         self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.uploadTransactionDocument = uploadTransactionDocument
         self.userId = userId
+        self.authSession = authSession
         self.existingTransaction = existingTransaction
         self.addAccountFormViewModel = addAccountFormViewModel
 
@@ -155,6 +169,25 @@ final class TransactionFormViewModel {
         splits.remove(at: index)
     }
 
+    /// Stores the selected document in memory. Does not upload anything.
+    /// - Parameters:
+    ///   - data: The selected file data.
+    ///   - type: The type of the selected document.
+    func selectAttachment(data: Data, type: AttachmentType) {
+        selectedAttachmentData = data
+        selectedAttachmentType = type
+    }
+
+    /// Clears the selected document.
+    func clearAttachment() {
+        selectedAttachmentData = nil
+        selectedAttachmentType = nil
+    }
+
+    func showSimulatorWarning() {
+        toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
+    }
+
     /// Validates and submits the transaction.
     func submit() async {
         guard totalAmount > 0 else {
@@ -198,7 +231,14 @@ final class TransactionFormViewModel {
                     category: category,
                     splits: splits
                 )
-                try await addTransaction.execute(input)
+                let created = try await addTransaction.execute(input)
+                if let data = selectedAttachmentData, let type = selectedAttachmentType {
+                    do {
+                        try await uploadTransactionDocument.execute(data: data, attachmentType: type, transaction: created)
+                    } catch {
+                        toasty.showError(error)
+                    }
+                }
             }
             isSuccess = true
         } catch {
