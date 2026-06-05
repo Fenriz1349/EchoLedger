@@ -1,5 +1,5 @@
 //
-//  DeleteUserProfil.swift
+//  DeleteUserProfile.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 24/04/2026.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// Permanently deletes the current user account and all associated remote data.
-final class DeleteUserProfil {
+final class DeleteUserProfile {
 
     private let repository: AuthProviding
     private let userStoring: UserProviding
@@ -27,6 +27,6 @@ final class DeleteUserProfil {
     /// Deletes user data, Firebase Auth account, and clears the local session.
     func execute() async throws {
         try? await userStoring.delete(by: userId)
-        try await repository.deleteUserProfil()
+        try await repository.deleteUserProfile()
     }
 }

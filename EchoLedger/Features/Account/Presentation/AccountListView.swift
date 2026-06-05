@@ -27,7 +27,7 @@ struct AccountListView: View {
                         onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
                         onEditInstitution: { editInstitution = $0 }
                     )
-                    
+
                     Section {
                         Button { sheet = .add } label: {
                             CustomButtonLabel(iconLeading: "plus",
@@ -39,7 +39,7 @@ struct AccountListView: View {
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal)
-                        
+
                         Button { showTransferForm = true } label: {
                             CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
                                               message: "Ajouter un transfert",
@@ -51,7 +51,7 @@ struct AccountListView: View {
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal)
                     }
-                    
+
                     if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
                         Section {
                             let count = coordinator.accountListViewModel.archivedAccounts.count

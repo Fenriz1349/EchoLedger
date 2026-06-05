@@ -40,7 +40,7 @@ final class AuthRemoteSource {
     ///   - email: The user's email address.
     ///   - password: The user's password.
     /// - Returns: The Firebase UID of the newly created user.
-    func createUserProfil(email: String, password: String) async throws -> String {
+    func createUserProfile(email: String, password: String) async throws -> String {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             return result.user.uid

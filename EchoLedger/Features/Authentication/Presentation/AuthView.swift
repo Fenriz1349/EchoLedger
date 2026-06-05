@@ -23,7 +23,7 @@ struct AuthView: View {
         _authViewModel = State(initialValue: AuthViewModel(
             toasty: toasty,
             signInWithEmail: SignInWithEmail(repository: authStoring),
-            createUserProfil: CreateUserProfil(repository: authStoring),
+            createUserProfile: CreateUserProfile(repository: authStoring),
             signInAnonymously: SignInAnonymously(repository: authStoring),
             onAuthSuccess: onAuthSuccess,
             resetPassword: ResetPassword(repository: authStoring)

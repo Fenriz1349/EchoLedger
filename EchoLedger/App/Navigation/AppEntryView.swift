@@ -63,36 +63,51 @@ struct AppEntryView: View {
             }
         }
 
-        buildApp(session: session)
+        await buildApp(session: session)
         try? await minimumDelay
         withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
     }
 
     /// Assembles the full dependency graph for the given session.
-    /// Warms the local user cache so profile data is available without waiting for a manual sync.
+    /// Loads the current user profile and warms the local cache.
     /// - Parameter session: The authenticated session to build from.
-    private func buildApp(session: AuthSession) {
+    private func buildApp(session: AuthSession) async {
         let newContainer = DIContainer(
             userId: session.userId,
             toasty: toasty,
             authStoring: authStoring,
             authSession: session
         )
-        container = newContainer
-        coordinator = AppCoordinator(container: newContainer, onSignOut: resetToAuth)
-        Task {
-            try? await newContainer.getCurrentUser.execute()
+
+        do {
+            let user = try await newContainer.getCurrentUser.execute()
+
+            container = newContainer
+            coordinator = AppCoordinator(
+                container: newContainer,
+                user: user,
+                onSignOut: resetToAuth,
+                onSessionUpdated: { [weak newContainer] session in
+                    newContainer?.authSession = session
+                }
+            )
+
             #if !CLOUD_TARGET
             await newContainer.syncManager.sync()
             #endif
+        } catch {
+            toasty.showError(error)
+            resetToAuth()
         }
     }
 
     /// Called on successful authentication from AuthView.
     /// - Parameter session: The authenticated session to build from.
     private func handleAuthSuccess(session: AuthSession) {
-        buildApp(session: session)
-        withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+        Task {
+            await buildApp(session: session)
+            withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+        }
     }
 
     /// Tears down the app state and returns to the authentication screen.

@@ -50,12 +50,12 @@ final class AuthStoring: AuthProviding {
         return AuthSession(userId: userId, isAnonymous: false)
     }
 
-    /// Creates a Firebase Auth account, generates an internal UUID, and persists the user document.
-    func createUserProfil(email: String,
-                       password: String,
-                       firstName: String,
-                       lastName: String) async throws -> AuthSession {
-        let firebaseUID = try await remote.createUserProfil(email: email, password: password)
+    /// Creates a Firebase Auth profile, generates an internal UUID, and persists the user document.
+    func createUserProfile(email: String,
+                           password: String,
+                           firstName: String,
+                           lastName: String) async throws -> AuthSession {
+        let firebaseUID = try await remote.createUserProfile(email: email, password: password)
         let userId = UUID()
         let user = User(id: userId, displayName: "\(firstName)|\(lastName)", email: email)
 
@@ -97,7 +97,7 @@ final class AuthStoring: AuthProviding {
     }
 
     /// Deletes the Firestore user document, the Firebase Auth account, and clears the local session.
-    func deleteUserProfil() async throws {
+    func deleteUserProfile() async throws {
         guard let userId = local.fetchUserId() else {
             throw AuthError.noSessionFound
         }

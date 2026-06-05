@@ -12,11 +12,9 @@ struct ContentView: View {
     @Environment(DIContainer.self) private var container
     let coordinator: AppCoordinator
     @State private var selectedTab: AppTab = .dashboard
-    @State private var userProfileViewModel: UserProfileViewModel
 
     init(coordinator: AppCoordinator) {
         self.coordinator = coordinator
-        self._userProfileViewModel = State(initialValue: coordinator.makeUserProfileViewModel())
     }
 
     var body: some View {
@@ -37,12 +35,12 @@ struct ContentView: View {
                 .tabItem { Label("", systemImage: "building.columns") }
                 .tag(AppTab.accounts)
 
-            if userProfileViewModel.isAnonymous {
-                UserProfileAnonymousView(viewModel: userProfileViewModel)
+            if container.authSession.isAnonymous {
+                UserProfileAnonymousView(viewModel: coordinator.userProfileViewModel)
                     .tabItem { Label("", systemImage: "person.circle") }
                     .tag(AppTab.profile)
             } else {
-                UserProfileView(viewModel: userProfileViewModel)
+                UserProfileView(viewModel: coordinator.userProfileViewModel)
                     .tabItem { Label("", systemImage: "person.circle") }
                     .tag(AppTab.profile)
             }

@@ -17,7 +17,7 @@ struct UserProfileAnonymousView: View {
 
     var body: some View {
 
-        NavigationStack{
+        NavigationStack {
             VStack(spacing: 6) {
                 Text("Mode démo")
                     .font(.headline)
@@ -36,7 +36,7 @@ struct UserProfileAnonymousView: View {
             .frame(maxWidth: .infinity)
             .background(Color.orange.opacity(0.1))
             .cornerRadius(12)
-            
+
             Button {
                 Task { await viewModel.signOut() }
             } label: {
@@ -47,7 +47,7 @@ struct UserProfileAnonymousView: View {
             Form {
                 Text("Créer un compte permanent")
                     .font(.headline)
-                
+
                 AuthFormContent(
                     isSignUp: .constant(true),
                     firstName: $viewModel.linkFirstName,
@@ -74,7 +74,6 @@ struct UserProfileAnonymousView: View {
                 .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
             }
         }
-        .task { await viewModel.load() }
         .overlay {
             if viewModel.isLoading {
                 EchoProgressView()

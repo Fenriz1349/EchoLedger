@@ -39,20 +39,20 @@ struct AccountDetailView: View {
                             .font(.subheadline)
                     }
                 }
-                
+
                 // MARK: Charts
                 if !viewModel.expenseChartData.isEmpty {
                     Section {
                         ExpensePieChartView(data: viewModel.expenseChartData)
                     }
                 }
-                
+
                 if !viewModel.incomeChartData.isEmpty {
                     Section {
                         IncomePieChartView(data: viewModel.incomeChartData)
                     }
                 }
-                
+
                 // MARK: Recent transactions
                 if !viewModel.recentItems.isEmpty {
                     RecentTransactionsView(

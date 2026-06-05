@@ -24,14 +24,14 @@ struct UserProfileActionsView: View {
                     .foregroundColor(.accentColor)
             }
             .disabled(viewModel.isLoading)
-            
+
             Button {
                 Task { await viewModel.signOut() }
             } label: {
                 CustomButtonLabel(message: "Se déconnecter", color: .orange, isSelected: false)
             }
             .disabled(viewModel.isLoading)
-            
+
             Button {
                 viewModel.showDeleteAlert = true
             } label: {

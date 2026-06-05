@@ -24,6 +24,9 @@ final class CreateUserProfile {
     ///   - lastName: The user's last name.
     /// - Returns: An `AuthSession` for the newly created user.
     func execute(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
-        try await repository.createUserProfile(email: email, password: password, firstName: firstName, lastName: lastName)
+        try await repository.createUserProfile(email: email,
+                                               password: password,
+                                               firstName: firstName,
+                                               lastName: lastName)
     }
 }
