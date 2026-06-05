@@ -1,5 +1,5 @@
 //
-//  UserProfileFormView.swift
+//  UserProfileFormContent.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 30/04/2026.
@@ -10,7 +10,7 @@ import CustomTextFields
 import CustomLabels
 
 /// Displays user profile fields in read mode or edit mode.
-struct UserProfileFormView: View {
+struct UserProfileFormContent: View {
 
     @Bindable var viewModel: UserProfileViewModel
 
@@ -58,6 +58,6 @@ struct UserProfileFormView: View {
 #Preview {
     let viewModel = PreviewHelpers.makeUserProfileViewModel()
     viewModel.startEditing()
-    return UserProfileFormView(viewModel: viewModel)
+    return UserProfileFormContent(viewModel: viewModel)
         .padding()
 }

@@ -26,7 +26,7 @@ struct UserProfileView: View {
                         onEditBlocked: DocumentError.isSimulator ? { viewModel.showSimulatorWarning() } : nil,
                     )
                     if viewModel.isEditing {
-                        UserProfileFormView(viewModel: viewModel)
+                        UserProfileFormContent(viewModel: viewModel)
                             .padding(.horizontal, 24)
                     }
                     Divider()
