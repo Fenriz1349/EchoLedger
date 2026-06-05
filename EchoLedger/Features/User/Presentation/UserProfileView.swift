@@ -61,6 +61,11 @@ struct UserProfileView: View {
             }
         }
         .task { await viewModel.load() }
+        .overlay {
+            if viewModel.isLoading || viewModel.isUploadingAvatar {
+                EchoProgressView()
+            }
+        }
     }
 }
 

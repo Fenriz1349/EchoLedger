@@ -25,50 +25,46 @@ struct AccountDetailView: View {
 
     var body: some View {
         Group {
-            if viewModel.isLoading {
-                EchoLedgerLoader().frame(width: 80, height: 80)
-            } else {
-                List {
-                    // MARK: Balance
-                    Section("Solde") {
-                        HStack {
-                            Text(viewModel.balance.toEuro)
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(viewModel.balance >= 0 ? Color.green : Color.red)
-                            Spacer()
-                            Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
-                                .foregroundStyle(.secondary)
-                                .font(.subheadline)
-                        }
+            List {
+                // MARK: Balance
+                Section("Solde") {
+                    HStack {
+                        Text(viewModel.balance.toEuro)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(viewModel.balance >= 0 ? Color.green : Color.red)
+                        Spacer()
+                        Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
+                            .foregroundStyle(.secondary)
+                            .font(.subheadline)
                     }
-
-                    // MARK: Charts
-                    if !viewModel.expenseChartData.isEmpty {
-                        Section {
-                            ExpensePieChartView(data: viewModel.expenseChartData)
-                        }
+                }
+                
+                // MARK: Charts
+                if !viewModel.expenseChartData.isEmpty {
+                    Section {
+                        ExpensePieChartView(data: viewModel.expenseChartData)
                     }
-
-                    if !viewModel.incomeChartData.isEmpty {
-                        Section {
-                            IncomePieChartView(data: viewModel.incomeChartData)
-                        }
+                }
+                
+                if !viewModel.incomeChartData.isEmpty {
+                    Section {
+                        IncomePieChartView(data: viewModel.incomeChartData)
                     }
-
-                    // MARK: Recent transactions
-                    if !viewModel.recentItems.isEmpty {
-                        RecentTransactionsView(
-                            items: viewModel.recentItems,
-                            accountNames: viewModel.accountNames,
-                            onEdit: { editTransaction = $0 },
-                            onDelete: { transaction in Task { await viewModel.delete(transaction) } },
-                            onTapTransfer: { transfer in
-                                selectedTransfer = transfer
-                            },
-                            onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } }
-                        )
-                    }
+                }
+                
+                // MARK: Recent transactions
+                if !viewModel.recentItems.isEmpty {
+                    RecentTransactionsView(
+                        items: viewModel.recentItems,
+                        accountNames: viewModel.accountNames,
+                        onEdit: { editTransaction = $0 },
+                        onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                        onTapTransfer: { transfer in
+                            selectedTransfer = transfer
+                        },
+                        onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } }
+                    )
                 }
             }
         }
@@ -119,6 +115,11 @@ struct AccountDetailView: View {
         .task {
             viewModel.onNotFound = { dismiss() }
             await viewModel.load()
+        }
+        .overlay {
+            if viewModel.isLoading {
+                EchoProgressView()
+            }
         }
     }
 }

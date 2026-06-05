@@ -17,10 +17,7 @@ struct TransactionListView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if coordinator.transactionListViewModel.isLoading {
-                    EchoLedgerLoader()
-                        .frame(width: 80, height: 80)
-                } else if coordinator.transactionListViewModel.transactions.isEmpty {
+                if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")
                         .foregroundStyle(.secondary)
                 } else {
@@ -86,6 +83,11 @@ struct TransactionListView: View {
             }
             .task {
                 await coordinator.transactionListViewModel.load()
+            }
+        }
+        .overlay {
+            if coordinator.transactionListViewModel.isLoading {
+                EchoProgressView()
             }
         }
     }

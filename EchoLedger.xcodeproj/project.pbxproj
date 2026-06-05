@@ -27,13 +27,16 @@
 		681314182FD2B34100F74B8D /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314162FD2B34100F74B8D /* DocumentPickerView.swift */; };
 		6813141A2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */; };
 		6813141B2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */; };
+		6813141D2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */; };
+		6813141E2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */; };
+		681314232FD2D09600F74B8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681314222FD2D09600F74B8D /* GoogleService-Info.plist */; };
+		681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681314222FD2D09600F74B8D /* GoogleService-Info.plist */; };
 		6813E8012F6D3BFE00344774 /* InstitutionDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */; };
 		6813E8052F6D3C3300344774 /* GetInstitutionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */; };
 		6813E8072F6D3C4B00344774 /* GetInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */; };
 		6813E80B2F6D3CC900344774 /* AddInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8092F6D3CC900344774 /* AddInstitutionTests.swift */; };
 		6813E80D2F6D3CDC00344774 /* UpdateInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E80C2F6D3CDC00344774 /* UpdateInstitutionTests.swift */; };
 		6813E80F2F6D3CFC00344774 /* DeleteInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E80E2F6D3CFC00344774 /* DeleteInstitutionTests.swift */; };
-		6813E8112F6D4FEA00344774 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
 		6813E8142F6D51ED00344774 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8132F6D51ED00344774 /* FirebaseAuth */; };
 		6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8152F6D51ED00344774 /* FirebaseFirestore */; };
 		6813E8192F6D568900344774 /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8182F6D568900344774 /* UserRemote.swift */; };
@@ -254,7 +257,6 @@
 		683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D22FC8432000CA6761 /* FirebaseFirestore */; };
 		683821772FC8432000CA6761 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA32F5ACF700009B885 /* Assets.xcassets */; };
 		683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA42F5ACF700009B885 /* Localizable.xcstrings */; };
-		683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
 		683821892FC8492A00CA6761 /* DIContainerCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821882FC8492A00CA6761 /* DIContainerCloud.swift */; };
 		6838218B2FC8493F00CA6761 /* UserCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821862FC8491000CA6761 /* UserCloudStoring.swift */; };
 		6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */; };
@@ -415,13 +417,14 @@
 		6812CFC12F878BF50019F634 /* AccountRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRowView.swift; sourceTree = "<group>"; };
 		681314162FD2B34100F74B8D /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
 		681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerSection.swift; sourceTree = "<group>"; };
+		6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoProgressView.swift; sourceTree = "<group>"; };
+		681314222FD2D09600F74B8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDouble.swift; sourceTree = "<group>"; };
 		6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionsTests.swift; sourceTree = "<group>"; };
 		6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E8092F6D3CC900344774 /* AddInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E80C2F6D3CDC00344774 /* UpdateInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E80E2F6D3CFC00344774 /* DeleteInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitutionTests.swift; sourceTree = "<group>"; };
-		6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6813E8172F6D535F00344774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6813E8182F6D568900344774 /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		6813E81A2F6D913200344774 /* GetAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccounts.swift; sourceTree = "<group>"; };
@@ -1059,7 +1062,7 @@
 				685A1EA52F5ACF700009B885 /* Resources */,
 				684497122F7537F600337F74 /* PreviewContent */,
 				6813E8172F6D535F00344774 /* Info.plist */,
-				6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */,
+				681314222FD2D09600F74B8D /* GoogleService-Info.plist */,
 			);
 			path = EchoLedger;
 			sourceTree = "<group>";
@@ -1362,6 +1365,7 @@
 			children = (
 				68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */,
 				68EF99F22FA383EB00FEBC1A /* LoadingView.swift */,
+				6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */,
 			);
 			path = Loader;
 			sourceTree = "<group>";
@@ -1499,7 +1503,7 @@
 			files = (
 				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
 				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
-				683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */,
+				681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,7 +1513,7 @@
 			files = (
 				685A1EB72F5ACF700009B885 /* Assets.xcassets in Resources */,
 				685A1EB82F5ACF700009B885 /* Localizable.xcstrings in Resources */,
-				6813E8112F6D4FEA00344774 /* GoogleService-Info.plist in Resources */,
+				681314232FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1577,6 +1581,7 @@
 				683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */,
 				683820EF2FC8432000CA6761 /* UserRemoteSource.swift in Sources */,
 				683820F02FC8432000CA6761 /* TransactionListItem.swift in Sources */,
+				6813141D2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */,
 				683821B52FC8841400CA6761 /* UserAvatarView.swift in Sources */,
 				683820F12FC8432000CA6761 /* DashboardView.swift in Sources */,
 				683820F22FC8432000CA6761 /* DeleteTransaction.swift in Sources */,
@@ -1754,6 +1759,7 @@
 				683821B22FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
+				6813141E2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */,
 				6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */,
 				683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */,
 				683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */,

@@ -114,10 +114,7 @@ struct AuthView: View {
         }
         .overlay {
             if viewModel.isLoading {
-                ZStack {
-                    Color.black.opacity(0.4).ignoresSafeArea()
-                    EchoLedgerLoader().frame(width: 80, height: 80)
-                }
+                EchoProgressView()
             }
         }
     }

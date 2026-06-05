@@ -17,9 +17,6 @@ struct TransferFormView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if viewModel.isLoading {
-                    EchoLedgerLoader().frame(width: 80, height: 80)
-                } else {
                     Form {
                         Section("Comptes") {
                             Picker("De", selection: $viewModel.sourceAccount) {
@@ -75,7 +72,6 @@ struct TransferFormView: View {
                         }
                     }
                 }
-            }
             .navigationTitle(viewModel.isEditing ? "Modifier le transfert" : "Transfert")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -88,6 +84,11 @@ struct TransferFormView: View {
             }
             .task {
                 await viewModel.loadAccounts()
+            }
+        }
+        .overlay {
+            if viewModel.isLoading {
+                EchoProgressView()
             }
         }
     }

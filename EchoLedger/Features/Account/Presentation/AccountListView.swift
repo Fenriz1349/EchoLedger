@@ -19,60 +19,56 @@ struct AccountListView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if coordinator.accountListViewModel.isLoading {
-                    EchoLedgerLoader().frame(width: 80, height: 80)
-                } else {
-                    List {
-                        AccountGroupList(
-                            items: coordinator.accountListViewModel.institutionsWithAccounts,
-                            balances: coordinator.accountListViewModel.balances,
-                            onEdit: { sheet = .edit($0) },
-                            onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
-                            onEditInstitution: { editInstitution = $0 }
-                        )
-
+                List {
+                    AccountGroupList(
+                        items: coordinator.accountListViewModel.institutionsWithAccounts,
+                        balances: coordinator.accountListViewModel.balances,
+                        onEdit: { sheet = .edit($0) },
+                        onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
+                        onEditInstitution: { editInstitution = $0 }
+                    )
+                    
+                    Section {
+                        Button { sheet = .add } label: {
+                            CustomButtonLabel(iconLeading: "plus",
+                                              message: "Ajouter un compte",
+                                              color: .accentColor,
+                                              isSelected: true)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
+                        
+                        Button { showTransferForm = true } label: {
+                            CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
+                                              message: "Ajouter un transfert",
+                                              color: .accentColor,
+                                              isSelected: false)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
+                    }
+                    
+                    if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
                         Section {
-                            Button { sheet = .add } label: {
-                                CustomButtonLabel(iconLeading: "plus",
-                                                  message: "Ajouter un compte",
-                                                  color: .accentColor,
-                                                  isSelected: true)
-                            }
-                            .buttonStyle(.plain)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.horizontal)
-
-                            Button { showTransferForm = true } label: {
-                                CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
-                                                  message: "Ajouter un transfert",
-                                                  color: .accentColor,
-                                                  isSelected: false)
-                            }
-                            .buttonStyle(.plain)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.horizontal)
-                        }
-
-                        if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
-                            Section {
-                                let count = coordinator.accountListViewModel.archivedAccounts.count
-                                DisclosureGroup("Comptes archivés (\(count))") {
-                                    AccountGroupList(
-                                        items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
-                                        balances: coordinator.accountListViewModel.balances,
-                                        onEdit: { sheet = .edit($0) },
-                                        onArchive: nil,
-                                        onEditInstitution: { editInstitution = $0 }
-                                    )
-                                }
+                            let count = coordinator.accountListViewModel.archivedAccounts.count
+                            DisclosureGroup("Comptes archivés (\(count))") {
+                                AccountGroupList(
+                                    items: coordinator.accountListViewModel.institutionsWithArchivedAccounts,
+                                    balances: coordinator.accountListViewModel.balances,
+                                    onEdit: { sheet = .edit($0) },
+                                    onArchive: nil,
+                                    onEditInstitution: { editInstitution = $0 }
+                                )
                             }
                         }
                     }
-                    .refreshable {
-                        await coordinator.accountListViewModel.load()
-                    }
+                }
+                .refreshable {
+                    await coordinator.accountListViewModel.load()
                 }
             }
             .navigationTitle("Comptes")
@@ -113,6 +109,11 @@ struct AccountListView: View {
             }
             .task {
                 await coordinator.accountListViewModel.load()
+            }
+        }
+        .overlay {
+            if coordinator.accountListViewModel.isLoading {
+                EchoProgressView()
             }
         }
     }
