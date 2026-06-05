@@ -33,6 +33,10 @@
 		681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681314222FD2D09600F74B8D /* GoogleService-Info.plist */; };
 		681314262FD30D5900F74B8D /* TransactionAttachmentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314252FD30D5900F74B8D /* TransactionAttachmentSection.swift */; };
 		681314272FD30D5900F74B8D /* TransactionAttachmentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314252FD30D5900F74B8D /* TransactionAttachmentSection.swift */; };
+		681314292FD3159100F74B8D /* DocumentDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314282FD3159100F74B8D /* DocumentDisplayView.swift */; };
+		6813142A2FD3159100F74B8D /* DocumentDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314282FD3159100F74B8D /* DocumentDisplayView.swift */; };
+		6813142F2FD31B8000F74B8D /* SafariDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813142E2FD31B8000F74B8D /* SafariDocumentView.swift */; };
+		681314302FD31B8000F74B8D /* SafariDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813142E2FD31B8000F74B8D /* SafariDocumentView.swift */; };
 		6813E8012F6D3BFE00344774 /* InstitutionDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */; };
 		6813E8052F6D3C3300344774 /* GetInstitutionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */; };
 		6813E8072F6D3C4B00344774 /* GetInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */; };
@@ -422,6 +426,8 @@
 		6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoProgressView.swift; sourceTree = "<group>"; };
 		681314222FD2D09600F74B8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		681314252FD30D5900F74B8D /* TransactionAttachmentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAttachmentSection.swift; sourceTree = "<group>"; };
+		681314282FD3159100F74B8D /* DocumentDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDisplayView.swift; sourceTree = "<group>"; };
+		6813142E2FD31B8000F74B8D /* SafariDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariDocumentView.swift; sourceTree = "<group>"; };
 		6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDouble.swift; sourceTree = "<group>"; };
 		6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionsTests.swift; sourceTree = "<group>"; };
 		6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionTests.swift; sourceTree = "<group>"; };
@@ -961,6 +967,8 @@
 				681314162FD2B34100F74B8D /* DocumentPickerView.swift */,
 				681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */,
 				683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */,
+				681314282FD3159100F74B8D /* DocumentDisplayView.swift */,
+				6813142E2FD31B8000F74B8D /* SafariDocumentView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1610,6 +1618,7 @@
 				683821022FC8432000CA6761 /* AuthSession.swift in Sources */,
 				683821032FC8432000CA6761 /* DeleteTransfer.swift in Sources */,
 				683821042FC8432000CA6761 /* AuthError.swift in Sources */,
+				6813142A2FD3159100F74B8D /* DocumentDisplayView.swift in Sources */,
 				683821052FC8432000CA6761 /* SignOut.swift in Sources */,
 				6838218D2FC8495200CA6761 /* AccountCloudStoring.swift in Sources */,
 				683821062FC8432000CA6761 /* TransactionListViewModel.swift in Sources */,
@@ -1685,6 +1694,7 @@
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
 				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
 				6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */,
+				6813142F2FD31B8000F74B8D /* SafariDocumentView.swift in Sources */,
 				6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */,
 				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
 				6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
@@ -1776,6 +1786,7 @@
 				6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */,
 				684497262F7569AA00337F74 /* TransactionListView.swift in Sources */,
 				685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */,
+				681314302FD31B8000F74B8D /* SafariDocumentView.swift in Sources */,
 				684497162F753D4F00337F74 /* AddTransactionInput.swift in Sources */,
 				685A1EA82F5ACF700009B885 /* UpdateAccount.swift in Sources */,
 				685A1ED92F5AE6D70009B885 /* DeleteInstitution.swift in Sources */,
@@ -1808,6 +1819,7 @@
 				6844973D2F7579A500337F74 /* AccountFormViewModel.swift in Sources */,
 				681B470B2F7FEDB0000CC7C4 /* AccountPickerView.swift in Sources */,
 				685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */,
+				681314292FD3159100F74B8D /* DocumentDisplayView.swift in Sources */,
 				6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */,
 				683821AE2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				685A1EAA2F5ACF700009B885 /* InstitutionCategory.swift in Sources */,

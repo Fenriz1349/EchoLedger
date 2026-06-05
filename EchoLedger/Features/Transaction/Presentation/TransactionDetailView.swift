@@ -52,6 +52,12 @@ struct TransactionDetailView: View {
                 }
             }
 
+            if currentTransaction.attachmentURL != nil {
+                Section("Justificatif") {
+                    DocumentDisplayView(document: coordinator.transactionDocument(for: currentTransaction))
+                }
+            }
+
         }
         .navigationTitle(currentTransaction.label)
         .navigationBarTitleDisplayMode(.inline)
