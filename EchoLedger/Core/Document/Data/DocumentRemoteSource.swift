@@ -15,6 +15,13 @@ final class DocumentRemoteSource {
 
     private let storage = Storage.storage()
 
+    /// Throws on simulator where Firebase Storage TLS connections fail.
+    private func guardSimulator() throws {
+        #if targetEnvironment(simulator)
+        throw DocumentError.simulatorNotSupported
+        #endif
+    }
+
     /// Uploads a transaction attachment and returns its download URL.
     /// - Parameters:
     ///   - data: The file data to upload.
@@ -28,6 +35,7 @@ final class DocumentRemoteSource {
         userId: UUID,
         transactionId: UUID
     ) async throws -> String {
+        try guardSimulator()
         let metadata = StorageMetadata()
         metadata.contentType = mimeType
         let fileExtension = mimeType == "application/pdf" ? "pdf" : "jpg"
@@ -44,6 +52,7 @@ final class DocumentRemoteSource {
     ///   - userId: The identifier of the owning user.
     /// - Returns: The download URL string for the uploaded avatar.
     func uploadAvatarPhoto(_ data: Data, userId: UUID) async throws -> String {
+        try guardSimulator()
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         let reference = storage.reference()

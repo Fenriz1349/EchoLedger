@@ -35,7 +35,7 @@ final class AuthViewModel {
     // MARK: Dependencies
     private let toasty: ToastyManager
     private let signInWithEmailUseCase: SignInWithEmail
-    private let createAccountUseCase: CreateAccount
+    private let createUserProfileUseCase: CreateUserProfile
     private let signInAnonymouslyUseCase: SignInAnonymously
     private let resetPasswordUseCase: ResetPassword
     let onAuthSuccess: (AuthSession) -> Void
@@ -53,20 +53,20 @@ final class AuthViewModel {
     /// - Parameters:
     ///   - toasty: The shared toast notification manager.
     ///   - signInWithEmail: Use case for email/password sign-in.
-    ///   - createAccount: Use case for new account creation.
+    ///   - createUserProfile: Use case for new profile creation.
     ///   - signInAnonymously: Use case for anonymous demo session.
     ///   - onAuthSuccess: Closure called with the session once authentication succeeds.
     init(
         toasty: ToastyManager,
         signInWithEmail: SignInWithEmail,
-        createAccount: CreateAccount,
+        createUserProfile: CreateUserProfile,
         signInAnonymously: SignInAnonymously,
         onAuthSuccess: @escaping (AuthSession) -> Void,
         resetPassword: ResetPassword,
     ) {
         self.toasty = toasty
         self.signInWithEmailUseCase = signInWithEmail
-        self.createAccountUseCase = createAccount
+        self.createUserProfileUseCase = createUserProfile
         self.signInAnonymouslyUseCase = signInAnonymously
         self.onAuthSuccess = onAuthSuccess
         self.resetPasswordUseCase = resetPassword
@@ -80,7 +80,7 @@ final class AuthViewModel {
         do {
             let session: AuthSession
             if isSignUp {
-                session = try await createAccountUseCase.execute(
+                session = try await createUserProfileUseCase.execute(
                     email: email,
                     password: password,
                     firstName: firstName,

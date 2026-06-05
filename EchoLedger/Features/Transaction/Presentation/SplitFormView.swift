@@ -26,7 +26,7 @@ struct SplitFormView: View {
                 .onChange(of: amountText) { _, newValue in
                     split.amount = newValue.toDouble
                 }
-
+            Divider()
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts) { item in
                     Text(item.displayLabel)

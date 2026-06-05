@@ -22,7 +22,7 @@ final class AuthDouble: AuthProviding {
     var didCallExpire = false
 
     /// Tracks whether deleteAccount() was called.
-    var didCallDeleteUserAccount = false
+    var didCallDeleteUserProfile = false
 
     /// Tracks whether signOut() was called.
     var didCallSignOut = false
@@ -42,10 +42,10 @@ final class AuthDouble: AuthProviding {
         return sessionToReturn
     }
 
-    func createAccount(email: String,
-                       password: String,
-                       firstName: String,
-                       lastName: String) async throws -> AuthSession {
+    func createUserProfile(email: String,
+                           password: String,
+                           firstName: String,
+                           lastName: String) async throws -> AuthSession {
         if let error = errorToThrow { throw error }
         return sessionToReturn
     }
@@ -60,9 +60,9 @@ final class AuthDouble: AuthProviding {
         didCallSignOut = true
     }
 
-    func deleteUserAccount() async throws {
+    func deleteUserProfile() async throws {
         if let error = errorToThrow { throw error }
-        didCallDeleteUserAccount = true
+        didCallDeleteUserProfile = true
     }
 
     func linkAnonymousAccount(toEmail email: String,

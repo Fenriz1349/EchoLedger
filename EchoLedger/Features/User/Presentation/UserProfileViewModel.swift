@@ -15,9 +15,9 @@ import Toasty
 final class UserProfileViewModel {
 
     // MARK: User State
-    var user: User?
-    var firstName: String = ""
-    var lastName: String = ""
+    var user: User
+    var firstName: String
+    var lastName: String
     var firstNameEditState: ValidationState = .neutral
     var lastNameEditState: ValidationState = .neutral
 
@@ -54,37 +54,38 @@ final class UserProfileViewModel {
 
     // MARK: Dependencies
     private let toasty: ToastyManager
-    private let getCurrentUserUseCase: GetCurrentUser
     private let updateUserUseCase: UpdateUser
     private let signOutUseCase: SignOut
-    private let deleteUserAccountUseCase: DeleteUserAccount
+    private let deleteUserProfileUseCase: DeleteUserProfile
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
     private let getUserPhotoUseCase: GetUserPhoto
-    private let userStoring: UserProviding
     private let userId: UUID
     let onSignOut: () -> Void
     let onSessionUpdated: (AuthSession) -> Void
 
     // MARK: Computed
 
+    /// Shows the simulator upload blocked message via toast.
+    func showSimulatorWarning() {
+        toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
+    }
+
     var avatarDocument: DocumentResult {
-        guard let currentUser = user else {
-            return DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar)
-        }
-        return getUserPhotoUseCase.execute(user: currentUser)
+        getUserPhotoUseCase.execute(user: user)
     }
 
     /// - Parameters:
     ///   - toasty: The shared toast notification manager.
-    ///   - getCurrentUser: Use case to fetch the current user profile.
+    ///   - user: The loaded user profile.
     ///   - updateUser: Use case to update the user profile.
     ///   - signOut: Use case to sign out.
-    ///   - deleteUserAccount: Use case to delete the account.
+    ///   - deleteUserProfile: Use case to delete the profile.
     ///   - linkAnonymousAccount: Use case to link an anonymous account to a permanent one.
     ///   - resetPassword: Use case to send a password reset email.
-    ///   - userStoring: User repository for local cascade deletion.
+    ///   - uploadAvatarPhoto: Use case to upload avatar.
+    ///   - getUserPhoto: Use case to fetch user photo.
     ///   - authSession: The current authentication session.
     ///   - userId: The internal user identifier.
     ///   - daysRemainingInDemo: Number of days left in the demo session, nil if not anonymous.
@@ -92,15 +93,14 @@ final class UserProfileViewModel {
     ///   - onSessionUpdated: Closure called after anonymous account linking.
     init(
         toasty: ToastyManager,
-        getCurrentUser: GetCurrentUser,
+        user: User,
         updateUser: UpdateUser,
         signOut: SignOut,
-        deleteUserAccount: DeleteUserAccount,
+        deleteUserProfile: DeleteUserProfile,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
         getUserPhoto: GetUserPhoto,
-        userStoring: UserProviding,
         authSession: AuthSession,
         userId: UUID,
         daysRemainingInDemo: Int?,
@@ -108,15 +108,16 @@ final class UserProfileViewModel {
         onSessionUpdated: @escaping (AuthSession) -> Void
     ) {
         self.toasty = toasty
-        self.getCurrentUserUseCase = getCurrentUser
+        self.user = user
+        self.firstName = user.firstName
+        self.lastName = user.lastName
         self.updateUserUseCase = updateUser
         self.signOutUseCase = signOut
-        self.deleteUserAccountUseCase = deleteUserAccount
+        self.deleteUserProfileUseCase = deleteUserProfile
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
         self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
         self.getUserPhotoUseCase = getUserPhoto
-        self.userStoring = userStoring
         self.authSession = authSession
         self.userId = userId
         self.daysRemainingInDemo = daysRemainingInDemo
@@ -124,23 +125,10 @@ final class UserProfileViewModel {
         self.onSessionUpdated = onSessionUpdated
     }
 
-    /// Loads the current user profile from local storage.
-    func load() async {
-        do {
-            let loadedUser = try await getCurrentUserUseCase.execute()
-            user = loadedUser
-            firstName = loadedUser.firstName
-            lastName = loadedUser.lastName
-        } catch {
-            // Anonymous users have no profile — expected
-        }
-    }
-
     /// Enters edit mode and pre-fills fields with the current user values.
     func startEditing() {
-        guard let currentUser = user else { return }
-        firstName = currentUser.firstName
-        lastName = currentUser.lastName
+        firstName = user.firstName
+        lastName = user.lastName
         firstNameEditState = .neutral
         lastNameEditState = .neutral
         isEditing = true
@@ -148,9 +136,8 @@ final class UserProfileViewModel {
 
     /// Cancels edit mode and restores fields to the current saved values.
     func cancelEdit() {
-        guard let currentUser = user else { return }
-        firstName = currentUser.firstName
-        lastName = currentUser.lastName
+        firstName = user.firstName
+        lastName = user.lastName
         firstNameEditState = .neutral
         lastNameEditState = .neutral
         isEditing = false
@@ -158,7 +145,6 @@ final class UserProfileViewModel {
 
     /// Updates the user's first and last name locally and remotely, then exits edit mode on success.
     func updateProfile() async {
-        guard let currentUser = user else { return }
         let trimmedFirst = firstName.trimmingCharacters(in: .whitespaces)
         let trimmedLast = lastName.trimmingCharacters(in: .whitespaces)
         guard !trimmedFirst.isEmpty else { firstNameEditState = .invalid; return }
@@ -166,16 +152,16 @@ final class UserProfileViewModel {
         isLoading = true
         defer { isLoading = false }
         do {
-            let input = UpdateUserInput(id: currentUser.id,
+            let input = UpdateUserInput(id: user.id,
                                         firstName: trimmedFirst,
                                         lastName: trimmedLast,
-                                        email: currentUser.email,
-                                        photoURL: currentUser.photoURL)
+                                        email: user.email,
+                                        photoURL: user.photoURL)
             try await updateUserUseCase.execute(input)
-            user = User(id: currentUser.id,
+            user = User(id: user.id,
                         displayName: "\(trimmedFirst)|\(trimmedLast)",
-                        email: currentUser.email,
-                        photoURL: currentUser.photoURL)
+                        email: user.email,
+                        photoURL: user.photoURL)
             isEditing = false
             toasty.showSuccess("Profil mis à jour.")
         } catch {
@@ -196,12 +182,12 @@ final class UserProfileViewModel {
     }
 
     /// Deletes the Firebase account, Firestore document, and local SwiftData data.
-    func deleteUserAccount() async {
+    func deleteUserProfile() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            try await deleteUserAccountUseCase.execute()
-            try await userStoring.delete(by: userId)
+            try await deleteUserProfileUseCase.execute()
+            toasty.showInfo("Compte supprimé.")
             onSignOut()
         } catch {
             toasty.showError(error)
@@ -228,13 +214,13 @@ final class UserProfileViewModel {
         }
     }
 
-    /// Uploads new avatar data to Firebase Storage and refreshes the user profile.
+    /// Uploads new avatar data to Firebase Storage.
     func uploadAvatar(data: Data) async {
         isUploadingAvatar = true
         defer { isUploadingAvatar = false }
         do {
-            _ = try await uploadAvatarPhotoUseCase.execute(data: data)
-            await load()
+            let photoURL = try await uploadAvatarPhotoUseCase.execute(data: data)
+            user = User(id: user.id, displayName: user.displayName, email: user.email, photoURL: photoURL)
             toasty.showSuccess("Photo mise à jour.")
         } catch {
             toasty.showError(error)
@@ -243,19 +229,18 @@ final class UserProfileViewModel {
 
     /// Removes the current avatar by setting photoURL to nil.
     func removeAvatar() async {
-        guard let currentUser = user else { return }
         isUploadingAvatar = true
         defer { isUploadingAvatar = false }
         do {
             let input = UpdateUserInput(
-                id: currentUser.id,
-                firstName: currentUser.firstName,
-                lastName: currentUser.lastName,
-                email: currentUser.email,
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
                 photoURL: nil
             )
             try await updateUserUseCase.execute(input)
-            await load()
+            user = User(id: user.id, displayName: user.displayName, email: user.email, photoURL: nil)
             toasty.showSuccess("Photo supprimée.")
         } catch {
             toasty.showError(error)
@@ -264,11 +249,10 @@ final class UserProfileViewModel {
 
     /// Sends a password reset email to the current user's email address.
     func sendPasswordReset() async {
-        guard let email = user?.email else { return }
         isLoading = true
         defer { isLoading = false }
         do {
-            try await resetPasswordUseCase.execute(email: email)
+            try await resetPasswordUseCase.execute(email: user.email)
             toasty.showSuccess("Email de réinitialisation envoyé.")
         } catch {
             toasty.showError(error)

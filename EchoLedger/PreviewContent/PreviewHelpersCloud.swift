@@ -20,7 +20,12 @@ struct PreviewHelpers {
 
     /// Creates a preview AppCoordinator wired to the Cloud container.
     static var appCoordinator: AppCoordinator {
-        AppCoordinator(container: container, onSignOut: {})
+        AppCoordinator(
+            container: container,
+            user: PreviewData.user,
+            onSignOut: {},
+            onSessionUpdated: { _ in }
+        )
     }
 
     /// - Returns: A UserProfileViewModel wired to the Cloud container.
@@ -29,9 +34,8 @@ struct PreviewHelpers {
         onSignOut: @escaping () -> Void = {},
         onSessionUpdated: @escaping (AuthSession) -> Void = { _ in }
     ) -> UserProfileViewModel {
-        let session = AuthSession(userId: PreviewData.user.id, isAnonymous: isAnonymous)
-        return container.makeUserProfileViewModel(
-            authSession: session,
+        container.makeUserProfileViewModel(
+            user: PreviewData.user,
             onSignOut: onSignOut,
             onSessionUpdated: onSessionUpdated
         )

@@ -23,7 +23,7 @@ struct AuthView: View {
         _authViewModel = State(initialValue: AuthViewModel(
             toasty: toasty,
             signInWithEmail: SignInWithEmail(repository: authStoring),
-            createAccount: CreateAccount(repository: authStoring),
+            createUserProfile: CreateUserProfile(repository: authStoring),
             signInAnonymously: SignInAnonymously(repository: authStoring),
             onAuthSuccess: onAuthSuccess,
             resetPassword: ResetPassword(repository: authStoring)
@@ -114,10 +114,7 @@ struct AuthView: View {
         }
         .overlay {
             if viewModel.isLoading {
-                ZStack {
-                    Color.black.opacity(0.4).ignoresSafeArea()
-                    EchoLedgerLoader().frame(width: 80, height: 80)
-                }
+                EchoProgressView()
             }
         }
     }

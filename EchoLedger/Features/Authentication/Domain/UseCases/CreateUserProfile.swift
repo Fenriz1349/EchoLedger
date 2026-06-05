@@ -1,5 +1,5 @@
 //
-//  CreateAccount.swift
+//  CreateUserProfile.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 24/04/2026.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Creates a new permanent user account with email, password, and display name.
-final class CreateAccount {
+/// Creates a new permanent user profile with email, password, and display name.
+final class CreateUserProfile {
 
     private let repository: AuthProviding
 
@@ -24,6 +24,9 @@ final class CreateAccount {
     ///   - lastName: The user's last name.
     /// - Returns: An `AuthSession` for the newly created user.
     func execute(email: String, password: String, firstName: String, lastName: String) async throws -> AuthSession {
-        try await repository.createAccount(email: email, password: password, firstName: firstName, lastName: lastName)
+        try await repository.createUserProfile(email: email,
+                                               password: password,
+                                               firstName: firstName,
+                                               lastName: lastName)
     }
 }

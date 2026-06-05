@@ -15,6 +15,7 @@ final class AppCoordinator {
     let dashboardViewModel: DashboardViewModel
     let transactionListViewModel: TransactionListViewModel
     let accountListViewModel: AccountListViewModel
+    let userProfileViewModel: UserProfileViewModel
 
     #if !CLOUD_TARGET
     var syncManager: SyncManager { container.syncManager }
@@ -22,25 +23,26 @@ final class AppCoordinator {
     var authSession: AuthSession { container.authSession }
 
     private let container: DIContainer
-    private let onSignOut: () -> Void
 
     /// - Parameters:
     ///   - container: The dependency injection container providing all use cases.
-    ///   - onSignOut: Closure called after a successful sign-out or account deletion.
-    init(container: DIContainer, onSignOut: @escaping () -> Void) {
+    ///   - user: The loaded user profile.
+    ///   - onSignOut: Closure called when the user signs out or deletes their account.
+    ///   - onSessionUpdated: Closure called when the user links an anonymous account.
+    init(
+        container: DIContainer,
+        user: User,
+        onSignOut: @escaping () -> Void,
+        onSessionUpdated: @escaping (AuthSession) -> Void
+    ) {
         self.container = container
-        self.onSignOut = onSignOut
         self.dashboardViewModel = container.makeDashboardViewModel()
         self.transactionListViewModel = container.makeTransactionListViewModel()
         self.accountListViewModel = container.makeAccountListViewModel()
-    }
-
-    /// Creates a UserProfileViewModel with sign-out and session-update callbacks.
-    /// - Returns: A configured UserProfileViewModel.
-    func makeUserProfileViewModel() -> UserProfileViewModel {
-        container.makeUserProfileViewModel(
-            onSignOut: { [weak self] in self?.signOut() },
-            onSessionUpdated: { [weak self] session in self?.updateSession(session) }
+        self.userProfileViewModel = container.makeUserProfileViewModel(
+            user: user,
+            onSignOut: onSignOut,
+            onSessionUpdated: onSessionUpdated
         )
     }
 
@@ -83,16 +85,5 @@ final class AppCoordinator {
     /// - Returns: A configured TransactionFormViewModel.
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
         container.makeTransactionFormViewModel(existing: existing)
-    }
-
-    /// Updates the current auth session, used after linking an anonymous account.
-    /// - Parameter session: The updated authentication session.
-    func updateSession(_ session: AuthSession) {
-        container.authSession = session
-    }
-
-    /// Triggers the sign-out flow, resetting the app to the authentication screen.
-    func signOut() {
-        onSignOut()
     }
 }

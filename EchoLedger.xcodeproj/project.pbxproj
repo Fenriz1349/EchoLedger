@@ -23,13 +23,20 @@
 		680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F9CAB2F646F750014193B /* GetInstitution.swift */; };
 		6812CFC02F87833F0019F634 /* AccountFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFBF2F87833F0019F634 /* AccountFilter.swift */; };
 		6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFC12F878BF50019F634 /* AccountRowView.swift */; };
+		681314172FD2B34100F74B8D /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314162FD2B34100F74B8D /* DocumentPickerView.swift */; };
+		681314182FD2B34100F74B8D /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314162FD2B34100F74B8D /* DocumentPickerView.swift */; };
+		6813141A2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */; };
+		6813141B2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */; };
+		6813141D2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */; };
+		6813141E2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */; };
+		681314232FD2D09600F74B8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681314222FD2D09600F74B8D /* GoogleService-Info.plist */; };
+		681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681314222FD2D09600F74B8D /* GoogleService-Info.plist */; };
 		6813E8012F6D3BFE00344774 /* InstitutionDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */; };
 		6813E8052F6D3C3300344774 /* GetInstitutionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */; };
 		6813E8072F6D3C4B00344774 /* GetInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */; };
 		6813E80B2F6D3CC900344774 /* AddInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8092F6D3CC900344774 /* AddInstitutionTests.swift */; };
 		6813E80D2F6D3CDC00344774 /* UpdateInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E80C2F6D3CDC00344774 /* UpdateInstitutionTests.swift */; };
 		6813E80F2F6D3CFC00344774 /* DeleteInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E80E2F6D3CFC00344774 /* DeleteInstitutionTests.swift */; };
-		6813E8112F6D4FEA00344774 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
 		6813E8142F6D51ED00344774 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8132F6D51ED00344774 /* FirebaseAuth */; };
 		6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6813E8152F6D51ED00344774 /* FirebaseFirestore */; };
 		6813E8192F6D568900344774 /* UserRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6813E8182F6D568900344774 /* UserRemote.swift */; };
@@ -93,9 +100,9 @@
 		683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */; };
 		683133C82F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */; };
 		683275EF2F9B65E900DA5796 /* SignInWithEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */; };
-		683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateAccount.swift */; };
+		683275F12F9B660000DA5796 /* CreateUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateUserProfile.swift */; };
 		683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
-		683275F52F9B66F500DA5796 /* DeleteUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteUserAccount.swift */; };
+		683275F52F9B66F500DA5796 /* DeleteUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteUserProfile.swift */; };
 		683275F72F9B670600DA5796 /* LinkAnonymousAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */; };
 		683275F92F9B73A500DA5796 /* PreviewAuthStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */; };
 		683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */; };
@@ -192,7 +199,7 @@
 		683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F22F9B662F00DA5796 /* SignInAnonymously.swift */; };
 		683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1EF12F5AEAEC0009B885 /* TransactionProviding.swift */; };
 		683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5A2FBF367100AE9F62 /* RecentTransactionsView.swift */; };
-		683821342FC8432000CA6761 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateAccount.swift */; };
+		683821342FC8432000CA6761 /* CreateUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F02F9B660000DA5796 /* CreateUserProfile.swift */; };
 		683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683820C72FC82F8800CA6761 /* ArchiveInstitution.swift */; };
 		683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497172F753D8100337F74 /* UpdateTransactionInput.swift */; };
 		683821382FC8432000CA6761 /* TransferRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA52FC03E25007375C0 /* TransferRowView.swift */; };
@@ -206,15 +213,15 @@
 		683821422FC8432000CA6761 /* AuthRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E57F2F922C3D0099DCE4 /* AuthRemoteSource.swift */; };
 		683821432FC8432000CA6761 /* AccountCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E8D2F5ACF700009B885 /* AccountCategory.swift */; };
 		683821442FC8432000CA6761 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
-		683821452FC8432000CA6761 /* DeleteUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteUserAccount.swift */; };
+		683821452FC8432000CA6761 /* DeleteUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683275F42F9B66F500DA5796 /* DeleteUserProfile.swift */; };
 		683821462FC8432000CA6761 /* AddInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E952F5ACF700009B885 /* AddInstitution.swift */; };
 		683821472FC8432000CA6761 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCA32FC03E05007375C0 /* TransactionListItemView.swift */; };
-		683821482FC8432000CA6761 /* UserProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */; };
+		683821482FC8432000CA6761 /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */; };
 		6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
 		6838214C2FC8432000CA6761 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB12FC04F81007375C0 /* Transfer.swift */; };
-		6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
+		6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
 		6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C562FBF305500AE9F62 /* AccountDetailViewModel.swift */; };
 		683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C542FBF304300AE9F62 /* UnarchiveAccount.swift */; };
@@ -250,7 +257,6 @@
 		683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 683820D22FC8432000CA6761 /* FirebaseFirestore */; };
 		683821772FC8432000CA6761 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA32F5ACF700009B885 /* Assets.xcassets */; };
 		683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 685A1EA42F5ACF700009B885 /* Localizable.xcstrings */; };
-		683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */; };
 		683821892FC8492A00CA6761 /* DIContainerCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821882FC8492A00CA6761 /* DIContainerCloud.swift */; };
 		6838218B2FC8493F00CA6761 /* UserCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821862FC8491000CA6761 /* UserCloudStoring.swift */; };
 		6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */; };
@@ -310,6 +316,8 @@
 		6844973D2F7579A500337F74 /* AccountFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973C2F7579A500337F74 /* AccountFormViewModel.swift */; };
 		6844973F2F757AC400337F74 /* AccountFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6844973E2F757AC400337F74 /* AccountFormView.swift */; };
 		684497422F75848000337F74 /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497412F75848000337F74 /* AccountListViewModel.swift */; };
+		68467C942FD19F4500144A84 /* DocumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68467C932FD19F4500144A84 /* DocumentError.swift */; };
+		68467C952FD19F4500144A84 /* DocumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68467C932FD19F4500144A84 /* DocumentError.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
@@ -367,9 +375,9 @@
 		6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */; };
 		6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6742F6D9D5A0038A612 /* TransactionModel.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
-		68EF99E12FA335C300FEBC1A /* UserProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */; };
+		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
-		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */; };
+		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
 		68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */; };
 		68EF99E62FA344A100FEBC1A /* ExpireAnonymousSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */; };
 		68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */; };
@@ -407,13 +415,16 @@
 		680F9CAB2F646F750014193B /* GetInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitution.swift; sourceTree = "<group>"; };
 		6812CFBF2F87833F0019F634 /* AccountFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFilter.swift; sourceTree = "<group>"; };
 		6812CFC12F878BF50019F634 /* AccountRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRowView.swift; sourceTree = "<group>"; };
+		681314162FD2B34100F74B8D /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
+		681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerSection.swift; sourceTree = "<group>"; };
+		6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoProgressView.swift; sourceTree = "<group>"; };
+		681314222FD2D09600F74B8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6813E8002F6D3BFE00344774 /* InstitutionDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDouble.swift; sourceTree = "<group>"; };
 		6813E8042F6D3C3300344774 /* GetInstitutionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionsTests.swift; sourceTree = "<group>"; };
 		6813E8062F6D3C4B00344774 /* GetInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E8092F6D3CC900344774 /* AddInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E80C2F6D3CDC00344774 /* UpdateInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInstitutionTests.swift; sourceTree = "<group>"; };
 		6813E80E2F6D3CFC00344774 /* DeleteInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteInstitutionTests.swift; sourceTree = "<group>"; };
-		6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6813E8172F6D535F00344774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6813E8182F6D568900344774 /* UserRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemote.swift; sourceTree = "<group>"; };
 		6813E81A2F6D913200344774 /* GetAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccounts.swift; sourceTree = "<group>"; };
@@ -476,9 +487,9 @@
 		683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionTests.swift; sourceTree = "<group>"; };
 		683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByCategoryTests.swift; sourceTree = "<group>"; };
 		683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithEmail.swift; sourceTree = "<group>"; };
-		683275F02F9B660000DA5796 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
+		683275F02F9B660000DA5796 /* CreateUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserProfile.swift; sourceTree = "<group>"; };
 		683275F22F9B662F00DA5796 /* SignInAnonymously.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAnonymously.swift; sourceTree = "<group>"; };
-		683275F42F9B66F500DA5796 /* DeleteUserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserAccount.swift; sourceTree = "<group>"; };
+		683275F42F9B66F500DA5796 /* DeleteUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserProfile.swift; sourceTree = "<group>"; };
 		683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAnonymousAccount.swift; sourceTree = "<group>"; };
 		683275F82F9B73A500DA5796 /* PreviewAuthStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAuthStoring.swift; sourceTree = "<group>"; };
 		683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -535,6 +546,7 @@
 		6844973C2F7579A500337F74 /* AccountFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFormViewModel.swift; sourceTree = "<group>"; };
 		6844973E2F757AC400337F74 /* AccountFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFormView.swift; sourceTree = "<group>"; };
 		684497412F75848000337F74 /* AccountListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewModel.swift; sourceTree = "<group>"; };
+		68467C932FD19F4500144A84 /* DocumentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentError.swift; sourceTree = "<group>"; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		685A1E822F5ACF700009B885 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
@@ -592,9 +604,9 @@
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
-		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousSectionView.swift; sourceTree = "<group>"; };
+		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
-		68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFormView.swift; sourceTree = "<group>"; };
+		68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileFormContent.swift; sourceTree = "<group>"; };
 		68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAnonymousSession.swift; sourceTree = "<group>"; };
 		68EF99EA2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAnonymousSessionTests.swift; sourceTree = "<group>"; };
 		68EF99EC2FA3461A00FEBC1A /* AuthDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDouble.swift; sourceTree = "<group>"; };
@@ -676,11 +688,11 @@
 			isa = PBXGroup;
 			children = (
 				6807E5792F922C210099DCE4 /* ResolveSession.swift */,
-				683275F02F9B660000DA5796 /* CreateAccount.swift */,
+				683275F02F9B660000DA5796 /* CreateUserProfile.swift */,
 				683275EE2F9B65E900DA5796 /* SignInWithEmail.swift */,
 				683275F22F9B662F00DA5796 /* SignInAnonymously.swift */,
 				6807E57B2F922C290099DCE4 /* SignOut.swift */,
-				683275F42F9B66F500DA5796 /* DeleteUserAccount.swift */,
+				683275F42F9B66F500DA5796 /* DeleteUserProfile.swift */,
 				683276012F9BA22200DA5796 /* ResetPassword.swift */,
 				683275F62F9B670600DA5796 /* LinkAnonymousAccount.swift */,
 				68EF99E52FA344A100FEBC1A /* ExpireAnonymousSession.swift */,
@@ -885,8 +897,8 @@
 				683821BA2FC8874200CA6761 /* AvatarCircleView.swift */,
 				683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */,
 				68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */,
-				68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift */,
-				68EF99E02FA335C300FEBC1A /* UserProfileFormView.swift */,
+				68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */,
+				68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -914,6 +926,7 @@
 			children = (
 				683821A72FC86BF700CA6761 /* AttachmentType.swift */,
 				683821AA2FC86C5300CA6761 /* DocumentResult.swift */,
+				68467C932FD19F4500144A84 /* DocumentError.swift */,
 				683821952FC8682000CA6761 /* UseCases */,
 			);
 			path = Domain;
@@ -942,6 +955,8 @@
 			isa = PBXGroup;
 			children = (
 				683821B72FC8844400CA6761 /* CameraPickerView.swift */,
+				681314162FD2B34100F74B8D /* DocumentPickerView.swift */,
+				681314192FD2B4CD00F74B8D /* DocumentPickerSection.swift */,
 				683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */,
 			);
 			path = Presentation;
@@ -1047,7 +1062,7 @@
 				685A1EA52F5ACF700009B885 /* Resources */,
 				684497122F7537F600337F74 /* PreviewContent */,
 				6813E8172F6D535F00344774 /* Info.plist */,
-				6813E8102F6D4FEA00344774 /* GoogleService-Info.plist */,
+				681314222FD2D09600F74B8D /* GoogleService-Info.plist */,
 			);
 			path = EchoLedger;
 			sourceTree = "<group>";
@@ -1350,6 +1365,7 @@
 			children = (
 				68EF99F02FA383B200FEBC1A /* EchoLedgerLoader.swift */,
 				68EF99F22FA383EB00FEBC1A /* LoadingView.swift */,
+				6813141C2FD2B9FE00F74B8D /* EchoProgressView.swift */,
 			);
 			path = Loader;
 			sourceTree = "<group>";
@@ -1487,7 +1503,7 @@
 			files = (
 				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
 				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
-				683821792FC8432000CA6761 /* GoogleService-Info.plist in Resources */,
+				681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1497,7 +1513,7 @@
 			files = (
 				685A1EB72F5ACF700009B885 /* Assets.xcassets in Resources */,
 				685A1EB82F5ACF700009B885 /* Localizable.xcstrings in Resources */,
-				6813E8112F6D4FEA00344774 /* GoogleService-Info.plist in Resources */,
+				681314232FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1565,6 +1581,7 @@
 				683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */,
 				683820EF2FC8432000CA6761 /* UserRemoteSource.swift in Sources */,
 				683820F02FC8432000CA6761 /* TransactionListItem.swift in Sources */,
+				6813141D2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */,
 				683821B52FC8841400CA6761 /* UserAvatarView.swift in Sources */,
 				683820F12FC8432000CA6761 /* DashboardView.swift in Sources */,
 				683820F22FC8432000CA6761 /* DeleteTransaction.swift in Sources */,
@@ -1582,6 +1599,7 @@
 				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
 				683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
+				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
 				683821002FC8432000CA6761 /* GetAccount.swift in Sources */,
 				683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */,
@@ -1614,6 +1632,7 @@
 				6838211C2FC8432000CA6761 /* AppCoordinator.swift in Sources */,
 				6838211D2FC8432000CA6761 /* AccountListView.swift in Sources */,
 				6838211E2FC8432000CA6761 /* SyncStatus.swift in Sources */,
+				6813141A2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */,
 				6838211F2FC8432000CA6761 /* AccountProviding.swift in Sources */,
 				683821202FC8432000CA6761 /* LinkAnonymousAccount.swift in Sources */,
 				683821212FC8432000CA6761 /* Double+Extension.swift in Sources */,
@@ -1635,7 +1654,7 @@
 				683821312FC8432000CA6761 /* SignInAnonymously.swift in Sources */,
 				683821322FC8432000CA6761 /* TransactionProviding.swift in Sources */,
 				683821332FC8432000CA6761 /* RecentTransactionsView.swift in Sources */,
-				683821342FC8432000CA6761 /* CreateAccount.swift in Sources */,
+				683821342FC8432000CA6761 /* CreateUserProfile.swift in Sources */,
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
 				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
@@ -1651,16 +1670,16 @@
 				683821422FC8432000CA6761 /* AuthRemoteSource.swift in Sources */,
 				683821432FC8432000CA6761 /* AccountCategory.swift in Sources */,
 				683821442FC8432000CA6761 /* TransactionDetailView.swift in Sources */,
-				683821452FC8432000CA6761 /* DeleteUserAccount.swift in Sources */,
+				683821452FC8432000CA6761 /* DeleteUserProfile.swift in Sources */,
 				683821462FC8432000CA6761 /* AddInstitution.swift in Sources */,
 				683821472FC8432000CA6761 /* TransactionListItemView.swift in Sources */,
-				683821482FC8432000CA6761 /* UserProfileFormView.swift in Sources */,
+				683821482FC8432000CA6761 /* UserProfileFormContent.swift in Sources */,
 				683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */,
 				6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */,
 				683821AF2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
 				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
-				6838214D2FC8432000CA6761 /* UserProfileAnonymousSectionView.swift in Sources */,
+				6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */,
 				6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */,
 				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
 				6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
@@ -1687,6 +1706,7 @@
 				683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */,
 				683821612FC8432000CA6761 /* TransactionSplit.swift in Sources */,
 				683821622FC8432000CA6761 /* UnarchiveInstitution.swift in Sources */,
+				681314182FD2B34100F74B8D /* DocumentPickerView.swift in Sources */,
 				683821632FC8432000CA6761 /* TransactionNatureFilter.swift in Sources */,
 				683821642FC8432000CA6761 /* TransactionCategory.swift in Sources */,
 				683821652FC8432000CA6761 /* IncomePieChartView.swift in Sources */,
@@ -1739,9 +1759,11 @@
 				683821B22FC86C8600CA6761 /* GetTransactionDocument.swift in Sources */,
 				685A1EFD2F5AEB240009B885 /* DeleteTransaction.swift in Sources */,
 				6844971C2F753DB700337F74 /* UpdateInstitutionInput.swift in Sources */,
+				6813141E2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */,
 				6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */,
 				683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */,
 				683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */,
+				681314172FD2B34100F74B8D /* DocumentPickerView.swift in Sources */,
 				685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */,
 				683821B82FC8844400CA6761 /* CameraPickerView.swift in Sources */,
 				681B47092F7FEB60000CC7C4 /* SplitFormView.swift in Sources */,
@@ -1772,6 +1794,7 @@
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */,
+				68467C952FD19F4500144A84 /* DocumentError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
 				6824DCB02FC049D9007375C0 /* TransferDetailView.swift in Sources */,
 				6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */,
@@ -1809,7 +1832,7 @@
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				682C6C5B2FBF367100AE9F62 /* RecentTransactionsView.swift in Sources */,
 				6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
-				683275F12F9B660000DA5796 /* CreateAccount.swift in Sources */,
+				683275F12F9B660000DA5796 /* CreateUserProfile.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
 				683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */,
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,
@@ -1826,16 +1849,16 @@
 				6807E5802F922C3D0099DCE4 /* AuthRemoteSource.swift in Sources */,
 				685A1EAF2F5ACF700009B885 /* AccountCategory.swift in Sources */,
 				683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */,
-				683275F52F9B66F500DA5796 /* DeleteUserAccount.swift in Sources */,
+				683275F52F9B66F500DA5796 /* DeleteUserProfile.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
 				6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */,
 				683821B42FC8841400CA6761 /* UserAvatarView.swift in Sources */,
-				68EF99E12FA335C300FEBC1A /* UserProfileFormView.swift in Sources */,
+				68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */,
 				68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */,
 				682C6C612FBF570800AE9F62 /* AccountBalanceChartView.swift in Sources */,
 				6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */,
 				6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */,
-				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousSectionView.swift in Sources */,
+				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */,
 				68EF99E42FA335C300FEBC1A /* UserProfileActionsView.swift in Sources */,
 				683821C12FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */,
 				682C6C572FBF305500AE9F62 /* AccountDetailViewModel.swift in Sources */,
@@ -1868,6 +1891,7 @@
 				682B0AAA2FC9790500BFB539 /* DeleteAccount.swift in Sources */,
 				6807E57E2F922C340099DCE4 /* AuthLocalSource.swift in Sources */,
 				68EF99F32FA383EB00FEBC1A /* LoadingView.swift in Sources */,
+				6813141B2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
 				683821A92FC86BF700CA6761 /* AttachmentType.swift in Sources */,

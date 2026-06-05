@@ -87,7 +87,12 @@ struct PreviewHelpers {
         seedUser()
         seedInstitutionsAndAccounts()
         seedTransactions()
-        return AppCoordinator(container: container, onSignOut: {})
+        return AppCoordinator(
+            container: container,
+            user: PreviewData.user,
+            onSignOut: {},
+            onSessionUpdated: { _ in }
+        )
     }
 
     /// - Returns: A UserProfileViewModel with the preview user pre-seeded in SwiftData.
@@ -97,9 +102,8 @@ struct PreviewHelpers {
         onSessionUpdated: @escaping (AuthSession) -> Void = { _ in }
     ) -> UserProfileViewModel {
         seedUser()
-        let session = AuthSession(userId: PreviewData.user.id, isAnonymous: isAnonymous)
         return container.makeUserProfileViewModel(
-            authSession: session,
+            user: PreviewData.user,
             onSignOut: onSignOut,
             onSessionUpdated: onSessionUpdated
         )

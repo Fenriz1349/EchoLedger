@@ -14,29 +14,27 @@ extension DIContainer {
 
     /// Creates a UserProfileViewModel wired with all required dependencies.
     /// - Parameters:
-    ///   - authSession: Overrides the container's session. Defaults to the container's current session.
+    ///   - user: The loaded user profile.
     ///   - onSignOut: Closure called after sign-out or account deletion.
     ///   - onSessionUpdated: Closure called after anonymous account linking.
     func makeUserProfileViewModel(
-        authSession: AuthSession? = nil,
+        user: User,
         onSignOut: @escaping () -> Void,
         onSessionUpdated: @escaping (AuthSession) -> Void
     ) -> UserProfileViewModel {
-        let session = authSession ?? self.authSession
-        return UserProfileViewModel(
+        UserProfileViewModel(
             toasty: toasty,
-            getCurrentUser: getCurrentUser,
+            user: user,
             updateUser: updateUser,
             signOut: signOut,
-            deleteUserAccount: deleteUserAccount,
+            deleteUserProfile: deleteUserProfile,
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             uploadAvatarPhoto: uploadAvatarPhoto,
             getUserPhoto: getUserPhoto,
-            userStoring: userStoring,
-            authSession: session,
+            authSession: authSession,
             userId: userId,
-            daysRemainingInDemo: session.isAnonymous ? authStoring.anonymousDaysRemaining() : nil,
+            daysRemainingInDemo: authSession.isAnonymous ? authStoring.anonymousDaysRemaining() : nil,
             onSignOut: onSignOut,
             onSessionUpdated: onSessionUpdated
         )
