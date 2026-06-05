@@ -86,10 +86,11 @@ final class UserRemoteSource {
         var data: [String: Any] = [
             "id": user.id.uuidString,
             "displayName": user.displayName,
-            "email": user.email
+            "email": user.email,
+            "photoURL": user.photoURL as Any
         ]
-        if let photoURL = user.photoURL {
-            data["photoURL"] = photoURL
+        if user.photoURL == nil {
+            data["photoURL"] = FieldValue.delete()
         }
         return data
     }
