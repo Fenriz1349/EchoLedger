@@ -57,7 +57,7 @@ final class UserProfileViewModel {
     private let getCurrentUserUseCase: GetCurrentUser
     private let updateUserUseCase: UpdateUser
     private let signOutUseCase: SignOut
-    private let deleteUserAccountUseCase: DeleteUserAccount
+    private let deleteUserAccountUseCase: DeleteUserProfil
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
@@ -100,7 +100,7 @@ final class UserProfileViewModel {
         getCurrentUser: GetCurrentUser,
         updateUser: UpdateUser,
         signOut: SignOut,
-        deleteUserAccount: DeleteUserAccount,
+        deleteUserAccount: DeleteUserProfil,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
