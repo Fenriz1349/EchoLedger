@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CustomTextFields
+import CustomLabels
 
 /// Displays user profile fields in read mode or edit mode.
 struct UserProfileFormView: View {
@@ -35,6 +36,21 @@ struct UserProfileFormView: View {
                 colors: .echo,
                 showErrorOnlyWhenTriggered: false
             )
+
+            HStack {
+                Button {
+                    Task { await viewModel.updateProfile() }
+                } label: {
+                    CustomButtonLabel(message: "Enregistrer", color: .accentColor, isSelected: true)
+                }
+                .disabled(viewModel.isLoading)
+
+                Button {
+                    viewModel.cancelEdit()
+                } label: {
+                    CustomButtonLabel(message: "Annuler", color: .secondary, isSelected: false)
+                }
+            }
         }
     }
 }

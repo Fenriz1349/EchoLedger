@@ -131,6 +131,8 @@ final class UserProfileViewModel {
 
     /// Loads the current user profile from local storage.
     func load() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             let loadedUser = try await getCurrentUserUseCase.execute()
             user = loadedUser

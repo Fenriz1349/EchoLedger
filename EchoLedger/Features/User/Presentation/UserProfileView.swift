@@ -14,40 +14,37 @@ struct UserProfileView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    if viewModel.isAnonymous {
-                        UserProfileAnonymousSectionView(viewModel: viewModel)
-                    } else if let user = viewModel.user {
-                        UserProfileHeaderView(
-                            user: user,
-                            avatarDocument: viewModel.avatarDocument,
-                            onImageSelected: { data in Task { await viewModel.uploadAvatar(data: data) } },
-                            onRemoveAvatar: { Task { await viewModel.removeAvatar() } },
-                            onEditBlocked: DocumentError.isSimulator ? { viewModel.showSimulatorWarning() } : nil
-                        )
-                        if viewModel.isEditing {
-                            Divider()
-                            UserProfileFormView(viewModel: viewModel)
-                        }
-                        Divider()
-                        UserProfileActionsView(viewModel: viewModel)
-                    } else {
-                        EchoLedgerLoader()
-                            .frame(width: 160, height: 160)
-                            .padding(.top, 60)
+            VStack(spacing: 24) {
+                if viewModel.isAnonymous {
+                    UserProfileAnonymousSectionView(viewModel: viewModel)
+                } else if let user = viewModel.user {
+                    UserProfileHeaderView(
+                        user: user,
+                        avatarDocument: viewModel.avatarDocument,
+                        onImageSelected: { data in Task { await viewModel.uploadAvatar(data: data) } },
+                        onRemoveAvatar: { Task { await viewModel.removeAvatar() } },
+                        onEditBlocked: DocumentError.isSimulator ? { viewModel.showSimulatorWarning() } : nil,
+                    )
+                    if viewModel.isEditing {
+                        UserProfileFormView(viewModel: viewModel)
+                            .padding(.horizontal, 24)
                     }
+                    Divider()
+                    UserProfileActionsView(viewModel: viewModel)
+                        .padding(.horizontal, 24)
                 }
-                .padding(.horizontal, 24)
-                .padding(.vertical, 24)
             }
             .navigationTitle("Mon profil")
-            .overlay {
-                if viewModel.isLoading || viewModel.isUploadingAvatar {
-                    ZStack {
-                        Color.black.opacity(0.4).ignoresSafeArea()
-                        EchoLedgerLoader()
-                            .frame(width: 80, height: 80)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if viewModel.isEditing {
+                            viewModel.cancelEdit()
+                        } else {
+                            viewModel.startEditing()
+                        }
+                    } label: {
+                        Image(systemName: viewModel.isEditing ? "xmark" : "pencil")
                     }
                 }
             }
