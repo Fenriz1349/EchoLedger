@@ -63,15 +63,17 @@ struct AppEntryView: View {
             }
         }
 
-        await buildApp(session: session)
+        let didBuild = await buildApp(session: session)
         try? await minimumDelay
-        withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+        if didBuild {
+            withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+        }
     }
 
     /// Assembles the full dependency graph for the given session.
     /// Loads the current user profile and warms the local cache.
     /// - Parameter session: The authenticated session to build from.
-    private func buildApp(session: AuthSession) async {
+    private func buildApp(session: AuthSession) async -> Bool {
         let newContainer = DIContainer(
             userId: session.userId,
             toasty: toasty,
@@ -95,9 +97,12 @@ struct AppEntryView: View {
             #if !CLOUD_TARGET
             await newContainer.syncManager.sync()
             #endif
+            return true
         } catch {
             toasty.showError(error)
+            try? await authStoring.signOut()
             resetToAuth()
+            return false
         }
     }
 
@@ -105,8 +110,9 @@ struct AppEntryView: View {
     /// - Parameter session: The authenticated session to build from.
     private func handleAuthSuccess(session: AuthSession) {
         Task {
-            await buildApp(session: session)
-            withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+            if await buildApp(session: session) {
+                withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+            }
         }
     }
 
