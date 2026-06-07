@@ -9,9 +9,6 @@ DerivedData/
 # Swift Package Manager
 .build/
 
-# Firebase
-GoogleService-Info.plist
-
 # MacOS
 .DS_Store
 .scannerwork
