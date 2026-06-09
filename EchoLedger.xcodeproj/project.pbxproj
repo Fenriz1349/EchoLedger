@@ -1034,8 +1034,8 @@
 		6844972E2F756B3200337F74 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				684497232F75699100337F74 /* DashboardView.swift */,
 				682C6C5E2FBF54ED00AE9F62 /* DashboardViewModel.swift */,
+				684497232F75699100337F74 /* DashboardView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

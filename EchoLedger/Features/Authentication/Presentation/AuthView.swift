@@ -38,11 +38,13 @@ struct AuthView: View {
 
                 // MARK: Header
                 VStack(spacing: 8) {
-                    Image(systemName: "chart.line.uptrend.xyaxis.circle")
-                        .font(.system(size: 60))
-                        .foregroundColor(.accentColor)
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
                     Text("EchoLedger")
                         .font(.largeTitle.bold())
+                        .foregroundStyle(.accent)
                 }
                 .padding(.top, 40)
 
@@ -118,4 +120,12 @@ struct AuthView: View {
             }
         }
     }
+}
+
+#Preview {
+    AuthView(
+        authStoring: PreviewData.authStoring,
+        toasty: PreviewData.toasty,
+        onAuthSuccess: { _ in }
+    )
 }
