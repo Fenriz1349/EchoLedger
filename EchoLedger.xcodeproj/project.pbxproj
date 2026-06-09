@@ -503,7 +503,6 @@
 		683820C92FC82FA200CA6761 /* UnarchiveInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnarchiveInstitution.swift; sourceTree = "<group>"; };
 		683820CB2FC830DC00CA6761 /* InstitutionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionFormView.swift; sourceTree = "<group>"; };
 		6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedgerCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6838217E2FC8432000CA6761 /* EchoLedger copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "EchoLedger copy-Info.plist"; path = "/Users/juliencotte/Documents/DevOpenClassrooms/EchoLedger/EchoLedger copy-Info.plist"; sourceTree = "<absolute>"; };
 		683821802FC848DF00CA6761 /* InstitutionCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionCloudStoring.swift; sourceTree = "<group>"; };
 		683821822FC848EC00CA6761 /* AccountCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCloudStoring.swift; sourceTree = "<group>"; };
 		683821842FC848FC00CA6761 /* TransactionCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCloudStoring.swift; sourceTree = "<group>"; };
@@ -1048,7 +1047,6 @@
 				681B47002F7F9138000CC7C4 /* EchoLedger.app */,
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
 				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
-				6838217E2FC8432000CA6761 /* EchoLedger copy-Info.plist */,
 				683821A22FC8695000CA6761 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1965,7 +1963,7 @@
 				DEVELOPMENT_TEAM = F435NP2676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "EchoLedger copy-Info.plist";
+				INFOPLIST_FILE = EchoLedger/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -2000,7 +1998,7 @@
 				DEVELOPMENT_TEAM = F435NP2676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "EchoLedger copy-Info.plist";
+				INFOPLIST_FILE = EchoLedger/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
