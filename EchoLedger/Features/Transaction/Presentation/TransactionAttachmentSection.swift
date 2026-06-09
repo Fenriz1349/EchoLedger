@@ -13,6 +13,7 @@ struct TransactionAttachmentSection: View {
 
     @Bindable var viewModel: TransactionFormViewModel
     @State private var showOptions = false
+    @State private var previewImage: UIImage?
 
     var body: some View {
         Section("Justificatif") {
@@ -20,13 +21,15 @@ struct TransactionAttachmentSection: View {
                 Text("Disponible avec un compte permanent")
                     .foregroundStyle(.secondary)
                     .font(.footnote)
-            } else if let data = viewModel.selectedAttachmentData {
-                if viewModel.selectedAttachmentType == .image, let image = UIImage(data: data) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+            } else if viewModel.selectedAttachmentData != nil {
+                if viewModel.selectedAttachmentType == .image {
+                    if let previewImage {
+                        Image(uiImage: previewImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                 } else {
                     Label("Document PDF sélectionné", systemImage: "doc.fill")
                         .foregroundStyle(.secondary)
@@ -50,6 +53,13 @@ struct TransactionAttachmentSection: View {
                     onImageSelected: { viewModel.selectAttachment(data: $0, type: .image) },
                     onPDFSelected: { viewModel.selectAttachment(data: $0, type: .pdf) }
                 )
+            }
+        }
+        .task(id: viewModel.selectedAttachmentData) {
+            if viewModel.selectedAttachmentType == .image, let data = viewModel.selectedAttachmentData {
+                previewImage = UIImage(data: data)
+            } else {
+                previewImage = nil
             }
         }
     }
