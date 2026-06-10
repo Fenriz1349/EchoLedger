@@ -18,13 +18,15 @@ struct InstitutionFormContent: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            CustomTextField.immediate(
+            CustomTextField(
                 placeholder: "Nom de l'établissement",
                 text: $viewModel.name,
                 type: .alphaNumber,
-                validator: { $0.trimmingCharacters(in: .whitespaces).count >= 2 },
-                errorMessage: "Le nom doit contenir au moins 2 caractères",
-                colors: .echo
+                validator: viewModel.isValidName,
+                errorMessage: "Le nom doit contenir au moins 2 caractères.",
+                validationState: $viewModel.nameState,
+                colors: .echo,
+                showErrorOnlyWhenTriggered: false
             )
 
             Picker("Categorie", selection: $viewModel.category) {
@@ -41,10 +43,10 @@ struct InstitutionFormContent: View {
                 CustomButtonLabel(
                     message: viewModel.isEditing ? "Modifier l'établissement" : "Ajouter l'établissement",
                     color: .accentColor,
-                    isSelected: viewModel.isValid
+                    isSelected: viewModel.isFormValid
                 )
             }
-            .disabled(!viewModel.isValid || viewModel.isLoading)
+            .disabled(!viewModel.isFormValid || viewModel.isLoading)
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
 
