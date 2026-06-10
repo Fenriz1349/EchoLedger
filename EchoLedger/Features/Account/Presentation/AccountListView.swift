@@ -28,29 +28,21 @@ struct AccountListView: View {
                         onEditInstitution: { editInstitution = $0 }
                     )
 
-                    Section {
+                    VStack {
                         Button { sheet = .add } label: {
                             CustomButtonLabel(iconLeading: "plus",
                                               message: "Ajouter un compte",
                                               color: .accentColor,
-                                              isSelected: true)
+                                              isSelected: false)
                         }
-                        .buttonStyle(.plain)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.horizontal)
-
                         Button { showTransferForm = true } label: {
                             CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
                                               message: "Ajouter un transfert",
                                               color: .accentColor,
                                               isSelected: false)
                         }
-                        .buttonStyle(.plain)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.horizontal)
                     }
+                    .listRowBackground(Color.clear)
 
                     if !coordinator.accountListViewModel.archivedAccounts.isEmpty {
                         Section {

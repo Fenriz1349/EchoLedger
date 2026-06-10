@@ -200,7 +200,9 @@ final class TransactionFormViewModel {
         selectedAttachmentType = nil
     }
 
-    /// Marks the existing attachment for removal on the next submit, clearing any pending selection.
+    /// Flags the existing attachment for removal and clears any pending selection.
+    /// Nothing is deleted (Storage file or Firestore field) until `submit()` runs —
+    /// closing the form without submitting leaves the attachment untouched.
     func removeExistingDocument() {
         selectedAttachmentData = nil
         selectedAttachmentType = nil

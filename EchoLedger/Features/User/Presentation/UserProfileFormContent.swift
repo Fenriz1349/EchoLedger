@@ -41,9 +41,9 @@ struct UserProfileFormContent: View {
                 Button {
                     Task { await viewModel.updateProfile() }
                 } label: {
-                    CustomButtonLabel(message: "Enregistrer", color: .accentColor, isSelected: true)
+                    CustomButtonLabel(message: "Enregistrer", color: .accentColor, isSelected: viewModel.isFormValid)
                 }
-                .disabled(viewModel.isLoading)
+                .disabled(viewModel.isFormValid)
 
                 Button {
                     viewModel.cancelEdit()

@@ -92,6 +92,8 @@ struct AccountFormContent: View {
                 )
             }
             .disabled(!viewModel.isValid || viewModel.isLoading)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
 
             if let errorMessage = viewModel.errorMessage {
                 Section {

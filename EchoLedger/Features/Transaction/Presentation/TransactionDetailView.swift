@@ -56,6 +56,8 @@ struct TransactionDetailView: View {
                 Section("Justificatif") {
                     DocumentDisplayView(document: coordinator.transactionDocument(for: currentTransaction))
                 }
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
             }
 
         }
