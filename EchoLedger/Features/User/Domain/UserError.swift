@@ -14,9 +14,6 @@ enum UserError: Error, Equatable, LocalizedError {
     /// Thrown when no user is found for the given identifier.
     case notFound
 
-    /// Thrown when the user display name is shorter than the minimum allowed length of 2 characters.
-    case nameTooShort
-
     /// Thrown when the user display name exceeds the maximum allowed length of 50 characters.
     case nameTooLong
 
@@ -28,8 +25,6 @@ enum UserError: Error, Equatable, LocalizedError {
         switch self {
         case .notFound:
             return "Utilisateur introuvable."
-        case .nameTooShort:
-            return "Le nom doit contenir au moins 2 caractères."
         case .nameTooLong:
             return "Le nom ne peut pas dépasser 50 caractères."
         case .invalidEmail:
