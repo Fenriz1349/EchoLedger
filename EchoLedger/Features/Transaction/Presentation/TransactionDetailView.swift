@@ -85,7 +85,11 @@ struct TransactionDetailView: View {
             await coordinator.transactionListViewModel.loadAccountNames(for: currentTransaction)
         }
         .sheet(isPresented: $showEditForm) {
-            TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: currentTransaction))
+            if currentTransaction.category == .initialBalance {
+                InitialBalanceFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: currentTransaction))
+            } else {
+                TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: currentTransaction))
+            }
         }
         .onChange(of: showEditForm) {
             if !showEditForm {

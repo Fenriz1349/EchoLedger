@@ -61,9 +61,11 @@ final class TransactionFormViewModel {
     // MARK: Computed
 
     /// Returns true if the form is ready to be submitted.
-    var isValid: Bool {
-        guard !splits.isEmpty, totalAmount > 0 else { return false }
-        return Set(splits.map(\.accountId)).count == splits.count
+    /// An initial balance transaction may total zero; every other transaction needs a positive total.
+    var isFormValid: Bool {
+        guard !splits.isEmpty else { return false }
+        let amountValid = isInitialBalance ? totalAmount >= 0 : totalAmount > 0
+        return amountValid && Set(splits.map(\.accountId)).count == splits.count
     }
 
     /// Returns the trimmed label, falling back to the category name if empty.
@@ -184,6 +186,24 @@ final class TransactionFormViewModel {
         splits.remove(at: index)
     }
 
+    /// Amount of the initial balance, held on its single split.
+    var initialBalanceAmount: Double {
+        splits.first?.amount ?? 0
+    }
+
+    /// Updates the initial balance amount on its single split.
+    func setInitialBalanceAmount(_ amount: Double) {
+        guard !splits.isEmpty else { return }
+        splits[0].amount = amount
+    }
+
+    /// Display label ("account • institution") of the account this initial balance belongs to.
+    /// Resolved once `loadAccounts()` has populated `availableAccounts`.
+    var initialBalanceAccountLabel: String? {
+        guard let accountId = splits.first?.accountId else { return nil }
+        return availableAccounts.first(where: { $0.account.id == accountId })?.displayLabel
+    }
+
     /// Stores the selected document in memory. Does not upload anything.
     /// - Parameters:
     ///   - data: The selected file data.
@@ -215,7 +235,7 @@ final class TransactionFormViewModel {
 
     /// Validates and submits the transaction.
     func submit() async {
-        guard totalAmount > 0 else {
+        guard isInitialBalance ? totalAmount >= 0 : totalAmount > 0 else {
             errorMessage = TransactionError.invalidTotalAmount.localizedDescription
             return
         }

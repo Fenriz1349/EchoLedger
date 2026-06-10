@@ -20,7 +20,6 @@ final class TransactionListViewModel {
     var isLoading = false
 
     // MARK: Filters
-
     var searchText: String = ""
     var selectedNature: TransactionNatureFilter = .all
     var selectedCategory: TransactionCategory?

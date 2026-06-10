@@ -104,10 +104,10 @@ struct TransactionFormContent: View {
                 ? "Ajouter la transaction"
                 : "Modifier la transaction",
                 color: .accentColor,
-                isSelected: viewModel.isValid
+                isSelected: viewModel.isFormValid
             )
         }
-        .disabled(!viewModel.isValid || viewModel.isLoading)
+        .disabled(!viewModel.isFormValid || viewModel.isLoading)
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
 

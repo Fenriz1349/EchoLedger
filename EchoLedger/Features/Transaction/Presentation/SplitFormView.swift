@@ -24,7 +24,11 @@ struct SplitFormView: View {
                     amountText = split.amount == 0 ? "": String(split.amount)
                 }
                 .onChange(of: amountText) { _, newValue in
-                    split.amount = newValue.toDouble
+                    let filtered = newValue.numericOnly
+                    if filtered != newValue {
+                        amountText = filtered
+                    }
+                    split.amount = filtered.toDouble
                 }
             Divider()
             Picker("", selection: $split.accountId) {
