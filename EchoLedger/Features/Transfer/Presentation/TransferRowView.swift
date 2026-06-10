@@ -16,6 +16,7 @@ struct TransferRowView: View {
     let destinationName: String
     let onTap: () -> Void
     let onDelete: () -> Void
+    let onEdit: () -> Void
 
     var body: some View {
         Button(action: onTap) {
@@ -54,6 +55,11 @@ struct TransferRowView: View {
             } label: {
                 Label("Supprimer", systemImage: "trash")
             }
+            Button {
+                onEdit()
+            } label: {
+                Label("Modifier", systemImage: "pencil")
+            }
         }
     }
 }
@@ -67,7 +73,8 @@ struct TransferRowView: View {
                 sourceName: PreviewData.accountCourant.name,
                 destinationName: PreviewData.accountLivret.name,
                 onTap: {},
-                onDelete: {}
+                onDelete: {},
+                onEdit: {}
             )
         }
     }
