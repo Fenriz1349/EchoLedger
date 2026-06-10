@@ -20,6 +20,7 @@ struct AccountFormView: View {
             Form {
                 AccountFormContent(viewModel: viewModel)
             }
+            .scrollDismissesKeyboard(.immediately)
             .navigationTitle(viewModel.existingAccount == nil ? "Nouveau compte" : "Modifier le compte")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

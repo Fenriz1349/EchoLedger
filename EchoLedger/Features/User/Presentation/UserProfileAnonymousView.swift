@@ -73,6 +73,7 @@ struct UserProfileAnonymousView: View {
                 }
                 .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
             }
+            .scrollDismissesKeyboard(.immediately)
         }
         .overlay {
             if viewModel.isLoading {

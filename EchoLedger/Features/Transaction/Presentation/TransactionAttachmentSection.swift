@@ -39,6 +39,7 @@ struct TransactionAttachmentSection: View {
                 }
             } else {
                 Button {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     if DocumentError.isSimulator {
                         viewModel.showSimulatorWarning()
                     } else {

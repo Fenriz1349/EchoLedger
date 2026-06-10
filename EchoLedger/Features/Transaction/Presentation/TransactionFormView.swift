@@ -18,6 +18,7 @@ struct TransactionFormView: View {
             Form {
                 TransactionFormContent(viewModel: viewModel)
             }
+            .scrollDismissesKeyboard(.immediately)
             .navigationTitle(viewModel.existingTransaction == nil ? "Nouvelle transaction" :"Modifier la transaction")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

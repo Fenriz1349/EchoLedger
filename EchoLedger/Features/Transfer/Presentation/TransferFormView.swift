@@ -71,6 +71,7 @@ struct TransferFormView: View {
                             .padding(.horizontal)
                         }
                     }
+                    .scrollDismissesKeyboard(.immediately)
                 }
             .navigationTitle(viewModel.isEditing ? "Modifier le transfert" : "Transfert")
             .navigationBarTitleDisplayMode(.inline)
