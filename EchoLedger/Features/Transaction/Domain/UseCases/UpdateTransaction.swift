@@ -49,6 +49,8 @@ final class UpdateTransaction {
             isExpense: input.isExpense,
             category: input.category,
             splits: input.splits,
+            attachmentURL: input.attachmentURL,
+            attachmentContentType: input.attachmentContentType,
             updatedAt: Date()
         )
         try await repository.update(updated)

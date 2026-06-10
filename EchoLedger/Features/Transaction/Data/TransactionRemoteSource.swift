@@ -39,7 +39,7 @@ final class TransactionRemoteSource {
     func update(_ transaction: Transaction, userId: UUID) async throws {
         try await collection(for: userId)
             .document(transaction.id.uuidString)
-            .setData(encode(transaction), merge: true)
+            .setData(encode(transaction, forMerge: true), merge: true)
     }
 
     /// Deletes a transaction from Firestore.
@@ -120,9 +120,12 @@ final class TransactionRemoteSource {
     // MARK: Private
 
     /// Encodes a domain Transaction into a Firestore-compatible dictionary.
-    /// - Parameter transaction: The transaction to encode.
+    /// - Parameters:
+    ///   - transaction: The transaction to encode.
+    ///   - forMerge: When true (merge writes), nil attachment fields are cleared with `FieldValue.delete()`
+    ///     instead of being omitted, allowing an attachment to be removed.
     /// - Returns: A dictionary representation of the transaction including embedded splits.
-    private func encode(_ transaction: Transaction) -> [String: Any] {
+    private func encode(_ transaction: Transaction, forMerge: Bool = false) -> [String: Any] {
         var data: [String: Any] = [
             "id": transaction.id.uuidString,
             "userId": transaction.userId.uuidString,
@@ -142,9 +145,13 @@ final class TransactionRemoteSource {
         ]
         if let attachmentURL = transaction.attachmentURL {
             data["attachmentURL"] = attachmentURL
+        } else if forMerge {
+            data["attachmentURL"] = FieldValue.delete()
         }
         if let attachmentContentType = transaction.attachmentContentType {
             data["attachmentContentType"] = attachmentContentType
+        } else if forMerge {
+            data["attachmentContentType"] = FieldValue.delete()
         }
         if let updatedAt = transaction.updatedAt {
             data["updatedAt"] = Timestamp(date: updatedAt)

@@ -40,6 +40,9 @@ struct TransactionAttachmentSection: View {
             } else {
                 if let existingDocument = viewModel.existingDocument {
                     DocumentDisplayView(document: existingDocument)
+                    Button("Supprimer le justificatif", role: .destructive) {
+                        viewModel.removeExistingDocument()
+                    }
                 }
                 Button {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

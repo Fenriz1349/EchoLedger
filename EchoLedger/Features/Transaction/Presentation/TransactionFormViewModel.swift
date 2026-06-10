@@ -21,6 +21,7 @@ final class TransactionFormViewModel {
     private let getAccountsWithInstitution: GetAccountsWithInstitution
     private let uploadTransactionDocument: UploadTransactionDocument
     private let getTransactionDocument: GetTransactionDocument
+    private let deleteDocument: DeleteDocument
     private let userId: UUID
     private let authSession: AuthSession
 
@@ -37,6 +38,8 @@ final class TransactionFormViewModel {
     // MARK: Attachment State
     var selectedAttachmentData: Data?
     var selectedAttachmentType: AttachmentType?
+    /// True when the existing attachment should be removed on the next submit.
+    var removeExistingAttachment = false
 
     // MARK: UI State
     var availableAccounts: [AccountDisplayItem] = []
@@ -93,7 +96,8 @@ final class TransactionFormViewModel {
 
     /// The attachment of the transaction being edited, if any. Nil in create mode or when there is none.
     var existingDocument: DocumentResult? {
-        guard let existingTransaction, existingTransaction.attachmentURL != nil else { return nil }
+        guard !removeExistingAttachment,
+              let existingTransaction, existingTransaction.attachmentURL != nil else { return nil }
         return getTransactionDocument.execute(transaction: existingTransaction)
     }
 
@@ -112,6 +116,7 @@ final class TransactionFormViewModel {
         getAccountsWithInstitution: GetAccountsWithInstitution,
         uploadTransactionDocument: UploadTransactionDocument,
         getTransactionDocument: GetTransactionDocument,
+        deleteDocument: DeleteDocument,
         userId: UUID,
         authSession: AuthSession,
         addAccountFormViewModel: AccountFormViewModel,
@@ -123,6 +128,7 @@ final class TransactionFormViewModel {
         self.getAccountsWithInstitution = getAccountsWithInstitution
         self.uploadTransactionDocument = uploadTransactionDocument
         self.getTransactionDocument = getTransactionDocument
+        self.deleteDocument = deleteDocument
         self.userId = userId
         self.authSession = authSession
         self.existingTransaction = existingTransaction
@@ -185,12 +191,20 @@ final class TransactionFormViewModel {
     func selectAttachment(data: Data, type: AttachmentType) {
         selectedAttachmentData = data
         selectedAttachmentType = type
+        removeExistingAttachment = false
     }
 
-    /// Clears the selected document.
+    /// Clears the pending selection (does not affect an existing attachment).
     func clearAttachment() {
         selectedAttachmentData = nil
         selectedAttachmentType = nil
+    }
+
+    /// Marks the existing attachment for removal on the next submit, clearing any pending selection.
+    func removeExistingDocument() {
+        selectedAttachmentData = nil
+        selectedAttachmentType = nil
+        removeExistingAttachment = true
     }
 
     func showSimulatorWarning() {
@@ -217,6 +231,8 @@ final class TransactionFormViewModel {
 
         do {
             if let existingTransaction {
+                let keepURL = removeExistingAttachment ? nil : existingTransaction.attachmentURL
+                let keepType = removeExistingAttachment ? nil : existingTransaction.attachmentContentType
                 let input = UpdateTransactionInput(
                     id: existingTransaction.id,
                     userId: userId,
@@ -226,9 +242,14 @@ final class TransactionFormViewModel {
                     note: nil,
                     isExpense: isExpense,
                     category: category,
-                    splits: splits
+                    splits: splits,
+                    attachmentURL: keepURL,
+                    attachmentContentType: keepType
                 )
                 try await updateTransaction.execute(input)
+                if removeExistingAttachment, let oldURL = existingTransaction.attachmentURL {
+                    try? await deleteDocument.execute(urlString: oldURL)
+                }
                 let edited = Transaction(
                     id: existingTransaction.id,
                     userId: userId,
@@ -238,7 +259,9 @@ final class TransactionFormViewModel {
                     note: nil,
                     isExpense: isExpense,
                     category: category,
-                    splits: splits
+                    splits: splits,
+                    attachmentURL: keepURL,
+                    attachmentContentType: keepType
                 )
                 await uploadPendingAttachment(to: edited)
             } else {
