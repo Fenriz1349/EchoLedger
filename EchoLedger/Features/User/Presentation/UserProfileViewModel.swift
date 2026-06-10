@@ -57,8 +57,8 @@ final class UserProfileViewModel {
     }
 
     var isLinkFormValid: Bool {
-        !linkFirstName.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !linkLastName.trimmingCharacters(in: .whitespaces).isEmpty &&
+        isValidName(linkFirstName) &&
+        isValidName(linkLastName) &&
         Validators.isValidEmail(linkEmail) &&
         Validators.isStrongPassword(linkPassword) &&
         linkPassword == linkConfirmPassword

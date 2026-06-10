@@ -23,6 +23,9 @@ struct AuthFormContent: View {
     @Binding var emailState: ValidationState
     @Binding var passwordState: ValidationState
     @Binding var confirmPasswordState: ValidationState
+    /// Name validity rule, provided by the owning ViewModel (keeps the rule out of the view).
+    let firstNameValidator: (String) -> Bool
+    let lastNameValidator: (String) -> Bool
 
     var body: some View {
         VStack(spacing: 16) {
@@ -31,7 +34,7 @@ struct AuthFormContent: View {
                     placeholder: "Prénom",
                     text: $firstName,
                     type: .lettersOnly,
-                    validator: { !$0.trimmingCharacters(in: .whitespaces).isEmpty },
+                    validator: firstNameValidator,
                     errorMessage: "Le prénom est requis.",
                     validationState: $firstNameState,
                     colors: .echo,
@@ -41,7 +44,7 @@ struct AuthFormContent: View {
                     placeholder: "Nom",
                     text: $lastName,
                     type: .lettersOnly,
-                    validator: { !$0.trimmingCharacters(in: .whitespaces).isEmpty },
+                    validator: lastNameValidator,
                     errorMessage: "Le nom est requis.",
                     validationState: $lastNameState,
                     colors: .echo,

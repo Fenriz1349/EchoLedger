@@ -40,13 +40,19 @@ final class AuthViewModel {
     private let resetPasswordUseCase: ResetPassword
     let onAuthSuccess: (AuthSession) -> Void
 
+    /// A name is valid when it is not empty (ignoring whitespace).
+    /// Shared by the text fields (display) and the form validity checks so both stay in sync.
+    func isValidName(_ value: String) -> Bool {
+        !value.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
     /// Returns true when all required fields are filled and valid.
     var isFormValid: Bool {
         let base = Validators.isValidEmail(email) && Validators.isStrongPassword(password)
         guard isSignUp else { return base }
         return base
-            && !firstName.trimmingCharacters(in: .whitespaces).isEmpty
-            && !lastName.trimmingCharacters(in: .whitespaces).isEmpty
+            && isValidName(firstName)
+            && isValidName(lastName)
             && password == confirmPassword
     }
 
@@ -138,11 +144,11 @@ final class AuthViewModel {
             isValid = false
         }
         if isSignUp {
-            if firstName.trimmingCharacters(in: .whitespaces).isEmpty {
+            if !isValidName(firstName) {
                 firstNameState = .invalid
                 isValid = false
             }
-            if lastName.trimmingCharacters(in: .whitespaces).isEmpty {
+            if !isValidName(lastName) {
                 lastNameState = .invalid
                 isValid = false
             }
