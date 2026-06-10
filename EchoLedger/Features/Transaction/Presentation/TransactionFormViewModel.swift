@@ -75,10 +75,7 @@ final class TransactionFormViewModel {
 
     /// Returns only initialBalance for Account creation Transaction or isUserSelectable TransactionCategory
     var categoryList: [TransactionCategory] {
-        if existingTransaction?.category == .initialBalance {
-            return [.initialBalance]
-        }
-        return TransactionCategory.allCases.filter(\.isUserSelectable)
+        TransactionCategory.allCases.filter(\.isUserSelectable)
     }
 
     /// Reverse isExpense for UI

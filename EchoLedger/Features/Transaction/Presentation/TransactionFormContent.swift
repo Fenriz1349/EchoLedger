@@ -58,27 +58,23 @@ struct TransactionFormContent: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 }
-                if !viewModel.isInitialBalance {
-                    Button {
-                        if let account = viewModel.nextAvailableAccount {
-                            viewModel.addSplit(for: account)
-                        }
-                    } label: {
-                        Label("Ajouter un split", systemImage: "plus")
+                Button {
+                    if let account = viewModel.nextAvailableAccount {
+                        viewModel.addSplit(for: account)
                     }
-                    .disabled(viewModel.nextAvailableAccount == nil)
+                } label: {
+                    Label("Ajouter un split", systemImage: "plus")
                 }
+                .disabled(viewModel.nextAvailableAccount == nil)
             }
 
-            if !viewModel.isInitialBalance {
-                Button {
-                    withAnimation { viewModel.showAddAccountForm.toggle() }
-                } label: {
-                    Label(
-                        viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
-                        systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
-                    )
-                }
+            Button {
+                withAnimation { viewModel.showAddAccountForm.toggle() }
+            } label: {
+                Label(
+                    viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
+                    systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
+                )
             }
         }
 

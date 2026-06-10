@@ -92,11 +92,7 @@ struct AccountDetailView: View {
             AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: viewModel.account))
         }
         .sheet(item: $editTransaction) { transaction in
-            if transaction.category == .initialBalance {
-                InitialBalanceFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
-            } else {
-                TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
-            }
+            TransactionEditView(transaction: transaction, coordinator: coordinator)
         }
         .onChange(of: showEditForm) {
             if !showEditForm {

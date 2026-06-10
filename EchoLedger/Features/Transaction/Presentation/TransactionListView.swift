@@ -64,11 +64,7 @@ struct TransactionListView: View {
                     }
             }
             .sheet(item: $editTransaction) { transaction in
-                if transaction.category == .initialBalance {
-                    InitialBalanceFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
-                } else {
-                    TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
-                }
+                TransactionEditView(transaction: transaction, coordinator: coordinator)
             }
             .onChange(of: editTransaction) {
                 if editTransaction == nil {
