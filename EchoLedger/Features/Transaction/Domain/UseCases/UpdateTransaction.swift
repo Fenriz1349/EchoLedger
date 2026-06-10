@@ -26,13 +26,15 @@ final class UpdateTransaction {
         guard !input.label.trimmingCharacters(in: .whitespaces).isEmpty else {
             throw TransactionError.emptyLabel
         }
-        guard input.totalAmount > 0 else {
+        // An initial balance entry may be zero (account opened at 0); every other transaction needs a positive amount.
+        let allowsZeroAmount = input.category == .initialBalance
+        guard allowsZeroAmount ? input.totalAmount >= 0 : input.totalAmount > 0 else {
             throw TransactionError.invalidTotalAmount
         }
         guard !input.splits.isEmpty else {
             throw TransactionError.missingSplits
         }
-        guard input.splits.allSatisfy({ $0.amount > 0 }) else {
+        guard input.splits.allSatisfy({ allowsZeroAmount ? $0.amount >= 0 : $0.amount > 0 }) else {
             throw TransactionError.invalidSplitAmount
         }
         guard input.splits.map(\.amount).reduce(0, +) == input.totalAmount else {
