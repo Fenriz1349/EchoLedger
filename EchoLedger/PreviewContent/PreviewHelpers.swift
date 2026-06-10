@@ -153,6 +153,7 @@ struct PreviewHelpers {
             updateTransaction: container.updateTransaction,
             getAccountsWithInstitution: container.getAccountsWithInstitution,
             uploadTransactionDocument: container.uploadTransactionDocument,
+            getTransactionDocument: container.getTransactionDocument,
             userId: container.userId,
             authSession: container.authSession,
             addAccountFormViewModel: container.makeAccountFormViewModel()

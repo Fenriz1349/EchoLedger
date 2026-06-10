@@ -20,6 +20,7 @@ final class TransactionFormViewModel {
     private let updateTransaction: UpdateTransaction
     private let getAccountsWithInstitution: GetAccountsWithInstitution
     private let uploadTransactionDocument: UploadTransactionDocument
+    private let getTransactionDocument: GetTransactionDocument
     private let userId: UUID
     private let authSession: AuthSession
 
@@ -90,6 +91,12 @@ final class TransactionFormViewModel {
         authSession.isAnonymous
     }
 
+    /// The attachment of the transaction being edited, if any. Nil in create mode or when there is none.
+    var existingDocument: DocumentResult? {
+        guard let existingTransaction, existingTransaction.attachmentURL != nil else { return nil }
+        return getTransactionDocument.execute(transaction: existingTransaction)
+    }
+
     // MARK: Init
     /// - Parameters:
     ///   - toasty: Toaster to display message to user.
@@ -104,6 +111,7 @@ final class TransactionFormViewModel {
         updateTransaction: UpdateTransaction,
         getAccountsWithInstitution: GetAccountsWithInstitution,
         uploadTransactionDocument: UploadTransactionDocument,
+        getTransactionDocument: GetTransactionDocument,
         userId: UUID,
         authSession: AuthSession,
         addAccountFormViewModel: AccountFormViewModel,
@@ -114,6 +122,7 @@ final class TransactionFormViewModel {
         self.updateTransaction = updateTransaction
         self.getAccountsWithInstitution = getAccountsWithInstitution
         self.uploadTransactionDocument = uploadTransactionDocument
+        self.getTransactionDocument = getTransactionDocument
         self.userId = userId
         self.authSession = authSession
         self.existingTransaction = existingTransaction
@@ -220,6 +229,18 @@ final class TransactionFormViewModel {
                     splits: splits
                 )
                 try await updateTransaction.execute(input)
+                let edited = Transaction(
+                    id: existingTransaction.id,
+                    userId: userId,
+                    label: trimmedLabel,
+                    date: date,
+                    totalAmount: totalAmount,
+                    note: nil,
+                    isExpense: isExpense,
+                    category: category,
+                    splits: splits
+                )
+                await uploadPendingAttachment(to: edited)
             } else {
                 let input = AddTransactionInput(
                     userId: userId,
@@ -232,18 +253,23 @@ final class TransactionFormViewModel {
                     splits: splits
                 )
                 let created = try await addTransaction.execute(input)
-                if let data = selectedAttachmentData, let type = selectedAttachmentType {
-                    do {
-                        try await uploadTransactionDocument.execute(data: data, attachmentType: type, transaction: created)
-                    } catch {
-                        toasty.showError(error)
-                    }
-                }
+                await uploadPendingAttachment(to: created)
             }
             isSuccess = true
         } catch {
             toasty.showError(error)
         }
         isLoading = false
+    }
+
+    /// Uploads the pending attachment to the given transaction, if one was selected.
+    /// A failed upload does not fail the submit — it only surfaces a toast.
+    private func uploadPendingAttachment(to transaction: Transaction) async {
+        guard let data = selectedAttachmentData, let type = selectedAttachmentType else { return }
+        do {
+            try await uploadTransactionDocument.execute(data: data, attachmentType: type, transaction: transaction)
+        } catch {
+            toasty.showError(error)
+        }
     }
 }

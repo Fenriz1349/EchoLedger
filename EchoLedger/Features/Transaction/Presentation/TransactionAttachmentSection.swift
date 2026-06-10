@@ -38,6 +38,9 @@ struct TransactionAttachmentSection: View {
                     viewModel.clearAttachment()
                 }
             } else {
+                if let existingDocument = viewModel.existingDocument {
+                    DocumentDisplayView(document: existingDocument)
+                }
                 Button {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     if DocumentError.isSimulator {
@@ -46,7 +49,10 @@ struct TransactionAttachmentSection: View {
                         showOptions = true
                     }
                 } label: {
-                    Label("Ajouter une photo ou un PDF", systemImage: "paperclip")
+                    Label(
+                        viewModel.existingDocument == nil ? "Ajouter une photo ou un PDF" : "Remplacer le justificatif",
+                        systemImage: viewModel.existingDocument == nil ? "paperclip" : "arrow.triangle.2.circlepath"
+                    )
                 }
                 .documentPicker(
                     showOptions: $showOptions,
