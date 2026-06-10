@@ -61,7 +61,8 @@ struct AuthView: View {
                     passwordState: $viewModel.passwordState,
                     confirmPasswordState: $viewModel.confirmPasswordState,
                     firstNameValidator: viewModel.isValidName,
-                    lastNameValidator: viewModel.isValidName
+                    lastNameValidator: viewModel.isValidName,
+                    confirmPasswordValidator: viewModel.isValidConfirmPassword
                 )
 
                 // MARK: Password Reset

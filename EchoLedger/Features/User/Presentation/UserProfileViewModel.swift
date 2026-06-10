@@ -52,6 +52,11 @@ final class UserProfileViewModel {
         !value.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    /// The link form confirmation is valid when it is not empty and matches the chosen password.
+    func isValidConfirmPassword(_ value: String) -> Bool {
+        !value.isEmpty && value == linkPassword
+    }
+
     var isFormValid: Bool {
         isValidName(firstName) && isValidName(lastName)
     }

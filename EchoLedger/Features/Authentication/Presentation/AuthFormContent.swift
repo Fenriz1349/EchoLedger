@@ -26,6 +26,8 @@ struct AuthFormContent: View {
     /// Name validity rule, provided by the owning ViewModel (keeps the rule out of the view).
     let firstNameValidator: (String) -> Bool
     let lastNameValidator: (String) -> Bool
+    /// Confirmation rule (matches the password), provided by the owning ViewModel.
+    let confirmPasswordValidator: (String) -> Bool
 
     var body: some View {
         VStack(spacing: 16) {
@@ -74,6 +76,7 @@ struct AuthFormContent: View {
                     placeholder: "Confirmer le mot de passe",
                     text: $confirmPassword,
                     type: .password,
+                    validator: confirmPasswordValidator,
                     errorMessage: AuthError.passwordsDoNotMatch.errorDescription,
                     validationState: $confirmPasswordState,
                     colors: .echo,

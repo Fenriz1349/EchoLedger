@@ -46,6 +46,12 @@ final class AuthViewModel {
         !value.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    /// The confirmation is valid when it is not empty and matches the password.
+    /// Lets the confirm field show the mismatch live, instead of only via the disabled button.
+    func isValidConfirmPassword(_ value: String) -> Bool {
+        !value.isEmpty && value == password
+    }
+
     /// Returns true when all required fields are filled and valid.
     var isFormValid: Bool {
         let base = Validators.isValidEmail(email) && Validators.isStrongPassword(password)
