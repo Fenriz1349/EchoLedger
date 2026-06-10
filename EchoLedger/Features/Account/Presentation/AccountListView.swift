@@ -13,8 +13,6 @@ struct AccountListView: View {
 
     let coordinator: AppCoordinator
     @State private var sheet: AccountSheet?
-    @State private var showTransferForm = false
-    @State private var editInstitution: Institution?
 
     var body: some View {
         NavigationStack {
@@ -25,7 +23,7 @@ struct AccountListView: View {
                         balances: coordinator.accountListViewModel.balances,
                         onEdit: { sheet = .edit($0) },
                         onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
-                        onEditInstitution: { editInstitution = $0 }
+                        onEditInstitution: { sheet = .editInstitution($0) }
                     )
 
                     VStack {
@@ -35,12 +33,15 @@ struct AccountListView: View {
                                               color: .accentColor,
                                               isSelected: false)
                         }
-                        Button { showTransferForm = true } label: {
+                        .buttonStyle(.borderless)
+
+                        Button { sheet = .transfer } label: {
                             CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
                                               message: "Ajouter un transfert",
                                               color: .accentColor,
                                               isSelected: false)
                         }
+                        .buttonStyle(.borderless)
                     }
                     .listRowBackground(Color.clear)
 
@@ -53,7 +54,7 @@ struct AccountListView: View {
                                     balances: coordinator.accountListViewModel.balances,
                                     onEdit: { sheet = .edit($0) },
                                     onArchive: nil,
-                                    onEditInstitution: { editInstitution = $0 }
+                                    onEditInstitution: { sheet = .editInstitution($0) }
                                 )
                             }
                         }
@@ -70,32 +71,20 @@ struct AccountListView: View {
                         Task { await coordinator.accountListViewModel.load() }
                     }
             }
-            .sheet(isPresented: $showTransferForm) {
-                TransferFormView(viewModel: coordinator.makeTransferFormViewModel())
-            }
-            .onChange(of: showTransferForm) {
-                if !showTransferForm {
-                    Task { await coordinator.accountListViewModel.load() }
-                }
-            }
             .sheet(item: $sheet) { sheet in
                 switch sheet {
                 case .add:
                     AccountFormView(viewModel: coordinator.makeAccountFormViewModel())
                 case .edit(let account):
                     AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: account))
+                case .transfer:
+                    TransferFormView(viewModel: coordinator.makeTransferFormViewModel())
+                case .editInstitution(let institution):
+                    InstitutionFormView(viewModel: coordinator.makeInstitutionFormViewModel(existing: institution))
                 }
             }
             .onChange(of: sheet) {
                 if sheet == nil {
-                    Task { await coordinator.accountListViewModel.load() }
-                }
-            }
-            .sheet(item: $editInstitution) { institution in
-                InstitutionFormView(viewModel: coordinator.makeInstitutionFormViewModel(existing: institution))
-            }
-            .onChange(of: editInstitution) {
-                if editInstitution == nil {
                     Task { await coordinator.accountListViewModel.load() }
                 }
             }
