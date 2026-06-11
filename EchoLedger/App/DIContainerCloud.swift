@@ -111,9 +111,18 @@ final class DIContainer {
         self.accountStoring = accountCloud
         self.transactionStoring = transactionCloud
 
+        // MARK: Document source (needed by the delete use cases below)
+        let documentSource = DocumentRemoteSource()
+        self.deleteDocument = DeleteDocument(documentSource: documentSource)
+
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteUserProfile = DeleteUserProfile(repository: authStoring, userStoring: userCloud, userId: userId)
+        self.deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            userStoring: userCloud,
+            deleteDocument: deleteDocument,
+            userId: userId
+        )
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 
@@ -150,6 +159,7 @@ final class DIContainer {
         self.deleteAccount = DeleteAccount(
             accountRepository: accountCloud,
             transactionRepository: transactionCloud,
+            deleteDocument: deleteDocument,
             userId: userId
         )
         self.deleteInstitution = DeleteInstitution(
@@ -168,12 +178,11 @@ final class DIContainer {
         self.getTransactions = GetTransactions(repository: transactionCloud)
         self.getTransaction = GetTransaction(repository: transactionCloud)
         self.updateTransaction = UpdateTransaction(repository: transactionCloud)
-        self.deleteTransaction = DeleteTransaction(repository: transactionCloud)
+        self.deleteTransaction = DeleteTransaction(repository: transactionCloud, deleteDocument: deleteDocument)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionCloud)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionCloud)
 
         // MARK: Use Cases — Document
-        let documentSource = DocumentRemoteSource()
         self.uploadTransactionDocument = UploadTransactionDocument(
             documentSource: documentSource,
             transactionRepository: transactionCloud,
@@ -184,7 +193,6 @@ final class DIContainer {
             userRepository: userCloud,
             userId: userId
         )
-        self.deleteDocument = DeleteDocument(documentSource: documentSource)
         self.getTransactionDocument = GetTransactionDocument()
         self.getUserPhoto = GetUserPhoto()
     }

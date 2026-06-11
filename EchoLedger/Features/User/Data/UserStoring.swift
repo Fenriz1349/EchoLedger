@@ -50,8 +50,9 @@ final class UserStoring: UserProviding {
         try await remote.update(user)
     }
 
-    /// Deletes a user and all associated local data via cascade.
+    /// Deletes a user locally, then removes the remote document (consistent with `update`).
     func delete(by id: UUID) async throws {
         try local.delete(by: id)
+        try await remote.delete(userId: id)
     }
 }

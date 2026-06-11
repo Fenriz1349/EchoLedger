@@ -98,11 +98,11 @@ final class AuthStoring: AuthProviding {
 
     /// Deletes the Firestore user document, the Firebase Auth account, and clears the local session.
     func deleteUserProfile() async throws {
-        guard let userId = local.fetchUserId() else {
+        guard local.fetchUserId() != nil else {
             throw AuthError.noSessionFound
         }
         do {
-            try await userRemote.delete(userId: userId)
+            // The user document is removed by UserProviding.delete; here we only delete the Auth account.
             try await remote.deleteCurrentUser()
             local.clearUserId()
             local.clearAnonymousCreationDate()

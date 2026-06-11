@@ -173,9 +173,18 @@ final class DIContainer {
             transactionLocal: transactionLocal
         )
 
+        // MARK: Document source (needed by the delete use cases below)
+        let documentSource = DocumentRemoteSource()
+        self.deleteDocument = DeleteDocument(documentSource: documentSource)
+
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteUserProfile = DeleteUserProfile(repository: authStoring, userStoring: userStore, userId: userId)
+        self.deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            userStoring: userStore,
+            deleteDocument: deleteDocument,
+            userId: userId
+        )
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 
@@ -212,6 +221,7 @@ final class DIContainer {
         self.deleteAccount = DeleteAccount(
             accountRepository: accountStore,
             transactionRepository: transactionStore,
+            deleteDocument: deleteDocument,
             userId: userId
         )
         self.deleteInstitution = DeleteInstitution(
@@ -230,12 +240,11 @@ final class DIContainer {
         self.getTransactions = GetTransactions(repository: transactionStore)
         self.getTransaction = GetTransaction(repository: transactionStore)
         self.updateTransaction = UpdateTransaction(repository: transactionStore)
-        self.deleteTransaction = DeleteTransaction(repository: transactionStore)
+        self.deleteTransaction = DeleteTransaction(repository: transactionStore, deleteDocument: deleteDocument)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
 
         // MARK: Use Cases — Document
-        let documentSource = DocumentRemoteSource()
         self.uploadTransactionDocument = UploadTransactionDocument(
             documentSource: documentSource,
             transactionRepository: transactionStore,
@@ -246,7 +255,6 @@ final class DIContainer {
             userRepository: userStore,
             userId: userId
         )
-        self.deleteDocument = DeleteDocument(documentSource: documentSource)
         self.getTransactionDocument = GetTransactionDocument()
         self.getUserPhoto = GetUserPhoto()
     }
