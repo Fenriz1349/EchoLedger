@@ -17,6 +17,7 @@ struct AccountDetailView: View {
     @State private var showEditForm = false
     @State private var editTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
+    @State private var editTransfer: Transfer?
 
     init(account: Account, coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -63,7 +64,8 @@ struct AccountDetailView: View {
                         onTapTransfer: { transfer in
                             selectedTransfer = transfer
                         },
-                        onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } }
+                        onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } },
+                        onEditTransfer: { editTransfer = $0 }
                     )
                 }
             }
@@ -92,7 +94,7 @@ struct AccountDetailView: View {
             AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: viewModel.account))
         }
         .sheet(item: $editTransaction) { transaction in
-            TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel(existing: transaction))
+            TransactionEditView(transaction: transaction, coordinator: coordinator)
         }
         .onChange(of: showEditForm) {
             if !showEditForm {
@@ -104,8 +106,16 @@ struct AccountDetailView: View {
                 Task { await viewModel.load() }
             }
         }
-        .sheet(item: $selectedTransfer) { transfer in
+        .navigationDestination(item: $selectedTransfer) { transfer in
             TransferDetailView(transfer: transfer, coordinator: coordinator)
+        }
+        .sheet(item: $editTransfer) { transfer in
+            TransferFormView(viewModel: coordinator.makeTransferFormViewModel(existing: transfer))
+        }
+        .onChange(of: editTransfer) {
+            if editTransfer == nil {
+                Task { await viewModel.load() }
+            }
         }
         .onChange(of: selectedTransfer) {
             if selectedTransfer == nil {

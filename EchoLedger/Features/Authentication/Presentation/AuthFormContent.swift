@@ -23,6 +23,11 @@ struct AuthFormContent: View {
     @Binding var emailState: ValidationState
     @Binding var passwordState: ValidationState
     @Binding var confirmPasswordState: ValidationState
+    /// Name validity rule, provided by the owning ViewModel (keeps the rule out of the view).
+    let firstNameValidator: (String) -> Bool
+    let lastNameValidator: (String) -> Bool
+    /// Confirmation rule (matches the password), provided by the owning ViewModel.
+    let confirmPasswordValidator: (String) -> Bool
 
     var body: some View {
         VStack(spacing: 16) {
@@ -31,6 +36,7 @@ struct AuthFormContent: View {
                     placeholder: "Prénom",
                     text: $firstName,
                     type: .lettersOnly,
+                    validator: firstNameValidator,
                     errorMessage: "Le prénom est requis.",
                     validationState: $firstNameState,
                     colors: .echo,
@@ -40,6 +46,7 @@ struct AuthFormContent: View {
                     placeholder: "Nom",
                     text: $lastName,
                     type: .lettersOnly,
+                    validator: lastNameValidator,
                     errorMessage: "Le nom est requis.",
                     validationState: $lastNameState,
                     colors: .echo,
@@ -69,6 +76,7 @@ struct AuthFormContent: View {
                     placeholder: "Confirmer le mot de passe",
                     text: $confirmPassword,
                     type: .password,
+                    validator: confirmPasswordValidator,
                     errorMessage: AuthError.passwordsDoNotMatch.errorDescription,
                     validationState: $confirmPasswordState,
                     colors: .echo,

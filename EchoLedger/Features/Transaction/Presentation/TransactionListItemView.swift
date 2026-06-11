@@ -17,6 +17,7 @@ struct TransactionListItemView: View {
     let onDelete: (Transaction) -> Void
     let onTapTransfer: (Transfer) -> Void
     let onDeleteTransfer: (Transfer) -> Void
+    let onEditTransfer: (Transfer) -> Void
 
     var body: some View {
         switch item {
@@ -32,7 +33,8 @@ struct TransactionListItemView: View {
                 sourceName: transfer.sourceName(from: accountNames),
                 destinationName: transfer.destinationName(from: accountNames),
                 onTap: { onTapTransfer(transfer) },
-                onDelete: { onDeleteTransfer(transfer) }
+                onDelete: { onDeleteTransfer(transfer) },
+                onEdit: { onEditTransfer(transfer) }
             )
         }
     }
@@ -51,7 +53,8 @@ struct TransactionListItemView: View {
                 onEdit: { _ in },
                 onDelete: { _ in },
                 onTapTransfer: { _ in },
-                onDeleteTransfer: { _ in }
+                onDeleteTransfer: { _ in },
+                onEditTransfer: { _ in }
             )
             TransactionListItemView(
                 item: .single(PreviewData.transactionCourses),
@@ -59,7 +62,8 @@ struct TransactionListItemView: View {
                 onEdit: { _ in },
                 onDelete: { _ in },
                 onTapTransfer: { _ in },
-                onDeleteTransfer: { _ in }
+                onDeleteTransfer: { _ in },
+                onEditTransfer: { _ in }
             )
         }
     }

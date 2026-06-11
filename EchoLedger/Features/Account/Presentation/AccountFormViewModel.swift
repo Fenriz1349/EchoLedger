@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CustomTextFields
 import Toasty
 
 /// Manages form state and submission logic for creating or editing an account.
@@ -15,6 +16,7 @@ final class AccountFormViewModel {
 
     // MARK: Form State
     var name = ""
+    var nameState: ValidationState = .neutral
     var category: AccountCategory = .checking
     var selectedInstitution: Institution?
     var initialBalanceText: String = ""
@@ -46,16 +48,31 @@ final class AccountFormViewModel {
     let addInstitutionFormViewModel: InstitutionFormViewModel
 
     // MARK: Computed
+    /// A name is valid when it has at least 2 non-whitespace characters.
+    /// Shared by the text field (display) and `isFormValid` (gating) so both stay in sync.
+    func isValidName(_ value: String) -> Bool {
+        value.trimmingCharacters(in: .whitespaces).count >= 2
+    }
+
     /// Returns true if the form is ready to be submitted.
-    var isValid: Bool {
-        name.trimmingCharacters(in: .whitespaces).count >= 2 &&
-        selectedInstitution != nil
+    var isFormValid: Bool {
+        isValidName(name) && selectedInstitution != nil
     }
 
     /// Reverse isExpense for UI
     var isIncome: Bool {
         get { !isInitialBalanceExpense }
         set { isInitialBalanceExpense = !newValue }
+    }
+
+    /// Strips any non-numeric character from the initial balance field, keeping only digits
+    /// and decimal separators (a hardware keyboard bypasses `.decimalPad`).
+    /// Reassigns only when something was actually removed, so typing a separator isn't disrupted.
+    func sanitizeBalance() {
+        let filtered = initialBalanceText.numericOnly
+        if filtered != initialBalanceText {
+            initialBalanceText = filtered
+        }
     }
 
     // MARK: Init

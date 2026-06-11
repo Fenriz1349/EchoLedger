@@ -32,7 +32,7 @@ final class TransferFormViewModel {
     var isEditing: Bool { existingTransfer != nil }
 
     /// True when the form has enough data to submit.
-    var isValid: Bool {
+    var isFormValid: Bool {
         guard let source = sourceAccount,
               let destination = destinationAccount else { return false }
         return source.id != destination.id && amountText.toDouble > 0
@@ -111,9 +111,18 @@ final class TransferFormViewModel {
         }
     }
 
+    /// Strips any non-numeric character from the amount field, keeping digits and a single separator.
+    /// Reassigns only when something was removed, so typing a separator isn't disrupted.
+    func sanitizeAmount() {
+        let filtered = amountText.numericOnly
+        if filtered != amountText {
+            amountText = filtered
+        }
+    }
+
     /// Validates and submits the transfer (create or update).
     func submit() async {
-        guard isValid,
+        guard isFormValid,
               let source = sourceAccount,
               let destination = destinationAccount else { return }
 

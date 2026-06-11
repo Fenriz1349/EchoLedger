@@ -13,6 +13,7 @@ struct TransactionListView: View {
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
+    @State private var editTransfer: Transfer?
 
     var body: some View {
         NavigationStack {
@@ -37,7 +38,8 @@ struct TransactionListView: View {
                                         },
                                         onDeleteTransfer: { transfer in
                                             Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
-                                        }
+                                        },
+                                        onEditTransfer: { editTransfer = $0 }
                                     )
                                 }
                             }
@@ -64,20 +66,26 @@ struct TransactionListView: View {
                     }
             }
             .sheet(item: $editTransaction) { transaction in
-                TransactionFormView(
-                    viewModel: coordinator.makeTransactionFormViewModel(existing: transaction)
-                )
+                TransactionEditView(transaction: transaction, coordinator: coordinator)
             }
             .onChange(of: editTransaction) {
                 if editTransaction == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }
-            .sheet(item: $selectedTransfer) { transfer in
+            .navigationDestination(item: $selectedTransfer) { transfer in
                 TransferDetailView(transfer: transfer, coordinator: coordinator)
             }
             .onChange(of: selectedTransfer) {
                 if selectedTransfer == nil {
+                    Task { await coordinator.transactionListViewModel.load() }
+                }
+            }
+            .sheet(item: $editTransfer) { transfer in
+                TransferFormView(viewModel: coordinator.makeTransferFormViewModel(existing: transfer))
+            }
+            .onChange(of: editTransfer) {
+                if editTransfer == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }

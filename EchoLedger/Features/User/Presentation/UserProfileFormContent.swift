@@ -21,6 +21,7 @@ struct UserProfileFormContent: View {
                 placeholder: "Prénom",
                 text: $viewModel.firstName,
                 type: .lettersOnly,
+                validator: viewModel.isValidName,
                 errorMessage: "Le prénom est requis.",
                 validationState: $viewModel.firstNameEditState,
                 colors: .echo,
@@ -31,6 +32,7 @@ struct UserProfileFormContent: View {
                 placeholder: "Nom",
                 text: $viewModel.lastName,
                 type: .lettersOnly,
+                validator: viewModel.isValidName,
                 errorMessage: "Le nom est requis.",
                 validationState: $viewModel.lastNameEditState,
                 colors: .echo,
@@ -43,7 +45,7 @@ struct UserProfileFormContent: View {
                 } label: {
                     CustomButtonLabel(message: "Enregistrer", color: .accentColor, isSelected: viewModel.isFormValid)
                 }
-                .disabled(viewModel.isFormValid)
+                .disabled(!viewModel.isFormValid || viewModel.isLoading)
 
                 Button {
                     viewModel.cancelEdit()

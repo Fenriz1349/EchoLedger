@@ -59,7 +59,10 @@ struct UserProfileAnonymousView: View {
                     lastNameState: $viewModel.linkLastNameState,
                     emailState: $viewModel.linkEmailState,
                     passwordState: $viewModel.linkPasswordState,
-                    confirmPasswordState: $viewModel.linkConfirmPasswordState
+                    confirmPasswordState: $viewModel.linkConfirmPasswordState,
+                    firstNameValidator: viewModel.isValidName,
+                    lastNameValidator: viewModel.isValidName,
+                    confirmPasswordValidator: viewModel.isValidConfirmPassword
                 )
 
                 Button {

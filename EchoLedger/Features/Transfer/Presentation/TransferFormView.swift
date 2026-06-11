@@ -45,6 +45,7 @@ struct TransferFormView: View {
                             HStack {
                                 TextField("0,00€", text: $viewModel.amountText)
                                     .keyboardType(.decimalPad)
+                                    .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
                             }
                             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                         }
@@ -61,11 +62,11 @@ struct TransferFormView: View {
                                     iconLeading: "arrow.left.arrow.right",
                                     message: viewModel.isEditing ? "Modifier le transfert" : "Transférer",
                                     color: .accentColor,
-                                    isSelected: viewModel.isValid
+                                    isSelected: viewModel.isFormValid
                                 )
                             }
                             .buttonStyle(.plain)
-                            .disabled(!viewModel.isValid)
+                            .disabled(!viewModel.isFormValid || viewModel.isLoading)
                             .listRowBackground(Color.clear)
                             .listRowInsets(EdgeInsets())
                             .padding(.horizontal)

@@ -24,9 +24,7 @@ final class UpdateUser {
     func execute(_ input: UpdateUserInput) async throws {
         let firstName = input.firstName.trimmingCharacters(in: .whitespaces)
         let lastName = input.lastName.trimmingCharacters(in: .whitespaces)
-        guard firstName.count >= 2 else { throw UserError.nameTooShort }
         guard firstName.count <= 50 else { throw UserError.nameTooLong }
-        guard lastName.count >= 2 else { throw UserError.nameTooShort }
         guard lastName.count <= 50 else { throw UserError.nameTooLong }
         guard input.email.contains("@") else { throw UserError.invalidEmail }
 

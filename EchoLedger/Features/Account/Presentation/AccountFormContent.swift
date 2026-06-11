@@ -16,13 +16,15 @@ struct AccountFormContent: View {
     var body: some View {
         Group {
             Section("Compte") {
-                CustomTextField.immediate(
+                CustomTextField(
                     placeholder: "Nom du compte",
                     text: $viewModel.name,
                     type: .alphaNumber,
-                    validator: { $0.trimmingCharacters(in: .whitespaces).count >= 2 },
-                    errorMessage: "Le nom doit contenir au moins 2 caractères",
-                    colors: .echo
+                    validator: viewModel.isValidName,
+                    errorMessage: "Le nom doit contenir au moins 2 caractères.",
+                    validationState: $viewModel.nameState,
+                    colors: .echo,
+                    showErrorOnlyWhenTriggered: false
                 )
                 .listRowInsets(EdgeInsets())
                 .padding(.horizontal)
@@ -40,6 +42,7 @@ struct AccountFormContent: View {
                         Text(viewModel.isInitialBalanceExpense ? "-" : "")
                         TextField("0,00€", text: $viewModel.initialBalanceText)
                             .keyboardType(.decimalPad)
+                            .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
                         Text(viewModel.isInitialBalanceExpense ? "Négatif" : "Positif")
                         Toggle("", isOn: $viewModel.isInitialBalanceExpense)
                             .labelsHidden()
@@ -88,10 +91,10 @@ struct AccountFormContent: View {
                 CustomButtonLabel(
                     message: viewModel.existingAccount == nil ? "Ajouter le compte" : "Modifier le compte",
                     color: .accentColor,
-                    isSelected: viewModel.isValid
+                    isSelected: viewModel.isFormValid
                 )
             }
-            .disabled(!viewModel.isValid || viewModel.isLoading)
+            .disabled(!viewModel.isFormValid || viewModel.isLoading)
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
 
@@ -122,7 +125,10 @@ struct AccountFormContent: View {
                     Button(role: .destructive) {
                         viewModel.showDeleteAlert = true
                     } label: {
-                        Label("Supprimer le compte", systemImage: "trash")
+                        CustomButtonLabel(iconLeading: "trash",
+                                          message: "Supprimer le compte",
+                                          color: .red,
+                                          isSelected: false)
                     }
                     .disabled(viewModel.isLoading)
                     .alert("Supprimer le compte ?", isPresented: $viewModel.showDeleteAlert) {

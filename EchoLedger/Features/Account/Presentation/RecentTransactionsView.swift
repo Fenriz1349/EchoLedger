@@ -17,6 +17,7 @@ struct RecentTransactionsView: View {
     let onDelete: (Transaction) -> Void
     let onTapTransfer: (Transfer) -> Void
     let onDeleteTransfer: (Transfer) -> Void
+    let onEditTransfer: (Transfer) -> Void
 
     var body: some View {
         Section("Dernières transactions") {
@@ -27,7 +28,8 @@ struct RecentTransactionsView: View {
                     onEdit: onEdit,
                     onDelete: onDelete,
                     onTapTransfer: onTapTransfer,
-                    onDeleteTransfer: onDeleteTransfer
+                    onDeleteTransfer: onDeleteTransfer,
+                    onEditTransfer: onEditTransfer
                 )
             }
         }
@@ -45,7 +47,8 @@ struct RecentTransactionsView: View {
                 onEdit: { _ in },
                 onDelete: { _ in },
                 onTapTransfer: { _ in },
-                onDeleteTransfer: { _ in }
+                onDeleteTransfer: { _ in },
+                onEditTransfer: { _ in }
             )
         }
     }

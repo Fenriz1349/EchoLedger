@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-import CustomLabels
 
 /// Shows the full details of a transfer: accounts, amount, date, and description.
-/// Inline buttons to edit or delete the transfer, matching the layout of `TransactionDetailView`.
+/// Pushed in the navigation stack, with edit/delete actions in the toolbar — like `TransactionDetailView`.
 struct TransferDetailView: View {
 
     @State private var viewModel: TransferDetailViewModel
@@ -22,71 +21,62 @@ struct TransferDetailView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section("Transfert") {
-                    HStack {
-                        Text(viewModel.sourceName)
-                        Spacer()
-                        Image(systemName: "arrow.right")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Text(viewModel.destinationName)
-                    }
-                    LabeledContent("Montant", value: viewModel.transfer.amount.toEuro)
-                    LabeledContent("Date", value: viewModel.transfer.date.formatted(date: .long, time: .omitted))
-                    if !viewModel.transfer.label.isEmpty && viewModel.transfer.label != "Transfert" {
-                        LabeledContent("Description", value: viewModel.transfer.label)
-                    }
+        List {
+            Section("Transfert") {
+                HStack {
+                    Text(viewModel.sourceName)
+                    Spacer()
+                    Image(systemName: "arrow.right")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(viewModel.destinationName)
                 }
-
-                Section {
-                    HStack(spacing: 12) {
-                        Button { viewModel.showEditForm = true } label: {
-                            CustomButtonLabel(iconLeading: "pencil", message: "Modifier", color: .blue)
-                        }
-                        .buttonStyle(.plain)
-
-                        Button { viewModel.showDeleteAlert = true } label: {
-                            CustomButtonLabel(iconLeading: "trash", message: "Supprimer", color: .red)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .padding(.horizontal)
+                LabeledContent("Montant", value: viewModel.transfer.amount.toEuro)
+                LabeledContent("Date", value: viewModel.transfer.date.formatted(date: .long, time: .omitted))
+                if !viewModel.transfer.label.isEmpty && viewModel.transfer.label != "Transfert" {
+                    LabeledContent("Description", value: viewModel.transfer.label)
                 }
             }
-            .navigationTitle("Transfert")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Fermer") { dismiss() }
+        }
+        .navigationTitle("Transfert")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { viewModel.showEditForm = true } label: {
+                    Image(systemName: "pencil")
                 }
             }
-            .alert("Supprimer ce transfert ?", isPresented: $viewModel.showDeleteAlert) {
-                Button("Supprimer", role: .destructive) {
-                    Task {
-                        await viewModel.delete()
-                        dismiss()
-                    }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(role: .destructive) {
+                    viewModel.showDeleteAlert = true
+                } label: {
+                    Image(systemName: "trash")
                 }
-                Button("Annuler", role: .cancel) {}
-            } message: {
-                Text("Les deux transactions associées à ce transfert seront supprimées définitivement.")
+                .tint(.red)
             }
-            .sheet(isPresented: $viewModel.showEditForm) {
-                TransferFormView(
-                    viewModel: coordinator.makeTransferFormViewModel(existing: viewModel.transfer)
-                )
+        }
+        .alert("Supprimer ce transfert ?", isPresented: $viewModel.showDeleteAlert) {
+            Button("Supprimer", role: .destructive) {
+                Task {
+                    await viewModel.delete()
+                    dismiss()
+                }
             }
-            .onChange(of: viewModel.showEditForm) {
-                if !viewModel.showEditForm { dismiss() }
-            }
-            .task {
-                await viewModel.loadNames()
-            }
+            Button("Annuler", role: .cancel) {}
+        } message: {
+            Text("Les deux transactions associées à ce transfert seront supprimées définitivement.")
+        }
+        .sheet(isPresented: $viewModel.showEditForm) {
+            TransferFormView(
+                viewModel: coordinator.makeTransferFormViewModel(existing: viewModel.transfer)
+            )
+        }
+        .onChange(of: viewModel.showEditForm) {
+            if !viewModel.showEditForm { dismiss() }
+        }
+        .task {
+            await viewModel.loadNames()
         }
     }
 }

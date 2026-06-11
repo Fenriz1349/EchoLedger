@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CustomTextFields
 import Toasty
 
 /// Manages form state and submission for creating or editing an institution.
@@ -18,6 +19,7 @@ final class InstitutionFormViewModel {
     // MARK: Form State
     var name = ""
     var category: InstitutionCategory = .bank
+    var nameState: ValidationState = .neutral
 
     // MARK: UI State
     var errorMessage: String?
@@ -31,9 +33,15 @@ final class InstitutionFormViewModel {
     var isEditing: Bool { existingInstitution != nil }
     var isArchived: Bool { existingInstitution?.isArchived ?? false }
 
-    /// Returns true if the form is ready to be submitted.
-    var isValid: Bool {
-        name.trimmingCharacters(in: .whitespaces).count >= 2
+    /// A name is valid when it has at least 2 non-whitespace characters.
+    /// Shared by the text field (display) and `isFormValid` (gating) so both stay in sync.
+    func isValidName(_ value: String) -> Bool {
+        value.trimmingCharacters(in: .whitespaces).count >= 2
+    }
+
+    /// True when the form is ready to submit.
+    var isFormValid: Bool {
+        isValidName(name)
     }
 
     // MARK: Dependencies

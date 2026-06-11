@@ -27,6 +27,8 @@ final class UserProfileViewModel {
     var linkEmail: String = ""
     var linkPassword: String = ""
     var linkConfirmPassword: String = ""
+
+    // MARK: Validation States
     var linkFirstNameState: ValidationState = .neutral
     var linkLastNameState: ValidationState = .neutral
     var linkEmailState: ValidationState = .neutral
@@ -44,14 +46,24 @@ final class UserProfileViewModel {
     var isAnonymous: Bool { authSession.isAnonymous }
     let daysRemainingInDemo: Int?
     
+    /// A name is valid when it is not empty (ignoring whitespace).
+    /// Shared by the text fields (display) and `isFormValid` (gating) so both stay in sync.
+    func isValidName(_ value: String) -> Bool {
+        !value.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    /// The link form confirmation is valid when it is not empty and matches the chosen password.
+    func isValidConfirmPassword(_ value: String) -> Bool {
+        !value.isEmpty && value == linkPassword
+    }
+
     var isFormValid: Bool {
-        firstName.trimmingCharacters(in: .whitespaces).count >= 2 &&
-        lastName.trimmingCharacters(in: .whitespaces).count >= 2
+        isValidName(firstName) && isValidName(lastName)
     }
 
     var isLinkFormValid: Bool {
-        !linkFirstName.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !linkLastName.trimmingCharacters(in: .whitespaces).isEmpty &&
+        isValidName(linkFirstName) &&
+        isValidName(linkLastName) &&
         Validators.isValidEmail(linkEmail) &&
         Validators.isStrongPassword(linkPassword) &&
         linkPassword == linkConfirmPassword
