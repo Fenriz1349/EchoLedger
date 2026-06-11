@@ -20,8 +20,10 @@ final class AddTransaction {
 
     /// Creates and persists a new transaction.
     /// - Parameter input: The data required to create the transaction.
+    /// - Returns: The created transaction, including its generated identifier.
     /// - Throws: `TransactionError` if any business rule is violated.
-    func execute(_ input: AddTransactionInput) async throws {
+    @discardableResult
+    func execute(_ input: AddTransactionInput) async throws -> Transaction {
         guard !input.label.trimmingCharacters(in: .whitespaces).isEmpty else {
             throw TransactionError.emptyLabel
         }
@@ -50,5 +52,6 @@ final class AddTransaction {
             updatedAt: Date()
         )
         try await repository.save(transaction)
+        return transaction
     }
 }

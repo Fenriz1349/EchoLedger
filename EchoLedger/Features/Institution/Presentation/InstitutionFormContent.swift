@@ -45,6 +45,8 @@ struct InstitutionFormContent: View {
                 )
             }
             .disabled(!viewModel.isValid || viewModel.isLoading)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
 
             if viewModel.isEditing {
                 Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(

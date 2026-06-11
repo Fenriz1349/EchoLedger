@@ -28,6 +28,7 @@ final class UploadTransactionDocument {
     ///   - attachmentType: The type of the attachment — mapped to a standard MIME type for storage.
     ///   - transaction: The transaction to attach the file to.
     /// - Returns: The updated transaction with its new attachmentURL and attachmentContentType.
+    @discardableResult
     func execute(data: Data, attachmentType: AttachmentType, transaction: Transaction) async throws -> Transaction {
         let mimeType = attachmentType == .pdf ? "application/pdf" : "image/jpeg"
         let url = try await documentSource.uploadTransactionAttachment(

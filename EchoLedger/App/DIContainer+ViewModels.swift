@@ -168,7 +168,11 @@ extension DIContainer {
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            uploadTransactionDocument: uploadTransactionDocument,
+            getTransactionDocument: getTransactionDocument,
+            deleteDocument: deleteDocument,
             userId: userId,
+            authSession: authSession,
             addAccountFormViewModel: makeAccountFormViewModel(),
             existingTransaction: existing
         )

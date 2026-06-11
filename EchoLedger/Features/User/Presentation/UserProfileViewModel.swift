@@ -43,6 +43,11 @@ final class UserProfileViewModel {
     // MARK: Computed
     var isAnonymous: Bool { authSession.isAnonymous }
     let daysRemainingInDemo: Int?
+    
+    var isFormValid: Bool {
+        firstName.trimmingCharacters(in: .whitespaces).count >= 2 &&
+        lastName.trimmingCharacters(in: .whitespaces).count >= 2
+    }
 
     var isLinkFormValid: Bool {
         !linkFirstName.trimmingCharacters(in: .whitespaces).isEmpty &&

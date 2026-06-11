@@ -86,4 +86,10 @@ final class AppCoordinator {
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
         container.makeTransactionFormViewModel(existing: existing)
     }
+
+    /// - Parameter transaction: The transaction whose attachment should be displayed.
+    /// - Returns: The DocumentResult describing its attachment.
+    func transactionDocument(for transaction: Transaction) -> DocumentResult {
+        container.getTransactionDocument.execute(transaction: transaction)
+    }
 }

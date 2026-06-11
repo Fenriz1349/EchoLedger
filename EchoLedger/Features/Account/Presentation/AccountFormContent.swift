@@ -40,6 +40,7 @@ struct AccountFormContent: View {
                         Text(viewModel.isInitialBalanceExpense ? "-" : "")
                         TextField("0,00€", text: $viewModel.initialBalanceText)
                             .keyboardType(.decimalPad)
+                        Text(viewModel.isInitialBalanceExpense ? "Négatif" : "Positif")
                         Toggle("", isOn: $viewModel.isInitialBalanceExpense)
                             .labelsHidden()
                             .tint(.red)
@@ -91,6 +92,8 @@ struct AccountFormContent: View {
                 )
             }
             .disabled(!viewModel.isValid || viewModel.isLoading)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
 
             if let errorMessage = viewModel.errorMessage {
                 Section {

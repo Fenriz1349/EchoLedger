@@ -94,11 +94,7 @@ struct TransactionFormContent: View {
                 }
         }
 
-        Section("Photo") {
-            Text("À venir")
-                .foregroundStyle(.secondary)
-                .font(.footnote)
-        }
+        TransactionAttachmentSection(viewModel: viewModel)
 
         Button {
             Task { await viewModel.submit() }
@@ -112,6 +108,8 @@ struct TransactionFormContent: View {
             )
         }
         .disabled(!viewModel.isValid || viewModel.isLoading)
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
 
         if let errorMessage = viewModel.errorMessage {
             Section {
