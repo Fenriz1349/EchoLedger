@@ -107,9 +107,10 @@ final class SyncManager: SyncManagerProtocol {
                 } else {
                     try institutionLocal.upsert(remote)
                 }
-            } else if let pivot, let updatedAt = local.updatedAt, updatedAt <= pivot {
-                try? institutionLocal.delete(by: local.id)
             } else {
+                // Interim: never delete on local absence (caused data loss).
+                // A local-only record is pushed, not deleted. Real deletes will
+                // propagate via tombstones (deletedAt) — see sync rework Plan 1.
                 try await institutionRemote.save(local, userId: userId)
             }
         }
@@ -144,9 +145,8 @@ final class SyncManager: SyncManagerProtocol {
                 } else {
                     try transactionLocal.upsert(remote)
                 }
-            } else if let pivot, let updatedAt = local.updatedAt, updatedAt <= pivot {
-                try? transactionLocal.delete(by: local.id)
             } else {
+                // Interim: never delete on local absence (see syncLocalInstitutions).
                 try await transactionRemote.save(local, userId: userId)
             }
         }
@@ -159,12 +159,10 @@ final class SyncManager: SyncManagerProtocol {
         localIds: Set<UUID>,
         pivot: Date?
     ) async throws {
+        // Interim: pull-only. We no longer delete remote records on local absence
+        // (caused data loss). Real deletes will propagate via tombstones — see Plan 1.
         for remote in remotes where !localIds.contains(remote.id) {
-            if let pivot, let updatedAt = remote.updatedAt, updatedAt <= pivot {
-                try await institutionRemote.delete(id: remote.id, userId: userId)
-            } else {
-                try institutionLocal.upsert(remote)
-            }
+            try institutionLocal.upsert(remote)
         }
     }
 
@@ -180,12 +178,9 @@ final class SyncManager: SyncManagerProtocol {
         localIds: Set<UUID>,
         pivot: Date?
     ) async throws {
+        // Interim: pull-only (see syncRemoteOnlyInstitutions).
         for remote in remotes where !localIds.contains(remote.id) {
-            if let pivot, let updatedAt = remote.updatedAt, updatedAt <= pivot {
-                try await transactionRemote.delete(id: remote.id, userId: userId)
-            } else {
-                try transactionLocal.upsert(remote)
-            }
+            try transactionLocal.upsert(remote)
         }
     }
 
