@@ -387,6 +387,8 @@
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 		68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
 		68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
+		68C811652FDC37110077D42B /* Transaction+Effective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811642FDC37110077D42B /* Transaction+Effective.swift */; };
+		68C811662FDC37110077D42B /* Transaction+Effective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811642FDC37110077D42B /* Transaction+Effective.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -620,6 +622,7 @@
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
+		68C811642FDC37110077D42B /* Transaction+Effective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Effective.swift"; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -1218,6 +1221,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1E9E2F5ACF700009B885 /* Transaction.swift */,
+				68C811642FDC37110077D42B /* Transaction+Effective.swift */,
 				685A1EEF2F5AEA9F0009B885 /* TransactionSplit.swift */,
 				683133A42F61736A004AA5E4 /* TransactionCategory.swift */,
 				685A1EF32F5AEAF40009B885 /* TransactionError.swift */,
@@ -1693,6 +1697,7 @@
 				6838213E2FC8432000CA6761 /* AuthProviding.swift in Sources */,
 				683821412FC8432000CA6761 /* AuthFormContent.swift in Sources */,
 				683821422FC8432000CA6761 /* AuthRemoteSource.swift in Sources */,
+				68C811662FDC37110077D42B /* Transaction+Effective.swift in Sources */,
 				683821432FC8432000CA6761 /* AccountCategory.swift in Sources */,
 				683821442FC8432000CA6761 /* TransactionDetailView.swift in Sources */,
 				683821452FC8432000CA6761 /* DeleteUserProfile.swift in Sources */,
@@ -1758,6 +1763,7 @@
 				683821982FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */,
 				685A1EC72F5AD97D0009B885 /* GetCurrentUser.swift in Sources */,
 				682C6C512FBF301F00AE9F62 /* ExpensePieChartView.swift in Sources */,
+				68C811652FDC37110077D42B /* Transaction+Effective.swift in Sources */,
 				685A1ECC2F5AD9990009B885 /* UserStoring.swift in Sources */,
 				6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */,
 				683821BE2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */,

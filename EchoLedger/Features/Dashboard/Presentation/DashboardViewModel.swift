@@ -66,7 +66,9 @@ final class DashboardViewModel {
                 activeAccounts.append(contentsOf: accounts)
             }
 
-            let transactions = try await getTransactions.execute(for: userId)
+            // Only effective transactions (today or earlier) feed balances and charts;
+            // future-dated ones (scheduled recurrences) are excluded until their day passes.
+            let transactions = try await getTransactions.execute(for: userId).filter { $0.isEffective() }
             let balanceMap = computeBalances(from: transactions, accounts: activeAccounts)
 
             accountBalances = activeAccounts
