@@ -59,12 +59,6 @@ final class AccountFormViewModel {
         isValidName(name) && selectedInstitution != nil
     }
 
-    /// Reverse isExpense for UI
-    var isIncome: Bool {
-        get { !isInitialBalanceExpense }
-        set { isInitialBalanceExpense = !newValue }
-    }
-
     /// Strips any non-numeric character from the initial balance field, keeping only digits
     /// and decimal separators (a hardware keyboard bypasses `.decimalPad`).
     /// Reassigns only when something was actually removed, so typing a separator isn't disrupted.
