@@ -45,16 +45,16 @@ struct DashboardView: View {
                     }
 
                     // MARK: Expense chart
-                    if !coordinator.dashboardViewModel.expenseChartData.isEmpty {
+                    if !coordinator.dashboardViewModel.expenseTotals.isEmpty {
                         Section {
-                            ExpensePieChartView(data: coordinator.dashboardViewModel.expenseChartData)
+                            ExpensePieChartView(data: coordinator.dashboardViewModel.expenseTotals)
                         }
                     }
 
                     // MARK: Income chart
-                    if !coordinator.dashboardViewModel.incomeChartData.isEmpty {
+                    if !coordinator.dashboardViewModel.incomeTotals.isEmpty {
                         Section {
-                            IncomePieChartView(data: coordinator.dashboardViewModel.incomeChartData)
+                            IncomePieChartView(data: coordinator.dashboardViewModel.incomeTotals)
                         }
                     }
                 }

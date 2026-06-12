@@ -19,8 +19,8 @@ final class AccountDetailViewModel {
     var balance: Double = 0
     var recentItems: [TransactionListItem] = []
     var accountNames: [UUID: String] = [:]
-    var expenseChartData: [(category: TransactionCategory, total: Double)] = []
-    var incomeChartData: [(category: TransactionCategory, total: Double)] = []
+    var expenseChartData: [CategorySlice] = []
+    var incomeChartData: [CategorySlice] = []
     var isLoading = false
     var showArchiveAlert = false
     var onNotFound: (() -> Void)?
@@ -95,12 +95,15 @@ final class AccountDetailViewModel {
 
             balance = fetchedBalance
 
-            let accountTransactions = allTransactions
-                .filter { $0.splits.contains { $0.accountId == account.id } }
-                .sorted { $0.date > $1.date }
-
-            expenseChartData = chartData(from: accountTransactions.filter { $0.isExpense && $0.category.isReportable })
-            incomeChartData = chartData(from: accountTransactions.filter { !$0.isExpense && $0.category.isReportable })
+            // Only effective (non-future) transactions feed the charts, like the dashboard.
+            // The calculator scopes amounts to this account via its splits.
+            let effectiveTransactions = allTransactions.filter { $0.isEffective() }
+            expenseChartData = ChartDataCalculator.categoryBreakdown(
+                effectiveTransactions, isExpense: true, accountId: account.id
+            )
+            incomeChartData = ChartDataCalculator.categoryBreakdown(
+                effectiveTransactions, isExpense: false, accountId: account.id
+            )
 
             // Group all transactions so transfer pairs are merged before filtering by account.
             // Filtering account-only transactions before grouping would break pairing.
@@ -189,18 +192,4 @@ final class AccountDetailViewModel {
         }
     }
 
-    // MARK: Helpers
-
-    /// Groups transactions by category and sums amounts, sorted descending by total.
-    private func chartData(from transactions: [Transaction]) -> [(category: TransactionCategory, total: Double)] {
-        var totals: [TransactionCategory: Double] = [:]
-        for transaction in transactions {
-            let split = transaction.splits.filter { $0.accountId == account.id }.map(\.amount).reduce(0, +)
-            totals[transaction.category, default: 0] += split
-        }
-        return totals
-            .map { (category: $0.key, total: $0.value) }
-            .filter { $0.total > 0 }
-            .sorted { $0.total > $1.total }
-    }
 }

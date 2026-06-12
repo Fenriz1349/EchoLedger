@@ -8,11 +8,11 @@
 import SwiftUI
 import Charts
 
-/// Pie chart showing income distribution by category.
-/// Receives pre-computed data sorted by total descending.
+/// Pie chart showing income distribution by category, as a share of the total.
+/// Receives pre-computed slices sorted by total descending.
 struct IncomePieChartView: View {
 
-    let data: [(category: TransactionCategory, total: Double)]
+    let data: [CategorySlice]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -41,7 +41,7 @@ struct IncomePieChartView: View {
                             .font(.caption)
                             .lineLimit(1)
                         Spacer()
-                        Text(item.total.toEuro)
+                        Text("\(Int(item.percentage.rounded())) %")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

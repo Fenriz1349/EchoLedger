@@ -12,7 +12,7 @@ import Charts
 /// Positive balances appear in green, negative in red.
 struct AccountBalanceChartView: View {
 
-    let items: [(account: Account, balance: Double)]
+    let items: [AccountBalance]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -43,9 +43,9 @@ struct AccountBalanceChartView: View {
     List {
         Section {
             AccountBalanceChartView(items: [
-                (account: PreviewData.accountCourant, balance: 1250.50),
-                (account: PreviewData.accountLivret, balance: 3200.00),
-                (account: PreviewData.accountSwile, balance: -85.20)
+                AccountBalance(account: PreviewData.accountCourant, balance: 1250.50),
+                AccountBalance(account: PreviewData.accountLivret, balance: 3200.00),
+                AccountBalance(account: PreviewData.accountSwile, balance: -85.20)
             ])
         }
     }

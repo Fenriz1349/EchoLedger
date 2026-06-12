@@ -116,10 +116,7 @@ extension DIContainer {
     func makeDashboardViewModel() -> DashboardViewModel {
         DashboardViewModel(
             toasty: toasty,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
-            getTransactions: getTransactions,
-            userId: userId
+            getChartData: getChartData
         )
     }
 
