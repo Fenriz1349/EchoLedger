@@ -177,4 +177,52 @@ enum PreviewData {
         transferExpense,
         transferIncome
     ]
+
+    // MARK: Chart sample (multi-month)
+
+    /// ~6 months of varied transactions so chart previews (monthly bars,
+    /// running balance, category pies) render with realistic data.
+    /// Generated rather than hand-written to keep this file readable.
+    static let chartTransactions: [Transaction] = {
+        var result: [Transaction] = []
+        let calendar = Calendar.current
+        let now = Date()
+
+        func date(monthsAgo: Int, day: Int) -> Date {
+            let base = calendar.date(byAdding: .month, value: -monthsAgo, to: now) ?? now
+            var comps = calendar.dateComponents([.year, .month], from: base)
+            comps.day = day
+            return calendar.date(from: comps) ?? base
+        }
+
+        func make(_ label: String, _ amount: Double, _ category: TransactionCategory,
+                  _ isExpense: Bool, _ account: Account, _ day: Int, _ monthsAgo: Int) {
+            result.append(Transaction(
+                id: UUID(),
+                userId: user.id,
+                label: label,
+                date: date(monthsAgo: monthsAgo, day: day),
+                totalAmount: amount,
+                isExpense: isExpense,
+                category: category,
+                splits: [TransactionSplit(accountId: account.id, amount: amount)]
+            ))
+        }
+
+        for month in 0..<6 {
+            let drift = Double(month) * 7 // makes monthly bars differ
+            make("Salaire", 2300, .salary, false, accountCourant, 25, month)
+            make("Loyer", 800, .rent, true, accountCourant, 3, month)
+            make("Courses", 72 + drift, .grocery, true, accountCourant, 7, month)
+            make("Courses", 48, .grocery, true, accountCourant, 19, month)
+            make("Restaurant", 27, .restaurant, true, accountSwile, 12, month)
+            make("Transport", 38, .transport, true, accountCourant, 9, month)
+            make("Loisirs", 45 + drift, .leisure, true, accountCourant, 16, month)
+            make("Abonnements", 26, .subscription, true, accountCourant, 5, month)
+            if month % 3 == 0 {
+                make("Intérêts Livret", 12, .investment, false, accountLivret, 28, month)
+            }
+        }
+        return result
+    }()
 }
