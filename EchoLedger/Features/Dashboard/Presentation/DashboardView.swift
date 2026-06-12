@@ -15,6 +15,9 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             Group {
+                if coordinator.userProfileViewModel.isAnonymous {
+                    AnonymousHeaderView(dayInDemo: coordinator.userProfileViewModel.daysRemainingInDemo)
+                }
                 List {
                     // MARK: Total balance
                     Section {
