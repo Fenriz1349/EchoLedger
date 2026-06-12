@@ -385,6 +385,8 @@
 		6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */; };
 		6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6742F6D9D5A0038A612 /* TransactionModel.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
+		68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
+		68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -617,6 +619,7 @@
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -897,6 +900,7 @@
 				683275FB2F9B7A0400DA5796 /* AuthViewModel.swift */,
 				683275FD2F9B7A2D00DA5796 /* AuthView.swift */,
 				683275FF2F9BA04400DA5796 /* AuthFormContent.swift */,
+				68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1704,6 +1708,7 @@
 				6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */,
 				6813142F2FD31B8000F74B8D /* SafariDocumentView.swift in Sources */,
 				6838214E2FC8432000CA6761 /* UserProfileActionsView.swift in Sources */,
+				68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */,
 				6838214F2FC8432000CA6761 /* AccountDetailViewModel.swift in Sources */,
 				6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */,
 				683821502FC8432000CA6761 /* UnarchiveAccount.swift in Sources */,
@@ -1897,6 +1902,7 @@
 				685A1EF72F5AEB070009B885 /* AddTransaction.swift in Sources */,
 				685A1EDB2F5AE6E60009B885 /* InstitutionStoring.swift in Sources */,
 				685A1EE82F5AE9A80009B885 /* AccountLocalSource.swift in Sources */,
+				68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */,
 				685A1EC22F5AD95B0009B885 /* UserProviding.swift in Sources */,
 				6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */,
 				6824DCA22FC03704007375C0 /* TransferFormView.swift in Sources */,
@@ -1990,7 +1996,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F435NP2676;
+				DEVELOPMENT_TEAM = A9J8B8CPN4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EchoLedger/Info.plist;
@@ -2025,7 +2031,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F435NP2676;
+				DEVELOPMENT_TEAM = A9J8B8CPN4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EchoLedger/Info.plist;

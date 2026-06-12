@@ -179,12 +179,6 @@ final class DIContainer {
 
         // MARK: Use Cases — Auth
         self.signOut = SignOut(repository: authStoring)
-        self.deleteUserProfile = DeleteUserProfile(
-            repository: authStoring,
-            userStoring: userStore,
-            deleteDocument: deleteDocument,
-            userId: userId
-        )
         self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
         self.resetPassword = ResetPassword(repository: authStoring)
 
@@ -228,6 +222,14 @@ final class DIContainer {
             repository: institutionStore,
             getAccounts: getAccounts,
             deleteAccount: deleteAccount
+        )
+        self.deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            userStoring: userStore,
+            deleteDocument: deleteDocument,
+            getInstitutions: getInstitutions,
+            deleteInstitution: deleteInstitution,
+            userId: userId
         )
 
         // MARK: Use Cases — Transfer

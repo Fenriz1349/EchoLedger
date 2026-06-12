@@ -18,31 +18,22 @@ struct UserProfileAnonymousView: View {
     var body: some View {
 
         NavigationStack {
-            VStack(spacing: 6) {
-                Text("Mode démo")
-                    .font(.headline)
-                if let days = viewModel.daysRemainingInDemo {
-                    Text("Il vous reste \(days) jour\(days > 1 ? "s" : "").")
-                        .font(.subheadline.bold())
-                        .foregroundColor(.orange)
-                }
-                Text("Vos données sont sauvegardées, mais accessibles uniquement depuis cet appareil. "
-                     + "Créez un compte pour y accéder depuis n'importe où.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-            }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.orange.opacity(0.1))
-            .cornerRadius(12)
+            AnonymousHeaderView(dayInDemo: viewModel.daysRemainingInDemo)
 
             Button {
-                Task { await viewModel.signOut() }
+                viewModel.showDeleteAlert = true
             } label: {
-                CustomButtonLabel(message: "Se déconnecter", color: .orange, isSelected: false)
+                CustomButtonLabel(message: "Arrêter l'essai", color: .orange, isSelected: false)
             }
             .disabled(viewModel.isLoading)
+            .alert("Arrêter l'essai ?", isPresented: $viewModel.showDeleteAlert) {
+                Button("Arrêter", role: .destructive) {
+                    Task { await viewModel.deleteUserProfile() }
+                }
+                Button("Annuler", role: .cancel) {}
+            } message: {
+                Text("Votre session de démo et ses données seront définitivement supprimées.")
+            }
 
             Form {
                 Text("Créer un compte permanent")
