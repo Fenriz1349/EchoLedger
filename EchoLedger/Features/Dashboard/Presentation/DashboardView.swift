@@ -35,6 +35,15 @@ struct DashboardView: View {
                         }
                     }
 
+                    // MARK: Monthly income / expense
+                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
+                        Section {
+                            MonthlyFlowChartView(
+                                data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
+                            )
+                        }
+                    }
+
                     // MARK: Per-account breakdown
                     if !coordinator.dashboardViewModel.graphsViewModel.accountBalances.isEmpty {
                         Section {
@@ -53,15 +62,6 @@ struct DashboardView: View {
                                 onPrevious: { coordinator.dashboardViewModel.graphsViewModel.goToPreviousPie() },
                                 onNext: { coordinator.dashboardViewModel.graphsViewModel.goToNextPie() },
                                 onSwipe: { coordinator.dashboardViewModel.graphsViewModel.handlePieSwipe($0) }
-                            )
-                        }
-                    }
-
-                    // MARK: Monthly income / expense
-                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
-                        Section {
-                            MonthlyFlowChartView(
-                                data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
                             )
                         }
                     }

@@ -57,7 +57,7 @@ struct IncomePieChartView: View {
                             .font(.caption)
                             .lineLimit(1)
                         Spacer()
-                        Text("\(Int(item.percentage.rounded())) %")
+                        Text(item.total.toEuro)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
