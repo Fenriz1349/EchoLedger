@@ -44,6 +44,15 @@ struct DashboardView: View {
                         }
                     }
 
+                    // MARK: Monthly income / expense
+                    if !coordinator.dashboardViewModel.monthlyFlows.isEmpty {
+                        Section {
+                            MonthlyFlowChartView(
+                                data: coordinator.dashboardViewModel.monthlyFlows
+                            )
+                        }
+                    }
+
                     // MARK: Expense chart
                     if !coordinator.dashboardViewModel.expenseTotals.isEmpty {
                         Section {

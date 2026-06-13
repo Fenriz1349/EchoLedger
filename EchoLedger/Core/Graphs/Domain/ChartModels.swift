@@ -15,6 +15,8 @@ struct MonthlyFlow: Identifiable {
     let income: Double
     let expense: Double
     var net: Double { income - expense }
+    /// True if the month has any income or expense (used to skip the net line on empty months).
+    var hasData: Bool { income > 0 || expense > 0 }
     var id: Date { month }
 }
 

@@ -32,10 +32,12 @@ enum ChartDataCalculator {
 
     // MARK: Monthly income / expense
 
-    /// Income and expense totals per month (reportable transactions only),
-    /// sorted chronologically. `accountId == nil` aggregates all accounts.
+    /// Income and expense totals for each of the 12 months of `year` (reportable
+    /// transactions only). Months without data are returned with zero values, so the
+    /// chart always spans the full year. `accountId == nil` aggregates all accounts.
     static func monthlyFlows(_ transactions: [Transaction],
-                             accountId: UUID? = nil) -> [MonthlyFlow] {
+                             accountId: UUID? = nil,
+                             year: Int = Calendar.current.component(.year, from: Date())) -> [MonthlyFlow] {
         let calendar = Calendar.current
         var income: [Date: Double] = [:]
         var expense: [Date: Double] = [:]
@@ -49,9 +51,8 @@ enum ChartDataCalculator {
                 income[month, default: 0] += value
             }
         }
-        let months = Set(income.keys).union(expense.keys).sorted()
-        return months.map {
-            MonthlyFlow(month: $0, income: income[$0] ?? 0, expense: expense[$0] ?? 0)
+        return calendar.months(ofYear: year).map { month in
+            MonthlyFlow(month: month, income: income[month] ?? 0, expense: expense[month] ?? 0)
         }
     }
 
@@ -110,12 +111,5 @@ enum ChartDataCalculator {
         return transaction.splits
             .filter { $0.accountId == accountId }
             .reduce(0) { $0 + $1.amount }
-    }
-}
-
-private extension Calendar {
-    /// First moment of the month containing `date`.
-    func startOfMonth(for date: Date) -> Date {
-        self.date(from: dateComponents([.year, .month], from: date)) ?? startOfDay(for: date)
     }
 }

@@ -77,3 +77,13 @@ struct IncomePieChartView: View {
         .padding(.vertical, 4)
     }
 }
+
+#Preview {
+    List {
+        Section {
+            IncomePieChartView(
+                data: ChartDataCalculator.categoryBreakdown(PreviewData.chartTransactions, isExpense: false)
+            )
+        }
+    }
+}

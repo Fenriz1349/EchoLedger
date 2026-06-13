@@ -21,6 +21,7 @@ final class DashboardViewModel {
     var accountBalances: [AccountBalance] = []
     var expenseTotals: [CategorySlice] = []
     var incomeTotals: [CategorySlice] = []
+    var monthlyFlows: [MonthlyFlow] = []
     var isLoading = false
 
     // MARK: Dependencies
@@ -49,6 +50,7 @@ final class DashboardViewModel {
             accountBalances = bundle.accountBalances
             expenseTotals = bundle.expenseTotals
             incomeTotals = bundle.incomeTotals
+            monthlyFlows = bundle.monthlyFlows
         } catch {
             toasty.showError(error)
         }

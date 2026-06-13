@@ -77,3 +77,13 @@ struct ExpensePieChartView: View {
         .padding(.vertical, 4)
     }
 }
+
+#Preview {
+    List {
+        Section {
+            ExpensePieChartView(
+                data: ChartDataCalculator.categoryBreakdown(PreviewData.chartTransactions, isExpense: true)
+            )
+        }
+    }
+}

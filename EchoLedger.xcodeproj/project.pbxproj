@@ -395,6 +395,10 @@
 		68C8116E2FDC394D0077D42B /* ChartDataCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C8116C2FDC394D0077D42B /* ChartDataCalculator.swift */; };
 		68C811702FDC39580077D42B /* GetChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C8116F2FDC39580077D42B /* GetChartData.swift */; };
 		68C811712FDC39580077D42B /* GetChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C8116F2FDC39580077D42B /* GetChartData.swift */; };
+		68C811742FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */; };
+		68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */; };
+		68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
+		68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -632,6 +636,8 @@
 		68C811692FDC39410077D42B /* ChartModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModels.swift; sourceTree = "<group>"; };
 		68C8116C2FDC394D0077D42B /* ChartDataCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataCalculator.swift; sourceTree = "<group>"; };
 		68C8116F2FDC39580077D42B /* GetChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChartData.swift; sourceTree = "<group>"; };
+		68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyFlowChartView.swift; sourceTree = "<group>"; };
+		68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Extension.swift"; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -855,9 +861,7 @@
 			isa = PBXGroup;
 			children = (
 				68C811672FDC392B0077D42B /* Domain */,
-				682C6C502FBF301F00AE9F62 /* ExpensePieChartView.swift */,
-				682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */,
-				682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */,
+				68C811722FDC4D160077D42B /* Presentation */,
 			);
 			path = Graphs;
 			sourceTree = "<group>";
@@ -1375,6 +1379,7 @@
 				681B47042F7F9F27000CC7C4 /* String+Extension.swift */,
 				681B47062F7FA04F000CC7C4 /* Double+Extension.swift */,
 				68EF99F52FA3863400FEBC1A /* Color+Extension.swift */,
+				68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1395,6 +1400,17 @@
 				68C8116F2FDC39580077D42B /* GetChartData.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		68C811722FDC4D160077D42B /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				682C6C502FBF301F00AE9F62 /* ExpensePieChartView.swift */,
+				682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */,
+				682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */,
+				68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		68EF99EB2FA3461A00FEBC1A /* UseCases */ = {
@@ -1652,6 +1668,7 @@
 				683820FA2FC8432000CA6761 /* TransactionListView.swift in Sources */,
 				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
 				683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */,
+				68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
 				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
@@ -1738,6 +1755,7 @@
 				6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */,
 				683821AF2FC86C6B00CA6761 /* GetUserPhoto.swift in Sources */,
 				681C82132FDA0A1C00807581 /* TransactionEditView.swift in Sources */,
+				68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */,
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
 				6838214C2FC8432000CA6761 /* Transfer.swift in Sources */,
 				6838214D2FC8432000CA6761 /* UserProfileAnonymousView.swift in Sources */,
@@ -1860,6 +1878,7 @@
 				683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */,
 				683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */,
 				684497372F75743F00337F74 /* InstitutionFormContent.swift in Sources */,
+				68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
 				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
@@ -1889,6 +1908,7 @@
 				6824DCAC2FC0495C007375C0 /* UpdateTransfer.swift in Sources */,
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
 				683276072F9BB03A00DA5796 /* UserProfileView.swift in Sources */,
+				68C811742FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */,
 				684497142F75380900337F74 /* PreviewData.swift in Sources */,
 				685A1F032F5AEB700009B885 /* TransactionRemoteSource.swift in Sources */,
 				6807E57A2F922C210099DCE4 /* ResolveSession.swift in Sources */,
