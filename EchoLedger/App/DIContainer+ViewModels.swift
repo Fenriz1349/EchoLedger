@@ -94,13 +94,13 @@ extension DIContainer {
         )
     }
 
-    /// Creates an AccountDetailViewModel for a given account.
+    /// Creates an AccountDetailViewModel for a given account with its own GraphsViewModel scoped to that account.
     func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {
         AccountDetailViewModel(
             account: account,
             toasty: toasty,
+            graphsViewModel: makeGraphsViewModel(),
             getTransactions: getTransactions,
-            getAccountBalance: getAccountBalance,
             getAccount: getAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
@@ -112,14 +112,16 @@ extension DIContainer {
 
     // MARK: - Dashboard
 
-    /// Creates a DashboardViewModel wired with all required use cases.
+    /// Creates a GraphsViewModel wired to the shared GetChartData use case.
+    func makeGraphsViewModel() -> GraphsViewModel {
+        GraphsViewModel(getChartData: getChartData)
+    }
+
+    /// Creates a DashboardViewModel with its own GraphsViewModel for the global scope.
     func makeDashboardViewModel() -> DashboardViewModel {
         DashboardViewModel(
             toasty: toasty,
-            getInstitutions: getInstitutions,
-            getAccounts: getAccounts,
-            getTransactions: getTransactions,
-            userId: userId
+            graphsViewModel: makeGraphsViewModel()
         )
     }
 

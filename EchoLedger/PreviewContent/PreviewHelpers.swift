@@ -20,8 +20,11 @@ struct PreviewHelpers {
     )
 
     /// Seeds all preview institutions and accounts into SwiftData.
+    /// Idempotent: skips if already seeded (shared container across previews).
     private static func seedInstitutionsAndAccounts() {
         let context = container.modelContainer.mainContext
+        let alreadySeeded = !((try? context.fetch(FetchDescriptor<InstitutionModel>()))?.isEmpty ?? true)
+        guard !alreadySeeded else { return }
         for institution in PreviewData.institutions {
             let model = InstitutionModel(
                 id: institution.id,
@@ -45,9 +48,13 @@ struct PreviewHelpers {
     }
 
     /// Seeds all preview transactions and splits into SwiftData.
+    /// Includes the multi-month `chartTransactions` so dashboard/chart previews are populated.
+    /// Idempotent: skips if transactions are already seeded (shared container across previews).
     private static func seedTransactions() {
         let context = container.modelContainer.mainContext
-        for transaction in PreviewData.transactions {
+        let alreadySeeded = !((try? context.fetch(FetchDescriptor<TransactionModel>()))?.isEmpty ?? true)
+        guard !alreadySeeded else { return }
+        for transaction in PreviewData.transactions + PreviewData.chartTransactions {
             let model = TransactionModel(
                 id: transaction.id,
                 userId: transaction.userId,

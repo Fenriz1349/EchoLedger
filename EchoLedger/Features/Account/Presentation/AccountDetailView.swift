@@ -30,10 +30,10 @@ struct AccountDetailView: View {
                 // MARK: Balance
                 Section("Solde") {
                     HStack {
-                        Text(viewModel.balance.toEuro)
+                        Text(viewModel.graphsViewModel.totalBalance.toEuro)
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundStyle(viewModel.balance >= 0 ? Color.green : Color.red)
+                            .foregroundStyle(viewModel.graphsViewModel.totalBalance >= 0 ? Color.green : Color.red)
                         Spacer()
                         Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
                             .foregroundStyle(.secondary)
@@ -41,16 +41,29 @@ struct AccountDetailView: View {
                     }
                 }
 
-                // MARK: Charts
-                if !viewModel.expenseChartData.isEmpty {
+                // MARK: Monthly pie carousel
+                if !viewModel.graphsViewModel.monthlyPieData.isEmpty {
                     Section {
-                        ExpensePieChartView(data: viewModel.expenseChartData)
+                        MonthlyPieCarouselView(
+                            months: viewModel.graphsViewModel.monthlyPieData,
+                            currentIndex: viewModel.graphsViewModel.selectedPieIndex,
+                            onPrevious: { viewModel.graphsViewModel.goToPreviousPie() },
+                            onNext: { viewModel.graphsViewModel.goToNextPie() },
+                            onSwipe: { viewModel.graphsViewModel.handlePieSwipe($0) }
+                        )
                     }
                 }
 
-                if !viewModel.incomeChartData.isEmpty {
+                // MARK: Charts
+                if !viewModel.graphsViewModel.expenseTotals.isEmpty {
                     Section {
-                        IncomePieChartView(data: viewModel.incomeChartData)
+                        ExpensePieChartView(data: viewModel.graphsViewModel.expenseTotals)
+                    }
+                }
+
+                if !viewModel.graphsViewModel.incomeTotals.isEmpty {
+                    Section {
+                        IncomePieChartView(data: viewModel.graphsViewModel.incomeTotals)
                     }
                 }
 
