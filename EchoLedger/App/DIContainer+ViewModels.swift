@@ -112,11 +112,16 @@ extension DIContainer {
 
     // MARK: - Dashboard
 
-    /// Creates a DashboardViewModel wired with all required use cases.
+    /// Creates a GraphsViewModel wired to the shared GetChartData use case.
+    func makeGraphsViewModel() -> GraphsViewModel {
+        GraphsViewModel(getChartData: getChartData)
+    }
+
+    /// Creates a DashboardViewModel with its own GraphsViewModel for the global scope.
     func makeDashboardViewModel() -> DashboardViewModel {
         DashboardViewModel(
             toasty: toasty,
-            getChartData: getChartData
+            graphsViewModel: makeGraphsViewModel()
         )
     }
 
