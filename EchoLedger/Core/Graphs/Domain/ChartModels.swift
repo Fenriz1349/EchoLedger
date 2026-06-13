@@ -42,3 +42,12 @@ struct AccountBalance: Identifiable {
     let balance: Double
     var id: UUID { account.id }
 }
+
+/// Expense and income category breakdowns for a single month. Feeds the pie carousel.
+struct MonthlyPieData: Identifiable {
+    /// First day of the month this data represents.
+    let month: Date
+    let expenses: [CategorySlice]
+    let income: [CategorySlice]
+    var id: Date { month }
+}

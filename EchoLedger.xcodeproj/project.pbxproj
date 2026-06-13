@@ -384,6 +384,12 @@
 		6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6702F6D9D2C0038A612 /* AccountModel.swift */; };
 		6868A6732F6D9D460038A612 /* TransactionSplitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */; };
 		6868A6752F6D9D5A0038A612 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6742F6D9D5A0038A612 /* TransactionModel.swift */; };
+		687DD66D2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD66C2FDD336B00B281FF /* MonthlyPieCarouselView.swift */; };
+		687DD66E2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD66C2FDD336B00B281FF /* MonthlyPieCarouselView.swift */; };
+		687DD6702FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */; };
+		687DD6712FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */; };
+		687DD6732FDD384900B281FF /* PieCarouselNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */; };
+		687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 		68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
 		68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
@@ -631,6 +637,9 @@
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		6868A6722F6D9D460038A612 /* TransactionSplitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSplitModel.swift; sourceTree = "<group>"; };
 		6868A6742F6D9D5A0038A612 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		687DD66C2FDD336B00B281FF /* MonthlyPieCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPieCarouselView.swift; sourceTree = "<group>"; };
+		687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselPageIndicator.swift; sourceTree = "<group>"; };
+		687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselNavigation.swift; sourceTree = "<group>"; };
 		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
 		68C811642FDC37110077D42B /* Transaction+Effective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Effective.swift"; sourceTree = "<group>"; };
 		68C811692FDC39410077D42B /* ChartModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModels.swift; sourceTree = "<group>"; };
@@ -1409,6 +1418,9 @@
 				682C6C522FBF302900AE9F62 /* IncomePieChartView.swift */,
 				682C6C602FBF570800AE9F62 /* AccountBalanceChartView.swift */,
 				68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */,
+				687DD66C2FDD336B00B281FF /* MonthlyPieCarouselView.swift */,
+				687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */,
+				687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1521,7 +1533,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2620;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					683133AF2F61A1A8004AA5E4 = {
 						CreatedOnToolsVersion = 26.2;
@@ -1629,6 +1641,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				687DD66E2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
 				683820D82FC8432000CA6761 /* GetCurrentUser.swift in Sources */,
 				683820D92FC8432000CA6761 /* ExpensePieChartView.swift in Sources */,
 				683820DC2FC8432000CA6761 /* TransferDetailViewModel.swift in Sources */,
@@ -1646,6 +1659,7 @@
 				683820E92FC8432000CA6761 /* TransactionFilterBar.swift in Sources */,
 				683820EA2FC8432000CA6761 /* DashboardViewModel.swift in Sources */,
 				683820EB2FC8432000CA6761 /* GetTransactions.swift in Sources */,
+				687DD6732FDD384900B281FF /* PieCarouselNavigation.swift in Sources */,
 				683820EC2FC8432000CA6761 /* EchoLedgerApp.swift in Sources */,
 				683820ED2FC8432000CA6761 /* GetTransactionsByDateRange.swift in Sources */,
 				683820EE2FC8432000CA6761 /* GetInstitution.swift in Sources */,
@@ -1792,6 +1806,7 @@
 				683821642FC8432000CA6761 /* TransactionCategory.swift in Sources */,
 				683821652FC8432000CA6761 /* IncomePieChartView.swift in Sources */,
 				683821672FC8432000CA6761 /* GetTransactionsByCategory.swift in Sources */,
+				687DD6702FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */,
 				68C811712FDC39580077D42B /* GetChartData.swift in Sources */,
 				682B0AA72FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
 				683821682FC8432000CA6761 /* AuthLocalSource.swift in Sources */,
@@ -1877,6 +1892,7 @@
 				682C6C5D2FBF394F00AE9F62 /* TransactionRowView.swift in Sources */,
 				683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */,
 				683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */,
+				687DD66D2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
 				684497372F75743F00337F74 /* InstitutionFormContent.swift in Sources */,
 				68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
 				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
@@ -1925,6 +1941,7 @@
 				682C6C5B2FBF367100AE9F62 /* RecentTransactionsView.swift in Sources */,
 				6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
 				683275F12F9B660000DA5796 /* CreateUserProfile.swift in Sources */,
+				687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
 				683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */,
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,
@@ -1949,6 +1966,7 @@
 				68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */,
 				68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */,
 				682C6C612FBF570800AE9F62 /* AccountBalanceChartView.swift in Sources */,
+				687DD6712FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */,
 				6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */,
 				6824DCB22FC04F81007375C0 /* Transfer.swift in Sources */,
 				68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */,
@@ -2178,6 +2196,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2235,6 +2254,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};

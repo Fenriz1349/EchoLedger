@@ -21,6 +21,7 @@ struct ChartBundle {
     let runningBalance: [BalancePoint]
     let expenseTotals: [CategorySlice]
     let incomeTotals: [CategorySlice]
+    let monthlyPieData: [MonthlyPieData]
 }
 
 /// Fetches the data the charts need in a single pass, then delegates all
@@ -78,7 +79,8 @@ final class GetChartData {
             monthlyFlows: ChartDataCalculator.monthlyFlows(transactions, accountId: accountId),
             runningBalance: ChartDataCalculator.runningBalance(transactions, accountId: accountId),
             expenseTotals: ChartDataCalculator.categoryBreakdown(transactions, isExpense: true, accountId: accountId),
-            incomeTotals: ChartDataCalculator.categoryBreakdown(transactions, isExpense: false, accountId: accountId)
+            incomeTotals: ChartDataCalculator.categoryBreakdown(transactions, isExpense: false, accountId: accountId),
+            monthlyPieData: ChartDataCalculator.monthlyPieBreakdown(transactions, accountId: accountId)
         )
     }
 }

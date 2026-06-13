@@ -27,6 +27,14 @@ extension Calendar {
         }
     }
 
+    /// Full French month + year label for `date` — e.g. "Juin 2026". Used in carousel headers.
+    func monthYearLabel(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "fr_FR")
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter.string(from: date).capitalized
+    }
+
     /// Compact French month label for the month containing `date` — 3 letters,
     /// except "Juin"/"Juil" (4) to disambiguate them. Used for tight chart axes.
     func shortMonthLabel(for date: Date) -> String {

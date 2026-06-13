@@ -102,6 +102,32 @@ enum ChartDataCalculator {
             .sorted { $0.total > $1.total }
     }
 
+    // MARK: Monthly pie breakdown
+
+    /// Expense and income category breakdowns for every month that has reportable data.
+    /// Months are returned in chronological order. `accountId == nil` aggregates all accounts.
+    /// - Parameters:
+    ///   - transactions: Effective transactions to analyse.
+    ///   - accountId: Restrict to a single account, or `nil` for all accounts.
+    /// - Returns: One `MonthlyPieData` per month that contains at least one reportable transaction.
+    static func monthlyPieBreakdown(_ transactions: [Transaction],
+                                    accountId: UUID? = nil) -> [MonthlyPieData] {
+        let calendar = Calendar.current
+        var months: Set<Date> = []
+        for transaction in transactions where transaction.category.isReportable {
+            let value = amount(of: transaction, for: accountId)
+            guard value > 0 else { continue }
+            months.insert(calendar.startOfMonth(for: transaction.date))
+        }
+        return months.sorted().map { month in
+            MonthlyPieData(
+                month: month,
+                expenses: categoryBreakdown(transactions, isExpense: true, accountId: accountId, month: month),
+                income: categoryBreakdown(transactions, isExpense: false, accountId: accountId, month: month)
+            )
+        }
+    }
+
     // MARK: Helpers
 
     /// Amount of a transaction attributable to a given account.

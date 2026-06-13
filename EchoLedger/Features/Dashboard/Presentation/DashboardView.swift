@@ -44,6 +44,19 @@ struct DashboardView: View {
                         }
                     }
 
+                    // MARK: Monthly pie carousel
+                    if !coordinator.dashboardViewModel.monthlyPieData.isEmpty {
+                        Section {
+                            MonthlyPieCarouselView(
+                                months: coordinator.dashboardViewModel.monthlyPieData,
+                                currentIndex: coordinator.dashboardViewModel.selectedPieIndex,
+                                onPrevious: { coordinator.dashboardViewModel.goToPreviousPie() },
+                                onNext: { coordinator.dashboardViewModel.goToNextPie() },
+                                onSwipe: { coordinator.dashboardViewModel.handlePieSwipe($0) }
+                            )
+                        }
+                    }
+
                     // MARK: Monthly income / expense
                     if !coordinator.dashboardViewModel.monthlyFlows.isEmpty {
                         Section {
