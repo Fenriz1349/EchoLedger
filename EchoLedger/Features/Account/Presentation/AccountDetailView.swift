@@ -41,6 +41,19 @@ struct AccountDetailView: View {
                     }
                 }
 
+                // MARK: Monthly pie carousel
+                if !viewModel.graphsViewModel.monthlyPieData.isEmpty {
+                    Section {
+                        MonthlyPieCarouselView(
+                            months: viewModel.graphsViewModel.monthlyPieData,
+                            currentIndex: viewModel.graphsViewModel.selectedPieIndex,
+                            onPrevious: { viewModel.graphsViewModel.goToPreviousPie() },
+                            onNext: { viewModel.graphsViewModel.goToNextPie() },
+                            onSwipe: { viewModel.graphsViewModel.handlePieSwipe($0) }
+                        )
+                    }
+                }
+
                 // MARK: Charts
                 if !viewModel.graphsViewModel.expenseTotals.isEmpty {
                     Section {
