@@ -10,17 +10,15 @@ import Toasty
 
 /// Manages the data displayed on the account detail screen:
 /// balance, recent transactions, chart data, and archive/unarchive actions.
+/// Chart state lives in `graphsViewModel`, scoped to this account.
 @MainActor
 @Observable
 final class AccountDetailViewModel {
 
     // MARK: State
 
-    var balance: Double = 0
     var recentItems: [TransactionListItem] = []
     var accountNames: [UUID: String] = [:]
-    var expenseChartData: [CategorySlice] = []
-    var incomeChartData: [CategorySlice] = []
     var isLoading = false
     var showArchiveAlert = false
     var onNotFound: (() -> Void)?
@@ -34,21 +32,21 @@ final class AccountDetailViewModel {
 
     private let toasty: ToastyManager
     private let getTransactions: GetTransactions
-    private let getAccountBalance: GetAccountBalance
     private let getAccount: GetAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccount
     private let deleteTransaction: DeleteTransaction
     private let deleteTransferUseCase: DeleteTransfer
     private let userId: UUID
+    let graphsViewModel: GraphsViewModel
 
     // MARK: Init
 
     /// - Parameters:
     ///   - account: The account to display.
     ///   - toasty: Toaster to display messages to the user.
+    ///   - graphsViewModel: Child VM owning all chart state scoped to this account.
     ///   - getTransactions: UseCase for fetching all user transactions.
-    ///   - getAccountBalance: UseCase for computing the account balance.
     ///   - getAccount: UseCase for resolving account names (used for transfer rows).
     ///   - archiveAccount: UseCase for archiving the account.
     ///   - unarchiveAccount: UseCase for restoring the account.
@@ -58,8 +56,8 @@ final class AccountDetailViewModel {
     init(
         account: Account,
         toasty: ToastyManager,
+        graphsViewModel: GraphsViewModel,
         getTransactions: GetTransactions,
-        getAccountBalance: GetAccountBalance,
         getAccount: GetAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccount,
@@ -69,8 +67,8 @@ final class AccountDetailViewModel {
     ) {
         self.account = account
         self.toasty = toasty
+        self.graphsViewModel = graphsViewModel
         self.getTransactions = getTransactions
-        self.getAccountBalance = getAccountBalance
         self.getAccount = getAccount
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
@@ -81,32 +79,17 @@ final class AccountDetailViewModel {
 
     // MARK: Actions
 
-    /// Loads balance, recent transactions and chart data for this account.
+    /// Loads chart data and recent transactions for this account.
     func load() async {
         isLoading = true
+        defer { isLoading = false }
         do {
-            // Verify the account still exists before loading its data
             _ = try await getAccount.execute(id: account.id)
 
-            async let balanceResult = getAccountBalance.execute(accountId: account.id, userId: userId)
-            async let transactionsResult = getTransactions.execute(for: userId)
+            try await graphsViewModel.load(scope: .account(account.id))
 
-            let (fetchedBalance, allTransactions) = try await (balanceResult, transactionsResult)
+            let allTransactions = try await getTransactions.execute(for: userId)
 
-            balance = fetchedBalance
-
-            // Only effective (non-future) transactions feed the charts, like the dashboard.
-            // The calculator scopes amounts to this account via its splits.
-            let effectiveTransactions = allTransactions.filter { $0.isEffective() }
-            expenseChartData = ChartDataCalculator.categoryBreakdown(
-                effectiveTransactions, isExpense: true, accountId: account.id
-            )
-            incomeChartData = ChartDataCalculator.categoryBreakdown(
-                effectiveTransactions, isExpense: false, accountId: account.id
-            )
-
-            // Group all transactions so transfer pairs are merged before filtering by account.
-            // Filtering account-only transactions before grouping would break pairing.
             recentItems = TransactionListItem.group(allTransactions)
                 .filter { item in
                     switch item {
@@ -135,7 +118,6 @@ final class AccountDetailViewModel {
         } catch {
             toasty.showError(error)
         }
-        isLoading = false
     }
 
     /// Archives the account.
@@ -191,5 +173,4 @@ final class AccountDetailViewModel {
             toasty.showError(error)
         }
     }
-
 }

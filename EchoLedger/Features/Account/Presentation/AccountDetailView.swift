@@ -30,10 +30,10 @@ struct AccountDetailView: View {
                 // MARK: Balance
                 Section("Solde") {
                     HStack {
-                        Text(viewModel.balance.toEuro)
+                        Text(viewModel.graphsViewModel.totalBalance.toEuro)
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundStyle(viewModel.balance >= 0 ? Color.green : Color.red)
+                            .foregroundStyle(viewModel.graphsViewModel.totalBalance >= 0 ? Color.green : Color.red)
                         Spacer()
                         Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
                             .foregroundStyle(.secondary)
@@ -42,15 +42,15 @@ struct AccountDetailView: View {
                 }
 
                 // MARK: Charts
-                if !viewModel.expenseChartData.isEmpty {
+                if !viewModel.graphsViewModel.expenseTotals.isEmpty {
                     Section {
-                        ExpensePieChartView(data: viewModel.expenseChartData)
+                        ExpensePieChartView(data: viewModel.graphsViewModel.expenseTotals)
                     }
                 }
 
-                if !viewModel.incomeChartData.isEmpty {
+                if !viewModel.graphsViewModel.incomeTotals.isEmpty {
                     Section {
-                        IncomePieChartView(data: viewModel.incomeChartData)
+                        IncomePieChartView(data: viewModel.graphsViewModel.incomeTotals)
                     }
                 }
 

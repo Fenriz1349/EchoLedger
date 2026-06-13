@@ -94,13 +94,13 @@ extension DIContainer {
         )
     }
 
-    /// Creates an AccountDetailViewModel for a given account.
+    /// Creates an AccountDetailViewModel for a given account with its own GraphsViewModel scoped to that account.
     func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {
         AccountDetailViewModel(
             account: account,
             toasty: toasty,
+            graphsViewModel: makeGraphsViewModel(),
             getTransactions: getTransactions,
-            getAccountBalance: getAccountBalance,
             getAccount: getAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
