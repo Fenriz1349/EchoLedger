@@ -29,13 +29,6 @@ struct CategorySlice: Identifiable {
     var id: TransactionCategory { category }
 }
 
-/// A single point on the running-balance line: the cumulative balance at a date.
-struct BalancePoint: Identifiable {
-    let date: Date
-    let balance: Double
-    var id: Date { date }
-}
-
 /// An account paired with its computed balance. Feeds the per-account bar chart.
 struct AccountBalance: Identifiable {
     let account: Account

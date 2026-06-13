@@ -56,27 +56,6 @@ enum ChartDataCalculator {
         }
     }
 
-    // MARK: Running balance
-
-    /// Cumulative balance over time, one point per day that has activity.
-    /// Includes every transaction (initial balances set the starting point).
-    /// `accountId == nil` aggregates all accounts.
-    static func runningBalance(_ transactions: [Transaction],
-                               accountId: UUID? = nil) -> [BalancePoint] {
-        let calendar = Calendar.current
-        var running: Double = 0
-        var balanceByDay: [Date: Double] = [:]
-        var dayOrder: [Date] = []
-        for transaction in transactions.sorted(by: { $0.date < $1.date }) {
-            let value = amount(of: transaction, for: accountId)
-            running += transaction.isExpense ? -value : value
-            let day = calendar.startOfDay(for: transaction.date)
-            if balanceByDay[day] == nil { dayOrder.append(day) }
-            balanceByDay[day] = running
-        }
-        return dayOrder.map { BalancePoint(date: $0, balance: balanceByDay[$0] ?? 0) }
-    }
-
     // MARK: Category breakdown
 
     /// Totals per category for one side (expense or income), each with its share.

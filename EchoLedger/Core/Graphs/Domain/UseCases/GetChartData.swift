@@ -18,7 +18,6 @@ struct ChartBundle {
     let totalBalance: Double
     let accountBalances: [AccountBalance]
     let monthlyFlows: [MonthlyFlow]
-    let runningBalance: [BalancePoint]
     let expenseTotals: [CategorySlice]
     let incomeTotals: [CategorySlice]
     let monthlyPieData: [MonthlyPieData]
@@ -77,7 +76,6 @@ final class GetChartData {
             totalBalance: balances.reduce(0) { $0 + $1.balance },
             accountBalances: balances,
             monthlyFlows: ChartDataCalculator.monthlyFlows(transactions, accountId: accountId),
-            runningBalance: ChartDataCalculator.runningBalance(transactions, accountId: accountId),
             expenseTotals: ChartDataCalculator.categoryBreakdown(transactions, isExpense: true, accountId: accountId),
             incomeTotals: ChartDataCalculator.categoryBreakdown(transactions, isExpense: false, accountId: accountId),
             monthlyPieData: ChartDataCalculator.monthlyPieBreakdown(transactions, accountId: accountId)

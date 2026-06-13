@@ -8,10 +8,9 @@
 import SwiftUI
 import Charts
 
-/// Grouped chart of the current year: two bars per month (income vs expense),
-/// with the net (income − expense) overlaid as a line.
-/// `data` already holds the 12 months of the year (see `ChartDataCalculator.monthlyFlows`),
-/// so months without data simply render no bar.
+/// Grouped bar chart of the current year: two bars per month (income vs expense).
+/// `data` holds the 12 months of the year (see `ChartDataCalculator.monthlyFlows`);
+/// months without data render no bar.
 struct MonthlyFlowChartView: View {
 
     let data: [MonthlyFlow]
@@ -22,7 +21,6 @@ struct MonthlyFlowChartView: View {
                 .font(.headline)
 
             Chart(data) { flow in
-                // Two bars side by side per month: income then expense.
                 BarMark(
                     x: .value("Mois", flow.month, unit: .month),
                     y: .value("Montant", flow.income)
@@ -36,22 +34,10 @@ struct MonthlyFlowChartView: View {
                 )
                 .foregroundStyle(by: .value("Série", "Dépenses"))
                 .position(by: .value("Série", "Dépenses"))
-
-                // Net line for completed months that have data only: the current month is
-                // still partial, and empty months would otherwise plot a point at 0.
-                if flow.month < Calendar.startOfCurrentMonth && flow.hasData {
-                    LineMark(
-                        x: .value("Mois", flow.month, unit: .month),
-                        y: .value("Net", flow.net)
-                    )
-                    .foregroundStyle(by: .value("Série", "Net"))
-                    .symbol(.circle)
-                }
             }
             .chartForegroundStyleScale([
                 "Revenus": Color.green,
-                "Dépenses": Color.red,
-                "Net": Color.accentColor
+                "Dépenses": Color.red
             ])
             .chartXAxis {
                 AxisMarks(values: .stride(by: .month)) { value in
