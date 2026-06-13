@@ -25,36 +25,62 @@ struct DashboardView: View {
                             Text("Solde total")
                                 .font(.headline)
                             Spacer()
-                            Text(coordinator.dashboardViewModel.totalBalance.toEuro)
+                            Text(coordinator.dashboardViewModel.graphsViewModel.totalBalance.toEuro)
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(
-                                    coordinator.dashboardViewModel.totalBalance >= 0
+                                    coordinator.dashboardViewModel.graphsViewModel.totalBalance >= 0
                                     ? Color.green : Color.red
                                 )
                         }
                     }
 
+                    // MARK: Monthly income / expense
+                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
+                        Section {
+                            MonthlyFlowChartView(
+                                data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
+                            )
+                        }
+                    }
+
                     // MARK: Per-account breakdown
-                    if !coordinator.dashboardViewModel.accountBalances.isEmpty {
+                    if !coordinator.dashboardViewModel.graphsViewModel.accountBalances.isEmpty {
                         Section {
                             AccountBalanceChartView(
-                                items: coordinator.dashboardViewModel.accountBalances
+                                items: coordinator.dashboardViewModel.graphsViewModel.accountBalances
+                            )
+                        }
+                    }
+
+                    // MARK: Monthly pie carousel
+                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyPieData.isEmpty {
+                        Section {
+                            MonthlyPieCarouselView(
+                                months: coordinator.dashboardViewModel.graphsViewModel.monthlyPieData,
+                                currentIndex: coordinator.dashboardViewModel.graphsViewModel.selectedPieIndex,
+                                onPrevious: { coordinator.dashboardViewModel.graphsViewModel.goToPreviousPie() },
+                                onNext: { coordinator.dashboardViewModel.graphsViewModel.goToNextPie() },
+                                onSwipe: { coordinator.dashboardViewModel.graphsViewModel.handlePieSwipe($0) }
                             )
                         }
                     }
 
                     // MARK: Expense chart
-                    if !coordinator.dashboardViewModel.expenseChartData.isEmpty {
+                    if !coordinator.dashboardViewModel.graphsViewModel.expenseTotals.isEmpty {
                         Section {
-                            ExpensePieChartView(data: coordinator.dashboardViewModel.expenseChartData)
+                            ExpensePieChartView(
+                                data: coordinator.dashboardViewModel.graphsViewModel.expenseTotals
+                            )
                         }
                     }
 
                     // MARK: Income chart
-                    if !coordinator.dashboardViewModel.incomeChartData.isEmpty {
+                    if !coordinator.dashboardViewModel.graphsViewModel.incomeTotals.isEmpty {
                         Section {
-                            IncomePieChartView(data: coordinator.dashboardViewModel.incomeChartData)
+                            IncomePieChartView(
+                                data: coordinator.dashboardViewModel.graphsViewModel.incomeTotals
+                            )
                         }
                     }
                 }
@@ -68,9 +94,7 @@ struct DashboardView: View {
             ToolbarItem(placement: .topBarTrailing) {
             #if CLOUD_TARGET
                 Button {
-                    Task {
-                        await coordinator.dashboardViewModel.load()
-                    }
+                    Task { await coordinator.dashboardViewModel.load() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
                 }
@@ -95,7 +119,7 @@ struct DashboardView: View {
             await coordinator.dashboardViewModel.load()
         }
         .overlay {
-            if coordinator.dashboardViewModel.isLoading {
+            if coordinator.dashboardViewModel.graphsViewModel.isLoading {
                 EchoProgressView()
             }
         }

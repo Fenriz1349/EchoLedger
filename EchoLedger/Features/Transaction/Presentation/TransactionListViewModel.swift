@@ -30,9 +30,15 @@ final class TransactionListViewModel {
         selectedNature != .all || selectedCategory != nil || selectedAccountId != nil
     }
 
+    /// Only transactions whose date has arrived. Future-dated ones (scheduled
+    /// recurrences) are hidden from the list and aggregates until their day passes.
+    private var effectiveTransactions: [Transaction] {
+        transactions.filter { $0.isEffective() }
+    }
+
     /// Categories present in the current transaction list, excluding internal ones.
     var availableCategories: [TransactionCategory] {
-        let used = Set(transactions.map(\.category))
+        let used = Set(effectiveTransactions.map(\.category))
         return TransactionCategory.allCases.filter { used.contains($0) && $0.isUserSelectable }
     }
 
@@ -44,7 +50,7 @@ final class TransactionListViewModel {
 
     /// Transactions grouped and filtered by the active pickers and search text.
     var listItems: [TransactionListItem] {
-        TransactionListItem.group(transactions).filter { item in
+        TransactionListItem.group(effectiveTransactions).filter { item in
             passesNature(item) && passesCategory(item) && passesAccount(item) && passesSearch(item)
         }
     }

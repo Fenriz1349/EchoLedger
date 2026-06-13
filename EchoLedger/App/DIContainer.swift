@@ -104,6 +104,9 @@ final class DIContainer {
     let getTransactionDocument: GetTransactionDocument
     let getUserPhoto: GetUserPhoto
 
+    // MARK: Use Cases — Charts
+    let getChartData: GetChartData
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies.
@@ -259,5 +262,13 @@ final class DIContainer {
         )
         self.getTransactionDocument = GetTransactionDocument()
         self.getUserPhoto = GetUserPhoto()
+
+        // MARK: Use Cases — Charts
+        self.getChartData = GetChartData(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            getTransactions: getTransactions,
+            userId: userId
+        )
     }
 }

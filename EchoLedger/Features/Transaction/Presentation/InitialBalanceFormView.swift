@@ -36,7 +36,7 @@ struct InitialBalanceFormView: View {
                                 viewModel.setInitialBalanceAmount(filtered.toDouble)
                             }
                         Text(viewModel.isExpense ? "Négatif" : "Positif")
-                        Toggle("", isOn: $viewModel.isIncome)
+                        Toggle("", isOn: $viewModel.isExpense)
                             .labelsHidden()
                             .tint(.red)
                     }

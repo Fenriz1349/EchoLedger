@@ -8,11 +8,15 @@
 import SwiftUI
 import Charts
 
-/// Pie chart showing expense distribution by category.
-/// Receives pre-computed data sorted by total descending.
+/// Pie chart showing expense distribution by category, as a share of the total.
+/// Slices ≥ 5% are labelled directly on the chart; the legend below lists every category.
 struct ExpensePieChartView: View {
 
-    let data: [(category: TransactionCategory, total: Double)]
+    let data: [CategorySlice]
+
+    private var total: Double {
+        data.reduce(0) { $0 + $1.total }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -27,10 +31,22 @@ struct ExpensePieChartView: View {
                 )
                 .foregroundStyle(item.category.color)
                 .cornerRadius(4)
+                .annotation(position: .overlay) {
+                    if item.percentage >= 5 {
+                        VStack(spacing: 1) {
+                            Text(item.category.name)
+                            Text("\(Int(item.percentage.rounded())) %")
+                        }
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    }
+                }
             }
             .frame(height: 220)
 
-            // Legend
+            // Full legend — every category with its share.
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 6) {
                 ForEach(data, id: \.category) { item in
                     HStack(spacing: 6) {
@@ -47,7 +63,27 @@ struct ExpensePieChartView: View {
                     }
                 }
             }
+
+            Divider()
+
+            HStack {
+                Text("Total")
+                    .font(.caption.weight(.medium))
+                Spacer()
+                Text(total.toEuro)
+                    .font(.caption.weight(.medium))
+            }
         }
         .padding(.vertical, 4)
+    }
+}
+
+#Preview {
+    List {
+        Section {
+            ExpensePieChartView(
+                data: ChartDataCalculator.categoryBreakdown(PreviewData.chartTransactions, isExpense: true)
+            )
+        }
     }
 }
