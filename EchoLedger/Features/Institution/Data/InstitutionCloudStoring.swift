@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreInternal
 
 /// Firebase-only implementation of InstitutionProviding.
 /// Delegates all reads and writes directly to InstitutionRemoteSource, with no local cache.
@@ -20,7 +21,7 @@ final class InstitutionCloudStoring: InstitutionProviding {
     }
 
     func fetchAll(for userId: UUID) async throws -> [Institution] {
-        try await remote.fetchAll(for: userId)
+        try await remote.fetchAll(for: userId, source: .cache)
     }
 
     func fetch(by id: UUID) async throws -> Institution {
