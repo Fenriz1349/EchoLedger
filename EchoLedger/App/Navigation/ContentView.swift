@@ -70,7 +70,10 @@ struct ContentView: View {
             isPresented: Binding(
                 get: { coordinator.transactionListViewModel.showAddTransaction },
                 set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
-            )
+            ),
+            // Refresh in onDismiss (after the sheet fully closes), not onChange: a fast local
+            // reload fired mid-dismissal lands during the transition and the rows don't redraw.
+            onDismiss: { Task { await coordinator.refreshAfterTransactionChange() } }
         ) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
         }
@@ -78,11 +81,6 @@ struct ContentView: View {
             if new == .add {
                 selectedTab = old
                 coordinator.transactionListViewModel.showAddTransaction = true
-            }
-        }
-        .onChange(of: coordinator.transactionListViewModel.showAddTransaction) {
-            if !coordinator.transactionListViewModel.showAddTransaction {
-                Task { await coordinator.transactionListViewModel.load() }
             }
         }
     }

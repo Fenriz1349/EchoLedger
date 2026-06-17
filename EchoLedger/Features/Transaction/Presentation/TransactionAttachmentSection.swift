@@ -50,17 +50,18 @@ struct TransactionAttachmentSection: View {
                 DocumentDisplayView(document: existingDocument)
                 HStack(spacing: 16) {
                     Button {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        UIApplication.shared
+                            .sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         if DocumentError.isSimulator {
                             viewModel.showSimulatorWarning()
                         } else {
                             showOptions = true
                         }
                     } label: {
-                        CustomButtonLabel(iconLeading:  "arrow.triangle.2.circlepath",
+                        CustomButtonLabel(iconLeading: "arrow.triangle.2.circlepath",
                                          message: "Modifier",
                                          color: .accentColor,
-                                         isSelected:false)
+                                         isSelected: false)
                     }
                     .documentPicker(
                         showOptions: $showOptions,
@@ -79,7 +80,8 @@ struct TransactionAttachmentSection: View {
                 }
             } else {
                 Button {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    UIApplication.shared
+                        .sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     if DocumentError.isSimulator {
                         viewModel.showSimulatorWarning()
                     } else {

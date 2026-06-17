@@ -45,7 +45,7 @@ final class UserProfileViewModel {
     // MARK: Computed
     var isAnonymous: Bool { authSession.isAnonymous }
     let daysRemainingInDemo: Int?
-    
+
     /// A name is valid when it is not empty (ignoring whitespace).
     /// Shared by the text fields (display) and `isFormValid` (gating) so both stay in sync.
     func isValidName(_ value: String) -> Bool {

@@ -60,12 +60,18 @@ final class TransactionFormViewModel {
 
     // MARK: Computed
 
-    /// Returns true if the form is ready to be submitted.
+    /// The first validation rule the form currently fails, or nil when it is ready to submit.
     /// An initial balance transaction may total zero; every other transaction needs a positive total.
-    var isFormValid: Bool {
-        guard !splits.isEmpty else { return false }
+    private var validationError: TransactionError? {
+        if splits.isEmpty { return .missingSplits }
+        if Set(splits.map(\.accountId)).count != splits.count { return .redundantSplitsAccounts }
         let amountValid = isInitialBalance ? totalAmount >= 0 : totalAmount > 0
-        return amountValid && Set(splits.map(\.accountId)).count == splits.count
+        return amountValid ? nil : .invalidTotalAmount
+    }
+
+    /// Returns true if the form is ready to be submitted.
+    var isFormValid: Bool {
+        validationError == nil
     }
 
     /// Returns the trimmed label, falling back to the category name if empty.
@@ -230,78 +236,81 @@ final class TransactionFormViewModel {
         toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
     }
 
-    /// Validates and submits the transaction.
+    /// Validates and submits the transaction (create or edit).
     func submit() async {
-        guard isInitialBalance ? totalAmount >= 0 : totalAmount > 0 else {
-            errorMessage = TransactionError.invalidTotalAmount.localizedDescription
-            return
-        }
-        guard !splits.isEmpty else {
-            errorMessage = TransactionError.missingSplits.localizedDescription
-            return
-        }
-        guard Set(splits.map(\.accountId)).count == splits.count else {
-            errorMessage = TransactionError.redundantSplitsAccounts.localizedDescription
+        if let validationError {
+            errorMessage = validationError.localizedDescription
             return
         }
 
         isLoading = true
         errorMessage = nil
-
         do {
             if let existingTransaction {
-                let keepURL = removeExistingAttachment ? nil : existingTransaction.attachmentURL
-                let keepType = removeExistingAttachment ? nil : existingTransaction.attachmentContentType
-                let input = UpdateTransactionInput(
-                    id: existingTransaction.id,
-                    userId: userId,
-                    label: trimmedLabel,
-                    date: date,
-                    totalAmount: totalAmount,
-                    note: nil,
-                    isExpense: isExpense,
-                    category: category,
-                    splits: splits,
-                    attachmentURL: keepURL,
-                    attachmentContentType: keepType
-                )
-                try await updateTransaction.execute(input)
-                if removeExistingAttachment, let oldURL = existingTransaction.attachmentURL {
-                    try? await deleteDocument.execute(urlString: oldURL)
-                }
-                let edited = Transaction(
-                    id: existingTransaction.id,
-                    userId: userId,
-                    label: trimmedLabel,
-                    date: date,
-                    totalAmount: totalAmount,
-                    note: nil,
-                    isExpense: isExpense,
-                    category: category,
-                    splits: splits,
-                    attachmentURL: keepURL,
-                    attachmentContentType: keepType
-                )
-                await uploadPendingAttachment(to: edited)
+                try await update(existingTransaction)
             } else {
-                let input = AddTransactionInput(
-                    userId: userId,
-                    label: trimmedLabel,
-                    date: date,
-                    totalAmount: totalAmount,
-                    note: nil,
-                    isExpense: isExpense,
-                    category: category,
-                    splits: splits
-                )
-                let created = try await addTransaction.execute(input)
-                await uploadPendingAttachment(to: created)
+                try await create()
             }
             isSuccess = true
         } catch {
             toasty.showError(error)
         }
         isLoading = false
+    }
+
+    /// Updates an existing transaction, removes the old attachment if requested,
+    /// then uploads any newly selected one.
+    private func update(_ existing: Transaction) async throws {
+        let keepURL = removeExistingAttachment ? nil : existing.attachmentURL
+        let keepType = removeExistingAttachment ? nil : existing.attachmentContentType
+        let edited = Transaction(
+            id: existing.id,
+            userId: userId,
+            label: trimmedLabel,
+            date: date,
+            totalAmount: totalAmount,
+            note: nil,
+            isExpense: isExpense,
+            category: category,
+            splits: splits,
+            attachmentURL: keepURL,
+            attachmentContentType: keepType
+        )
+        try await updateTransaction.execute(
+            UpdateTransactionInput(
+                id: edited.id,
+                userId: edited.userId,
+                label: edited.label,
+                date: edited.date,
+                totalAmount: edited.totalAmount,
+                note: edited.note,
+                isExpense: edited.isExpense,
+                category: edited.category,
+                splits: edited.splits,
+                attachmentURL: edited.attachmentURL,
+                attachmentContentType: edited.attachmentContentType
+            )
+        )
+        if removeExistingAttachment, let oldURL = existing.attachmentURL {
+            try? await deleteDocument.execute(urlString: oldURL)
+        }
+        await uploadPendingAttachment(to: edited)
+    }
+
+    /// Creates a new transaction, then uploads any selected attachment.
+    private func create() async throws {
+        let input = AddTransactionInput(
+            userId: userId,
+            label: trimmedLabel,
+            date: date,
+            totalAmount: totalAmount,
+            note: nil,
+            isExpense: isExpense,
+            category: category,
+            splits: splits
+        )
+        let created = try await addTransaction.execute(input)
+        await uploadPendingAttachment(to: created)
     }
 
     /// Uploads the pending attachment to the given transaction, if one was selected.
