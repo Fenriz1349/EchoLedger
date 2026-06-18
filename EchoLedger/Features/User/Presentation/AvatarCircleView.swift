@@ -6,33 +6,27 @@
 //
 
 import SwiftUI
+import UIKit
 
-/// Displays a circular avatar from a DocumentResult.
-/// Shows the avatar placeholder immediately, replaced by the remote image on success.
+/// Displays a circular avatar from already-downloaded image bytes.
+/// Shows the avatar placeholder when there is no image (none set, offline, or load failed).
+/// The `Data → UIImage` bridge is the single point where UIKit enters the avatar flow.
 struct AvatarCircleView: View {
 
-    let document: DocumentResult
+    let imageData: Data?
     let size: CGFloat
 
     var body: some View {
         Circle()
             .fill(Color(.secondarySystemBackground))
             .overlay {
-                if let urlString = document.urlString, let url = URL(string: urlString) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .clipShape(Circle())
-                        default:
-                            document.placeholder.placeholderView
-                                .padding(size * 0.08)
-                        }
-                    }
+                if let imageData, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape(Circle())
                 } else {
-                    document.placeholder.placeholderView
+                    DocumentPlaceholder.avatar.placeholderView
                         .padding(size * 0.08)
                 }
             }
@@ -46,19 +40,5 @@ struct AvatarCircleView: View {
 }
 
 #Preview("Sans photo") {
-    AvatarCircleView(
-        document: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
-        size: 180
-    )
-}
-
-#Preview("Avec photo") {
-    AvatarCircleView(
-        document: DocumentResult(
-            urlString: "https://picsum.photos/200",
-            attachmentType: nil,
-            placeholder: .avatar
-        ),
-        size: 180
-    )
+    AvatarCircleView(imageData: nil, size: 180)
 }

@@ -62,6 +62,15 @@ final class DocumentRemoteSource {
         return url.absoluteString
     }
 
+    /// Downloads image bytes from a download URL via URLSession (works on simulator, unlike the Storage SDK).
+    /// - Parameter urlString: The download URL of the image.
+    /// - Returns: The downloaded bytes.
+    func downloadImageData(urlString: String) async throws -> Data {
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return data
+    }
+
     /// Deletes a document from Firebase Storage by its download URL.
     /// - Parameter urlString: The download URL of the document to delete.
     func deleteDocument(urlString: String) async throws {

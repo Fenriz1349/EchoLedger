@@ -105,7 +105,7 @@ final class DIContainer {
     let uploadAvatarPhoto: UploadAvatarPhoto
     let deleteDocument: DeleteDocument
     let getTransactionDocument: GetTransactionDocument
-    let getUserPhoto: GetUserPhoto
+    let downloadImage: DownloadImage
 
     // MARK: Use Cases — Charts
     let getChartData: GetChartData
@@ -269,7 +269,7 @@ final class DIContainer {
             userId: userId
         )
         self.getTransactionDocument = GetTransactionDocument()
-        self.getUserPhoto = GetUserPhoto()
+        self.downloadImage = DownloadImage(documentSource: documentSource, networkMonitor: networkMonitor)
 
         // MARK: Use Cases — Charts
         self.getChartData = GetChartData(
