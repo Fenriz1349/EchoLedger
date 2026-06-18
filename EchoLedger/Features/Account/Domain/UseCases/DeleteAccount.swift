@@ -33,14 +33,16 @@ final class DeleteAccount {
     }
 
     /// Deletes a bank account, all its linked transactions, and their attachment files.
-    /// Attachment removal is best-effort — it never blocks the deletion.
+    /// Each attachment is deleted before its transaction record, so a file is never left
+    /// orphaned. A failure aborts the cascade; retrying resumes safely (an already-deleted file
+    /// counts as success).
     /// - Parameter id: The unique identifier of the account to delete.
     func execute(id: UUID) async throws {
         let allTransactions = try await transactionRepository.fetchAll(for: userId)
         let linked = allTransactions.filter { $0.splits.contains { $0.accountId == id } }
         for transaction in linked {
             if let attachmentURL = transaction.attachmentURL {
-                try? await deleteDocument.execute(urlString: attachmentURL)
+                try await deleteDocument.execute(urlString: attachmentURL)
             }
             try await transactionRepository.delete(by: transaction.id)
         }

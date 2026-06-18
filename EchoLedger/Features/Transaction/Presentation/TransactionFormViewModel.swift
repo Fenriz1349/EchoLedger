@@ -276,6 +276,9 @@ final class TransactionFormViewModel {
             attachmentURL: keepURL,
             attachmentContentType: keepType
         )
+        if removeExistingAttachment, let oldURL = existing.attachmentURL {
+            try await deleteDocument.execute(urlString: oldURL)
+        }
         try await updateTransaction.execute(
             UpdateTransactionInput(
                 id: edited.id,
@@ -291,9 +294,6 @@ final class TransactionFormViewModel {
                 attachmentContentType: edited.attachmentContentType
             )
         )
-        if removeExistingAttachment, let oldURL = existing.attachmentURL {
-            try? await deleteDocument.execute(urlString: oldURL)
-        }
         await uploadPendingAttachment(to: edited)
     }
 

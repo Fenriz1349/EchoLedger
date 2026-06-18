@@ -185,7 +185,7 @@ final class DIContainer {
         )
 
         // MARK: Document source (needed by the delete use cases below)
-        let documentSource = DocumentRemoteSource()
+        let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
         self.deleteDocument = DeleteDocument(documentSource: documentSource)
 
         // MARK: Use Cases — Auth

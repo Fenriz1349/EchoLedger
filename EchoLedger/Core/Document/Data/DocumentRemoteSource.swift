@@ -14,6 +14,11 @@ import FirebaseStorage
 final class DocumentRemoteSource {
 
     private let storage = Storage.storage()
+    private let networkMonitor: NetworkMonitor
+
+    init(networkMonitor: NetworkMonitor) {
+        self.networkMonitor = networkMonitor
+    }
 
     /// Throws on simulator where Firebase Storage TLS connections fail.
     private func guardSimulator() throws {
@@ -35,6 +40,7 @@ final class DocumentRemoteSource {
         userId: UUID,
         transactionId: UUID
     ) async throws -> String {
+        try await networkMonitor.verifyReachable()
         try guardSimulator()
         let metadata = StorageMetadata()
         metadata.contentType = mimeType
@@ -52,6 +58,7 @@ final class DocumentRemoteSource {
     ///   - userId: The identifier of the owning user.
     /// - Returns: The download URL string for the uploaded avatar.
     func uploadAvatarPhoto(_ data: Data, userId: UUID) async throws -> String {
+        try await networkMonitor.verifyReachable()
         try guardSimulator()
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
@@ -72,9 +79,17 @@ final class DocumentRemoteSource {
     }
 
     /// Deletes a document from Firebase Storage by its download URL.
+    /// An already-absent file counts as success, so retries after a partial failure are safe.
     /// - Parameter urlString: The download URL of the document to delete.
     func deleteDocument(urlString: String) async throws {
+        try await networkMonitor.verifyReachable()
         let reference = storage.reference(forURL: urlString)
-        try await reference.delete()
+        do {
+            try await reference.delete()
+        } catch {
+            let nsError = error as NSError
+            guard nsError.domain == StorageErrorDomain,
+                  nsError.code == StorageErrorCode.objectNotFound.rawValue else { throw error }
+        }
     }
 }
