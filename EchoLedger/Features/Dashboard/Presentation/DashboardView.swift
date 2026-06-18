@@ -85,7 +85,7 @@ struct DashboardView: View {
                     }
                 }
                 .refreshable {
-                    await coordinator.dashboardViewModel.load()
+                    await coordinator.dashboardViewModel.refresh()
                 }
                 .navigationTitle("Tableau de bord")
             }
@@ -94,7 +94,7 @@ struct DashboardView: View {
             ToolbarItem(placement: .topBarTrailing) {
             #if CLOUD_TARGET
                 Button {
-                    Task { await coordinator.dashboardViewModel.load() }
+                    Task { await coordinator.dashboardViewModel.refresh() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
                 }
@@ -115,11 +115,8 @@ struct DashboardView: View {
                 }
             }
         }
-        .task {
-            await coordinator.dashboardViewModel.load()
-        }
         .overlay {
-            if coordinator.dashboardViewModel.graphsViewModel.isLoading {
+            if coordinator.dashboardViewModel.isLoading {
                 EchoProgressView()
             }
         }

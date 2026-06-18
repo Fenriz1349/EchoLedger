@@ -46,6 +46,17 @@ final class AppCoordinator {
         )
     }
 
+    /// Loads the transaction-dependent view models — the transaction list, account balances
+    /// and dashboard charts. Called once at launch to pre-fill the tabs, and again after a
+    /// transaction is added or edited from the global form (those tabs stay alive in the
+    /// TabView so their content won't reload on its own, and no single feature view model
+    /// owns the global add button).
+    func loadData() async {
+        await transactionListViewModel.load()
+        await accountListViewModel.load()
+        await dashboardViewModel.load()
+    }
+
     /// - Parameter account: The account to display in detail.
     /// - Returns: A configured AccountDetailViewModel.
     func makeAccountDetailViewModel(account: Account) -> AccountDetailViewModel {

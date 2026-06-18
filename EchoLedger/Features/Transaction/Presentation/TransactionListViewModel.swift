@@ -17,7 +17,10 @@ final class TransactionListViewModel {
     var transactions: [Transaction] = []
     var accountNames: [UUID: String] = [:]
     var institutionNames: [UUID: String] = [:]
-    var isLoading = false
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     // MARK: Filters
     var searchText: String = ""
@@ -139,6 +142,7 @@ final class TransactionListViewModel {
     private let deleteTransaction: DeleteTransaction
     private let getAccount: GetAccount
     private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
 
     /// - Parameters:
@@ -147,24 +151,28 @@ final class TransactionListViewModel {
     ///   - deleteTransaction: UseCase for deleting one transaction.
     ///   - getAccount: UseCase for resolving a single account name.
     ///   - getAccountsWithInstitution: UseCase for building the flat list of AccountDisplayItem.
+    ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - userId: The identifier of the current user.
     init(toasty: ToastyManager,
          getTransactions: GetTransactions,
          deleteTransaction: DeleteTransaction,
          getAccount: GetAccount,
          getAccountsWithInstitution: GetAccountsWithInstitution,
+         refreshFromRemote: RefreshFromRemote,
          userId: UUID) {
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.deleteTransaction = deleteTransaction
         self.getAccount = getAccount
         self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.refreshFromRemote = refreshFromRemote
         self.userId = userId
     }
 
     /// Loads all transactions and available filter accounts for the current user.
     func load() async {
         isLoading = true
+        defer { isLoading = false }
         do {
             transactions = try await getTransactions.execute(for: userId)
 
@@ -178,7 +186,20 @@ final class TransactionListViewModel {
         } catch {
             toasty.showError(error)
         }
-        isLoading = false
+    }
+
+    /// Pulls fresh data from the remote backend, then reloads from the warmed cache.
+    /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
+    /// toast but still reloads whatever the cache holds.
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await refreshFromRemote.execute()
+        } catch {
+            toasty.showError(error)
+        }
+        await load()
     }
 
     /// Deletes a transaction by its identifier.

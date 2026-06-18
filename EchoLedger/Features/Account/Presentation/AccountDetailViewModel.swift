@@ -19,7 +19,6 @@ final class AccountDetailViewModel {
 
     var recentItems: [TransactionListItem] = []
     var accountNames: [UUID: String] = [:]
-    var isLoading = false
     var showArchiveAlert = false
     var onNotFound: (() -> Void)?
 
@@ -81,8 +80,6 @@ final class AccountDetailViewModel {
 
     /// Loads chart data and recent transactions for this account.
     func load() async {
-        isLoading = true
-        defer { isLoading = false }
         do {
             _ = try await getAccount.execute(id: account.id)
 

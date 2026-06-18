@@ -61,7 +61,7 @@ struct AccountListView: View {
                     }
                 }
                 .refreshable {
-                    await coordinator.accountListViewModel.load()
+                    await coordinator.accountListViewModel.refresh()
                 }
             }
             .navigationTitle("Comptes")
@@ -87,9 +87,6 @@ struct AccountListView: View {
                 if sheet == nil {
                     Task { await coordinator.accountListViewModel.load() }
                 }
-            }
-            .task {
-                await coordinator.accountListViewModel.load()
             }
         }
         .overlay {

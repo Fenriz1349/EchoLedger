@@ -56,10 +56,11 @@ final class TransactionRemoteSource {
     // MARK: Read
 
     /// Fetches all transactions for a given user from Firestore, ordered by date descending.
-    func fetchAll(for userId: UUID) async throws -> [Transaction] {
+    /// - Parameter source: `.cache` for instant offline-capable reads, `.server` for an explicit refresh.
+    func fetchAll(for userId: UUID, source: FirestoreSource = .default) async throws -> [Transaction] {
         let snapshot = try await collection(for: userId)
             .order(by: "date", descending: true)
-            .getDocuments()
+            .getDocuments(source: source)
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 

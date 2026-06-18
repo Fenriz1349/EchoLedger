@@ -50,7 +50,7 @@ struct TransactionListView: View {
                         TransactionFilterBar(viewModel: coordinator.transactionListViewModel)
                     }
                     .refreshable {
-                        await coordinator.transactionListViewModel.load()
+                        await coordinator.transactionListViewModel.refresh()
                     }
                 }
             }
@@ -88,9 +88,6 @@ struct TransactionListView: View {
                 if editTransfer == nil {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
-            }
-            .task {
-                await coordinator.transactionListViewModel.load()
             }
         }
         .overlay {

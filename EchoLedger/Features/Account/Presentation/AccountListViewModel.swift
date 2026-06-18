@@ -17,9 +17,12 @@ final class AccountListViewModel {
     var archivedAccounts: [Account] = []
     var institutions: [Institution] = []
     var balances: [UUID: Double] = [:]
-    var isLoading = false
     var showDeleteAlert = false
     var accountToDelete: Account?
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
@@ -44,6 +47,7 @@ final class AccountListViewModel {
     private let unarchiveAccount: UnarchiveAccount
     private let deleteAccount: DeleteAccount
     private let getAccountBalance: GetAccountBalance
+    private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
 
     /// - Parameters:
@@ -54,6 +58,7 @@ final class AccountListViewModel {
     ///   - unarchiveAccount: UseCase for restoring an archived account.
     ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - getAccountBalance: UseCase for computing an account balance.
+    ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - userId: The identifier of the current user.
     init(
         toasty: ToastyManager,
@@ -63,6 +68,7 @@ final class AccountListViewModel {
         unarchiveAccount: UnarchiveAccount,
         deleteAccount: DeleteAccount,
         getAccountBalance: GetAccountBalance,
+        refreshFromRemote: RefreshFromRemote,
         userId: UUID) {
             self.toasty = toasty
             self.getInstitutions = getInstitutions
@@ -71,13 +77,14 @@ final class AccountListViewModel {
             self.unarchiveAccount = unarchiveAccount
             self.deleteAccount = deleteAccount
             self.getAccountBalance = getAccountBalance
+            self.refreshFromRemote = refreshFromRemote
             self.userId = userId
         }
 
     /// Loads all institutions with their associated accounts.
     func load() async {
         isLoading = true
-
+        defer { isLoading = false }
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
@@ -104,8 +111,20 @@ final class AccountListViewModel {
         } catch {
             toasty.showError(error)
         }
+    }
 
-        isLoading = false
+    /// Pulls fresh data from the remote backend, then reloads the list from the warmed cache.
+    /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
+    /// toast but still reloads whatever the cache holds.
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await refreshFromRemote.execute()
+        } catch {
+            toasty.showError(error)
+        }
+        await load()
     }
 
     /// Archives an account and reloads the list.

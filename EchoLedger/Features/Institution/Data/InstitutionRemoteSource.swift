@@ -79,11 +79,13 @@ final class InstitutionRemoteSource {
     // MARK: Read
 
     /// Fetches all institutions for a given user from Firestore.
-    /// - Parameter userId: The identifier of the owning user.
+    /// - Parameters:
+    ///   - userId: The identifier of the owning user.
+    ///   - source: `.cache` for instant offline-capable reads, `.server` for an explicit refresh.
     /// - Returns: An array of Domain Institution entities.
     /// - Throws: A Firestore error if the fetch fails.
-    func fetchAll(for userId: UUID) async throws -> [Institution] {
-        let snapshot = try await collection(for: userId).getDocuments()
+    func fetchAll(for userId: UUID, source: FirestoreSource = .default) async throws -> [Institution] {
+        let snapshot = try await collection(for: userId).getDocuments(source: source)
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 

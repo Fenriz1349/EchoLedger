@@ -21,6 +21,10 @@
 		6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5832F9266800099DCE4 /* SyncButton.swift */; };
 		6807E5862F926C0D0099DCE4 /* SyncError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807E5852F926C0D0099DCE4 /* SyncError.swift */; };
 		680F9CAC2F646F750014193B /* GetInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F9CAB2F646F750014193B /* GetInstitution.swift */; };
+		68128E7A2FE2A5B100A568B5 /* RemoteRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68128E792FE2A5B100A568B5 /* RemoteRefreshable.swift */; };
+		68128E7B2FE2A5B100A568B5 /* RemoteRefreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68128E792FE2A5B100A568B5 /* RemoteRefreshable.swift */; };
+		68128E7E2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68128E7D2FE2A60900A568B5 /* RefreshFromRemote.swift */; };
+		68128E7F2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68128E7D2FE2A60900A568B5 /* RefreshFromRemote.swift */; };
 		6812CFC02F87833F0019F634 /* AccountFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFBF2F87833F0019F634 /* AccountFilter.swift */; };
 		6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812CFC12F878BF50019F634 /* AccountRowView.swift */; };
 		681314172FD2B34100F74B8D /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681314162FD2B34100F74B8D /* DocumentPickerView.swift */; };
@@ -306,6 +310,8 @@
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
 		683C909B2F892A3200CE2A6D /* TransactionFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C909A2F892A3200CE2A6D /* TransactionFormContent.swift */; };
 		683C909D2F892B2800CE2A6D /* AccountFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C909C2F892B2800CE2A6D /* AccountFormContent.swift */; };
+		683D5FDA2FE3DA240049D07D /* AppEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FD92FE3DA240049D07D /* AppEntryViewModel.swift */; };
+		683D5FDB2FE3DA240049D07D /* AppEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FD92FE3DA240049D07D /* AppEntryViewModel.swift */; };
 		684497142F75380900337F74 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497132F75380900337F74 /* PreviewData.swift */; };
 		684497162F753D4F00337F74 /* AddTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497152F753D4F00337F74 /* AddTransactionInput.swift */; };
 		684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497172F753D8100337F74 /* UpdateTransactionInput.swift */; };
@@ -445,6 +451,8 @@
 		6807E5832F9266800099DCE4 /* SyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncButton.swift; sourceTree = "<group>"; };
 		6807E5852F926C0D0099DCE4 /* SyncError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncError.swift; sourceTree = "<group>"; };
 		680F9CAB2F646F750014193B /* GetInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInstitution.swift; sourceTree = "<group>"; };
+		68128E792FE2A5B100A568B5 /* RemoteRefreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRefreshable.swift; sourceTree = "<group>"; };
+		68128E7D2FE2A60900A568B5 /* RefreshFromRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshFromRemote.swift; sourceTree = "<group>"; };
 		6812CFBF2F87833F0019F634 /* AccountFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFilter.swift; sourceTree = "<group>"; };
 		6812CFC12F878BF50019F634 /* AccountRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRowView.swift; sourceTree = "<group>"; };
 		681314162FD2B34100F74B8D /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
@@ -564,6 +572,7 @@
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
 		683C909A2F892A3200CE2A6D /* TransactionFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFormContent.swift; sourceTree = "<group>"; };
 		683C909C2F892B2800CE2A6D /* AccountFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFormContent.swift; sourceTree = "<group>"; };
+		683D5FD92FE3DA240049D07D /* AppEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryViewModel.swift; sourceTree = "<group>"; };
 		684497132F75380900337F74 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		684497152F753D4F00337F74 /* AddTransactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionInput.swift; sourceTree = "<group>"; };
 		684497172F753D8100337F74 /* UpdateTransactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionInput.swift; sourceTree = "<group>"; };
@@ -765,6 +774,31 @@
 				6807E5832F9266800099DCE4 /* SyncButton.swift */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		68128E772FE2A58B00A568B5 /* Reload */ = {
+			isa = PBXGroup;
+			children = (
+				68128E782FE2A5A100A568B5 /* Domain */,
+			);
+			path = Reload;
+			sourceTree = "<group>";
+		};
+		68128E782FE2A5A100A568B5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				68128E792FE2A5B100A568B5 /* RemoteRefreshable.swift */,
+				68128E7C2FE2A5FA00A568B5 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		68128E7C2FE2A5FA00A568B5 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				68128E7D2FE2A60900A568B5 /* RefreshFromRemote.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		6813E7FF2F6D3BF000344774 /* Institution */ = {
@@ -1124,6 +1158,7 @@
 				685A1EBB2F5AD8B10009B885 /* AppCoordinator.swift */,
 				685A1E7E2F5ACF700009B885 /* ContentView.swift */,
 				68EF99F72FA3968500FEBC1A /* AppEntryView.swift */,
+				683D5FD92FE3DA240049D07D /* AppEntryViewModel.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -1370,6 +1405,7 @@
 				683821922FC867FF00CA6761 /* Document */,
 				682C6C4F2FBF301700AE9F62 /* Graphs */,
 				68EF99F42FA3849200FEBC1A /* Loader */,
+				68128E772FE2A58B00A568B5 /* Reload */,
 				685A1F092F5AEBF50009B885 /* Sync */,
 				685A1F122F5AECE30009B885 /* Extensions */,
 			);
@@ -1716,6 +1752,7 @@
 				683821122FC8432000CA6761 /* TransferDetailView.swift in Sources */,
 				683821132FC8432000CA6761 /* TransferFormViewModel.swift in Sources */,
 				683821142FC8432000CA6761 /* TransferFormInput.swift in Sources */,
+				683D5FDA2FE3DA240049D07D /* AppEntryViewModel.swift in Sources */,
 				683821152FC8432000CA6761 /* AccountFormViewModel.swift in Sources */,
 				683821162FC8432000CA6761 /* AccountPickerView.swift in Sources */,
 				683821172FC8432000CA6761 /* SyncManagerProtocol.swift in Sources */,
@@ -1758,6 +1795,7 @@
 				6838213B2FC8432000CA6761 /* DIContainer+ViewModels.swift in Sources */,
 				6838213C2FC8432000CA6761 /* SyncError.swift in Sources */,
 				6838213D2FC8432000CA6761 /* AppEntryView.swift in Sources */,
+				68128E7F2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */,
 				68C8116E2FDC394D0077D42B /* ChartDataCalculator.swift in Sources */,
 				6838213E2FC8432000CA6761 /* AuthProviding.swift in Sources */,
 				683821412FC8432000CA6761 /* AuthFormContent.swift in Sources */,
@@ -1768,6 +1806,7 @@
 				683821452FC8432000CA6761 /* DeleteUserProfile.swift in Sources */,
 				683821462FC8432000CA6761 /* AddInstitution.swift in Sources */,
 				683821472FC8432000CA6761 /* TransactionListItemView.swift in Sources */,
+				68128E7A2FE2A5B100A568B5 /* RemoteRefreshable.swift in Sources */,
 				683821482FC8432000CA6761 /* UserProfileFormContent.swift in Sources */,
 				683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */,
 				6838214A2FC8432000CA6761 /* AccountBalanceChartView.swift in Sources */,
@@ -1940,6 +1979,7 @@
 				6868A66D2F6D9CC90038A612 /* UserModel.swift in Sources */,
 				685A1EAC2F5ACF700009B885 /* AccountError.swift in Sources */,
 				6844972A2F7569D800337F74 /* TransactionFormView.swift in Sources */,
+				683D5FDB2FE3DA240049D07D /* AppEntryViewModel.swift in Sources */,
 				685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */,
 				685A1EAE2F5ACF700009B885 /* AddAccount.swift in Sources */,
 				683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */,
@@ -1990,6 +2030,7 @@
 				685A1EC22F5AD95B0009B885 /* UserProviding.swift in Sources */,
 				6812CFC22F878BF50019F634 /* AccountRowView.swift in Sources */,
 				6824DCA22FC03704007375C0 /* TransferFormView.swift in Sources */,
+				68128E7B2FE2A5B100A568B5 /* RemoteRefreshable.swift in Sources */,
 				683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */,
 				685A1EB12F5ACF700009B885 /* GetInstitutions.swift in Sources */,
 				685A1EB22F5ACF700009B885 /* ArchiveAccount.swift in Sources */,
@@ -2015,6 +2056,7 @@
 				683821A92FC86BF700CA6761 /* AttachmentType.swift in Sources */,
 				6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */,
 				684497392F75760600337F74 /* InstitutionFormViewModel.swift in Sources */,
+				68128E7E2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */,
 				683C909B2F892A3200CE2A6D /* TransactionFormContent.swift in Sources */,
 				685A1EEA2F5AEA1D0009B885 /* AccountRemoteSource.swift in Sources */,
 			);

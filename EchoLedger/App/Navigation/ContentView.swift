@@ -70,7 +70,8 @@ struct ContentView: View {
             isPresented: Binding(
                 get: { coordinator.transactionListViewModel.showAddTransaction },
                 set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
-            )
+            ),
+            onDismiss: { Task { await coordinator.loadData() } }
         ) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
         }
@@ -78,11 +79,6 @@ struct ContentView: View {
             if new == .add {
                 selectedTab = old
                 coordinator.transactionListViewModel.showAddTransaction = true
-            }
-        }
-        .onChange(of: coordinator.transactionListViewModel.showAddTransaction) {
-            if !coordinator.transactionListViewModel.showAddTransaction {
-                Task { await coordinator.transactionListViewModel.load() }
             }
         }
     }

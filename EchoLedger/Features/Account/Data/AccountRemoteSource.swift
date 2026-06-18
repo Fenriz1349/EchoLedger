@@ -58,21 +58,24 @@ final class AccountRemoteSource {
     /// - Parameters:
     ///   - institutionId: The identifier of the institution to filter by.
     ///   - userId: The identifier of the owning user.
+    ///   - source: `.cache` for instant offline-capable reads, `.server` for an explicit refresh.
     /// - Returns: An array of decoded Account domain objects.
     /// - Throws: A Firestore error if the read fails.
-    func fetchAll(for institutionId: UUID, userId: UUID) async throws -> [Account] {
+    func fetchAll(for institutionId: UUID, userId: UUID, source: FirestoreSource = .default) async throws -> [Account] {
         let snapshot = try await collection(for: userId)
             .whereField("institutionId", isEqualTo: institutionId.uuidString)
-            .getDocuments()
+            .getDocuments(source: source)
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 
     /// Fetches all accounts belonging to a given user from Firestore, regardless of institution.
-    /// - Parameter userId: The identifier of the owning user.
+    /// - Parameters:
+    ///   - userId: The identifier of the owning user.
+    ///   - source: `.cache` for instant offline-capable reads, `.server` for an explicit refresh.
     /// - Returns: An array of Domain Account entities.
     /// - Throws: A Firestore error if the fetch fails.
-    func fetchAll(for userId: UUID) async throws -> [Account] {
-        let snapshot = try await collection(for: userId).getDocuments()
+    func fetchAll(for userId: UUID, source: FirestoreSource = .default) async throws -> [Account] {
+        let snapshot = try await collection(for: userId).getDocuments(source: source)
         return snapshot.documents.compactMap { decode($0.data()) }
     }
 

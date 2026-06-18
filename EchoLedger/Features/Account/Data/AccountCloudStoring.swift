@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreInternal
 
 /// Firebase-only implementation of AccountProviding.
 /// Delegates all reads and writes directly to AccountRemoteSource, with no local cache.
@@ -20,15 +21,15 @@ final class AccountCloudStoring: AccountProviding {
     }
 
     func fetchAll(for institutionId: UUID) async throws -> [Account] {
-        try await remote.fetchAll(for: institutionId, userId: userId)
+        try await remote.fetchAll(for: institutionId, userId: userId, source: .cache)
     }
 
     func fetchAllActive(for institutionId: UUID) async throws -> [Account] {
-        try await remote.fetchAllActive(for: institutionId, userId: userId)
+        try await remote.fetchAll(for: institutionId, userId: userId, source: .cache).filter { !$0.isArchived }
     }
 
     func fetchAllArchived(for institutionId: UUID) async throws -> [Account] {
-        try await remote.fetchAllArchived(for: institutionId, userId: userId)
+        try await remote.fetchAll(for: institutionId, userId: userId, source: .cache).filter { $0.isArchived }
     }
 
     func fetch(by id: UUID) async throws -> Account {
@@ -45,5 +46,15 @@ final class AccountCloudStoring: AccountProviding {
 
     func delete(by id: UUID) async throws {
         try await remote.delete(id: id, userId: userId)
+    }
+}
+
+// MARK: - RemoteRefreshable
+
+extension AccountCloudStoring: RemoteRefreshable {
+
+    /// Warms the Firestore cache with a fresh server read of all accounts.
+    func refreshFromRemote() async throws {
+        _ = try await remote.fetchAll(for: userId, source: .server)
     }
 }

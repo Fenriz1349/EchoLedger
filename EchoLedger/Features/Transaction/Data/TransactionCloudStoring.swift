@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreInternal
 
 /// Firebase-only implementation of TransactionProviding.
 /// Delegates all reads and writes directly to TransactionRemoteSource, with no local cache.
@@ -20,7 +21,7 @@ final class TransactionCloudStoring: TransactionProviding {
     }
 
     func fetchAll(for userId: UUID) async throws -> [Transaction] {
-        try await remote.fetchAll(for: userId)
+        try await remote.fetchAll(for: userId, source: .cache)
     }
 
     func fetch(by id: UUID) async throws -> Transaction {
@@ -37,5 +38,15 @@ final class TransactionCloudStoring: TransactionProviding {
 
     func delete(by id: UUID) async throws {
         try await remote.delete(id: id, userId: userId)
+    }
+}
+
+// MARK: - RemoteRefreshable
+
+extension TransactionCloudStoring: RemoteRefreshable {
+
+    /// Warms the Firestore cache with a fresh server read of all transactions.
+    func refreshFromRemote() async throws {
+        _ = try await remote.fetchAll(for: userId, source: .server)
     }
 }

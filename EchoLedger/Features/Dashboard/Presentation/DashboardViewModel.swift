@@ -17,15 +17,23 @@ final class DashboardViewModel {
     // MARK: Dependencies
 
     private let toasty: ToastyManager
+    private let refreshFromRemote: RefreshFromRemote
     let graphsViewModel: GraphsViewModel
+
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     // MARK: Init
 
     /// - Parameters:
     ///   - toasty: Toaster to display error messages to the user.
+    ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - graphsViewModel: Child VM owning all chart state for the global scope.
-    init(toasty: ToastyManager, graphsViewModel: GraphsViewModel) {
+    init(toasty: ToastyManager, refreshFromRemote: RefreshFromRemote, graphsViewModel: GraphsViewModel) {
         self.toasty = toasty
+        self.refreshFromRemote = refreshFromRemote
         self.graphsViewModel = graphsViewModel
     }
 
@@ -33,10 +41,26 @@ final class DashboardViewModel {
 
     /// Loads every chart dataset for the whole portfolio in one pass.
     func load() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             try await graphsViewModel.load(scope: .global)
         } catch {
             toasty.showError(error)
         }
+    }
+
+    /// Pulls fresh data from the remote backend, then reloads the charts from the warmed cache.
+    /// Triggered by an explicit user action (pull-to-refresh or the refresh button). A failed
+    /// remote pull surfaces a toast but still reloads whatever the cache holds.
+    func refresh() async {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await refreshFromRemote.execute()
+        } catch {
+            toasty.showError(error)
+        }
+        await load()
     }
 }
