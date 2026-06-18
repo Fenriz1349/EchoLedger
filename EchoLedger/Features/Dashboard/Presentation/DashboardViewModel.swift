@@ -20,9 +20,10 @@ final class DashboardViewModel {
     private let refreshFromRemote: RefreshFromRemote
     let graphsViewModel: GraphsViewModel
 
-    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
-    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
-    private(set) var isRefreshing = false
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     // MARK: Init
 
@@ -40,6 +41,8 @@ final class DashboardViewModel {
 
     /// Loads every chart dataset for the whole portfolio in one pass.
     func load() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             try await graphsViewModel.load(scope: .global)
         } catch {
@@ -51,8 +54,8 @@ final class DashboardViewModel {
     /// Triggered by an explicit user action (pull-to-refresh or the refresh button). A failed
     /// remote pull surfaces a toast but still reloads whatever the cache holds.
     func refresh() async {
-        isRefreshing = true
-        defer { isRefreshing = false }
+        isLoading = true
+        defer { isLoading = false }
         do {
             try await refreshFromRemote.execute()
         } catch {

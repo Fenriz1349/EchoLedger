@@ -116,7 +116,7 @@ struct DashboardView: View {
             }
         }
         .overlay {
-            if coordinator.dashboardViewModel.isRefreshing {
+            if coordinator.dashboardViewModel.isLoading {
                 EchoProgressView()
             }
         }

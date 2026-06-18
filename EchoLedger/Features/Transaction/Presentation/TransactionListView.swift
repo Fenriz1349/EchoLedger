@@ -91,7 +91,7 @@ struct TransactionListView: View {
             }
         }
         .overlay {
-            if coordinator.transactionListViewModel.isRefreshing {
+            if coordinator.transactionListViewModel.isLoading {
                 EchoProgressView()
             }
         }

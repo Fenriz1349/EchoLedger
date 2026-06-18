@@ -90,7 +90,7 @@ struct AccountListView: View {
             }
         }
         .overlay {
-            if coordinator.accountListViewModel.isRefreshing {
+            if coordinator.accountListViewModel.isLoading {
                 EchoProgressView()
             }
         }

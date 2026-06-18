@@ -19,9 +19,10 @@ final class AccountListViewModel {
     var balances: [UUID: Double] = [:]
     var showDeleteAlert = false
     var accountToDelete: Account?
-    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
-    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
-    private(set) var isRefreshing = false
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
@@ -82,6 +83,8 @@ final class AccountListViewModel {
 
     /// Loads all institutions with their associated accounts.
     func load() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
@@ -114,8 +117,8 @@ final class AccountListViewModel {
     /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
     /// toast but still reloads whatever the cache holds.
     func refresh() async {
-        isRefreshing = true
-        defer { isRefreshing = false }
+        isLoading = true
+        defer { isLoading = false }
         do {
             try await refreshFromRemote.execute()
         } catch {

@@ -17,9 +17,10 @@ final class TransactionListViewModel {
     var transactions: [Transaction] = []
     var accountNames: [UUID: String] = [:]
     var institutionNames: [UUID: String] = [:]
-    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
-    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
-    private(set) var isRefreshing = false
+    /// True while a load or refresh is running. Drives the branded overlay. Navigation no longer
+    /// triggers loads (the data is pre-filled at launch), so this only fires on launch, an explicit
+    /// refresh, or a data mutation — never on a plain screen change.
+    private(set) var isLoading = false
 
     // MARK: Filters
     var searchText: String = ""
@@ -170,6 +171,8 @@ final class TransactionListViewModel {
 
     /// Loads all transactions and available filter accounts for the current user.
     func load() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             transactions = try await getTransactions.execute(for: userId)
 
@@ -189,8 +192,8 @@ final class TransactionListViewModel {
     /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
     /// toast but still reloads whatever the cache holds.
     func refresh() async {
-        isRefreshing = true
-        defer { isRefreshing = false }
+        isLoading = true
+        defer { isLoading = false }
         do {
             try await refreshFromRemote.execute()
         } catch {
