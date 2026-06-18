@@ -44,13 +44,14 @@ final class UserRemoteSource {
     /// Fetches the internal UUID for a user by their Firebase UID.
     /// Used when signing in on a new device where UserDefaults has been cleared.
     /// - Parameter firebaseUID: The Firebase Auth UID to look up.
-    /// - Returns: The internal UUID if found, nil otherwise.
-    func fetchInternalUserId(forFirebaseUID firebaseUID: String) async -> UUID? {
-        guard let snapshot = try? await firestore.collection("users")
+    /// - Returns: The internal UUID, or nil if no user document matches.
+    /// - Throws: A Firestore error if the query fails (distinct from "no match").
+    func fetchInternalUserId(forFirebaseUID firebaseUID: String) async throws -> UUID? {
+        let snapshot = try await firestore.collection("users")
             .whereField("firebaseUID", isEqualTo: firebaseUID)
             .limit(to: 1)
-            .getDocuments(),
-              let data = snapshot.documents.first?.data(),
+            .getDocuments()
+        guard let data = snapshot.documents.first?.data(),
               let idString = data["id"] as? String
         else { return nil }
         return UUID(uuidString: idString)
@@ -58,9 +59,10 @@ final class UserRemoteSource {
 
     /// Fetches a user document from Firestore by internal UUID.
     /// - Parameter userId: The internal UUID of the user to fetch.
-    /// - Returns: The domain User, or nil if the document does not exist or cannot be decoded.
-    func fetchUser(id userId: UUID) async -> User? {
-        guard let data = try? await document(for: userId).getDocument().data() else { return nil }
+    /// - Returns: The domain User, or nil if the document does not exist or can't be decoded.
+    /// - Throws: A Firestore error if the read fails (distinct from "document absent").
+    func fetchUser(id userId: UUID) async throws -> User? {
+        guard let data = try await document(for: userId).getDocument().data() else { return nil }
         return decode(data)
     }
 

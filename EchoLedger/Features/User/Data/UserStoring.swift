@@ -32,7 +32,7 @@ final class UserStoring: UserProviding {
         if let user = try? local.fetchCurrent(by: userId) {
             return user
         }
-        guard let user = await remote.fetchUser(id: userId) else {
+        guard let user = try await remote.fetchUser(id: userId) else {
             throw UserError.notFound
         }
         try local.save(user)

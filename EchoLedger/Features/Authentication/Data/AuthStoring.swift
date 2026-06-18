@@ -43,7 +43,7 @@ final class AuthStoring: AuthProviding {
             return AuthSession(userId: existingId, isAnonymous: false)
         }
 
-        guard let userId = await userRemote.fetchInternalUserId(forFirebaseUID: firebaseUID) else {
+        guard let userId = try await userRemote.fetchInternalUserId(forFirebaseUID: firebaseUID) else {
             throw AuthError.noSessionFound
         }
         local.saveUserId(userId)
