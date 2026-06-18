@@ -48,3 +48,13 @@ final class InstitutionCloudStoring: InstitutionProviding {
         try await remote.delete(id: id, userId: userId)
     }
 }
+
+// MARK: - RemoteRefreshable
+
+extension InstitutionCloudStoring: RemoteRefreshable {
+
+    /// Warms the Firestore cache with a fresh server read of all institutions.
+    func refreshFromRemote() async throws {
+        _ = try await remote.fetchAll(for: userId, source: .server)
+    }
+}

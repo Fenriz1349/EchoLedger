@@ -50,7 +50,7 @@ struct TransactionListView: View {
                         TransactionFilterBar(viewModel: coordinator.transactionListViewModel)
                     }
                     .refreshable {
-                        await coordinator.transactionListViewModel.load()
+                        await coordinator.refreshFromRemote()
                     }
                 }
             }

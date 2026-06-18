@@ -61,7 +61,7 @@ struct AccountListView: View {
                     }
                 }
                 .refreshable {
-                    await coordinator.accountListViewModel.load()
+                    await coordinator.refreshFromRemote()
                 }
             }
             .navigationTitle("Comptes")

@@ -40,3 +40,13 @@ final class TransactionCloudStoring: TransactionProviding {
         try await remote.delete(id: id, userId: userId)
     }
 }
+
+// MARK: - RemoteRefreshable
+
+extension TransactionCloudStoring: RemoteRefreshable {
+
+    /// Warms the Firestore cache with a fresh server read of all transactions.
+    func refreshFromRemote() async throws {
+        _ = try await remote.fetchAll(for: userId, source: .server)
+    }
+}

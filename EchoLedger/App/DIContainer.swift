@@ -107,6 +107,9 @@ final class DIContainer {
     // MARK: Use Cases — Charts
     let getChartData: GetChartData
 
+    // MARK: Use Cases — Reload
+    let refreshFromRemote: RefreshFromRemote
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies.
@@ -270,5 +273,10 @@ final class DIContainer {
             getTransactions: getTransactions,
             userId: userId
         )
+
+        // MARK: Use Cases — Reload
+        // No-op on the classic target: reading from remote into local is the job of
+        // SyncManager (the real local↔remote sync), not of a cache-warming reload.
+        self.refreshFromRemote = RefreshFromRemote(refreshables: [])
     }
 }

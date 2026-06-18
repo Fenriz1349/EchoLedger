@@ -92,6 +92,9 @@ final class DIContainer {
     // MARK: Use Cases — Charts
     let getChartData: GetChartData
 
+    // MARK: Use Cases — Reload
+    let refreshFromRemote: RefreshFromRemote
+
     // MARK: Init
 
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
@@ -207,6 +210,13 @@ final class DIContainer {
             getAccounts: getAccounts,
             getTransactions: getTransactions,
             userId: userId
+        )
+
+        // MARK: Use Cases — Reload
+        // The cloud storings warm their Firestore cache from the server. Adding a
+        // new collection later means appending its storing here — nothing else.
+        self.refreshFromRemote = RefreshFromRemote(
+            refreshables: [transactionCloud, accountCloud, institutionCloud]
         )
     }
 }

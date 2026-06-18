@@ -48,3 +48,13 @@ final class AccountCloudStoring: AccountProviding {
         try await remote.delete(id: id, userId: userId)
     }
 }
+
+// MARK: - RemoteRefreshable
+
+extension AccountCloudStoring: RemoteRefreshable {
+
+    /// Warms the Firestore cache with a fresh server read of all accounts.
+    func refreshFromRemote() async throws {
+        _ = try await remote.fetchAll(for: userId, source: .server)
+    }
+}
