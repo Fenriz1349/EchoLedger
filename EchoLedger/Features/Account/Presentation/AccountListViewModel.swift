@@ -44,6 +44,7 @@ final class AccountListViewModel {
     private let unarchiveAccount: UnarchiveAccount
     private let deleteAccount: DeleteAccount
     private let getAccountBalance: GetAccountBalance
+    private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
 
     /// - Parameters:
@@ -54,6 +55,7 @@ final class AccountListViewModel {
     ///   - unarchiveAccount: UseCase for restoring an archived account.
     ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - getAccountBalance: UseCase for computing an account balance.
+    ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - userId: The identifier of the current user.
     init(
         toasty: ToastyManager,
@@ -63,6 +65,7 @@ final class AccountListViewModel {
         unarchiveAccount: UnarchiveAccount,
         deleteAccount: DeleteAccount,
         getAccountBalance: GetAccountBalance,
+        refreshFromRemote: RefreshFromRemote,
         userId: UUID) {
             self.toasty = toasty
             self.getInstitutions = getInstitutions
@@ -71,6 +74,7 @@ final class AccountListViewModel {
             self.unarchiveAccount = unarchiveAccount
             self.deleteAccount = deleteAccount
             self.getAccountBalance = getAccountBalance
+            self.refreshFromRemote = refreshFromRemote
             self.userId = userId
         }
 
@@ -106,6 +110,18 @@ final class AccountListViewModel {
         }
 
         isLoading = false
+    }
+
+    /// Pulls fresh data from the remote backend, then reloads the list from the warmed cache.
+    /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
+    /// toast but still reloads whatever the cache holds.
+    func refresh() async {
+        do {
+            try await refreshFromRemote.execute()
+        } catch {
+            toasty.showError(error)
+        }
+        await load()
     }
 
     /// Archives an account and reloads the list.

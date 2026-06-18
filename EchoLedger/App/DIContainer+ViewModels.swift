@@ -73,6 +73,7 @@ extension DIContainer {
             unarchiveAccount: unarchiveAccount,
             deleteAccount: deleteAccount,
             getAccountBalance: getAccountBalance,
+            refreshFromRemote: refreshFromRemote,
             userId: userId
         )
     }
@@ -121,6 +122,7 @@ extension DIContainer {
     func makeDashboardViewModel() -> DashboardViewModel {
         DashboardViewModel(
             toasty: toasty,
+            refreshFromRemote: refreshFromRemote,
             graphsViewModel: makeGraphsViewModel()
         )
     }
@@ -159,6 +161,7 @@ extension DIContainer {
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            refreshFromRemote: refreshFromRemote,
             userId: userId
         )
     }

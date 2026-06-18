@@ -48,7 +48,8 @@ final class AppCoordinator {
 
     /// Reloads the view models whose data depends on transactions — the transaction list,
     /// account balances and dashboard charts. Call after a transaction is added or edited from
-    /// the global form: those tabs stay alive in the TabView, so their `.task` won't re-run.
+    /// the global form: those tabs stay alive in the TabView, so their `.task` won't re-run, and
+    /// no single feature view model owns the global add button.
     func refreshAfterTransactionChange() async {
         await transactionListViewModel.load()
         await accountListViewModel.load()

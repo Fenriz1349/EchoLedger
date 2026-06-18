@@ -8,27 +8,32 @@
 import SwiftUI
 import Toasty
 
-/// Manages app-phase transitions between loading, authentication, and main content.
+/// Thin root view: renders the current app phase and delegates all launch logic to
+/// `AppEntryViewModel`. The view model is created and owned by `EchoLedgerApp`, so this
+/// view only reads its phase and forwards user actions.
 struct AppEntryView: View {
 
     @EnvironmentObject private var toasty: ToastyManager
-    @State private var phase: AppPhase = .loading
-    @State private var container: DIContainer?
-    @State private var coordinator: AppCoordinator?
-
+    let viewModel: AppEntryViewModel
     let authStoring: AuthStoring
 
     var body: some View {
         ZStack {
-            switch phase {
+            switch viewModel.phase {
             case .loading:
                 LoadingView()
                     .transition(.opacity)
             case .auth:
-                AuthView(authStoring: authStoring, toasty: toasty, onAuthSuccess: handleAuthSuccess)
-                    .transition(.opacity)
+                AuthView(
+                    authStoring: authStoring,
+                    toasty: toasty,
+                    onAuthSuccess: { session in
+                        Task { await viewModel.handleAuthSuccess(session: session) }
+                    }
+                )
+                .transition(.opacity)
             case .app:
-                if let coordinator, let container {
+                if let coordinator = viewModel.coordinator, let container = viewModel.container {
                     ContentView(coordinator: coordinator)
                         .environment(container)
                         .id(container.userId)
@@ -36,94 +41,9 @@ struct AppEntryView: View {
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.4), value: phase)
-        .task { await resolveExistingSession() }
-    }
-
-    /// Attempts to restore an existing session at launch.
-    /// Runs in parallel with a minimum display delay so the loading screen is never a flash.
-    /// If an anonymous session has exceeded 7 days, deletes it and shows an expiration message.
-    private func resolveExistingSession() async {
-        async let minimumDelay: Void = Task.sleep(nanoseconds: 1_500_000_000)
-
-        let resolve = ResolveSession(repository: authStoring)
-        guard let session = await resolve.execute() else {
-            try? await minimumDelay
-            withAnimation(.easeInOut(duration: 0.4)) { phase = .auth }
-            return
-        }
-
-        if session.isAnonymous {
-            let expire = ExpireAnonymousSession(repository: authStoring)
-            if await expire.execute() {
-                try? await minimumDelay
-                toasty.showInfo(AuthError.sessionExpired.errorDescription ?? "")
-                withAnimation(.easeInOut(duration: 0.4)) { phase = .auth }
-                return
-            }
-        }
-
-        let didBuild = await buildApp(session: session)
-        try? await minimumDelay
-        if didBuild {
-            withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
+        .animation(.easeInOut(duration: 0.4), value: viewModel.phase)
+        .task {
+            await viewModel.start()
         }
     }
-
-    /// Assembles the full dependency graph for the given session.
-    /// Loads the current user profile and warms the local cache.
-    /// - Parameter session: The authenticated session to build from.
-    private func buildApp(session: AuthSession) async -> Bool {
-        let newContainer = DIContainer(
-            userId: session.userId,
-            toasty: toasty,
-            authStoring: authStoring,
-            authSession: session
-        )
-
-        do {
-            let user = try await newContainer.getCurrentUser.execute()
-
-            container = newContainer
-            coordinator = AppCoordinator(
-                container: newContainer,
-                user: user,
-                onSignOut: resetToAuth,
-                onSessionUpdated: { [weak newContainer] session in
-                    newContainer?.authSession = session
-                }
-            )
-
-            #if !CLOUD_TARGET
-            await newContainer.syncManager.sync()
-            #endif
-            return true
-        } catch {
-            toasty.showError(error)
-            try? await authStoring.signOut()
-            resetToAuth()
-            return false
-        }
-    }
-
-    /// Called on successful authentication from AuthView.
-    /// - Parameter session: The authenticated session to build from.
-    private func handleAuthSuccess(session: AuthSession) {
-        Task {
-            if await buildApp(session: session) {
-                withAnimation(.easeInOut(duration: 0.4)) { phase = .app }
-            }
-        }
-    }
-
-    /// Tears down the app state and returns to the authentication screen.
-    private func resetToAuth() {
-        container = nil
-        coordinator = nil
-        withAnimation(.easeInOut(duration: 0.4)) { phase = .auth }
-    }
-}
-
-private enum AppPhase: Equatable {
-    case loading, auth, app
 }

@@ -85,7 +85,7 @@ struct DashboardView: View {
                     }
                 }
                 .refreshable {
-                    await coordinator.refreshFromRemote()
+                    await coordinator.dashboardViewModel.refresh()
                 }
                 .navigationTitle("Tableau de bord")
             }
@@ -94,7 +94,7 @@ struct DashboardView: View {
             ToolbarItem(placement: .topBarTrailing) {
             #if CLOUD_TARGET
                 Button {
-                    Task { await coordinator.refreshFromRemote() }
+                    Task { await coordinator.dashboardViewModel.refresh() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
                 }

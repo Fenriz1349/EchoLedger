@@ -139,6 +139,7 @@ final class TransactionListViewModel {
     private let deleteTransaction: DeleteTransaction
     private let getAccount: GetAccount
     private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
 
     /// - Parameters:
@@ -147,18 +148,21 @@ final class TransactionListViewModel {
     ///   - deleteTransaction: UseCase for deleting one transaction.
     ///   - getAccount: UseCase for resolving a single account name.
     ///   - getAccountsWithInstitution: UseCase for building the flat list of AccountDisplayItem.
+    ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - userId: The identifier of the current user.
     init(toasty: ToastyManager,
          getTransactions: GetTransactions,
          deleteTransaction: DeleteTransaction,
          getAccount: GetAccount,
          getAccountsWithInstitution: GetAccountsWithInstitution,
+         refreshFromRemote: RefreshFromRemote,
          userId: UUID) {
         self.toasty = toasty
         self.getTransactions = getTransactions
         self.deleteTransaction = deleteTransaction
         self.getAccount = getAccount
         self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.refreshFromRemote = refreshFromRemote
         self.userId = userId
     }
 
@@ -179,6 +183,18 @@ final class TransactionListViewModel {
             toasty.showError(error)
         }
         isLoading = false
+    }
+
+    /// Pulls fresh data from the remote backend, then reloads from the warmed cache.
+    /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
+    /// toast but still reloads whatever the cache holds.
+    func refresh() async {
+        do {
+            try await refreshFromRemote.execute()
+        } catch {
+            toasty.showError(error)
+        }
+        await load()
     }
 
     /// Deletes a transaction by its identifier.
