@@ -2148,7 +2148,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13.0;
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2183,7 +2183,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13.0;
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2341,7 +2341,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13.0;
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2375,7 +2375,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13.0;
+				MARKETING_VERSION = 0.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
