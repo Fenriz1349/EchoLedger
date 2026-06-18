@@ -281,8 +281,8 @@
 		683821982FC8682D00CA6761 /* UploadTransactionPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */; };
 		6838219A2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */; };
 		6838219B2FC8683500CA6761 /* UploadAvatarPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */; };
-		6838219D2FC8683C00CA6761 /* DeletePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeletePhoto.swift */; };
-		6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeletePhoto.swift */; };
+		6838219D2FC8683C00CA6761 /* DeleteDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeleteDocument.swift */; };
+		6838219E2FC8683C00CA6761 /* DeleteDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219C2FC8683C00CA6761 /* DeleteDocument.swift */; };
 		683821A02FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */; };
 		683821A12FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */; };
 		683821A42FC8695000CA6761 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 683821A32FC8695000CA6761 /* FirebaseStorage */; };
@@ -560,7 +560,7 @@
 		6838218F2FC84ABC00CA6761 /* PreviewHelpersCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHelpersCloud.swift; sourceTree = "<group>"; };
 		683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTransactionPhoto.swift; sourceTree = "<group>"; };
 		683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarPhoto.swift; sourceTree = "<group>"; };
-		6838219C2FC8683C00CA6761 /* DeletePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePhoto.swift; sourceTree = "<group>"; };
+		6838219C2FC8683C00CA6761 /* DeleteDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDocument.swift; sourceTree = "<group>"; };
 		6838219F2FC8684600CA6761 /* DocumentRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRemoteSource.swift; sourceTree = "<group>"; };
 		683821A72FC86BF700CA6761 /* AttachmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentType.swift; sourceTree = "<group>"; };
 		683821AA2FC86C5300CA6761 /* DocumentResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentResult.swift; sourceTree = "<group>"; };
@@ -1027,7 +1027,7 @@
 				683821962FC8682D00CA6761 /* UploadTransactionPhoto.swift */,
 				683821992FC8683500CA6761 /* UploadAvatarPhoto.swift */,
 				683821B02FC86C8600CA6761 /* GetTransactionDocument.swift */,
-				6838219C2FC8683C00CA6761 /* DeletePhoto.swift */,
+				6838219C2FC8683C00CA6761 /* DeleteDocument.swift */,
 				683D5FE22FE426E00049D07D /* DownloadImage.swift */,
 			);
 			path = UseCases;
@@ -1796,7 +1796,7 @@
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
 				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
-				6838219D2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
+				6838219D2FC8683C00CA6761 /* DeleteDocument.swift in Sources */,
 				683821382FC8432000CA6761 /* TransferRowView.swift in Sources */,
 				683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */,
 				6838213A2FC8432000CA6761 /* String+Extension.swift in Sources */,
@@ -1996,7 +1996,7 @@
 				683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */,
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				682C6C5B2FBF367100AE9F62 /* RecentTransactionsView.swift in Sources */,
-				6838219E2FC8683C00CA6761 /* DeletePhoto.swift in Sources */,
+				6838219E2FC8683C00CA6761 /* DeleteDocument.swift in Sources */,
 				683275F12F9B660000DA5796 /* CreateUserProfile.swift in Sources */,
 				687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,

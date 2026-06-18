@@ -20,4 +20,10 @@ final class DeleteDocument {
     func execute(urlString: String) async throws {
         try await documentSource.deleteDocument(urlString: urlString)
     }
+
+    /// Deletes every file under the user's Storage folder. Used on account deletion.
+    /// - Parameter userId: The owner whose files should be removed.
+    func deleteAllUserFiles(userId: UUID) async throws {
+        try await documentSource.deleteAllUserFiles(userId: userId)
+    }
 }
