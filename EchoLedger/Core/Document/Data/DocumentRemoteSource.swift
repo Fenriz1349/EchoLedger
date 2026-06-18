@@ -92,4 +92,29 @@ final class DocumentRemoteSource {
                   nsError.code == StorageErrorCode.objectNotFound.rawValue else { throw error }
         }
     }
+
+    /// Deletes every file under the user's Storage folder (`users/{userId}/`), recursively.
+    /// Used on account deletion so no attachment or avatar is left behind, independently of the
+    /// Firestore records. Retries are safe — a fresh listing only returns the remaining files.
+    func deleteAllUserFiles(userId: UUID) async throws {
+        #if targetEnvironment(simulator)
+        return  // No Storage files on the simulator (uploads are blocked); nothing to delete.
+        #else
+        try await networkMonitor.verifyReachable()
+        try await deleteAll(at: storage.reference().child("users/\(userId.uuidString)"))
+        #endif
+    }
+
+    #if !targetEnvironment(simulator)
+    /// Recursively deletes every item under a Storage reference, descending into subfolders.
+    private func deleteAll(at reference: StorageReference) async throws {
+        let result = try await reference.listAll()
+        for item in result.items {
+            try await item.delete()
+        }
+        for prefix in result.prefixes {
+            try await deleteAll(at: prefix)
+        }
+    }
+    #endif
 }

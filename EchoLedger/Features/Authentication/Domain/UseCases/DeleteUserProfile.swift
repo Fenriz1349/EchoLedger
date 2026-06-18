@@ -38,23 +38,22 @@ final class DeleteUserProfile {
         self.userId = userId
     }
 
-    /// Deletes everything the user owns, in an order that keeps Storage deletes authorized:
-    /// every file (transaction attachments, avatar) is removed while the user document still
-    /// exists and the session is valid — the document and the Auth account are deleted last.
-    /// 1. institutions → accounts → transactions → their attachment files (via the cascade)
-    /// 2. avatar file
-    /// 3. user document, then the Auth account + local session
-    /// Data cleanup is best-effort; only the final account deletion is propagated.
+    /// Deletes everything the user owns, all-or-nothing, in an order that keeps Storage deletes
+    /// authorized (files removed while the session is still valid; Auth account deleted last):
+    /// 1. every Storage file under the user's folder — nuked directly, not via the cascade, so
+    ///    nothing is left behind even if the records are inconsistent.
+    /// 2. the Firestore records (institutions → accounts → transactions).
+    /// 3. the user document, then the Auth account + local session.
+    /// Every step is propagated: a failure aborts and keeps the account, and a retry resumes
+    /// safely (re-listing yields only remaining files, and Firestore deletes are idempotent).
     func execute() async throws {
-        if let institutions = try? await getInstitutions.execute(for: userId) {
-            for institution in institutions {
-                try? await deleteInstitution.execute(id: institution.id)
-            }
+        try await deleteDocument.deleteAllUserFiles(userId: userId)
+
+        let institutions = try await getInstitutions.execute(for: userId)
+        for institution in institutions {
+            try await deleteInstitution.execute(id: institution.id)
         }
-        if let photoURL = try? await userStoring.fetchCurrent().photoURL {
-            try? await deleteDocument.execute(urlString: photoURL)
-        }
-        try? await userStoring.delete(by: userId)
+        try await userStoring.delete(by: userId)
         try await repository.deleteUserProfile()
     }
 }

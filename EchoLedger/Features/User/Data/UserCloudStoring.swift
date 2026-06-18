@@ -25,7 +25,7 @@ final class UserCloudStoring: UserProviding {
 
     /// Fetches the current user. Reads fall back to the cache when offline.
     func fetchCurrent() async throws -> User {
-        guard let user = await remote.fetchUser(id: userId) else {
+        guard let user = try await remote.fetchUser(id: userId) else {
             throw UserError.notFound
         }
         return user
