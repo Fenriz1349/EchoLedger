@@ -40,6 +40,8 @@ final class UserProfileViewModel {
     var isEditing: Bool = false
     var showDeleteAlert: Bool = false
     var isUploadingAvatar: Bool = false
+    /// Downloaded avatar bytes, held so the image shows without re-fetching. Nil shows the placeholder.
+    private(set) var avatarData: Data?
     private(set) var authSession: AuthSession
 
     // MARK: Computed
@@ -77,7 +79,7 @@ final class UserProfileViewModel {
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
-    private let getUserPhotoUseCase: GetUserPhoto
+    private let downloadImageUseCase: DownloadImage
     private let userId: UUID
     let onSignOut: () -> Void
     let onSessionUpdated: (AuthSession) -> Void
@@ -89,10 +91,6 @@ final class UserProfileViewModel {
         toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
     }
 
-    var avatarDocument: DocumentResult {
-        getUserPhotoUseCase.execute(user: user)
-    }
-
     /// - Parameters:
     ///   - toasty: The shared toast notification manager.
     ///   - user: The loaded user profile.
@@ -102,7 +100,7 @@ final class UserProfileViewModel {
     ///   - linkAnonymousAccount: Use case to link an anonymous account to a permanent one.
     ///   - resetPassword: Use case to send a password reset email.
     ///   - uploadAvatarPhoto: Use case to upload avatar.
-    ///   - getUserPhoto: Use case to fetch user photo.
+    ///   - downloadImage: Use case to download the avatar image bytes.
     ///   - authSession: The current authentication session.
     ///   - userId: The internal user identifier.
     ///   - daysRemainingInDemo: Number of days left in the demo session, nil if not anonymous.
@@ -117,7 +115,7 @@ final class UserProfileViewModel {
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
-        getUserPhoto: GetUserPhoto,
+        downloadImage: DownloadImage,
         authSession: AuthSession,
         userId: UUID,
         daysRemainingInDemo: Int?,
@@ -134,7 +132,7 @@ final class UserProfileViewModel {
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
         self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
-        self.getUserPhotoUseCase = getUserPhoto
+        self.downloadImageUseCase = downloadImage
         self.authSession = authSession
         self.userId = userId
         self.daysRemainingInDemo = daysRemainingInDemo
@@ -231,6 +229,14 @@ final class UserProfileViewModel {
         }
     }
 
+    /// Downloads the current avatar once and holds its bytes. Preloaded at launch so the profile
+    /// opens with the image already present, and never re-fetched afterwards. No-op when offline
+    /// or when the user has no photo — the placeholder is shown instead.
+    func loadAvatar() async {
+        guard let photoURL = user.photoURL else { return }
+        avatarData = await downloadImageUseCase.execute(urlString: photoURL)
+    }
+
     /// Uploads new avatar data to Firebase Storage.
     func uploadAvatar(data: Data) async {
         isUploadingAvatar = true
@@ -238,6 +244,7 @@ final class UserProfileViewModel {
         do {
             let photoURL = try await uploadAvatarPhotoUseCase.execute(data: data)
             user = User(id: user.id, displayName: user.displayName, email: user.email, photoURL: photoURL)
+            avatarData = data
             toasty.showSuccess("Photo mise à jour.")
         } catch {
             toasty.showError(error)
@@ -258,6 +265,7 @@ final class UserProfileViewModel {
             )
             try await updateUserUseCase.execute(input)
             user = User(id: user.id, displayName: user.displayName, email: user.email, photoURL: nil)
+            avatarData = nil
             toasty.showSuccess("Photo supprimée.")
         } catch {
             toasty.showError(error)

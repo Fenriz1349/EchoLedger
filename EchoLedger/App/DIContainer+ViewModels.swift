@@ -31,7 +31,7 @@ extension DIContainer {
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             uploadAvatarPhoto: uploadAvatarPhoto,
-            getUserPhoto: getUserPhoto,
+            downloadImage: downloadImage,
             authSession: authSession,
             userId: userId,
             daysRemainingInDemo: authSession.isAnonymous ? authStoring.anonymousDaysRemaining() : nil,

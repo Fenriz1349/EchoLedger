@@ -12,7 +12,7 @@ import SwiftUI
 /// Uses DocumentPickerSection for the image source selection.
 struct UserAvatarView: View {
 
-    let document: DocumentResult
+    let imageData: Data?
     let size: CGFloat
     let onImageSelected: (Data) -> Void
     let onRemove: (() -> Void)?
@@ -22,7 +22,7 @@ struct UserAvatarView: View {
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            AvatarCircleView(document: document, size: size)
+            AvatarCircleView(imageData: imageData, size: size)
 
             AvatarEditButtonView(size: size, onTap: {
                 if let onEditBlocked {
@@ -43,7 +43,7 @@ struct UserAvatarView: View {
 
 #Preview {
     UserAvatarView(
-        document: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
+        imageData: nil,
         size: 180,
         onImageSelected: { _ in },
         onRemove: {},

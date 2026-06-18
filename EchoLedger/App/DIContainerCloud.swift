@@ -32,6 +32,9 @@ final class DIContainer {
     // MARK: Toasty
     let toasty: ToastyManager
 
+    // MARK: Network
+    let networkMonitor: NetworkMonitor
+
     // MARK: Storings
     let userStoring: UserProviding
     let institutionStoring: InstitutionProviding
@@ -87,7 +90,7 @@ final class DIContainer {
     let uploadAvatarPhoto: UploadAvatarPhoto
     let deleteDocument: DeleteDocument
     let getTransactionDocument: GetTransactionDocument
-    let getUserPhoto: GetUserPhoto
+    let downloadImage: DownloadImage
 
     // MARK: Use Cases — Charts
     let getChartData: GetChartData
@@ -98,19 +101,24 @@ final class DIContainer {
     // MARK: Init
 
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
-         authSession: AuthSession) {
+         authSession: AuthSession, networkMonitor: NetworkMonitor) {
         self.userId = userId
         self.toasty = toasty
         self.authStoring = authStoring
         self.authSession = authSession
+        self.networkMonitor = networkMonitor
 
         let firebaseUID = Auth.auth().currentUser?.uid ?? ""
 
         // MARK: Cloud Storings
-        let userCloud = UserCloudStoring(remote: userRemote, userId: userId, firebaseUID: firebaseUID)
-        let institutionCloud = InstitutionCloudStoring(remote: institutionRemote, userId: userId)
-        let accountCloud = AccountCloudStoring(remote: accountRemote, userId: userId)
-        let transactionCloud = TransactionCloudStoring(remote: transactionRemote, userId: userId)
+        let userCloud = UserCloudStoring(remote: userRemote, userId: userId, firebaseUID: firebaseUID,
+                                         networkMonitor: networkMonitor)
+        let institutionCloud = InstitutionCloudStoring(remote: institutionRemote, userId: userId,
+                                                       networkMonitor: networkMonitor)
+        let accountCloud = AccountCloudStoring(remote: accountRemote, userId: userId,
+                                               networkMonitor: networkMonitor)
+        let transactionCloud = TransactionCloudStoring(remote: transactionRemote, userId: userId,
+                                                       networkMonitor: networkMonitor)
 
         self.userStoring = userCloud
         self.institutionStoring = institutionCloud
@@ -118,7 +126,7 @@ final class DIContainer {
         self.transactionStoring = transactionCloud
 
         // MARK: Document source (needed by the delete use cases below)
-        let documentSource = DocumentRemoteSource()
+        let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
         self.deleteDocument = DeleteDocument(documentSource: documentSource)
 
         // MARK: Use Cases — Auth
@@ -202,7 +210,7 @@ final class DIContainer {
             userId: userId
         )
         self.getTransactionDocument = GetTransactionDocument()
-        self.getUserPhoto = GetUserPhoto()
+        self.downloadImage = DownloadImage(documentSource: documentSource, networkMonitor: networkMonitor)
 
         // MARK: Use Cases — Charts
         self.getChartData = GetChartData(

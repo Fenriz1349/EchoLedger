@@ -18,7 +18,7 @@ struct UserProfileView: View {
             ScrollView {
                 UserProfileHeaderView(
                     user: viewModel.user,
-                    avatarDocument: viewModel.avatarDocument,
+                    avatarData: viewModel.avatarData,
                     onImageSelected: { data in Task { await viewModel.uploadAvatar(data: data) } },
                     onRemoveAvatar: { Task { await viewModel.removeAvatar() } },
                     onEditBlocked: DocumentError.isSimulator ? { viewModel.showSimulatorWarning() } : nil,

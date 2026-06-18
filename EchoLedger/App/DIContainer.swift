@@ -44,6 +44,9 @@ final class DIContainer {
     // MARK: Toasty
     let toasty: ToastyManager
 
+    // MARK: Network
+    let networkMonitor: NetworkMonitor
+
     // MARK: Sync
     let syncManager: SyncManager
 
@@ -102,7 +105,7 @@ final class DIContainer {
     let uploadAvatarPhoto: UploadAvatarPhoto
     let deleteDocument: DeleteDocument
     let getTransactionDocument: GetTransactionDocument
-    let getUserPhoto: GetUserPhoto
+    let downloadImage: DownloadImage
 
     // MARK: Use Cases — Charts
     let getChartData: GetChartData
@@ -118,13 +121,15 @@ final class DIContainer {
     ///   - toasty: The shared toast notification manager.
     ///   - authStoring: The authentication provider used for sign-out and account deletion.
     ///   - authSession: The current authentication session.
+    ///   - networkMonitor: The shared connectivity monitor used to gate remote writes.
     ///   - inMemory: If true, SwiftData stores data in memory only. Defaults to false.
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
-         authSession: AuthSession, inMemory: Bool = false) {
+         authSession: AuthSession, networkMonitor: NetworkMonitor, inMemory: Bool = false) {
         self.userId = userId
         self.toasty = toasty
         self.authStoring = authStoring
         self.authSession = authSession
+        self.networkMonitor = networkMonitor
 
         // MARK: SwiftData Stack
         let schema = Schema([
@@ -180,7 +185,7 @@ final class DIContainer {
         )
 
         // MARK: Document source (needed by the delete use cases below)
-        let documentSource = DocumentRemoteSource()
+        let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
         self.deleteDocument = DeleteDocument(documentSource: documentSource)
 
         // MARK: Use Cases — Auth
@@ -264,7 +269,7 @@ final class DIContainer {
             userId: userId
         )
         self.getTransactionDocument = GetTransactionDocument()
-        self.getUserPhoto = GetUserPhoto()
+        self.downloadImage = DownloadImage(documentSource: documentSource, networkMonitor: networkMonitor)
 
         // MARK: Use Cases — Charts
         self.getChartData = GetChartData(

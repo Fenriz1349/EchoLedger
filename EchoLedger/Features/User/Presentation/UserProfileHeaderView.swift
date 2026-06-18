@@ -11,7 +11,7 @@ import SwiftUI
 struct UserProfileHeaderView: View {
 
     let user: User
-    let avatarDocument: DocumentResult
+    let avatarData: Data?
     let onImageSelected: (Data) -> Void
     let onRemoveAvatar: () -> Void
     let onEditBlocked: (() -> Void)?
@@ -19,7 +19,7 @@ struct UserProfileHeaderView: View {
     var body: some View {
         VStack(spacing: 8) {
             UserAvatarView(
-                document: avatarDocument,
+                imageData: avatarData,
                 size: 140,
                 onImageSelected: onImageSelected,
                 onRemove: onRemoveAvatar,
@@ -39,7 +39,7 @@ struct UserProfileHeaderView: View {
 #Preview {
     UserProfileHeaderView(
         user: PreviewData.user,
-        avatarDocument: DocumentResult(urlString: nil, attachmentType: nil, placeholder: .avatar),
+        avatarData: nil,
         onImageSelected: { _ in },
         onRemoveAvatar: {},
         onEditBlocked: nil

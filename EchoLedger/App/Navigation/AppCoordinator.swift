@@ -44,6 +44,10 @@ final class AppCoordinator {
             onSignOut: onSignOut,
             onSessionUpdated: onSessionUpdated
         )
+
+        // Preload the avatar in the background during launch so the profile tab opens with the
+        // image already present. Fire-and-forget: it must not block the app appearing.
+        Task { [userProfileViewModel] in await userProfileViewModel.loadAvatar() }
     }
 
     /// Loads the transaction-dependent view models — the transaction list, account balances

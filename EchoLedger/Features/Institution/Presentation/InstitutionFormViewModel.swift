@@ -128,10 +128,10 @@ final class InstitutionFormViewModel {
                     reset()
                 }
             }
-        } catch let error as InstitutionError {
-            errorMessage = error.localizedDescription
+        } catch let error as OfflineError {
+            toasty.showError(error)
         } catch {
-            errorMessage = "Une erreur est survenue"
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? "Une erreur est survenue"
         }
         isLoading = false
     }
