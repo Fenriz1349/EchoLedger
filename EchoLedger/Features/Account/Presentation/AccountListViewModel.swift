@@ -17,9 +17,11 @@ final class AccountListViewModel {
     var archivedAccounts: [Account] = []
     var institutions: [Institution] = []
     var balances: [UUID: Double] = [:]
-    var isLoading = false
     var showDeleteAlert = false
     var accountToDelete: Account?
+    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
+    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
+    private(set) var isRefreshing = false
 
     /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
@@ -80,8 +82,6 @@ final class AccountListViewModel {
 
     /// Loads all institutions with their associated accounts.
     func load() async {
-        isLoading = true
-
         do {
             let institutions = try await getInstitutions.execute(for: userId)
             self.institutions = institutions
@@ -108,14 +108,14 @@ final class AccountListViewModel {
         } catch {
             toasty.showError(error)
         }
-
-        isLoading = false
     }
 
     /// Pulls fresh data from the remote backend, then reloads the list from the warmed cache.
     /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
     /// toast but still reloads whatever the cache holds.
     func refresh() async {
+        isRefreshing = true
+        defer { isRefreshing = false }
         do {
             try await refreshFromRemote.execute()
         } catch {

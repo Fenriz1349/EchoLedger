@@ -118,6 +118,10 @@ final class AppEntryViewModel {
             #if !CLOUD_TARGET
             await newContainer.syncManager.sync()
             #endif
+
+            // Pre-fill the main tabs while the loading screen is still up, so the app opens
+            // already populated and the screens never show a per-screen loader afterwards.
+            await coordinator?.loadData()
             return true
         } catch {
             toasty.showError(error)

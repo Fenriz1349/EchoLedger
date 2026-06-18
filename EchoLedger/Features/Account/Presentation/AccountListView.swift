@@ -88,12 +88,9 @@ struct AccountListView: View {
                     Task { await coordinator.accountListViewModel.load() }
                 }
             }
-            .task {
-                await coordinator.accountListViewModel.load()
-            }
         }
         .overlay {
-            if coordinator.accountListViewModel.isLoading {
+            if coordinator.accountListViewModel.isRefreshing {
                 EchoProgressView()
             }
         }

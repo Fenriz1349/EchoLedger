@@ -71,7 +71,7 @@ struct ContentView: View {
                 get: { coordinator.transactionListViewModel.showAddTransaction },
                 set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
             ),
-            onDismiss: { Task { await coordinator.refreshAfterTransactionChange() } }
+            onDismiss: { Task { await coordinator.loadData() } }
         ) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
         }

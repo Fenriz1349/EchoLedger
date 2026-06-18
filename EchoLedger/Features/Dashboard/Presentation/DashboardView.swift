@@ -115,11 +115,8 @@ struct DashboardView: View {
                 }
             }
         }
-        .task {
-            await coordinator.dashboardViewModel.load()
-        }
         .overlay {
-            if coordinator.dashboardViewModel.graphsViewModel.isLoading {
+            if coordinator.dashboardViewModel.isRefreshing {
                 EchoProgressView()
             }
         }

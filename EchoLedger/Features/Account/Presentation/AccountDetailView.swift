@@ -139,11 +139,6 @@ struct AccountDetailView: View {
             viewModel.onNotFound = { dismiss() }
             await viewModel.load()
         }
-        .overlay {
-            if viewModel.isLoading {
-                EchoProgressView()
-            }
-        }
     }
 }
 

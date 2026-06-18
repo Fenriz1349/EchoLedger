@@ -17,7 +17,9 @@ final class TransactionListViewModel {
     var transactions: [Transaction] = []
     var accountNames: [UUID: String] = [:]
     var institutionNames: [UUID: String] = [:]
-    var isLoading = false
+    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
+    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
+    private(set) var isRefreshing = false
 
     // MARK: Filters
     var searchText: String = ""
@@ -168,7 +170,6 @@ final class TransactionListViewModel {
 
     /// Loads all transactions and available filter accounts for the current user.
     func load() async {
-        isLoading = true
         do {
             transactions = try await getTransactions.execute(for: userId)
 
@@ -182,13 +183,14 @@ final class TransactionListViewModel {
         } catch {
             toasty.showError(error)
         }
-        isLoading = false
     }
 
     /// Pulls fresh data from the remote backend, then reloads from the warmed cache.
     /// Triggered by an explicit user action (pull-to-refresh). A failed remote pull surfaces a
     /// toast but still reloads whatever the cache holds.
     func refresh() async {
+        isRefreshing = true
+        defer { isRefreshing = false }
         do {
             try await refreshFromRemote.execute()
         } catch {

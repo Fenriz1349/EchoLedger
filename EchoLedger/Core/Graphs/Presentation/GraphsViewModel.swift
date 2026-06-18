@@ -33,7 +33,6 @@ final class GraphsViewModel {
     var monthlyFlows: [MonthlyFlow] = []
     var monthlyPieData: [MonthlyPieData] = []
     var selectedPieIndex: Int = 0
-    var isLoading = false
 
     var canGoPreviousPie: Bool { selectedPieIndex > 0 }
     var canGoNextPie: Bool { selectedPieIndex < monthlyPieData.count - 1 }
@@ -66,8 +65,6 @@ final class GraphsViewModel {
     /// Throws so the caller's ViewModel can handle errors with its own toasty instance.
     /// - Parameter scope: `.global` for the whole portfolio, `.account(id)` for one account.
     func load(scope: ChartScope = .global) async throws {
-        isLoading = true
-        defer { isLoading = false }
         let bundle = try await getChartData.execute(scope: scope)
         totalBalance = bundle.totalBalance
         accountBalances = bundle.accountBalances

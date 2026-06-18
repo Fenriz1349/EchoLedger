@@ -89,12 +89,9 @@ struct TransactionListView: View {
                     Task { await coordinator.transactionListViewModel.load() }
                 }
             }
-            .task {
-                await coordinator.transactionListViewModel.load()
-            }
         }
         .overlay {
-            if coordinator.transactionListViewModel.isLoading {
+            if coordinator.transactionListViewModel.isRefreshing {
                 EchoProgressView()
             }
         }

@@ -20,6 +20,10 @@ final class DashboardViewModel {
     private let refreshFromRemote: RefreshFromRemote
     let graphsViewModel: GraphsViewModel
 
+    /// True only during an explicit user-triggered refresh (pull-to-refresh or refresh button).
+    /// Drives the branded overlay; navigation reads stay silent since the data is already present.
+    private(set) var isRefreshing = false
+
     // MARK: Init
 
     /// - Parameters:
@@ -47,6 +51,8 @@ final class DashboardViewModel {
     /// Triggered by an explicit user action (pull-to-refresh or the refresh button). A failed
     /// remote pull surfaces a toast but still reloads whatever the cache holds.
     func refresh() async {
+        isRefreshing = true
+        defer { isRefreshing = false }
         do {
             try await refreshFromRemote.execute()
         } catch {
