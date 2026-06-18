@@ -111,7 +111,8 @@ final class DIContainer {
         let firebaseUID = Auth.auth().currentUser?.uid ?? ""
 
         // MARK: Cloud Storings
-        let userCloud = UserCloudStoring(remote: userRemote, userId: userId, firebaseUID: firebaseUID)
+        let userCloud = UserCloudStoring(remote: userRemote, userId: userId, firebaseUID: firebaseUID,
+                                         networkMonitor: networkMonitor)
         let institutionCloud = InstitutionCloudStoring(remote: institutionRemote, userId: userId,
                                                        networkMonitor: networkMonitor)
         let accountCloud = AccountCloudStoring(remote: accountRemote, userId: userId,
