@@ -114,7 +114,8 @@ final class DIContainer {
         let userCloud = UserCloudStoring(remote: userRemote, userId: userId, firebaseUID: firebaseUID)
         let institutionCloud = InstitutionCloudStoring(remote: institutionRemote, userId: userId,
                                                        networkMonitor: networkMonitor)
-        let accountCloud = AccountCloudStoring(remote: accountRemote, userId: userId)
+        let accountCloud = AccountCloudStoring(remote: accountRemote, userId: userId,
+                                               networkMonitor: networkMonitor)
         let transactionCloud = TransactionCloudStoring(remote: transactionRemote, userId: userId)
 
         self.userStoring = userCloud

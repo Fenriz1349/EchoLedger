@@ -229,10 +229,8 @@ final class AccountFormViewModel {
                 try await addTransaction.execute(input)
             }
             isSuccess = true
-        } catch let error as AccountError {
-            toasty.showError(error)
         } catch {
-            toasty.showError("Une erreur est survenue")
+            toasty.showError((error as? LocalizedError)?.errorDescription ?? "Une erreur est survenue")
         }
         isLoading = false
     }
