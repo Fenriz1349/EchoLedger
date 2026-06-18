@@ -128,10 +128,10 @@ final class InstitutionFormViewModel {
                     reset()
                 }
             }
-        } catch let error as InstitutionError {
-            errorMessage = error.localizedDescription
         } catch {
-            errorMessage = "Une erreur est survenue"
+            // Domain errors (InstitutionError, OfflineError…) conform to LocalizedError and carry a
+            // localized message; raw backend errors (NSError) don't, so they fall back to the generic.
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? "Une erreur est survenue"
         }
         isLoading = false
     }

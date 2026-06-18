@@ -14,11 +14,16 @@ final class InstitutionCloudStoring: InstitutionProviding {
 
     private let remote: InstitutionRemoteSource
     private let userId: UUID
+    private let networkMonitor: NetworkMonitor
 
-    init(remote: InstitutionRemoteSource, userId: UUID) {
+    init(remote: InstitutionRemoteSource, userId: UUID, networkMonitor: NetworkMonitor) {
         self.remote = remote
         self.userId = userId
+        self.networkMonitor = networkMonitor
     }
+
+    // Reads stay cache-first and work offline; only writes are gated, so Firestore never
+    // queues a write the user believes was cancelled.
 
     func fetchAll(for userId: UUID) async throws -> [Institution] {
         try await remote.fetchAll(for: userId, source: .cache)
@@ -29,22 +34,27 @@ final class InstitutionCloudStoring: InstitutionProviding {
     }
 
     func save(_ institution: Institution) async throws {
+        try await networkMonitor.verifyReachable()
         try await remote.save(institution, userId: userId)
     }
 
     func update(_ institution: Institution) async throws {
+        try await networkMonitor.verifyReachable()
         try await remote.update(institution, userId: userId)
     }
 
     func archive(by id: UUID) async throws {
+        try await networkMonitor.verifyReachable()
         try await remote.archive(id: id, userId: userId)
     }
 
     func unarchive(by id: UUID) async throws {
+        try await networkMonitor.verifyReachable()
         try await remote.unarchive(id: id, userId: userId)
     }
 
     func delete(by id: UUID) async throws {
+        try await networkMonitor.verifyReachable()
         try await remote.delete(id: id, userId: userId)
     }
 }
