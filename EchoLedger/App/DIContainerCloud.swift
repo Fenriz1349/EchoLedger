@@ -32,6 +32,9 @@ final class DIContainer {
     // MARK: Toasty
     let toasty: ToastyManager
 
+    // MARK: Network
+    let networkMonitor: NetworkMonitor
+
     // MARK: Storings
     let userStoring: UserProviding
     let institutionStoring: InstitutionProviding
@@ -98,11 +101,12 @@ final class DIContainer {
     // MARK: Init
 
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
-         authSession: AuthSession) {
+         authSession: AuthSession, networkMonitor: NetworkMonitor) {
         self.userId = userId
         self.toasty = toasty
         self.authStoring = authStoring
         self.authSession = authSession
+        self.networkMonitor = networkMonitor
 
         let firebaseUID = Auth.auth().currentUser?.uid ?? ""
 

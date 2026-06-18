@@ -15,6 +15,9 @@ enum PreviewData {
     // MARK: Toasty
     static let toasty = ToastyManager()
 
+    // MARK: Network
+    static let networkMonitor = NetworkMonitor()
+
     // MARK: - Auth
     static let authSession = AuthSession(userId: user.id, isAnonymous: false)
     static let authStoring: AuthProviding = PreviewAuthStoring()

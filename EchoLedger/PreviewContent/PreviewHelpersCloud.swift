@@ -15,7 +15,8 @@ struct PreviewHelpers {
         userId: PreviewData.user.id,
         toasty: PreviewData.toasty,
         authStoring: PreviewData.authStoring,
-        authSession: PreviewData.authSession
+        authSession: PreviewData.authSession,
+        networkMonitor: PreviewData.networkMonitor
     )
 
     /// Creates a preview AppCoordinator wired to the Cloud container.

@@ -16,6 +16,7 @@ struct PreviewHelpers {
         toasty: PreviewData.toasty,
         authStoring: PreviewData.authStoring,
         authSession: PreviewData.authSession,
+        networkMonitor: PreviewData.networkMonitor,
         inMemory: true
     )
 

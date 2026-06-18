@@ -35,13 +35,16 @@ final class AppEntryViewModel {
 
     private let authStoring: AuthStoring
     private let toasty: ToastyManager
+    private let networkMonitor: NetworkMonitor
 
     /// - Parameters:
     ///   - authStoring: The authentication provider used to resolve and tear down sessions.
     ///   - toasty: The shared toast manager for surfacing launch-time errors.
-    init(authStoring: AuthStoring, toasty: ToastyManager) {
+    ///   - networkMonitor: The shared connectivity monitor, forwarded to the dependency container.
+    init(authStoring: AuthStoring, toasty: ToastyManager, networkMonitor: NetworkMonitor) {
         self.authStoring = authStoring
         self.toasty = toasty
+        self.networkMonitor = networkMonitor
     }
 
     // MARK: Launch
@@ -99,7 +102,8 @@ final class AppEntryViewModel {
             userId: session.userId,
             toasty: toasty,
             authStoring: authStoring,
-            authSession: session
+            authSession: session,
+            networkMonitor: networkMonitor
         )
 
         do {

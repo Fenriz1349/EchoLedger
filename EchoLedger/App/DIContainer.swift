@@ -44,6 +44,9 @@ final class DIContainer {
     // MARK: Toasty
     let toasty: ToastyManager
 
+    // MARK: Network
+    let networkMonitor: NetworkMonitor
+
     // MARK: Sync
     let syncManager: SyncManager
 
@@ -118,13 +121,15 @@ final class DIContainer {
     ///   - toasty: The shared toast notification manager.
     ///   - authStoring: The authentication provider used for sign-out and account deletion.
     ///   - authSession: The current authentication session.
+    ///   - networkMonitor: The shared connectivity monitor used to gate remote writes.
     ///   - inMemory: If true, SwiftData stores data in memory only. Defaults to false.
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
-         authSession: AuthSession, inMemory: Bool = false) {
+         authSession: AuthSession, networkMonitor: NetworkMonitor, inMemory: Bool = false) {
         self.userId = userId
         self.toasty = toasty
         self.authStoring = authStoring
         self.authSession = authSession
+        self.networkMonitor = networkMonitor
 
         // MARK: SwiftData Stack
         let schema = Schema([
