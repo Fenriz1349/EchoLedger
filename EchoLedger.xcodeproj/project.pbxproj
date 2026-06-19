@@ -68,6 +68,8 @@
 		681760B32FE4FB8D005873D2 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681760B12FE4FB8D005873D2 /* AppLogoView.swift */; };
 		681760B52FE4FB97005873D2 /* AppNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681760B42FE4FB97005873D2 /* AppNameView.swift */; };
 		681760B62FE4FB97005873D2 /* AppNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681760B42FE4FB97005873D2 /* AppNameView.swift */; };
+		681760BB2FE5408B005873D2 /* DocumentSourcing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681760BA2FE5408B005873D2 /* DocumentSourcing.swift */; };
+		681760BC2FE5408B005873D2 /* DocumentSourcing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681760BA2FE5408B005873D2 /* DocumentSourcing.swift */; };
 		681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47042F7F9F27000CC7C4 /* String+Extension.swift */; };
 		681B47072F7FA04F000CC7C4 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47062F7FA04F000CC7C4 /* Double+Extension.swift */; };
 		681B47092F7FEB60000CC7C4 /* SplitFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681B47082F7FEB60000CC7C4 /* SplitFormView.swift */; };
@@ -497,6 +499,7 @@
 		681760AD2FE4F9F6005873D2 /* AppHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderView.swift; sourceTree = "<group>"; };
 		681760B12FE4FB8D005873D2 /* AppLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoView.swift; sourceTree = "<group>"; };
 		681760B42FE4FB97005873D2 /* AppNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNameView.swift; sourceTree = "<group>"; };
+		681760BA2FE5408B005873D2 /* DocumentSourcing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSourcing.swift; sourceTree = "<group>"; };
 		681B47002F7F9138000CC7C4 /* EchoLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EchoLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoLedgerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		681B47042F7F9F27000CC7C4 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -1039,6 +1042,7 @@
 				683821A72FC86BF700CA6761 /* AttachmentType.swift */,
 				683821AA2FC86C5300CA6761 /* DocumentResult.swift */,
 				68467C932FD19F4500144A84 /* DocumentError.swift */,
+				681760BA2FE5408B005873D2 /* DocumentSourcing.swift */,
 				683821952FC8682000CA6761 /* UseCases */,
 			);
 			path = Domain;
@@ -1764,6 +1768,7 @@
 				683820FB2FC8432000CA6761 /* InstitutionProviding.swift in Sources */,
 				683820FC2FC8432000CA6761 /* AddTransactionInput.swift in Sources */,
 				68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
+				681760BB2FE5408B005873D2 /* DocumentSourcing.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
 				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
@@ -1924,6 +1929,7 @@
 				683821BE2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */,
 				681C82102FDA05AA00807581 /* InitialBalanceFormView.swift in Sources */,
 				6824DCAE2FC049D0007375C0 /* TransferDetailViewModel.swift in Sources */,
+				681760BC2FE5408B005873D2 /* DocumentSourcing.swift in Sources */,
 				68000F652F76886B00B30EB6 /* TransactionFormViewModel.swift in Sources */,
 				685A1EFB2F5AEB1C0009B885 /* UpdateTransaction.swift in Sources */,
 				683820C62FC823BA00CA6761 /* SplitRowView.swift in Sources */,
