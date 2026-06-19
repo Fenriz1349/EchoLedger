@@ -33,7 +33,8 @@ final class NetworkMonitor {
     init() {
         monitor.pathUpdateHandler = { [weak self] path in
             let connected = path.status == .satisfied
-            Task { @MainActor in self?.isConnected = connected }
+            guard let self else { return }
+            Task { @MainActor in self.isConnected = connected }
         }
         monitor.start(queue: queue)
     }
@@ -57,6 +58,8 @@ final class NetworkMonitor {
         var request = URLRequest(url: reachabilityURL)
         request.httpMethod = "HEAD"
         request.timeoutInterval = 3
+        // Always hit the network: a cached response would make us look reachable while offline.
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         do {
             let (_, response) = try await URLSession.shared.data(for: request)
             return response is HTTPURLResponse

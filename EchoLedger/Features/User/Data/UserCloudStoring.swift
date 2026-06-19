@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 /// Firebase-only implementation of UserProviding.
 /// Delegates all reads and writes directly to UserRemoteSource, with no local cache.
@@ -23,9 +24,15 @@ final class UserCloudStoring: UserProviding {
         self.networkMonitor = networkMonitor
     }
 
-    /// Fetches the current user. Reads fall back to the cache when offline.
+    /// Fetches the current user, cache-first so an offline launch never hangs waiting on the
+    /// server. Falls back to a server read only on a cache miss (e.g. a fresh device), which
+    /// fails fast when offline and surfaces as an unreachable error rather than a hang.
     func fetchCurrent() async throws -> User {
-        guard let user = try await remote.fetchUser(id: userId) else {
+        if let cached = try? await remote.fetchUser(id: userId, source: .cache) {
+            return cached
+        }
+        try await networkMonitor.verifyReachable()
+        guard let user = try await remote.fetchUser(id: userId, source: .server) else {
             throw UserError.notFound
         }
         return user

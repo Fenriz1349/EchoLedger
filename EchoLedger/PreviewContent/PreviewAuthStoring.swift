@@ -9,7 +9,7 @@ import Foundation
 
 /// No-op AuthProviding implementation for SwiftUI previews.
 final class PreviewAuthStoring: AuthProviding {
-    func resolveSession() async throws -> AuthSession { PreviewData.authSession }
+    func resolveSession() async -> AuthSession? { PreviewData.authSession }
     func signInWithEmail(email: String, password: String) async throws -> AuthSession { PreviewData.authSession }
     func createUserProfile(email: String,
                            password: String,

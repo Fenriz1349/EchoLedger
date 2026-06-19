@@ -22,7 +22,7 @@ final class DownloadImage {
     /// - Parameter urlString: The remote download URL of the image.
     /// - Returns: The raw image data, or `nil` if offline or the download fails.
     func execute(urlString: String) async -> Data? {
-        guard await networkMonitor.isConnected else { return nil }
+        guard networkMonitor.isConnected else { return nil }
         return try? await documentSource.downloadImageData(urlString: urlString)
     }
 }

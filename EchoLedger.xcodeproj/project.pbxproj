@@ -316,6 +316,8 @@
 		683D5FE12FE413860049D07D /* OfflineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FDF2FE413860049D07D /* OfflineError.swift */; };
 		683D5FE32FE426E00049D07D /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE22FE426E00049D07D /* DownloadImage.swift */; };
 		683D5FE42FE426E00049D07D /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE22FE426E00049D07D /* DownloadImage.swift */; };
+		683D5FE72FE441820049D07D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE62FE441820049D07D /* OfflineView.swift */; };
+		683D5FE82FE441820049D07D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE62FE441820049D07D /* OfflineView.swift */; };
 		684497142F75380900337F74 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497132F75380900337F74 /* PreviewData.swift */; };
 		684497162F753D4F00337F74 /* AddTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497152F753D4F00337F74 /* AddTransactionInput.swift */; };
 		684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497172F753D8100337F74 /* UpdateTransactionInput.swift */; };
@@ -579,6 +581,7 @@
 		683D5FDC2FE4136F0049D07D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		683D5FDF2FE413860049D07D /* OfflineError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineError.swift; sourceTree = "<group>"; };
 		683D5FE22FE426E00049D07D /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
+		683D5FE62FE441820049D07D /* OfflineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
 		684497132F75380900337F74 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		684497152F753D4F00337F74 /* AddTransactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionInput.swift; sourceTree = "<group>"; };
 		684497172F753D8100337F74 /* UpdateTransactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionInput.swift; sourceTree = "<group>"; };
@@ -786,6 +789,7 @@
 			isa = PBXGroup;
 			children = (
 				68128E782FE2A5A100A568B5 /* Domain */,
+				683D5FE52FE441660049D07D /* Presentation */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1049,6 +1053,14 @@
 				683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */,
 				681314282FD3159100F74B8D /* DocumentDisplayView.swift */,
 				6813142E2FD31B8000F74B8D /* SafariDocumentView.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		683D5FE52FE441660049D07D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				683D5FE62FE441820049D07D /* OfflineView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1691,6 +1703,7 @@
 			files = (
 				687DD66E2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
 				683820D82FC8432000CA6761 /* GetCurrentUser.swift in Sources */,
+				683D5FE82FE441820049D07D /* OfflineView.swift in Sources */,
 				683820D92FC8432000CA6761 /* ExpensePieChartView.swift in Sources */,
 				683820DC2FC8432000CA6761 /* TransferDetailViewModel.swift in Sources */,
 				683820DD2FC8432000CA6761 /* TransactionFormViewModel.swift in Sources */,
@@ -2018,6 +2031,7 @@
 				683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */,
 				683275F52F9B66F500DA5796 /* DeleteUserProfile.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
+				683D5FE72FE441820049D07D /* OfflineView.swift in Sources */,
 				681C82122FDA0A1C00807581 /* TransactionEditView.swift in Sources */,
 				6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */,
 				683821B42FC8841400CA6761 /* UserAvatarView.swift in Sources */,

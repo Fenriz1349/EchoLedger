@@ -22,7 +22,7 @@ final class AppEntryViewModel {
 
     /// The top-level screen the app is currently showing.
     enum Phase: Equatable {
-        case loading, auth, app
+        case loading, auth, app, offline
     }
 
     // MARK: State
@@ -30,6 +30,10 @@ final class AppEntryViewModel {
     private(set) var phase: Phase = .loading
     private(set) var container: DIContainer?
     private(set) var coordinator: AppCoordinator?
+
+    /// A resolved session that couldn't be built because the backend was unreachable. Kept so the
+    /// offline screen can retry without forcing the user back through authentication.
+    private var pendingSession: AuthSession?
 
     // MARK: Dependencies
 
@@ -62,6 +66,21 @@ final class AppEntryViewModel {
         }
     }
 
+    /// Retries after an offline launch — from the kept session if there was one, otherwise by
+    /// resolving the session again. Triggered by the offline screen's button or automatically when
+    /// connectivity returns.
+    func retry() async {
+        phase = .loading
+        if let session = pendingSession {
+            if await buildApp(session: session) {
+                pendingSession = nil
+                phase = .app
+            }
+        } else {
+            await resolveExistingSession()
+        }
+    }
+
     // MARK: Private
 
     /// Attempts to restore an existing session at launch.
@@ -72,8 +91,11 @@ final class AppEntryViewModel {
 
         let resolve = ResolveSession(repository: authStoring)
         guard let session = await resolve.execute() else {
+            // No stored session: offline → show the offline screen (authentication needs a network
+            // anyway); online → go to authentication.
+            let reachable = await currentlyReachable()
             try? await minimumDelay
-            phase = .auth
+            phase = reachable ? .auth : .offline
             return
         }
 
@@ -127,10 +149,27 @@ final class AppEntryViewModel {
             // already populated and the screens never show a per-screen loader afterwards.
             await coordinator?.loadData()
             return true
+        } catch is OfflineError {
+            // Backend unreachable → transient: keep the session and offer a retry, no sign-out.
+            pendingSession = session
+            phase = .offline
+            return false
         } catch {
+            // Reachable but the load still failed → genuine error (e.g. missing user) → back to auth.
             toasty.showError(error)
             try? await authStoring.signOut()
             resetToAuth()
+            return false
+        }
+    }
+
+    /// Actively checks whether the backend is reachable right now (a real round-trip, robust to the
+    /// interface flag still being stale at launch).
+    private func currentlyReachable() async -> Bool {
+        do {
+            try await networkMonitor.verifyReachable()
+            return true
+        } catch {
             return false
         }
     }

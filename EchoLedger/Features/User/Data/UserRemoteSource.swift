@@ -58,11 +58,13 @@ final class UserRemoteSource {
     }
 
     /// Fetches a user document from Firestore by internal UUID.
-    /// - Parameter userId: The internal UUID of the user to fetch.
+    /// - Parameters:
+    ///   - userId: The internal UUID of the user to fetch.
+    ///   - source: `.cache` for an instant offline-safe read, `.server` to force a fresh fetch.
     /// - Returns: The domain User, or nil if the document does not exist or can't be decoded.
     /// - Throws: A Firestore error if the read fails (distinct from "document absent").
-    func fetchUser(id userId: UUID) async throws -> User? {
-        guard let data = try await document(for: userId).getDocument().data() else { return nil }
+    func fetchUser(id userId: UUID, source: FirestoreSource = .default) async throws -> User? {
+        guard let data = try await document(for: userId).getDocument(source: source).data() else { return nil }
         return decode(data)
     }
 

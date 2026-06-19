@@ -11,8 +11,8 @@ import Foundation
 protocol AuthProviding {
 
     /// Resolves an existing session from local storage without creating a new one.
-    /// - Returns: The stored `AuthSession`, or throws `AuthError.noSessionFound` if none exists.
-    func resolveSession() async throws -> AuthSession
+    /// - Returns: The stored `AuthSession`, or nil if none exists (absence, not an error).
+    func resolveSession() async -> AuthSession?
 
     /// Signs in an existing user with email and password.
     /// - Parameters:
