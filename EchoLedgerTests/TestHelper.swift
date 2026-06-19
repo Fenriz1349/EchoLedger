@@ -21,6 +21,32 @@ enum TestData {
     ) -> User {
         User(id: id, displayName: "\(firstName)|\(lastName)", email: email, photoURL: photoURL)
     }
+
+    static func institution(
+        id: UUID = UUID(),
+        userId: UUID = UUID(),
+        name: String = "BNP Paribas",
+        category: InstitutionCategory = .bank,
+        isArchived: Bool = false
+    ) -> Institution {
+        Institution(id: id, userId: userId, name: name, category: category, isArchived: isArchived)
+    }
+
+    static func account(
+        id: UUID = UUID(),
+        institutionId: UUID = UUID(),
+        name: String = "Compte courant",
+        category: AccountCategory = .checking,
+        isArchived: Bool = false
+    ) -> Account {
+        Account(id: id, institutionId: institutionId, name: name, category: category, isArchived: isArchived)
+    }
+}
+
+/// No-op document deletion for use cases that delete records without exercising attachments.
+final class DocumentDeletingDouble: DocumentDeleting {
+    func execute(urlString: String) async throws {}
+    func deleteAllUserFiles(userId: UUID) async throws {}
 }
 
 /// Async variant of XCTAssertThrowsError for use with async throwing functions.

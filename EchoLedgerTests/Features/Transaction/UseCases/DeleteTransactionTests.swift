@@ -83,9 +83,3 @@ final class DeleteTransactionTests: XCTestCase {
         }
     }
 }
-
-/// No-op document deletion for tests that don't exercise attachments.
-private final class DocumentDeletingDouble: DocumentDeleting {
-    func execute(urlString: String) async throws {}
-    func deleteAllUserFiles(userId: UUID) async throws {}
-}

@@ -11,51 +11,66 @@ import XCTest
 @MainActor
 final class DeleteInstitutionTests: XCTestCase {
 
-    // MARK: Properties
-    private var repository: InstitutionDouble!
+    private var institutionRepository: InstitutionDouble!
+    private var accountRepository: AccountDouble!
     private var useCase: DeleteInstitution!
+    private let institutionId = UUID()
 
-    // MARK: Setup
     override func setUp() {
         super.setUp()
-        repository = InstitutionDouble()
-        useCase = DeleteInstitution(repository: repository)
+        institutionRepository = InstitutionDouble()
+        accountRepository = AccountDouble()
+        let deleteAccount = DeleteAccount(
+            accountRepository: accountRepository,
+            transactionRepository: TransactionDouble(),
+            deleteDocument: DocumentDeletingDouble(),
+            userId: UUID()
+        )
+        useCase = DeleteInstitution(
+            repository: institutionRepository,
+            getAccounts: GetAccounts(repository: accountRepository),
+            deleteAccount: deleteAccount
+        )
     }
 
     override func tearDown() {
-        repository = nil
+        institutionRepository = nil
+        accountRepository = nil
         useCase = nil
         super.tearDown()
     }
 
     // MARK: Helpers
-    /// Seeds and returns an institution with a known id.
-    private func seedInstitution() async throws -> UUID {
-        let institution = Institution(userId: UUID(), name: "BNP Paribas", category: .bank)
-        try await repository.save(institution)
-        return institution.id
+    private func seedInstitution() async throws {
+        try await institutionRepository.save(TestData.institution(id: institutionId))
     }
 
     // MARK: Tests
-    /// Verifies that an existing institution is deleted and didCallDelete is set.
-    func test_execute_existingId_callsDelete() async throws {
-        let id = try await seedInstitution()
-        try await useCase.execute(id: id)
-        XCTAssertTrue(repository.didCallDelete)
-    }
-
-    /// Verifies that the institution is no longer fetchable after deletion.
-    func test_execute_existingId_institutionNoLongerExists() async throws {
-        let id = try await seedInstitution()
-        try await useCase.execute(id: id)
+    /// Verifies that the institution is removed.
+    func test_execute_existingId_institutionDeleted() async throws {
+        try await seedInstitution()
+        try await useCase.execute(id: institutionId)
         await XCTAssertThrowsErrorAsync(
-            try await repository.fetch(by: id)
+            try await institutionRepository.fetch(by: institutionId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
         }
     }
 
-    /// Verifies that deleting an unknown id throws notFound.
+    /// Verifies that the institution's accounts are deleted in cascade.
+    func test_execute_deletesLinkedAccounts() async throws {
+        try await seedInstitution()
+        let accountId = UUID()
+        try await accountRepository.save(TestData.account(id: accountId, institutionId: institutionId))
+        try await useCase.execute(id: institutionId)
+        await XCTAssertThrowsErrorAsync(
+            try await accountRepository.fetch(by: accountId)
+        ) { error in
+            XCTAssertEqual(error as? AccountError, .notFound)
+        }
+    }
+
+    /// Verifies that deleting an unknown institution throws notFound.
     func test_execute_unknownId_throwsNotFound() async {
         await XCTAssertThrowsErrorAsync(
             try await useCase.execute(id: UUID())
