@@ -12,7 +12,7 @@ final class DeleteUserProfile {
 
     private let repository: AuthProviding
     private let userStoring: UserProviding
-    private let deleteDocument: DeleteDocument
+    private let deleteDocument: DocumentDeleting
     private let getInstitutions: GetInstitutions
     private let deleteInstitution: DeleteInstitution
     private let userId: UUID
@@ -26,7 +26,7 @@ final class DeleteUserProfile {
     ///   - userId: The internal user identifier.
     init(repository: AuthProviding,
          userStoring: UserProviding,
-         deleteDocument: DeleteDocument,
+         deleteDocument: DocumentDeleting,
          getInstitutions: GetInstitutions,
          deleteInstitution: DeleteInstitution,
          userId: UUID) {

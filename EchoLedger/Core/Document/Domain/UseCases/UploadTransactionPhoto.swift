@@ -11,11 +11,11 @@ import Foundation
 /// stores the download URL and its standard MIME type in the transaction repository.
 final class UploadTransactionDocument {
 
-    private let documentSource: DocumentRemoteSource
+    private let documentSource: DocumentSourcing
     private let transactionRepository: TransactionProviding
     private let userId: UUID
 
-    init(documentSource: DocumentRemoteSource,
+    init(documentSource: DocumentSourcing,
          transactionRepository: TransactionProviding,
          userId: UUID) {
         self.documentSource = documentSource

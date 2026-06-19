@@ -11,10 +11,10 @@ import Foundation
 /// (callers fall back to a placeholder). Returns `Data` to keep the domain UIKit-free.
 final class DownloadImage {
 
-    private let documentSource: DocumentRemoteSource
+    private let documentSource: DocumentSourcing
     private let networkMonitor: NetworkMonitor
 
-    init(documentSource: DocumentRemoteSource, networkMonitor: NetworkMonitor) {
+    init(documentSource: DocumentSourcing, networkMonitor: NetworkMonitor) {
         self.documentSource = documentSource
         self.networkMonitor = networkMonitor
     }

@@ -11,12 +11,12 @@ import Foundation
 final class DeleteTransaction {
 
     private let repository: TransactionProviding
-    private let deleteDocument: DeleteDocument
+    private let deleteDocument: DocumentDeleting
 
     /// - Parameters:
     ///   - repository: The data contract for transaction persistence.
-    ///   - deleteDocument: UseCase for removing the attachment file from storage.
-    init(repository: TransactionProviding, deleteDocument: DeleteDocument) {
+    ///   - deleteDocument: Removes the attachment file from storage.
+    init(repository: TransactionProviding, deleteDocument: DocumentDeleting) {
         self.repository = repository
         self.deleteDocument = deleteDocument
     }

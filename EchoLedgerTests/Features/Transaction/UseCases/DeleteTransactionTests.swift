@@ -19,7 +19,7 @@ final class DeleteTransactionTests: XCTestCase {
     override func setUp() {
         super.setUp()
         repository = TransactionDouble()
-        useCase = DeleteTransaction(repository: repository)
+        useCase = DeleteTransaction(repository: repository, deleteDocument: DocumentDeletingDouble())
     }
 
     override func tearDown() {
@@ -82,4 +82,10 @@ final class DeleteTransactionTests: XCTestCase {
             XCTAssertEqual(error as? TransactionError, .notFound)
         }
     }
+}
+
+/// No-op document deletion for tests that don't exercise attachments.
+private final class DocumentDeletingDouble: DocumentDeleting {
+    func execute(urlString: String) async throws {}
+    func deleteAllUserFiles(userId: UUID) async throws {}
 }

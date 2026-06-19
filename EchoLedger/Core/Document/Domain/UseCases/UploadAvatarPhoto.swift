@@ -11,11 +11,11 @@ import Foundation
 /// and updates the user's photoURL in the repository.
 final class UploadAvatarPhoto {
 
-    private let documentSource: DocumentRemoteSource
+    private let documentSource: DocumentSourcing
     private let userRepository: UserProviding
     private let userId: UUID
 
-    init(documentSource: DocumentRemoteSource,
+    init(documentSource: DocumentSourcing,
          userRepository: UserProviding,
          userId: UUID) {
         self.documentSource = documentSource

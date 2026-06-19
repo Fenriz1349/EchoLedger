@@ -14,7 +14,7 @@ final class DeleteAccount {
 
     private let accountRepository: AccountProviding
     private let transactionRepository: TransactionProviding
-    private let deleteDocument: DeleteDocument
+    private let deleteDocument: DocumentDeleting
     private let userId: UUID
 
     /// - Parameters:
@@ -24,7 +24,7 @@ final class DeleteAccount {
     ///   - userId: The identifier of the current user, used to scope the transaction fetch.
     init(accountRepository: AccountProviding,
          transactionRepository: TransactionProviding,
-         deleteDocument: DeleteDocument,
+         deleteDocument: DocumentDeleting,
          userId: UUID) {
         self.accountRepository = accountRepository
         self.transactionRepository = transactionRepository
