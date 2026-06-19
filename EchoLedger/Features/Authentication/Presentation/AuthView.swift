@@ -41,6 +41,13 @@ struct AuthView: View {
                AppHeaderView()
                 .padding(.top, 40)
 
+                // MARK: Toggle
+                Picker("", selection: $viewModel.isSignUp) {
+                    Text("Connexion").tag(false)
+                    Text("Inscription").tag(true)
+                }
+                .pickerStyle(.segmented)
+
                 AuthFormContent(
                     isSignUp: $viewModel.isSignUp,
                     firstName: $viewModel.firstName,
@@ -65,7 +72,7 @@ struct AuthView: View {
                     } label: {
                         Text("Mot de passe oublié ?")
                             .font(.subheadline)
-                            .foregroundColor(.accentColor)
+                            .foregroundColor(.secondary)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                     .disabled(viewModel.isLoading)
@@ -83,27 +90,17 @@ struct AuthView: View {
                 }
                 .disabled(!viewModel.isFormValid || viewModel.isLoading)
 
-                // MARK: Toggle
-                Button {
-                    viewModel.isSignUp.toggle()
-                } label: {
-                    CustomButtonLabel(
-                        message: viewModel.isSignUp
-                        ? "Déjà un compte ? Se connecter"
-                        : "Pas encore de compte ? Créer un compte",
-                        color: .accentColor,
-                        isSelected: false
-                    )
-                }
-                .disabled(viewModel.isLoading)
+                Divider()
 
                 // MARK: Demo Mode
                 Button {
                     Task { await viewModel.continueAnonymously() }
                 } label: {
-                    Text("Continuer en mode démo")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    CustomButtonLabel(
+                        message: "Continuer en mode démo",
+                        color: .accentColor,
+                        isSelected: false
+                    )
                 }
                 .disabled(viewModel.isLoading)
             }
