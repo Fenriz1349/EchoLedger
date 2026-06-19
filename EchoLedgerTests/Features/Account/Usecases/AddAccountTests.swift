@@ -35,10 +35,12 @@ final class AddAccountTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid account is saved to the repository.
-    func test_execute_validInput_callsSave() async throws {
+    /// Verifies that a valid account is persisted to the repository.
+    func test_execute_validInput_savesAccount() async throws {
         try await useCase.execute(institutionId: institutionId, name: "Livret A", category: .savings)
-        XCTAssertTrue(repository.didCallSave)
+        let accounts = try await repository.fetchAll(for: institutionId)
+        XCTAssertEqual(accounts.count, 1)
+        XCTAssertEqual(accounts.first?.name, "Livret A")
     }
 
     /// Verifies that the name is trimmed before being saved.
@@ -82,7 +84,8 @@ final class AddAccountTests: XCTestCase {
     func test_execute_nameExactly50Chars_succeeds() async throws {
         let maxName = String(repeating: "A", count: 50)
         try await useCase.execute(institutionId: institutionId, name: maxName, category: .savings)
-        XCTAssertTrue(repository.didCallSave)
+        let accounts = try await repository.fetchAll(for: institutionId)
+        XCTAssertEqual(accounts.first?.name, maxName)
     }
 
     // MARK: Duplicate Validation
@@ -109,7 +112,9 @@ final class AddAccountTests: XCTestCase {
     /// Verifies that the same name can be used in different institutions.
     func test_execute_sameNameDifferentInstitution_succeeds() async throws {
         try await seedAccount(name: "Livret A")
-        try await useCase.execute(institutionId: UUID(), name: "Livret A", category: .savings)
-        XCTAssertTrue(repository.didCallSave)
+        let otherInstitutionId = UUID()
+        try await useCase.execute(institutionId: otherInstitutionId, name: "Livret A", category: .savings)
+        let accounts = try await repository.fetchAll(for: otherInstitutionId)
+        XCTAssertEqual(accounts.count, 1)
     }
 }

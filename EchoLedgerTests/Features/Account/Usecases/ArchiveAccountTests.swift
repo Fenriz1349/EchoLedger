@@ -35,13 +35,6 @@ final class ArchiveAccountTests: XCTestCase {
     }
 
     // MARK: Tests
-    /// Verifies that archiving an existing account calls update on the repository.
-    func test_execute_existingId_callsUpdate() async throws {
-        let id = try await seedAccount()
-        try await useCase.execute(id: id)
-        XCTAssertTrue(repository.didCallUpdate)
-    }
-
     /// Verifies that the account is marked as archived after execution.
     func test_execute_existingId_accountIsArchived() async throws {
         let id = try await seedAccount()

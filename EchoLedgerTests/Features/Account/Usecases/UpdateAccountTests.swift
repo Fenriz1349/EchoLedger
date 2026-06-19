@@ -45,18 +45,20 @@ final class UpdateAccountTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid update calls update on the repository.
-    func test_execute_validInput_callsUpdate() async throws {
+    /// Verifies that a valid update persists the new values.
+    func test_execute_validInput_updatesAccount() async throws {
         let id = try await seedAccount()
-        try await useCase.execute(makeInput(id: id))
-        XCTAssertTrue(repository.didCallUpdate)
+        try await useCase.execute(makeInput(id: id, name: "PEL"))
+        let updated = try await repository.fetch(by: id)
+        XCTAssertEqual(updated.name, "PEL")
     }
 
     /// Verifies that updating with the same name succeeds (no self-duplicate).
     func test_execute_sameNameSameId_succeeds() async throws {
         let id = try await seedAccount(name: "Livret A")
         try await useCase.execute(makeInput(id: id, name: "Livret A", category: .creditCard))
-        XCTAssertTrue(repository.didCallUpdate)
+        let updated = try await repository.fetch(by: id)
+        XCTAssertEqual(updated.category, .creditCard)
     }
 
     // MARK: Validation
