@@ -33,19 +33,12 @@ struct AuthView: View {
     var body: some View {
         @Bindable var viewModel = authViewModel
 
-        ScrollView {
+        ZStack {
+            Color("BackgroundColor").ignoresSafeArea()
+            
             VStack(spacing: 24) {
 
-                // MARK: Header
-                VStack(spacing: 8) {
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                    Text("EchoLedger")
-                        .font(.largeTitle.bold())
-                        .foregroundStyle(.accent)
-                }
+               AppHeaderView()
                 .padding(.top, 40)
 
                 AuthFormContent(
