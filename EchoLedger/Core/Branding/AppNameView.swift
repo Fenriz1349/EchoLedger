@@ -12,8 +12,11 @@ struct AppNameView: View {
 
     var body: some View {
         Text("EchoLedger")
-            .font(.largeTitle.bold())
-            .foregroundStyle(.accent)
+            .font(.system(.largeTitle, design: .rounded).weight(.heavy))
+            .foregroundStyle(
+                LinearGradient(colors: [Color(.accentHard), Color(.accentSoft)],
+                               startPoint: .leading, endPoint: .trailing)
+            )
     }
 }
 
