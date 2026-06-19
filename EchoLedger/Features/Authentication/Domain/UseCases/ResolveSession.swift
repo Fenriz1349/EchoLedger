@@ -20,6 +20,6 @@ final class ResolveSession {
     /// Executes the session resolution.
     /// - Returns: The existing `AuthSession`, or nil if no session is stored.
     func execute() async -> AuthSession? {
-        try? await repository.resolveSession()
+        await repository.resolveSession()
     }
 }

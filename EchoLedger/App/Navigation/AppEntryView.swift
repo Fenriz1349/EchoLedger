@@ -39,6 +39,9 @@ struct AppEntryView: View {
                         .id(container.userId)
                         .transition(.opacity)
                 }
+            case .offline:
+                OfflineView(onRetry: { Task { await viewModel.retry() } })
+                    .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.4), value: viewModel.phase)
