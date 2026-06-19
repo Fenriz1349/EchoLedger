@@ -17,42 +17,44 @@ struct TransactionListView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
+            List {
+                ForEach(coordinator.transactionListViewModel.sections) { section in
+                    Section(section.title) {
+                        ForEach(section.items) { item in
+                            TransactionListItemView(
+                                item: item,
+                                accountNames: coordinator.transactionListViewModel.accountNames,
+                                onEdit: { editTransaction = $0 },
+                                onDelete: { transaction in
+                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                },
+                                onTapTransfer: { transfer in
+                                    selectedTransfer = transfer
+                                },
+                                onDeleteTransfer: { transfer in
+                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                                },
+                                onEditTransfer: { editTransfer = $0 }
+                            )
+                        }
+                    }
+                }
+            }
+            .contentMargins(.bottom, 72, for: .scrollContent)
+            .scrollBounceBehavior(.always)
+            .overlay {
                 if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")
                         .foregroundStyle(.secondary)
-                } else {
-                    List {
-                        ForEach(coordinator.transactionListViewModel.sections) { section in
-                            Section(section.title) {
-                                ForEach(section.items) { item in
-                                    TransactionListItemView(
-                                        item: item,
-                                        accountNames: coordinator.transactionListViewModel.accountNames,
-                                        onEdit: { editTransaction = $0 },
-                                        onDelete: { transaction in
-                                            Task { await coordinator.transactionListViewModel.delete(transaction) }
-                                        },
-                                        onTapTransfer: { transfer in
-                                            selectedTransfer = transfer
-                                        },
-                                        onDeleteTransfer: { transfer in
-                                            Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
-                                        },
-                                        onEditTransfer: { editTransfer = $0 }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    .contentMargins(.bottom, 72, for: .scrollContent)
-                    .overlay(alignment: .bottom) {
-                        TransactionFilterBar(viewModel: coordinator.transactionListViewModel)
-                    }
-                    .refreshable {
-                        await coordinator.transactionListViewModel.refresh()
-                    }
                 }
+            }
+            .overlay(alignment: .bottom) {
+                if !coordinator.transactionListViewModel.transactions.isEmpty {
+                    TransactionFilterBar(viewModel: coordinator.transactionListViewModel)
+                }
+            }
+            .refreshable {
+                await coordinator.transactionListViewModel.refresh()
             }
             .searchable(
                 text: Bindable(coordinator.transactionListViewModel).searchText,
