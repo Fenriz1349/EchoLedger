@@ -8,45 +8,35 @@
 import SwiftUI
 import CustomLabels
 import CustomTextFields
-import Toasty
 
 /// The authentication screen handling both sign-in and account creation.
 struct AuthView: View {
 
-    @State private var authViewModel: AuthViewModel
+    @State private var viewModel: AuthViewModel
 
-    /// - Parameters:
-    ///   - authStoring: The authentication provider used to build use cases.
-    ///   - toasty: The shared toast notification manager.
-    ///   - onAuthSuccess: Closure called with the session once authentication succeeds.
-    init(authStoring: AuthProviding, toasty: ToastyManager, onAuthSuccess: @escaping (AuthSession) -> Void) {
-        _authViewModel = State(initialValue: AuthViewModel(
-            toasty: toasty,
-            signInWithEmail: SignInWithEmail(repository: authStoring),
-            createUserProfile: CreateUserProfile(repository: authStoring),
-            signInAnonymously: SignInAnonymously(repository: authStoring),
-            onAuthSuccess: onAuthSuccess,
-            resetPassword: ResetPassword(repository: authStoring)
-        ))
+    /// Stores the injected view model in `@State` so the typed input survives re-renders.
+    /// No construction here — the view model is built by `AppEntryViewModel.makeAuthViewModel()`.
+    init(viewModel: AuthViewModel) {
+        _viewModel = State(initialValue: viewModel)
     }
 
     var body: some View {
-        @Bindable var viewModel = authViewModel
+        @Bindable var viewModel = viewModel
 
-        ScrollView {
+        ZStack {
+            Color("BackgroundColor").ignoresSafeArea()
+            
             VStack(spacing: 24) {
 
-                // MARK: Header
-                VStack(spacing: 8) {
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                    Text("EchoLedger")
-                        .font(.largeTitle.bold())
-                        .foregroundStyle(.accent)
-                }
+               AppHeaderView()
                 .padding(.top, 40)
+
+                // MARK: Toggle
+                Picker("", selection: $viewModel.isSignUp) {
+                    Text("Connexion").tag(false)
+                    Text("Inscription").tag(true)
+                }
+                .pickerStyle(.segmented)
 
                 AuthFormContent(
                     isSignUp: $viewModel.isSignUp,
@@ -72,7 +62,7 @@ struct AuthView: View {
                     } label: {
                         Text("Mot de passe oublié ?")
                             .font(.subheadline)
-                            .foregroundColor(.accentColor)
+                            .foregroundColor(.secondary)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                     .disabled(viewModel.isLoading)
@@ -90,27 +80,17 @@ struct AuthView: View {
                 }
                 .disabled(!viewModel.isFormValid || viewModel.isLoading)
 
-                // MARK: Toggle
-                Button {
-                    viewModel.isSignUp.toggle()
-                } label: {
-                    CustomButtonLabel(
-                        message: viewModel.isSignUp
-                        ? "Déjà un compte ? Se connecter"
-                        : "Pas encore de compte ? Créer un compte",
-                        color: .accentColor,
-                        isSelected: false
-                    )
-                }
-                .disabled(viewModel.isLoading)
+                Divider()
 
                 // MARK: Demo Mode
                 Button {
                     Task { await viewModel.continueAnonymously() }
                 } label: {
-                    Text("Continuer en mode démo")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    CustomButtonLabel(
+                        message: "Continuer en mode démo",
+                        color: .accentColor,
+                        isSelected: false
+                    )
                 }
                 .disabled(viewModel.isLoading)
             }
@@ -126,9 +106,12 @@ struct AuthView: View {
 }
 
 #Preview {
-    AuthView(
-        authStoring: PreviewData.authStoring,
+    AuthView(viewModel: AuthViewModel(
         toasty: PreviewData.toasty,
-        onAuthSuccess: { _ in }
-    )
+        signInWithEmail: SignInWithEmail(repository: PreviewData.authStoring),
+        createUserProfile: CreateUserProfile(repository: PreviewData.authStoring),
+        signInAnonymously: SignInAnonymously(repository: PreviewData.authStoring),
+        onAuthSuccess: { _ in },
+        resetPassword: ResetPassword(repository: PreviewData.authStoring)
+    ))
 }

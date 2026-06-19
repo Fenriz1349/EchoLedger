@@ -33,13 +33,15 @@ final class GetAccountBalance {
         _ = try await accountRepository.fetch(by: accountId)
         let transactions = try await transactionRepository.fetchAll(for: userId)
 
-        return transactions.reduce(Double(0)) { balance, transaction in
-            let splitAmount = transaction.splits
-                .filter { $0.accountId == accountId }
-                .map(\.amount)
-                .reduce(Double(0), +)
+        return transactions
+            .filter { $0.isEffective() }
+            .reduce(Double(0)) { balance, transaction in
+                let splitAmount = transaction.splits
+                    .filter { $0.accountId == accountId }
+                    .map(\.amount)
+                    .reduce(Double(0), +)
 
-            return transaction.isExpense ? balance - splitAmount : balance + splitAmount
-        }
+                return transaction.isExpense ? balance - splitAmount : balance + splitAmount
+            }
     }
 }

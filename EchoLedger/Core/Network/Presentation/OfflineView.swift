@@ -18,20 +18,12 @@ struct OfflineView: View {
 
     var body: some View {
         ZStack {
-            Color(hex: "#120D1F").ignoresSafeArea()
+            Color("BackgroundColor").ignoresSafeArea()
 
             VStack(spacing: 24) {
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 120)
+                AppHeaderView()
 
-                Text("EchoLedger")
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.accent)
-                    .kerning(3)
-
-                VStack(spacing: 16) {
+                VStack(spacing: 24) {
                     Text("Pas de connexion internet.\nReconnecte-toi pour accéder à tes données.")
                         .font(.subheadline)
                         .foregroundStyle(.accent)

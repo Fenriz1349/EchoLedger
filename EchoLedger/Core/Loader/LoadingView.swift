@@ -11,16 +11,13 @@ import SwiftUI
 struct LoadingView: View {
     var body: some View {
         ZStack {
-            Color(hex: "#120D1F").ignoresSafeArea()
+            Color("BackgroundColor").ignoresSafeArea()
 
             VStack(spacing: 24) {
                 EchoLedgerLoader()
                     .frame(width: 120, height: 120)
 
-                Text("EchoLedger")
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.accent)
-                    .kerning(3)
+                AppNameView()
             }
         }
     }

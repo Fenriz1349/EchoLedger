@@ -51,6 +51,23 @@ final class AppEntryViewModel {
         self.networkMonitor = networkMonitor
     }
 
+    // MARK: ViewModel factory
+
+    /// Builds the authentication screen's view model. Its success callback feeds the resolved
+    /// session back into the launch flow.
+    func makeAuthViewModel() -> AuthViewModel {
+        AuthViewModel(
+            toasty: toasty,
+            signInWithEmail: SignInWithEmail(repository: authStoring),
+            createUserProfile: CreateUserProfile(repository: authStoring),
+            signInAnonymously: SignInAnonymously(repository: authStoring),
+            onAuthSuccess: { [weak self] session in
+                Task { await self?.handleAuthSuccess(session: session) }
+            },
+            resetPassword: ResetPassword(repository: authStoring)
+        )
+    }
+
     // MARK: Launch
 
     /// Entry point called once when the root view appears.
