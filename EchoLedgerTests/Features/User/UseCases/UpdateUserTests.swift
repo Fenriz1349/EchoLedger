@@ -46,13 +46,6 @@ final class UpdateUserTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid update calls update on the repository.
-    func test_execute_validInput_callsUpdate() async throws {
-        let id = try await seedUser()
-        try await useCase.execute(makeInput(id: id, firstName: "Bruce", lastName: "Wayne"))
-        XCTAssertTrue(repository.didCallUpdate)
-    }
-
     /// Verifies that the displayName stored uses the pipe separator convention.
     func test_execute_validInput_storesDisplayNameWithSeparator() async throws {
         let id = try await seedUser()

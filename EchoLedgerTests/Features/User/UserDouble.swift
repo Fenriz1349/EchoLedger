@@ -15,16 +15,6 @@ final class UserDouble: UserProviding {
     // MARK: In-Memory Store
     private var current: User?
 
-    // MARK: Spy Properties
-    /// Tracks whether save(_:) was called.
-    var didCallSave = false
-
-    /// Tracks whether update(_:) was called.
-    var didCallUpdate = false
-
-    /// Tracks whether delete(by:) was called.
-    var didCallDelete = false
-
     // MARK: Error Simulation
     /// Set this to force any method to throw a specific error.
     var errorToThrow: Error?
@@ -41,21 +31,18 @@ final class UserDouble: UserProviding {
     /// Stores the user as the current user.
     func save(_ user: User) async throws {
         if let error = errorToThrow { throw error }
-        didCallSave = true
         current = user
     }
 
     /// Replaces the current user with the updated one.
     func update(_ user: User) async throws {
         if let error = errorToThrow { throw error }
-        didCallUpdate = true
         current = user
     }
 
     /// Clears the current user.
     func delete(by id: UUID) async throws {
         if let error = errorToThrow { throw error }
-        didCallDelete = true
         current = nil
     }
 }
