@@ -6,7 +6,7 @@
 ![SwiftData](https://img.shields.io/badge/Persistence-SwiftData-purple)
 ![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
-![Version](https://img.shields.io/badge/Version-0.10.0-blue)
+![Version](https://img.shields.io/badge/Version-0.16.0-blue)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
 A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, local persistence via **SwiftData**, and remote storage via **Firebase**.
@@ -20,10 +20,13 @@ A personal finance tracking iOS app built as a school project. The primary goal 
 | Language | Swift 6 |
 | UI | SwiftUI (iOS 18+) |
 | Observability | `@Observable` (not `ObservableObject`) |
+| Charts | Swift Charts |
 | Local persistence | SwiftData |
-| Remote backend | Firebase Auth + Firestore |
-| Dependency injection | `DIContainer` |
-| Navigation | `AppCoordinator` |
+| Remote backend | Firebase Auth + Firestore + Storage |
+| Connectivity | `NWPathMonitor` + active reachability ping (`NetworkMonitor`) |
+| Dependency injection | `DIContainer` (classic + cloud variants) |
+| Navigation / lifecycle | `AppEntryViewModel` (launch phases) + `AppCoordinator` (feature VMs) |
+| Targets | Classic (SwiftData + sync) and Cloud (Firestore cache-first) |
 
 ---
 
@@ -48,13 +51,16 @@ Presentation
 └── Subviews (SplitRowView, AccountRowView, TransferRowView, ...)
 
 Core
-└── Sync (SyncManager — bidirectional, offline-first)
-└── Loader (EchoLedgerLoader)
+└── Sync (SyncManager — classic target, additive)
+└── Network (NetworkMonitor, RemoteRefreshable, RefreshFromRemote, OfflineView)
+└── Document (Storage upload/download, DownloadImage)
+└── Graphs (ChartDataCalculator — pure, GetChartData)
+└── Loader (EchoLedgerLoader, LoadingView)
 
 App
-└── DIContainer (single source of truth for DI)
-└── AppCoordinator (navigation + ViewModel ownership)
-└── AppEntryView (session resolution + phase management)
+└── DIContainer (DI — classic & cloud variants)
+└── AppEntryViewModel (launch lifecycle: loading / auth / app / offline)
+└── AppCoordinator (feature ViewModel ownership + navigation)
 ```
 
 ### Naming Conventions
@@ -112,8 +118,7 @@ App
 - [x] Firebase Auth — email/password + anonymous demo mode (7-day limit)
 - [x] Multi-user isolation — internal UUID mapped to Firebase UID for cross-device sign-in
 - [x] Offline-first — local save always succeeds, remote synced separately
-- [x] Bidirectional `SyncManager` with `updatedAt`-based last-write-wins conflict resolution
-- [x] Delete detection via `lastSyncDate` pivot (no tombstone required)
+- [x] Additive `SyncManager` with `updatedAt`-based last-write-wins conflict resolution (deletes deferred to a tombstone-based rework — see *Targets, Data & Sync*)
 - [x] Sync status UI (`SyncButton`) with error feedback and timeout (15s)
 - [x] Session management — restore existing session on launch, anonymous expiry
 
@@ -142,29 +147,65 @@ App
 - [x] Naming consistency — "Profile" throughout (DeleteUserProfile, CreateUserProfile, etc.)
 - [x] Toolbar icons for secondary actions (edit, delete) instead of large buttons
 
-### Phase 5 — Upcoming
+### Phase 5 — Documents & Charts
 
-- [ ] Dashboard with account balances and recent transactions
-- [ ] Archived accounts view with unarchive support
+- [x] Transaction attachments (image/PDF) via Firebase Storage
+- [x] User avatar — uploaded to Storage, preloaded at launch and held in the view model (no per-appearance re-fetch)
+- [x] Dashboard with total balance, per-account balances, monthly flow, and category pies
+- [x] Pure `ChartDataCalculator` + `GetChartData` use case (all chart math out of the view models)
+- [x] Future-dated transactions excluded from displays and aggregates (`isEffective`)
+
+### Phase 6 — Cloud target & Offline (v0.13.0+)
+
+- [x] Cloud-only target — cache-first Firestore reads, server reload on explicit user action
+- [x] `RefreshFromRemote` use case + `RemoteRefreshable` protocol — reload decoupled from sync
+- [x] `NetworkMonitor` — `NWPathMonitor` interface state + active reachability ping (cache-bypassing)
+- [x] Offline write guards on every cloud write (storings + Storage) — fail fast, never queue silently
+- [x] Offline launch state — keeps the session and offers retry instead of signing out
+- [x] Load-once-at-launch — screens read their pre-filled view models, no per-navigation loader
+- [x] Guaranteed document deletion (delete file before record) + full Storage folder wipe on account deletion
+
+### Phase 7 — Branding & polish (v0.15.0)
+
+- [x] Adaptive color sets (`BackgroundColor`, `AccentSoft`, `AccentHard`) — full light/dark support
+- [x] Gradient wordmark, shared `AppHeaderView` (logo + name) across the branded screens
+- [x] Auth screen reworked — segmented Connexion/Inscription, primary CTA fills when valid, demo as secondary
+- [x] Pull-to-refresh works on empty lists
+
+### Upcoming
+
+- [ ] **Finalize `SyncManager`** — tombstones for correct cross-device deletions (1.0 blocker)
+- [ ] Test suite — review and expand coverage on the critical paths (sync, balances, deletions)
+- [ ] Animations — charts, list appearance, transaction add
+- [ ] Swipe-to-navigate (optional)
 - [ ] iPad layout support
-- [ ] Transaction document attachments
 
 ---
 
-## Sync Architecture
+## Targets, Data & Sync
 
-`SyncManager` implements a **bidirectional offline-first sync** between SwiftData and Firestore:
+The app ships as **two targets** sharing the same Domain and UseCases:
+
+- **Classic** — SwiftData is the local source of truth, synced to Firestore by `SyncManager`. Offline-first: reads and writes always work locally.
+- **Cloud** — Firestore-only, **cache-first**: reads come from the on-device Firestore cache (instant, offline-capable); an explicit *reload* warms the cache from the server. Remote writes are guarded by a real reachability check (`NetworkMonitor`) so they fail fast offline instead of queuing silently.
+
+### Reload vs Sync
+
+- **Reload** (`RefreshFromRemote`) — pulls fresh data from the backend on an explicit user action (pull-to-refresh, launch, refresh button). Same trigger points for both targets.
+- **Sync** (`SyncManager`, classic only) — reconciles local ↔ remote.
+
+### SyncManager status
+
+`SyncManager` is currently **additive** (last-write-wins on `updatedAt`, **no destructive deletes**), after a data-loss bug where absence was wrongly inferred as deletion. Cross-device **deletions are not yet propagated** — the real reconciliation via soft-delete **tombstones** is the main remaining work before a 1.0. Firestore PITR (7-day retention) is enabled as a safety net.
 
 | Situation | Action |
 |---|---|
-| Local only, `updatedAt` > last sync | Push to remote |
-| Local only, `updatedAt` ≤ last sync | Deleted on remote → delete locally |
-| Remote only, `updatedAt` > last sync | Pull to local |
-| Remote only, `updatedAt` ≤ last sync | Deleted locally → delete on remote |
-| Both sides present | Most recent `updatedAt` wins |
-| `updatedAt` nil (legacy) | Remote wins, no delete logic applied |
+| Local newer (`updatedAt`) | Push to remote |
+| Remote newer | Pull to local |
+| Both present | Most recent `updatedAt` wins |
+| Missing on one side | **No delete** (additive) — pending tombstones |
 
-Accounts are never hard-deleted (archived instead), so delete detection is skipped for them.
+Accounts are never hard-deleted (archived instead).
 
 ---
 
