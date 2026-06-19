@@ -6,16 +6,13 @@
 //
 
 import SwiftUI
-import Toasty
 
 /// Thin root view: renders the current app phase and delegates all launch logic to
 /// `AppEntryViewModel`. The view model is created and owned by `EchoLedgerApp`, so this
 /// view only reads its phase and forwards user actions.
 struct AppEntryView: View {
 
-    @EnvironmentObject private var toasty: ToastyManager
     let viewModel: AppEntryViewModel
-    let authStoring: AuthStoring
 
     var body: some View {
         ZStack {
@@ -24,14 +21,8 @@ struct AppEntryView: View {
                 LoadingView()
                     .transition(.opacity)
             case .auth:
-                AuthView(
-                    authStoring: authStoring,
-                    toasty: toasty,
-                    onAuthSuccess: { session in
-                        Task { await viewModel.handleAuthSuccess(session: session) }
-                    }
-                )
-                .transition(.opacity)
+                AuthView(viewModel: viewModel.makeAuthViewModel())
+                    .transition(.opacity)
             case .app:
                 if let coordinator = viewModel.coordinator, let container = viewModel.container {
                     ContentView(coordinator: coordinator)

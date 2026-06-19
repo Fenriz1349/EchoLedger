@@ -1196,8 +1196,8 @@
 			children = (
 				685A1EBB2F5AD8B10009B885 /* AppCoordinator.swift */,
 				685A1E7E2F5ACF700009B885 /* ContentView.swift */,
-				68EF99F72FA3968500FEBC1A /* AppEntryView.swift */,
 				683D5FD92FE3DA240049D07D /* AppEntryViewModel.swift */,
+				68EF99F72FA3968500FEBC1A /* AppEntryView.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";

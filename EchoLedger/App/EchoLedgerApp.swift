@@ -29,7 +29,6 @@ struct EchoLedgerApp: App {
     @StateObject private var toasty: ToastyManager
     @State private var networkMonitor: NetworkMonitor
     @State private var viewModel: AppEntryViewModel
-    private let authStoring: AuthStoring
 
     /// Builds the shared toast manager, connectivity monitor, authentication provider and the
     /// app-level view model once, so the launch lifecycle owner is created before the first frame
@@ -49,13 +48,12 @@ struct EchoLedgerApp: App {
             toasty: toasty,
             networkMonitor: networkMonitor
         ))
-        self.authStoring = authStoring
     }
 
     var body: some Scene {
         WindowGroup {
             ToastyContainer(manager: toasty) {
-                AppEntryView(viewModel: viewModel, authStoring: authStoring)
+                AppEntryView(viewModel: viewModel)
                     .environmentObject(toasty)
                     .environment(networkMonitor)
             }
