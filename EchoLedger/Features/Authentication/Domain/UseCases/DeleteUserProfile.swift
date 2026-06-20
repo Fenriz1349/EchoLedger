@@ -14,7 +14,7 @@ final class DeleteUserProfile {
     private let userStoring: UserProviding
     private let deleteDocument: DeleteDocument
     private let getInstitutions: GetInstitutions
-    private let deleteInstitution: DeleteInstitution
+    private let deleteInstitution: DeleteInstitutionRule
     private let userId: UUID
 
     /// - Parameters:
@@ -28,7 +28,7 @@ final class DeleteUserProfile {
          userStoring: UserProviding,
          deleteDocument: DeleteDocument,
          getInstitutions: GetInstitutions,
-         deleteInstitution: DeleteInstitution,
+         deleteInstitution: DeleteInstitutionRule,
          userId: UUID) {
         self.repository = repository
         self.userStoring = userStoring

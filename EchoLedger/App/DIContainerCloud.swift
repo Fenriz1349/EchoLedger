@@ -58,7 +58,7 @@ final class DIContainer {
     let updateInstitution: UpdateInstitution
     let archiveInstitution: ArchiveInstitution
     let unarchiveInstitution: UnarchiveInstitution
-    let deleteInstitution: DeleteInstitution
+    let deleteInstitutionRule: DeleteInstitutionRule
 
     // MARK: Use Cases — Account
     let addAccount: AddAccount
@@ -189,17 +189,18 @@ final class DIContainer {
             deleteAccount: deleteAccount,
             userId: userId
         )
-        self.deleteInstitution = DeleteInstitution(
-            repository: institutionCloud,
+        let deleteInstitution = DeleteInstitution(repository: institutionCloud)
+        self.deleteInstitutionRule = DeleteInstitutionRule(
             getAccounts: getAccounts,
-            deleteAccount: deleteAccountRule
+            deleteAccountRule: deleteAccountRule,
+            deleteInstitution: deleteInstitution
         )
         self.deleteUserProfile = DeleteUserProfile(
             repository: authStoring,
             userStoring: userCloud,
             deleteDocument: deleteDocument,
             getInstitutions: getInstitutions,
-            deleteInstitution: deleteInstitution,
+            deleteInstitution: deleteInstitutionRule,
             userId: userId
         )
 

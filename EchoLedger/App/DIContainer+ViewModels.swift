@@ -53,7 +53,7 @@ extension DIContainer {
             updateInstitution: updateInstitution,
             archiveInstitution: archiveInstitution,
             unarchiveInstitution: unarchiveInstitution,
-            deleteInstitution: deleteInstitution,
+            deleteInstitution: deleteInstitutionRule,
             getInstitutions: getInstitutions,
             userId: userId,
             existingInstitution: existing,
