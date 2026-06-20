@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Orchestrates full account deletion: cascades every institution (→ accounts → transactions and
-/// their files), deletes the user record and avatar, then deletes the Firebase Auth account.
+/// Orchestrates full account deletion: cascades every institution (→ accounts → transactions andt heir files),
+/// Deletes the user record and avatar, then deletes the Firebase Auth account.
 /// The Auth account goes last so Storage deletes stay authorized while the session is valid.
 final class DeleteUserRule {
 

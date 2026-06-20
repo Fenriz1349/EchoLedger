@@ -56,8 +56,8 @@ final class DIContainer {
     let getInstitutions: GetInstitutions
     let getInstitution: GetInstitution
     let updateInstitution: UpdateInstitution
-    let archiveInstitution: ArchiveInstitution
-    let unarchiveInstitution: UnarchiveInstitution
+    let archiveInstitutionRule: ArchiveInstitutionRule
+    let unarchiveInstitutionRule: UnarchiveInstitutionRule
     let deleteInstitutionRule: DeleteInstitutionRule
 
     // MARK: Use Cases — Account
@@ -66,7 +66,7 @@ final class DIContainer {
     let getAccount: GetAccount
     let updateAccount: UpdateAccount
     let archiveAccount: ArchiveAccount
-    let unarchiveAccount: UnarchiveAccount
+    let unarchiveAccountRule: UnarchiveAccountRule
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
     let deleteAccountRule: DeleteAccountRule
@@ -143,10 +143,8 @@ final class DIContainer {
         self.getInstitutions = GetInstitutions(repository: institutionCloud)
         self.getInstitution = GetInstitution(repository: institutionCloud)
         self.updateInstitution = UpdateInstitution(repository: institutionCloud)
-        self.archiveInstitution = ArchiveInstitution(institutionRepository: institutionCloud,
-                                                     accountRepository: accountCloud)
-        self.unarchiveInstitution = UnarchiveInstitution(institutionRepository: institutionCloud,
-                                                         accountRepository: accountCloud)
+        let archiveInstitution = ArchiveInstitution(repository: institutionCloud)
+        let unarchiveInstitution = UnarchiveInstitution(repository: institutionCloud)
 
         // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountCloud)
@@ -154,8 +152,7 @@ final class DIContainer {
         self.getAccount = GetAccount(repository: accountCloud)
         self.updateAccount = UpdateAccount(repository: accountCloud)
         self.archiveAccount = ArchiveAccount(repository: accountCloud)
-        self.unarchiveAccount = UnarchiveAccount(accountRepository: accountCloud,
-                                                  institutionRepository: institutionCloud)
+        let unarchiveAccount = UnarchiveAccount(repository: accountCloud)
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountCloud,
             transactionRepository: transactionCloud
@@ -163,6 +160,24 @@ final class DIContainer {
         self.getAccountsWithInstitution = GetAccountsWithInstitution(
             getInstitutions: getInstitutions,
             getAccounts: getAccounts
+        )
+
+        // MARK: Cascade Rules — archive/unarchive
+        self.archiveInstitutionRule = ArchiveInstitutionRule(
+            getAccounts: getAccounts,
+            archiveAccount: archiveAccount,
+            archiveInstitution: archiveInstitution
+        )
+        self.unarchiveInstitutionRule = UnarchiveInstitutionRule(
+            getAccounts: getAccounts,
+            unarchiveAccount: unarchiveAccount,
+            unarchiveInstitution: unarchiveInstitution
+        )
+        self.unarchiveAccountRule = UnarchiveAccountRule(
+            getAccount: getAccount,
+            unarchiveAccount: unarchiveAccount,
+            getInstitution: getInstitution,
+            unarchiveInstitution: unarchiveInstitution
         )
 
         // MARK: Use Cases — Transfer

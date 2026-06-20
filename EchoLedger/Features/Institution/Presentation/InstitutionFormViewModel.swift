@@ -48,8 +48,8 @@ final class InstitutionFormViewModel {
     private let toasty: ToastyManager
     private let addInstitution: AddInstitution
     private let updateInstitution: UpdateInstitution
-    private let archiveInstitution: ArchiveInstitution
-    private let unarchiveInstitution: UnarchiveInstitution
+    private let archiveInstitution: ArchiveInstitutionRule
+    private let unarchiveInstitution: UnarchiveInstitutionRule
     private let deleteInstitution: DeleteInstitutionRule
     private let getInstitutions: GetInstitutions
     private let userId: UUID
@@ -74,8 +74,8 @@ final class InstitutionFormViewModel {
         toasty: ToastyManager,
         addInstitution: AddInstitution,
         updateInstitution: UpdateInstitution,
-        archiveInstitution: ArchiveInstitution,
-        unarchiveInstitution: UnarchiveInstitution,
+        archiveInstitution: ArchiveInstitutionRule,
+        unarchiveInstitution: UnarchiveInstitutionRule,
         deleteInstitution: DeleteInstitutionRule,
         getInstitutions: GetInstitutions,
         userId: UUID,

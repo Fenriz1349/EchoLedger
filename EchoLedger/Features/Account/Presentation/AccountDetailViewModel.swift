@@ -33,7 +33,7 @@ final class AccountDetailViewModel {
     private let getTransactions: GetTransactions
     private let getAccount: GetAccount
     private let archiveAccount: ArchiveAccount
-    private let unarchiveAccount: UnarchiveAccount
+    private let unarchiveAccount: UnarchiveAccountRule
     private let deleteTransaction: DeleteTransaction
     private let deleteTransferUseCase: DeleteTransfer
     private let userId: UUID
@@ -59,7 +59,7 @@ final class AccountDetailViewModel {
         getTransactions: GetTransactions,
         getAccount: GetAccount,
         archiveAccount: ArchiveAccount,
-        unarchiveAccount: UnarchiveAccount,
+        unarchiveAccount: UnarchiveAccountRule,
         deleteTransaction: DeleteTransaction,
         deleteTransfer: DeleteTransfer,
         userId: UUID

@@ -7,36 +7,20 @@
 
 import Foundation
 
-/// Restores an archived institution and all its accounts to active status.
+/// Restores a single institution record to active status. Cascading to its accounts is orchestrated
+/// by `UnarchiveInstitutionRule`.
 final class UnarchiveInstitution {
 
-    private let institutionRepository: InstitutionProviding
-    private let accountRepository: AccountProviding
+    private let repository: InstitutionProviding
 
-    /// - Parameters:
-    ///   - institutionRepository: The data contract for institution persistence.
-    ///   - accountRepository: The data contract for account persistence.
-    init(institutionRepository: InstitutionProviding, accountRepository: AccountProviding) {
-        self.institutionRepository = institutionRepository
-        self.accountRepository = accountRepository
+    /// - Parameter repository: The data contract for institution persistence.
+    init(repository: InstitutionProviding) {
+        self.repository = repository
     }
 
-    /// Unarchives an institution and cascades the operation to all its accounts.
     /// - Parameter id: The unique identifier of the institution to unarchive.
     /// - Throws: `InstitutionError.notFound` if no institution matches the identifier.
     func execute(id: UUID) async throws {
-        let accounts = try await accountRepository.fetchAll(for: id)
-        for account in accounts {
-            let unarchived = Account(
-                id: account.id,
-                institutionId: account.institutionId,
-                name: account.name,
-                category: account.category,
-                isArchived: false,
-                updatedAt: Date()
-            )
-            try await accountRepository.update(unarchived)
-        }
-        try await institutionRepository.unarchive(by: id)
+        try await repository.unarchive(by: id)
     }
 }
