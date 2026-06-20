@@ -90,10 +90,10 @@ final class TransactionListViewModel {
         guard let accountId = selectedAccountId else { return true }
         switch item {
         case .single(let transaction):
-            return transaction.splits.contains { $0.accountId == accountId }
+            return transaction.belongs(to: accountId)
         case .transfer(let transfer):
-            return transfer.source.splits.contains { $0.accountId == accountId }
-                || transfer.destination.splits.contains { $0.accountId == accountId }
+            return transfer.source.belongs(to: accountId)
+                || transfer.destination.belongs(to: accountId)
         }
     }
 

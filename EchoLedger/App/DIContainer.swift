@@ -84,7 +84,7 @@ final class DIContainer {
     let unarchiveAccount: UnarchiveAccount
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
-    let deleteAccount: DeleteAccount
+    let deleteAccountRule: DeleteAccountRule
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -223,25 +223,6 @@ final class DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts
         )
-        self.deleteAccount = DeleteAccount(
-            accountRepository: accountStore,
-            transactionRepository: transactionStore,
-            deleteDocument: deleteDocument,
-            userId: userId
-        )
-        self.deleteInstitution = DeleteInstitution(
-            repository: institutionStore,
-            getAccounts: getAccounts,
-            deleteAccount: deleteAccount
-        )
-        self.deleteUserProfile = DeleteUserProfile(
-            repository: authStoring,
-            userStoring: userStore,
-            deleteDocument: deleteDocument,
-            getInstitutions: getInstitutions,
-            deleteInstitution: deleteInstitution,
-            userId: userId
-        )
 
         // MARK: Use Cases — Transfer
         self.transferBetweenAccounts = TransferBetweenAccounts(repository: transactionStore)
@@ -256,6 +237,30 @@ final class DIContainer {
         self.deleteTransaction = DeleteTransaction(repository: transactionStore, deleteDocument: deleteDocument)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
+
+        // MARK: Cascade Rules — orchestrate cross-aggregate deletion above the features
+        let getTransactionsByAccount = GetTransactionsByAccount(getTransactions: getTransactions)
+        let deleteAccount = DeleteAccount(repository: accountStore)
+        self.deleteAccountRule = DeleteAccountRule(
+            getTransactionsByAccount: getTransactionsByAccount,
+            deleteTransaction: deleteTransaction,
+            updateTransaction: updateTransaction,
+            deleteAccount: deleteAccount,
+            userId: userId
+        )
+        self.deleteInstitution = DeleteInstitution(
+            repository: institutionStore,
+            getAccounts: getAccounts,
+            deleteAccount: deleteAccountRule
+        )
+        self.deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            userStoring: userStore,
+            deleteDocument: deleteDocument,
+            getInstitutions: getInstitutions,
+            deleteInstitution: deleteInstitution,
+            userId: userId
+        )
 
         // MARK: Use Cases — Document
         self.uploadTransactionDocument = UploadTransactionDocument(

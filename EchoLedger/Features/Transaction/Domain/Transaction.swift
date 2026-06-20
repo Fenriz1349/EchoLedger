@@ -69,4 +69,9 @@ extension Transaction {
             return .primary
         }
     }
+
+    /// True when any of the transaction's splits is allocated to the given account.
+    func belongs(to accountId: UUID) -> Bool {
+        splits.contains { $0.accountId == accountId }
+    }
 }

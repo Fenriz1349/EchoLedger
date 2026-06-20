@@ -71,7 +71,7 @@ extension DIContainer {
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
-            deleteAccount: deleteAccount,
+            deleteAccount: deleteAccountRule,
             getAccountBalance: getAccountBalance,
             refreshFromRemote: refreshFromRemote,
             userId: userId
@@ -86,7 +86,7 @@ extension DIContainer {
             updateAccount: updateAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccount,
-            deleteAccount: deleteAccount,
+            deleteAccount: deleteAccountRule,
             addTransaction: addTransaction,
             getInstitutions: getInstitutions,
             addInstitutionFormViewModel: makeInstitutionFormViewModel(),

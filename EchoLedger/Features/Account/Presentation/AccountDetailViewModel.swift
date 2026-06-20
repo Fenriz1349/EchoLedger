@@ -91,10 +91,10 @@ final class AccountDetailViewModel {
                 .filter { item in
                     switch item {
                     case .single(let transaction):
-                        return transaction.splits.contains { $0.accountId == account.id }
+                        return transaction.belongs(to: account.id)
                     case .transfer(let transfer):
-                        return transfer.source.splits.contains { $0.accountId == account.id }
-                            || transfer.destination.splits.contains { $0.accountId == account.id }
+                        return transfer.source.belongs(to: account.id)
+                            || transfer.destination.belongs(to: account.id)
                     }
                 }
                 .prefix(10)

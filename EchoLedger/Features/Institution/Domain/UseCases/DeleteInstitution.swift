@@ -14,16 +14,16 @@ final class DeleteInstitution {
     // MARK: Dependencies
     private let repository: InstitutionProviding
     private let getAccounts: GetAccounts
-    private let deleteAccount: DeleteAccount
+    private let deleteAccount: DeleteAccountRule
 
     // MARK: Init
     /// - Parameters:
     ///   - repository: The data contract for institution persistence.
     ///   - getAccounts: UseCase for fetching all accounts of an institution.
-    ///   - deleteAccount: UseCase that cascades deletion to linked transactions.
+    ///   - deleteAccount: Rule that cascades each account's deletion to its transactions.
     init(repository: InstitutionProviding,
          getAccounts: GetAccounts,
-         deleteAccount: DeleteAccount) {
+         deleteAccount: DeleteAccountRule) {
         self.repository = repository
         self.getAccounts = getAccounts
         self.deleteAccount = deleteAccount
