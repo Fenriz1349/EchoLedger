@@ -27,7 +27,7 @@ extension DIContainer {
             user: user,
             updateUser: updateUser,
             signOut: signOut,
-            deleteUserProfile: deleteUserProfile,
+            deleteUserRule: deleteUserRule,
             linkAnonymousAccount: linkAnonymousAccount,
             resetPassword: resetPassword,
             uploadAvatarPhoto: uploadAvatarPhoto,

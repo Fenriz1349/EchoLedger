@@ -43,7 +43,7 @@ final class DIContainer {
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
-    let deleteUserProfile: DeleteUserProfile
+    let deleteUserRule: DeleteUserRule
     let linkAnonymousAccount: LinkAnonymousAccount
     let resetPassword: ResetPassword
 
@@ -195,12 +195,17 @@ final class DIContainer {
             deleteAccountRule: deleteAccountRule,
             deleteInstitution: deleteInstitution
         )
-        self.deleteUserProfile = DeleteUserProfile(
+        let deleteUser = DeleteUser(repository: userCloud, deleteDocument: deleteDocument)
+        let deleteUserProfile = DeleteUserProfile(
             repository: authStoring,
-            userStoring: userCloud,
             deleteDocument: deleteDocument,
+            userId: userId
+        )
+        self.deleteUserRule = DeleteUserRule(
             getInstitutions: getInstitutions,
-            deleteInstitution: deleteInstitutionRule,
+            deleteInstitutionRule: deleteInstitutionRule,
+            deleteUser: deleteUser,
+            deleteUserProfile: deleteUserProfile,
             userId: userId
         )
 
