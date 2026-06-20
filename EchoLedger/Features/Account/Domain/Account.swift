@@ -43,3 +43,11 @@ struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
         self.updatedAt = updatedAt
     }
 }
+
+extension Account {
+
+    /// True when the account belongs to the given institution.
+    func belongs(to institutionId: UUID) -> Bool {
+        self.institutionId == institutionId
+    }
+}

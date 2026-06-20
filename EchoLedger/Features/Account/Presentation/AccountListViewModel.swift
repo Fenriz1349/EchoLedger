@@ -27,7 +27,7 @@ final class AccountListViewModel {
     /// Returns institutions paired with their active accounts, for grouped display.
     var institutionsWithAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
-            let active = accounts.filter { $0.institutionId == institution.id }
+            let active = accounts.filter { $0.belongs(to: institution.id) }
             return active.isEmpty ? nil : (institution, active)
         }
     }
@@ -35,7 +35,7 @@ final class AccountListViewModel {
     /// Returns institutions paired with their archived accounts, for the collapsible section.
     var institutionsWithArchivedAccounts: [(institution: Institution, accounts: [Account])] {
         institutions.compactMap { institution in
-            let archived = archivedAccounts.filter { $0.institutionId == institution.id }
+            let archived = archivedAccounts.filter { $0.belongs(to: institution.id) }
             return archived.isEmpty ? nil : (institution, archived)
         }
     }
@@ -44,8 +44,8 @@ final class AccountListViewModel {
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
-    private let unarchiveAccount: UnarchiveAccount
-    private let deleteAccount: DeleteAccount
+    private let unarchiveAccount: UnarchiveAccountRule
+    private let deleteAccount: DeleteAccountRule
     private let getAccountBalance: GetAccountBalance
     private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
@@ -65,8 +65,8 @@ final class AccountListViewModel {
         getInstitutions: GetInstitutions,
         getAccounts: GetAccounts,
         archiveAccount: ArchiveAccount,
-        unarchiveAccount: UnarchiveAccount,
-        deleteAccount: DeleteAccount,
+        unarchiveAccount: UnarchiveAccountRule,
+        deleteAccount: DeleteAccountRule,
         getAccountBalance: GetAccountBalance,
         refreshFromRemote: RefreshFromRemote,
         userId: UUID) {

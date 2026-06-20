@@ -75,7 +75,7 @@ final class UserProfileViewModel {
     private let toasty: ToastyManager
     private let updateUserUseCase: UpdateUser
     private let signOutUseCase: SignOut
-    private let deleteUserProfileUseCase: DeleteUserProfile
+    private let deleteUserRule: DeleteUserRule
     private let linkAnonymousAccountUseCase: LinkAnonymousAccount
     private let resetPasswordUseCase: ResetPassword
     private let uploadAvatarPhotoUseCase: UploadAvatarPhoto
@@ -96,7 +96,7 @@ final class UserProfileViewModel {
     ///   - user: The loaded user profile.
     ///   - updateUser: Use case to update the user profile.
     ///   - signOut: Use case to sign out.
-    ///   - deleteUserProfile: Use case to delete the profile.
+    ///   - deleteUserRule: Rule orchestrating full account deletion (data, files, Auth account).
     ///   - linkAnonymousAccount: Use case to link an anonymous account to a permanent one.
     ///   - resetPassword: Use case to send a password reset email.
     ///   - uploadAvatarPhoto: Use case to upload avatar.
@@ -111,7 +111,7 @@ final class UserProfileViewModel {
         user: User,
         updateUser: UpdateUser,
         signOut: SignOut,
-        deleteUserProfile: DeleteUserProfile,
+        deleteUserRule: DeleteUserRule,
         linkAnonymousAccount: LinkAnonymousAccount,
         resetPassword: ResetPassword,
         uploadAvatarPhoto: UploadAvatarPhoto,
@@ -128,7 +128,7 @@ final class UserProfileViewModel {
         self.lastName = user.lastName
         self.updateUserUseCase = updateUser
         self.signOutUseCase = signOut
-        self.deleteUserProfileUseCase = deleteUserProfile
+        self.deleteUserRule = deleteUserRule
         self.linkAnonymousAccountUseCase = linkAnonymousAccount
         self.resetPasswordUseCase = resetPassword
         self.uploadAvatarPhotoUseCase = uploadAvatarPhoto
@@ -201,7 +201,7 @@ final class UserProfileViewModel {
         isLoading = true
         defer { isLoading = false }
         do {
-            try await deleteUserProfileUseCase.execute()
+            try await deleteUserRule.execute()
             toasty.showInfo("Compte supprimé.")
             onSignOut()
         } catch {

@@ -43,7 +43,7 @@ final class DIContainer {
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
-    let deleteUserProfile: DeleteUserProfile
+    let deleteUserRule: DeleteUserRule
     let linkAnonymousAccount: LinkAnonymousAccount
     let resetPassword: ResetPassword
 
@@ -56,9 +56,9 @@ final class DIContainer {
     let getInstitutions: GetInstitutions
     let getInstitution: GetInstitution
     let updateInstitution: UpdateInstitution
-    let archiveInstitution: ArchiveInstitution
-    let unarchiveInstitution: UnarchiveInstitution
-    let deleteInstitution: DeleteInstitution
+    let archiveInstitutionRule: ArchiveInstitutionRule
+    let unarchiveInstitutionRule: UnarchiveInstitutionRule
+    let deleteInstitutionRule: DeleteInstitutionRule
 
     // MARK: Use Cases — Account
     let addAccount: AddAccount
@@ -66,10 +66,10 @@ final class DIContainer {
     let getAccount: GetAccount
     let updateAccount: UpdateAccount
     let archiveAccount: ArchiveAccount
-    let unarchiveAccount: UnarchiveAccount
+    let unarchiveAccountRule: UnarchiveAccountRule
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
-    let deleteAccount: DeleteAccount
+    let deleteAccountRule: DeleteAccountRule
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -143,10 +143,8 @@ final class DIContainer {
         self.getInstitutions = GetInstitutions(repository: institutionCloud)
         self.getInstitution = GetInstitution(repository: institutionCloud)
         self.updateInstitution = UpdateInstitution(repository: institutionCloud)
-        self.archiveInstitution = ArchiveInstitution(institutionRepository: institutionCloud,
-                                                     accountRepository: accountCloud)
-        self.unarchiveInstitution = UnarchiveInstitution(institutionRepository: institutionCloud,
-                                                         accountRepository: accountCloud)
+        let archiveInstitution = ArchiveInstitution(repository: institutionCloud)
+        let unarchiveInstitution = UnarchiveInstitution(repository: institutionCloud)
 
         // MARK: Use Cases — Account
         self.addAccount = AddAccount(repository: accountCloud)
@@ -154,8 +152,7 @@ final class DIContainer {
         self.getAccount = GetAccount(repository: accountCloud)
         self.updateAccount = UpdateAccount(repository: accountCloud)
         self.archiveAccount = ArchiveAccount(repository: accountCloud)
-        self.unarchiveAccount = UnarchiveAccount(accountRepository: accountCloud,
-                                                  institutionRepository: institutionCloud)
+        let unarchiveAccount = UnarchiveAccount(repository: accountCloud)
         self.getAccountBalance = GetAccountBalance(
             accountRepository: accountCloud,
             transactionRepository: transactionCloud
@@ -164,24 +161,23 @@ final class DIContainer {
             getInstitutions: getInstitutions,
             getAccounts: getAccounts
         )
-        self.deleteAccount = DeleteAccount(
-            accountRepository: accountCloud,
-            transactionRepository: transactionCloud,
-            deleteDocument: deleteDocument,
-            userId: userId
-        )
-        self.deleteInstitution = DeleteInstitution(
-            repository: institutionCloud,
+
+        // MARK: Cascade Rules — archive/unarchive
+        self.archiveInstitutionRule = ArchiveInstitutionRule(
             getAccounts: getAccounts,
-            deleteAccount: deleteAccount
+            archiveAccount: archiveAccount,
+            archiveInstitution: archiveInstitution
         )
-        self.deleteUserProfile = DeleteUserProfile(
-            repository: authStoring,
-            userStoring: userCloud,
-            deleteDocument: deleteDocument,
-            getInstitutions: getInstitutions,
-            deleteInstitution: deleteInstitution,
-            userId: userId
+        self.unarchiveInstitutionRule = UnarchiveInstitutionRule(
+            getAccounts: getAccounts,
+            unarchiveAccount: unarchiveAccount,
+            unarchiveInstitution: unarchiveInstitution
+        )
+        self.unarchiveAccountRule = UnarchiveAccountRule(
+            getAccount: getAccount,
+            unarchiveAccount: unarchiveAccount,
+            getInstitution: getInstitution,
+            unarchiveInstitution: unarchiveInstitution
         )
 
         // MARK: Use Cases — Transfer
@@ -197,6 +193,36 @@ final class DIContainer {
         self.deleteTransaction = DeleteTransaction(repository: transactionCloud, deleteDocument: deleteDocument)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionCloud)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionCloud)
+
+        // MARK: Cascade Rules — orchestrate cross-aggregate deletion above the features
+        let getTransactionsByAccount = GetTransactionsByAccount(getTransactions: getTransactions)
+        let deleteAccount = DeleteAccount(repository: accountCloud)
+        self.deleteAccountRule = DeleteAccountRule(
+            getTransactionsByAccount: getTransactionsByAccount,
+            deleteTransaction: deleteTransaction,
+            updateTransaction: updateTransaction,
+            deleteAccount: deleteAccount,
+            userId: userId
+        )
+        let deleteInstitution = DeleteInstitution(repository: institutionCloud)
+        self.deleteInstitutionRule = DeleteInstitutionRule(
+            getAccounts: getAccounts,
+            deleteAccountRule: deleteAccountRule,
+            deleteInstitution: deleteInstitution
+        )
+        let deleteUser = DeleteUser(repository: userCloud, deleteDocument: deleteDocument)
+        let deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            deleteDocument: deleteDocument,
+            userId: userId
+        )
+        self.deleteUserRule = DeleteUserRule(
+            getInstitutions: getInstitutions,
+            deleteInstitutionRule: deleteInstitutionRule,
+            deleteUser: deleteUser,
+            deleteUserProfile: deleteUserProfile,
+            userId: userId
+        )
 
         // MARK: Use Cases — Document
         self.uploadTransactionDocument = UploadTransactionDocument(

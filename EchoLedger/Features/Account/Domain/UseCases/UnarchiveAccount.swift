@@ -7,27 +7,22 @@
 
 import Foundation
 
-/// Restores an archived account to active status.
-/// Also unarchives the parent institution if it was archived.
+/// Restores a single account to active status. Reactivating the parent institution is orchestrated
+/// by `UnarchiveAccountRule`.
 final class UnarchiveAccount {
 
-    private let accountRepository: AccountProviding
-    private let institutionRepository: InstitutionProviding
+    private let repository: AccountProviding
 
-    /// - Parameters:
-    ///   - accountRepository: The data contract for account persistence.
-    ///   - institutionRepository: The data contract for institution persistence.
-    init(accountRepository: AccountProviding, institutionRepository: InstitutionProviding) {
-        self.accountRepository = accountRepository
-        self.institutionRepository = institutionRepository
+    /// - Parameter repository: The data contract for account persistence.
+    init(repository: AccountProviding) {
+        self.repository = repository
     }
 
     /// Unarchives an account by marking it as active.
-    /// If the parent institution is also archived, it is automatically unarchived.
     /// - Parameter id: The unique identifier of the account to unarchive.
     /// - Throws: `AccountError.notFound` if no account matches the identifier.
     func execute(id: UUID) async throws {
-        let account = try await accountRepository.fetch(by: id)
+        let account = try await repository.fetch(by: id)
         let unarchived = Account(
             id: account.id,
             institutionId: account.institutionId,
@@ -36,11 +31,6 @@ final class UnarchiveAccount {
             isArchived: false,
             updatedAt: Date()
         )
-        try await accountRepository.update(unarchived)
-
-        let institution = try await institutionRepository.fetch(by: account.institutionId)
-        if institution.isArchived {
-            try await institutionRepository.unarchive(by: institution.id)
-        }
+        try await repository.update(unarchived)
     }
 }

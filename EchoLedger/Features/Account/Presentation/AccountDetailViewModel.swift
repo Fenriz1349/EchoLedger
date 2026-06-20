@@ -33,7 +33,7 @@ final class AccountDetailViewModel {
     private let getTransactions: GetTransactions
     private let getAccount: GetAccount
     private let archiveAccount: ArchiveAccount
-    private let unarchiveAccount: UnarchiveAccount
+    private let unarchiveAccount: UnarchiveAccountRule
     private let deleteTransaction: DeleteTransaction
     private let deleteTransferUseCase: DeleteTransfer
     private let userId: UUID
@@ -59,7 +59,7 @@ final class AccountDetailViewModel {
         getTransactions: GetTransactions,
         getAccount: GetAccount,
         archiveAccount: ArchiveAccount,
-        unarchiveAccount: UnarchiveAccount,
+        unarchiveAccount: UnarchiveAccountRule,
         deleteTransaction: DeleteTransaction,
         deleteTransfer: DeleteTransfer,
         userId: UUID
@@ -91,10 +91,10 @@ final class AccountDetailViewModel {
                 .filter { item in
                     switch item {
                     case .single(let transaction):
-                        return transaction.splits.contains { $0.accountId == account.id }
+                        return transaction.belongs(to: account.id)
                     case .transfer(let transfer):
-                        return transfer.source.splits.contains { $0.accountId == account.id }
-                            || transfer.destination.splits.contains { $0.accountId == account.id }
+                        return transfer.source.belongs(to: account.id)
+                            || transfer.destination.belongs(to: account.id)
                     }
                 }
                 .prefix(10)
