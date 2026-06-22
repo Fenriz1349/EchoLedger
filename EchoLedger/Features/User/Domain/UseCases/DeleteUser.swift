@@ -12,12 +12,12 @@ import Foundation
 final class DeleteUser {
 
     private let repository: UserProviding
-    private let deleteDocument: DeleteDocument
+    private let deleteDocument: DocumentDeleting
 
     /// - Parameters:
     ///   - repository: The data contract for user persistence.
-    ///   - deleteDocument: UseCase for removing the avatar file from storage.
-    init(repository: UserProviding, deleteDocument: DeleteDocument) {
+    ///   - deleteDocument: Abstraction for removing the avatar file from storage.
+    init(repository: UserProviding, deleteDocument: DocumentDeleting) {
         self.repository = repository
         self.deleteDocument = deleteDocument
     }

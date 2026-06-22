@@ -43,12 +43,6 @@ enum TestData {
     }
 }
 
-/// No-op document deletion for use cases that delete records without exercising attachments.
-final class DocumentDeletingDouble: DocumentDeleting {
-    func execute(urlString: String) async throws {}
-    func deleteAllUserFiles(userId: UUID) async throws {}
-}
-
 /// Async variant of XCTAssertThrowsError for use with async throwing functions.
 func XCTAssertThrowsErrorAsync<T>(
     _ expression: @autoclosure () async throws -> T,

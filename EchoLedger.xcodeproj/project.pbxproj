@@ -115,6 +115,8 @@
 		6824DCB42FC081DB007375C0 /* TransactionNatureFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB32FC081DB007375C0 /* TransactionNatureFilter.swift */; };
 		6824DCB62FC081F2007375C0 /* TransactionFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB52FC081F2007375C0 /* TransactionFilterBar.swift */; };
 		6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DCB72FC083E6007375C0 /* FilterPill.swift */; };
+		6825B6F32FE93267003170FC /* DeleteUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6F22FE93267003170FC /* DeleteUserTests.swift */; };
+		6825B6F52FE9327C003170FC /* DocumentDeletingDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6F42FE9327C003170FC /* DocumentDeletingDouble.swift */; };
 		682B0AA32FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA42FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA62FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */; };
@@ -556,6 +558,8 @@
 		6824DCB32FC081DB007375C0 /* TransactionNatureFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionNatureFilter.swift; sourceTree = "<group>"; };
 		6824DCB52FC081F2007375C0 /* TransactionFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilterBar.swift; sourceTree = "<group>"; };
 		6824DCB72FC083E6007375C0 /* FilterPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPill.swift; sourceTree = "<group>"; };
+		6825B6F22FE93267003170FC /* DeleteUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserTests.swift; sourceTree = "<group>"; };
+		6825B6F42FE9327C003170FC /* DocumentDeletingDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDeletingDouble.swift; sourceTree = "<group>"; };
 		682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDisplayItem.swift; sourceTree = "<group>"; };
 		682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsWithInstitution.swift; sourceTree = "<group>"; };
 		682B0AA82FC9790500BFB539 /* DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccount.swift; sourceTree = "<group>"; };
@@ -912,6 +916,7 @@
 			children = (
 				6813E8322F6D96D300344774 /* GetCurrentUserTests.swift */,
 				6813E8342F6D96E300344774 /* UpdateUserTests.swift */,
+				6825B6F22FE93267003170FC /* DeleteUserTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -980,6 +985,22 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
+		6825B6F02FE93228003170FC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				6825B6F12FE93236003170FC /* Document */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		6825B6F12FE93236003170FC /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				6825B6F42FE9327C003170FC /* DocumentDeletingDouble.swift */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
 		682C6C4F2FBF301700AE9F62 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
@@ -993,6 +1014,7 @@
 			isa = PBXGroup;
 			children = (
 				683133BC2F61A1D7004AA5E4 /* Features */,
+				6825B6F02FE93228003170FC /* Core */,
 				683133B92F61A1D3004AA5E4 /* EchoLedgerTests.swift */,
 				684497212F75410C00337F74 /* TestHelper.swift */,
 			);
@@ -1742,6 +1764,7 @@
 				6813E8052F6D3C3300344774 /* GetInstitutionsTests.swift in Sources */,
 				6813E80B2F6D3CC900344774 /* AddInstitutionTests.swift in Sources */,
 				681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */,
+				6825B6F32FE93267003170FC /* DeleteUserTests.swift in Sources */,
 				683133C22F61A4CB004AA5E4 /* AddTransactionTests.swift in Sources */,
 				6813E8202F6D947500344774 /* AccountDouble.swift in Sources */,
 				681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */,
@@ -1764,6 +1787,7 @@
 				683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */,
 				6813E82E2F6D969F00344774 /* ArchiveAccountTests.swift in Sources */,
 				6813E8352F6D96E300344774 /* UpdateUserTests.swift in Sources */,
+				6825B6F52FE9327C003170FC /* DocumentDeletingDouble.swift in Sources */,
 				6813E8232F6D961300344774 /* UserDouble.swift in Sources */,
 				684497222F75410C00337F74 /* TestHelper.swift in Sources */,
 			);
