@@ -42,11 +42,11 @@ final class GetAccountBalanceTests: XCTestCase {
     }
 
     /// Seeds a transaction with a split on the shared accountId.
-    private func seedTransaction(amount: Double, isExpense: Bool) async throws {
+    private func seedTransaction(amount: Double, isExpense: Bool, date: Date = Date()) async throws {
         let split = TransactionSplit(accountId: accountId, amount: amount)
         let transaction = Transaction(userId: userId,
                                       label: "Test",
-                                      date: Date(),
+                                      date: date,
                                       totalAmount: amount,
                                       isExpense: isExpense,
                                       category: .other,
@@ -86,6 +86,15 @@ final class GetAccountBalanceTests: XCTestCase {
         try await seedTransaction(amount: 20, isExpense: true)
         let balance = try await useCase.execute(accountId: accountId, userId: userId)
         XCTAssertEqual(balance, 50)
+    }
+
+    /// Verifies that future-dated transactions are excluded from the balance.
+    func test_execute_futureTransaction_isExcluded() async throws {
+        try await seedAccount()
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+        try await seedTransaction(amount: 100, isExpense: false, date: tomorrow)
+        let balance = try await useCase.execute(accountId: accountId, userId: userId)
+        XCTAssertEqual(balance, 0)
     }
 
     /// Verifies that transactions on other accounts do not affect the balance.
