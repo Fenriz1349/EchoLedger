@@ -6,7 +6,7 @@
 ![SwiftData](https://img.shields.io/badge/Persistence-SwiftData-purple)
 ![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
-![Version](https://img.shields.io/badge/Version-0.16.0-blue)
+![Version](https://img.shields.io/badge/Version-0.16.2-blue)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
 A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, local persistence via **SwiftData**, and remote storage via **Firebase**.
@@ -51,6 +51,7 @@ Presentation
 └── Subviews (SplitRowView, AccountRowView, TransferRowView, ...)
 
 Core
+└── CascadeRules (cross-aggregate orchestration — Delete/Archive/Unarchive *Rule)
 └── Sync (SyncManager — classic target, additive)
 └── Network (NetworkMonitor, RemoteRefreshable, RefreshFromRemote, OfflineView)
 └── Document (Storage upload/download, DownloadImage)
@@ -222,6 +223,13 @@ EchoLedger/
 │       ├── ContentView.swift
 │       └── AppCoordinator.swift
 ├── Core/
+│   ├── CascadeRules/
+│   │   ├── DeleteAccountRule.swift
+│   │   ├── DeleteInstitutionRule.swift
+│   │   ├── DeleteUserRule.swift
+│   │   ├── ArchiveInstitutionRule.swift
+│   │   ├── UnarchiveInstitutionRule.swift
+│   │   └── UnarchiveAccountRule.swift
 │   ├── Sync/
 │   │   ├── Domain/
 │   │   │   ├── SyncManager.swift
