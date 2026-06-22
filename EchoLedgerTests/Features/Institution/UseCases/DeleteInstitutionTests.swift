@@ -11,62 +11,36 @@ import XCTest
 @MainActor
 final class DeleteInstitutionTests: XCTestCase {
 
-    private var institutionRepository: InstitutionDouble!
-    private var accountRepository: AccountDouble!
+    private var repository: InstitutionDouble!
     private var useCase: DeleteInstitution!
     private let institutionId = UUID()
 
     override func setUp() {
         super.setUp()
-        institutionRepository = InstitutionDouble()
-        accountRepository = AccountDouble()
-        let deleteAccount = DeleteAccount(
-            accountRepository: accountRepository,
-            transactionRepository: TransactionDouble(),
-            deleteDocument: DocumentDeletingDouble(),
-            userId: UUID()
-        )
-        useCase = DeleteInstitution(
-            repository: institutionRepository,
-            getAccounts: GetAccounts(repository: accountRepository),
-            deleteAccount: deleteAccount
-        )
+        repository = InstitutionDouble()
+        useCase = DeleteInstitution(repository: repository)
     }
 
     override func tearDown() {
-        institutionRepository = nil
-        accountRepository = nil
+        repository = nil
         useCase = nil
         super.tearDown()
     }
 
     // MARK: Helpers
     private func seedInstitution() async throws {
-        try await institutionRepository.save(TestData.institution(id: institutionId))
+        try await repository.save(TestData.institution(id: institutionId))
     }
 
     // MARK: Tests
-    /// Verifies that the institution is removed.
+    /// Verifies that the institution record is removed.
     func test_execute_existingId_institutionDeleted() async throws {
         try await seedInstitution()
         try await useCase.execute(id: institutionId)
         await XCTAssertThrowsErrorAsync(
-            try await institutionRepository.fetch(by: institutionId)
+            try await repository.fetch(by: institutionId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
-        }
-    }
-
-    /// Verifies that the institution's accounts are deleted in cascade.
-    func test_execute_deletesLinkedAccounts() async throws {
-        try await seedInstitution()
-        let accountId = UUID()
-        try await accountRepository.save(TestData.account(id: accountId, institutionId: institutionId))
-        try await useCase.execute(id: institutionId)
-        await XCTAssertThrowsErrorAsync(
-            try await accountRepository.fetch(by: accountId)
-        ) { error in
-            XCTAssertEqual(error as? AccountError, .notFound)
         }
     }
 

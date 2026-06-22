@@ -11,51 +11,34 @@ import XCTest
 @MainActor
 final class UnarchiveInstitutionTests: XCTestCase {
 
-    private var institutionRepository: InstitutionDouble!
-    private var accountRepository: AccountDouble!
+    private var repository: InstitutionDouble!
     private var useCase: UnarchiveInstitution!
     private let institutionId = UUID()
 
     override func setUp() {
         super.setUp()
-        institutionRepository = InstitutionDouble()
-        accountRepository = AccountDouble()
-        useCase = UnarchiveInstitution(
-            institutionRepository: institutionRepository,
-            accountRepository: accountRepository
-        )
+        repository = InstitutionDouble()
+        useCase = UnarchiveInstitution(repository: repository)
     }
 
     override func tearDown() {
-        institutionRepository = nil
-        accountRepository = nil
+        repository = nil
         useCase = nil
         super.tearDown()
     }
 
     // MARK: Helpers
-    /// Seeds an archived institution with two archived accounts.
-    private func seed() async throws {
-        try await institutionRepository.save(TestData.institution(id: institutionId, isArchived: true))
-        try await accountRepository.save(TestData.account(institutionId: institutionId, isArchived: true))
-        try await accountRepository.save(TestData.account(institutionId: institutionId, isArchived: true))
+    private func seedArchivedInstitution() async throws {
+        try await repository.save(TestData.institution(id: institutionId, isArchived: true))
     }
 
     // MARK: Tests
     /// Verifies that the institution is restored to active status.
     func test_execute_unarchivesInstitution() async throws {
-        try await seed()
+        try await seedArchivedInstitution()
         try await useCase.execute(id: institutionId)
-        let institution = try await institutionRepository.fetch(by: institutionId)
+        let institution = try await repository.fetch(by: institutionId)
         XCTAssertFalse(institution.isArchived)
-    }
-
-    /// Verifies that every account linked to the institution is restored too.
-    func test_execute_unarchivesLinkedAccounts() async throws {
-        try await seed()
-        try await useCase.execute(id: institutionId)
-        let accounts = try await accountRepository.fetchAll(for: institutionId)
-        XCTAssertTrue(accounts.allSatisfy { !$0.isArchived })
     }
 
     /// Verifies that unarchiving an unknown institution throws notFound.
