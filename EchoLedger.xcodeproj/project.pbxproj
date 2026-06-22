@@ -120,6 +120,7 @@
 		6825B6F72FE949D5003170FC /* DeleteAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6F62FE949D5003170FC /* DeleteAccountTests.swift */; };
 		6825B6F92FE949E2003170FC /* UnarchiveAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6F82FE949E2003170FC /* UnarchiveAccountTests.swift */; };
 		6825B6FB2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6FA2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift */; };
+		6825B6FD2FE94C2F003170FC /* GetTransactionsByAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */; };
 		682B0AA32FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA42FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA62FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */; };
@@ -566,6 +567,7 @@
 		6825B6F62FE949D5003170FC /* DeleteAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTests.swift; sourceTree = "<group>"; };
 		6825B6F82FE949E2003170FC /* UnarchiveAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnarchiveAccountTests.swift; sourceTree = "<group>"; };
 		6825B6FA2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsWithInstitutionTests.swift; sourceTree = "<group>"; };
+		6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByAccountTests.swift; sourceTree = "<group>"; };
 		682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDisplayItem.swift; sourceTree = "<group>"; };
 		682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsWithInstitution.swift; sourceTree = "<group>"; };
 		682B0AA82FC9790500BFB539 /* DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccount.swift; sourceTree = "<group>"; };
@@ -1059,6 +1061,7 @@
 				681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */,
 				683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */,
 				681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */,
+				6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */,
 				683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */,
 				681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */,
 			);
@@ -1781,6 +1784,7 @@
 				683133C82F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift in Sources */,
 				6813E8012F6D3BFE00344774 /* InstitutionDouble.swift in Sources */,
 				68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */,
+				6825B6FD2FE94C2F003170FC /* GetTransactionsByAccountTests.swift in Sources */,
 				68EF99EF2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift in Sources */,
 				6825B6FB2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift in Sources */,
 				681760C02FE546F7005873D2 /* UnarchiveInstitutionTests.swift in Sources */,

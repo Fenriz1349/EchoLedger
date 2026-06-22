@@ -12,6 +12,7 @@ final class DeleteTransactionTests: XCTestCase {
 
     // MARK: Properties
     private var repository: TransactionDouble!
+    private var documentDeleting: DocumentDeletingDouble!
     private var useCase: DeleteTransaction!
     private let userId = UUID()
 
@@ -19,18 +20,20 @@ final class DeleteTransactionTests: XCTestCase {
     override func setUp() {
         super.setUp()
         repository = TransactionDouble()
-        useCase = DeleteTransaction(repository: repository, deleteDocument: DocumentDeletingDouble())
+        documentDeleting = DocumentDeletingDouble()
+        useCase = DeleteTransaction(repository: repository, deleteDocument: documentDeleting)
     }
 
     override func tearDown() {
         repository = nil
+        documentDeleting = nil
         useCase = nil
         super.tearDown()
     }
 
     // MARK: Helpers
-    /// Seeds and returns a transaction with a known id.
-    private func seedTransaction() async throws -> UUID {
+    /// Seeds and returns a transaction with a known id (optionally with an attachment).
+    private func seedTransaction(attachmentURL: String? = nil) async throws -> UUID {
         let id = UUID()
         let split = await TransactionSplit(accountId: UUID(), amount: 30)
         let transaction = await Transaction(id: id,
@@ -40,19 +43,13 @@ final class DeleteTransactionTests: XCTestCase {
                                             totalAmount: 30,
                                             isExpense: true,
                                             category: .other,
-                                            splits: [split])
+                                            splits: [split],
+                                            attachmentURL: attachmentURL)
         try await repository.save(transaction)
         return id
     }
 
     // MARK: Tests
-    /// Verifies that an existing transaction is deleted and didCallDelete is set.
-    func test_execute_existingId_callsDelete() async throws {
-        let id = try await seedTransaction()
-        try await useCase.execute(id: id)
-        XCTAssertTrue(repository.didCallDelete)
-    }
-
     /// Verifies that the transaction is no longer fetchable after deletion.
     func test_execute_existingId_transactionNoLongerExists() async throws {
         let id = try await seedTransaction()
@@ -82,4 +79,15 @@ final class DeleteTransactionTests: XCTestCase {
             XCTAssertEqual(error as? TransactionError, .notFound)
         }
     }
+
+    /// Verifies that a failing attachment deletion aborts and keeps the transaction.
+    func test_execute_attachmentDeletionFails_keepsTransaction() async throws {
+        let id = try await seedTransaction(attachmentURL: "https://example.com/receipt.jpg")
+        documentDeleting.errorToThrow = StubError.failed
+        await XCTAssertThrowsErrorAsync(try await useCase.execute(id: id))
+        let stillThere = try await repository.fetch(by: id)
+        XCTAssertEqual(stillThere.id, id)
+    }
 }
+
+private enum StubError: Error { case failed }

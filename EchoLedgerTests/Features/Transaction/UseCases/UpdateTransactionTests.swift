@@ -66,18 +66,24 @@ final class UpdateTransactionTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that updating a valid transaction calls update on the repository.
-    func test_execute_validInput_callsUpdate() async throws {
+    /// Verifies that a valid update persists the new values.
+    func test_execute_validInput_updatesTransaction() async throws {
         let id = try await seedTransaction()
         try await useCase.execute(makeInput(id: id, totalAmount: 50))
-        XCTAssertTrue(repository.didCallUpdate)
+        let updated = try await repository.fetch(by: id)
+        XCTAssertEqual(updated.totalAmount, 50)
     }
 
-    /// Verifies that removing a split and adjusting amounts succeeds when rules are respected.
-    func test_execute_removeSplit_succeeds() async throws {
+    /// Verifies that updating with multiple splits summing to the total persists them.
+    func test_execute_multipleSplits_succeeds() async throws {
         let id = try await seedTransaction()
-        try await useCase.execute(makeInput(id: id))
-        XCTAssertTrue(repository.didCallUpdate)
+        let splits = [
+            TransactionSplit(accountId: UUID(), amount: 15),
+            TransactionSplit(accountId: UUID(), amount: 15)
+        ]
+        try await useCase.execute(makeInput(id: id, totalAmount: 30, splits: splits))
+        let updated = try await repository.fetch(by: id)
+        XCTAssertEqual(updated.splits.count, 2)
     }
 
     // MARK: Validation
