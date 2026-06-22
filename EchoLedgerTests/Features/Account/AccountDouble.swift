@@ -15,16 +15,6 @@ final class AccountDouble: AccountProviding {
     // MARK: In-Memory Store
     private var store: [Account] = []
 
-    // MARK: Spy Properties
-    /// Tracks whether save(_:) was called.
-    var didCallSave = false
-
-    /// Tracks whether update(_:) was called.
-    var didCallUpdate = false
-
-    /// Tracks whether delete(by:) was called.
-    var didCallDelete = false
-
     // MARK: Error Simulation
     /// Set this to force any method to throw a specific error.
     var errorToThrow: Error?
@@ -61,14 +51,12 @@ final class AccountDouble: AccountProviding {
     /// Appends the account to the in-memory store.
     func save(_ account: Account) async throws {
         if let error = errorToThrow { throw error }
-        didCallSave = true
         store.append(account)
     }
 
     /// Replaces the existing account in the store with the updated one.
     func update(_ account: Account) async throws {
         if let error = errorToThrow { throw error }
-        didCallUpdate = true
         guard let index = store.firstIndex(where: { $0.id == account.id }) else {
             throw AccountError.notFound
         }
@@ -78,7 +66,6 @@ final class AccountDouble: AccountProviding {
     /// Removes the account matching the given id from the store.
     func delete(by id: UUID) async throws {
         if let error = errorToThrow { throw error }
-        didCallDelete = true
         guard store.contains(where: { $0.id == id }) else {
             throw AccountError.notFound
         }

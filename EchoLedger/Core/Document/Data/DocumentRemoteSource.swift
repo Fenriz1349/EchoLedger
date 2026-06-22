@@ -11,7 +11,8 @@ import FirebaseStorage
 /// Handles all Firebase Storage read and write operations for documents (images and PDFs).
 /// Documents are always remote — no local cache.
 /// The MIME contentType is set as standard metadata on every upload.
-final class DocumentRemoteSource {
+/// Conforms to `DocumentSourcing` (Domain) so the document use cases can be doubled in tests.
+final class DocumentRemoteSource: DocumentSourcing {
 
     private let storage = Storage.storage()
     private let networkMonitor: NetworkMonitor

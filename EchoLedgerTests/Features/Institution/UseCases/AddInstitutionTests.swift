@@ -43,10 +43,12 @@ final class AddInstitutionTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid institution is saved to the repository.
-    func test_execute_validInput_callsSave() async throws {
+    /// Verifies that a valid institution is persisted to the repository.
+    func test_execute_validInput_savesInstitution() async throws {
         try await useCase.execute(makeInput())
-        XCTAssertTrue(repository.didCallSave)
+        let institutions = try await repository.fetchAll(for: userId)
+        XCTAssertEqual(institutions.count, 1)
+        XCTAssertEqual(institutions.first?.name, "BNP Paribas")
     }
 
     /// Verifies that the name is trimmed before being saved.
@@ -96,8 +98,10 @@ final class AddInstitutionTests: XCTestCase {
 
     /// Verifies that a name of exactly 50 characters succeeds.
     func test_execute_nameExactly50Chars_succeeds() async throws {
-        try await useCase.execute(makeInput(name: String(repeating: "A", count: 50)))
-        XCTAssertTrue(repository.didCallSave)
+        let name = String(repeating: "A", count: 50)
+        try await useCase.execute(makeInput(name: name))
+        let institutions = try await repository.fetchAll(for: userId)
+        XCTAssertEqual(institutions.first?.name, name)
     }
 
     // MARK: Duplicate Validation
@@ -124,8 +128,10 @@ final class AddInstitutionTests: XCTestCase {
     /// Verifies that the same name can be used by different users.
     func test_execute_sameNameDifferentUser_succeeds() async throws {
         try await seedInstitution(name: "BNP Paribas")
-        let otherInput = AddInstitutionInput(userId: UUID(), name: "BNP Paribas", category: .bank, logoURL: nil)
+        let otherUserId = UUID()
+        let otherInput = AddInstitutionInput(userId: otherUserId, name: "BNP Paribas", category: .bank, logoURL: nil)
         try await useCase.execute(otherInput)
-        XCTAssertTrue(repository.didCallSave)
+        let otherInstitutions = try await repository.fetchAll(for: otherUserId)
+        XCTAssertEqual(otherInstitutions.count, 1)
     }
 }

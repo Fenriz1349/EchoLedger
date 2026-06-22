@@ -12,15 +12,15 @@ import Foundation
 /// Conforming types live in the Data layer.
 protocol InstitutionProviding {
 
-    /// Fetches all institutions belonging to a given user.
-    /// - Parameter userId: The identifier of the user.
-    /// - Returns: An array of institutions ordered by name.
-    func fetchAll(for userId: UUID) async throws -> [Institution]
-
     /// Fetches a single institution by its identifier.
     /// - Parameter id: The unique identifier of the institution.
     /// - Returns: The matching institution.
     func fetch(by id: UUID) async throws -> Institution
+
+    /// Fetches all institutions belonging to a given user.
+    /// - Parameter userId: The identifier of the user.
+    /// - Returns: An array of institutions ordered by name.
+    func fetchAll(for userId: UUID) async throws -> [Institution]
 
     /// Persists a new institution.
     /// - Parameter institution: The institution to save.

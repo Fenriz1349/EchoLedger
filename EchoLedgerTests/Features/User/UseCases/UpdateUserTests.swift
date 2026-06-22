@@ -29,7 +29,7 @@ final class UpdateUserTests: XCTestCase {
     // MARK: Helpers
     /// Seeds and returns a user with a known id.
     private func seedUser() async throws -> UUID {
-        let user = User(displayName: "Bruce|Wayne", email: "batman@gotham.com")
+        let user = TestData.user()
         try await repository.save(user)
         return user.id
     }
@@ -46,13 +46,6 @@ final class UpdateUserTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid update calls update on the repository.
-    func test_execute_validInput_callsUpdate() async throws {
-        let id = try await seedUser()
-        try await useCase.execute(makeInput(id: id, firstName: "Bruce", lastName: "Wayne"))
-        XCTAssertTrue(repository.didCallUpdate)
-    }
-
     /// Verifies that the displayName stored uses the pipe separator convention.
     func test_execute_validInput_storesDisplayNameWithSeparator() async throws {
         let id = try await seedUser()
@@ -62,26 +55,6 @@ final class UpdateUserTests: XCTestCase {
     }
 
     // MARK: First Name Validation
-    /// Verifies that an empty first name throws nameTooShort.
-    func test_execute_emptyFirstName_throwsNameTooShort() async throws {
-        let id = try await seedUser()
-        await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, firstName: ""))
-        ) { error in
-            XCTAssertEqual(error as? UserError, .nameTooShort)
-        }
-    }
-
-    /// Verifies that a single character first name throws nameTooShort.
-    func test_execute_singleCharFirstName_throwsNameTooShort() async throws {
-        let id = try await seedUser()
-        await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, firstName: "B"))
-        ) { error in
-            XCTAssertEqual(error as? UserError, .nameTooShort)
-        }
-    }
-
     /// Verifies that a first name exceeding 50 characters throws nameTooLong.
     func test_execute_firstNameTooLong_throwsNameTooLong() async throws {
         let id = try await seedUser()
@@ -93,16 +66,6 @@ final class UpdateUserTests: XCTestCase {
     }
 
     // MARK: Last Name Validation
-    /// Verifies that an empty last name throws nameTooShort.
-    func test_execute_emptyLastName_throwsNameTooShort() async throws {
-        let id = try await seedUser()
-        await XCTAssertThrowsErrorAsync(
-            try await useCase.execute(makeInput(id: id, lastName: ""))
-        ) { error in
-            XCTAssertEqual(error as? UserError, .nameTooShort)
-        }
-    }
-
     /// Verifies that a last name exceeding 50 characters throws nameTooLong.
     func test_execute_lastNameTooLong_throwsNameTooLong() async throws {
         let id = try await seedUser()

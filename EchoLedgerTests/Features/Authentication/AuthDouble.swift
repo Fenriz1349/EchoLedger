@@ -32,9 +32,8 @@ final class AuthDouble: AuthProviding {
 
     // MARK: AuthProviding
 
-    func resolveSession() async throws -> AuthSession {
-        if let error = errorToThrow { throw error }
-        return sessionToReturn
+    func resolveSession() async -> AuthSession? {
+        sessionToReturn
     }
 
     func signInWithEmail(email: String, password: String) async throws -> AuthSession {

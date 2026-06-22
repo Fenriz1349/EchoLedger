@@ -1,24 +1,24 @@
 //
-//  DeleteInstitutionTests.swift
+//  ArchiveInstitutionTests.swift
 //  EchoLedgerTests
 //
-//  Created by Julien Cotte on 20/03/2026.
+//  Created by Julien Cotte on 19/06/2026.
 //
 
 import XCTest
 @testable import EchoLedger
 
 @MainActor
-final class DeleteInstitutionTests: XCTestCase {
+final class ArchiveInstitutionTests: XCTestCase {
 
     private var repository: InstitutionDouble!
-    private var useCase: DeleteInstitution!
+    private var useCase: ArchiveInstitution!
     private let institutionId = UUID()
 
     override func setUp() {
         super.setUp()
         repository = InstitutionDouble()
-        useCase = DeleteInstitution(repository: repository)
+        useCase = ArchiveInstitution(repository: repository)
     }
 
     override func tearDown() {
@@ -33,18 +33,15 @@ final class DeleteInstitutionTests: XCTestCase {
     }
 
     // MARK: Tests
-    /// Verifies that the institution record is removed.
-    func test_execute_existingId_institutionDeleted() async throws {
+    /// Verifies that the institution is marked as archived.
+    func test_execute_archivesInstitution() async throws {
         try await seedInstitution()
         try await useCase.execute(id: institutionId)
-        await XCTAssertThrowsErrorAsync(
-            try await repository.fetch(by: institutionId)
-        ) { error in
-            XCTAssertEqual(error as? InstitutionError, .notFound)
-        }
+        let institution = try await repository.fetch(by: institutionId)
+        XCTAssertTrue(institution.isArchived)
     }
 
-    /// Verifies that deleting an unknown institution throws notFound.
+    /// Verifies that archiving an unknown institution throws notFound.
     func test_execute_unknownId_throwsNotFound() async {
         await XCTAssertThrowsErrorAsync(
             try await useCase.execute(id: UUID())

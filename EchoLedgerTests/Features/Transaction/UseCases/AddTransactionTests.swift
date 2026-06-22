@@ -50,20 +50,23 @@ final class AddTransactionTests: XCTestCase {
     }
 
     // MARK: Success
-    /// Verifies that a valid transaction is saved to the repository.
-    func test_execute_validInput_callsSave() async throws {
+    /// Verifies that a valid transaction is persisted to the repository.
+    func test_execute_validInput_savesTransaction() async throws {
         try await useCase.execute(makeInput())
-        XCTAssertTrue(repository.didCallSave)
+        let transactions = try await repository.fetchAll(for: userId)
+        XCTAssertEqual(transactions.count, 1)
+        XCTAssertEqual(transactions.first?.label, "Restaurant")
     }
 
-    /// Verifies that multiple splits summing to totalAmount succeed.
+    /// Verifies that multiple splits summing to totalAmount are persisted.
     func test_execute_multipleSplits_sumMatchesTotalAmount_succeeds() async throws {
         let splits = [
             TransactionSplit(accountId: UUID(), amount: 15),
             TransactionSplit(accountId: UUID(), amount: 15)
         ]
         try await useCase.execute(makeInput(totalAmount: 30, splits: splits))
-        XCTAssertTrue(repository.didCallSave)
+        let transactions = try await repository.fetchAll(for: userId)
+        XCTAssertEqual(transactions.first?.splits.count, 2)
     }
 
     // MARK: Label Validation

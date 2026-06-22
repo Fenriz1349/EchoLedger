@@ -14,14 +14,14 @@ import Foundation
 final class DeleteUserProfile {
 
     private let repository: AuthProviding
-    private let deleteDocument: DeleteDocument
+    private let deleteDocument: DocumentDeleting
     private let userId: UUID
 
     /// - Parameters:
     ///   - repository: The authentication provider used to delete the account.
-    ///   - deleteDocument: UseCase for sweeping any remaining user files from storage.
+    ///   - deleteDocument: Abstraction for sweeping any remaining user files from storage.
     ///   - userId: The internal user identifier.
-    init(repository: AuthProviding, deleteDocument: DeleteDocument, userId: UUID) {
+    init(repository: AuthProviding, deleteDocument: DocumentDeleting, userId: UUID) {
         self.repository = repository
         self.deleteDocument = deleteDocument
         self.userId = userId

@@ -7,12 +7,19 @@
 
 import Foundation
 
+/// Abstraction over document deletion, so the delete use cases can be unit-tested without
+/// reaching Firebase Storage (or the network).
+protocol DocumentDeleting {
+    func execute(urlString: String) async throws
+    func deleteAllUserFiles(userId: UUID) async throws
+}
+
 /// Deletes a document from Firebase Storage by its download URL.
-final class DeleteDocument {
+final class DeleteDocument: DocumentDeleting {
 
-    private let documentSource: DocumentRemoteSource
+    private let documentSource: DocumentSourcing
 
-    init(documentSource: DocumentRemoteSource) {
+    init(documentSource: DocumentSourcing) {
         self.documentSource = documentSource
     }
 
