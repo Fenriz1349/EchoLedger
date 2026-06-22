@@ -121,6 +121,9 @@
 		6825B6F92FE949E2003170FC /* UnarchiveAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6F82FE949E2003170FC /* UnarchiveAccountTests.swift */; };
 		6825B6FB2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6FA2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift */; };
 		6825B6FD2FE94C2F003170FC /* GetTransactionsByAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */; };
+		6825B7002FE94DDF003170FC /* TransferBetweenAccountsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B6FF2FE94DDF003170FC /* TransferBetweenAccountsTests.swift */; };
+		6825B7022FE94DEA003170FC /* UpdateTransferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B7012FE94DEA003170FC /* UpdateTransferTests.swift */; };
+		6825B7042FE94DF5003170FC /* DeleteTransferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6825B7032FE94DF5003170FC /* DeleteTransferTests.swift */; };
 		682B0AA32FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA42FC96DEF00BFB539 /* AccountDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */; };
 		682B0AA62FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */; };
@@ -568,6 +571,9 @@
 		6825B6F82FE949E2003170FC /* UnarchiveAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnarchiveAccountTests.swift; sourceTree = "<group>"; };
 		6825B6FA2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsWithInstitutionTests.swift; sourceTree = "<group>"; };
 		6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByAccountTests.swift; sourceTree = "<group>"; };
+		6825B6FF2FE94DDF003170FC /* TransferBetweenAccountsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccountsTests.swift; sourceTree = "<group>"; };
+		6825B7012FE94DEA003170FC /* UpdateTransferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransferTests.swift; sourceTree = "<group>"; };
+		6825B7032FE94DF5003170FC /* DeleteTransferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransferTests.swift; sourceTree = "<group>"; };
 		682B0AA22FC96DEF00BFB539 /* AccountDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDisplayItem.swift; sourceTree = "<group>"; };
 		682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsWithInstitution.swift; sourceTree = "<group>"; };
 		682B0AA82FC9790500BFB539 /* DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccount.swift; sourceTree = "<group>"; };
@@ -1012,6 +1018,16 @@
 			path = Document;
 			sourceTree = "<group>";
 		};
+		6825B6FE2FE94DBE003170FC /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				6825B6FF2FE94DDF003170FC /* TransferBetweenAccountsTests.swift */,
+				6825B7012FE94DEA003170FC /* UpdateTransferTests.swift */,
+				6825B7032FE94DF5003170FC /* DeleteTransferTests.swift */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
 		682C6C4F2FBF301700AE9F62 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1040,6 +1056,7 @@
 				6813E7FF2F6D3BF000344774 /* Institution */,
 				6813E81E2F6D944C00344774 /* Account */,
 				683133BD2F61A1DF004AA5E4 /* Transaction */,
+				6825B6FE2FE94DBE003170FC /* Transfer */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1781,8 +1798,10 @@
 				6813E8202F6D947500344774 /* AccountDouble.swift in Sources */,
 				681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */,
 				6813E82A2F6D967600344774 /* GetAccountTests.swift in Sources */,
+				6825B7042FE94DF5003170FC /* DeleteTransferTests.swift in Sources */,
 				683133C82F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift in Sources */,
 				6813E8012F6D3BFE00344774 /* InstitutionDouble.swift in Sources */,
+				6825B7022FE94DEA003170FC /* UpdateTransferTests.swift in Sources */,
 				68EF99EE2FA3461A00FEBC1A /* AuthDouble.swift in Sources */,
 				6825B6FD2FE94C2F003170FC /* GetTransactionsByAccountTests.swift in Sources */,
 				68EF99EF2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift in Sources */,
@@ -1801,6 +1820,7 @@
 				6813E8302F6D96B200344774 /* GetAccountBalanceTests.swift in Sources */,
 				681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */,
 				683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */,
+				6825B7002FE94DDF003170FC /* TransferBetweenAccountsTests.swift in Sources */,
 				6813E82E2F6D969F00344774 /* ArchiveAccountTests.swift in Sources */,
 				6813E8352F6D96E300344774 /* UpdateUserTests.swift in Sources */,
 				6825B6F52FE9327C003170FC /* DocumentDeletingDouble.swift in Sources */,
