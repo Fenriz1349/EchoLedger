@@ -61,9 +61,8 @@ struct IncomePieChartView: View {
                             .font(.caption)
                             .lineLimit(1)
                         Spacer()
-                        Text(item.total.toEuro)
+                        AnimatedAmountView(value: item.total, color: .secondary)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
                 }
             }
@@ -74,7 +73,7 @@ struct IncomePieChartView: View {
                 Text("Total")
                     .font(.caption.weight(.medium))
                 Spacer()
-                Text(total.toEuro)
+                AnimatedAmountView(value: total)
                     .font(.caption.weight(.medium))
             }
         }

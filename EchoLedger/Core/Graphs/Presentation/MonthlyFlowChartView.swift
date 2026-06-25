@@ -37,7 +37,7 @@ struct MonthlyFlowChartView: View {
                     x: .value("Mois", flow.month, unit: .month),
                     y: .value(
                         "Montant",
-                        index < animator.visibleItems ? flow.income : 0
+                        index < animator.visibleItems ? flow.expense : 0
                     )
                 )
                 .foregroundStyle(by: .value("Série", "Dépenses"))
