@@ -27,7 +27,7 @@ struct AccountGroupList: View {
         ForEach(items, id: \.institution.id) { item in
             let total = item.accounts.map { balances[$0.id] ?? 0 }.reduce(0, +)
             Section {
-                ForEach(item.accounts) { account in
+                ForEach(Array(item.accounts.enumerated()), id: \.element.id) { index, account in
                     NavigationLink(value: account) {
                         AccountRowView(
                             account: account,
@@ -36,6 +36,8 @@ struct AccountGroupList: View {
                             onArchive: onArchive.map { archive in { archive(account) } }
                         )
                     }
+                    .cascadeRow(index: index)
+                    .echoRowStyle()
                 }
             } header: {
                 HStack {

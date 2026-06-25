@@ -60,6 +60,8 @@ struct AccountListView: View {
                         }
                     }
                 }
+                .listStyle(.plain)
+                .listRowSpacing(8)
                 .refreshable {
                     await coordinator.accountListViewModel.refresh()
                 }
