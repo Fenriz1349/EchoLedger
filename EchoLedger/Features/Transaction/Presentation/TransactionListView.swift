@@ -12,6 +12,7 @@ struct TransactionListView: View {
 
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
+    @State private var selectedTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
     @State private var editTransfer: Transfer?
 
@@ -20,7 +21,7 @@ struct TransactionListView: View {
             List {
                 ForEach(coordinator.transactionListViewModel.sections) { section in
                     Section(section.title) {
-                        ForEach(section.items) { item in
+                        ForEach(Array(section.items.enumerated()), id: \.element.id) { index, item in
                             TransactionListItemView(
                                 item: item,
                                 accountNames: coordinator.transactionListViewModel.accountNames,
@@ -28,6 +29,7 @@ struct TransactionListView: View {
                                 onDelete: { transaction in
                                     Task { await coordinator.transactionListViewModel.delete(transaction) }
                                 },
+                                onTap: { selectedTransaction = $0 },
                                 onTapTransfer: { transfer in
                                     selectedTransfer = transfer
                                 },
@@ -36,10 +38,14 @@ struct TransactionListView: View {
                                 },
                                 onEditTransfer: { editTransfer = $0 }
                             )
+                            .cascadeRow(index: index)
+                            .echoRowStyle()
                         }
                     }
                 }
             }
+            .listStyle(.plain)
+            .listRowSpacing(8)
             .contentMargins(.bottom, 72, for: .scrollContent)
             .scrollBounceBehavior(.always)
             .overlay {
@@ -61,11 +67,13 @@ struct TransactionListView: View {
                 prompt: "Rechercher une transaction"
             )
             .navigationTitle("Transactions")
-            .navigationDestination(for: Transaction.self) { transaction in
+            .navigationDestination(item: $selectedTransaction) { transaction in
                 TransactionDetailView(transaction: transaction, coordinator: coordinator)
-                    .onDisappear {
-                        Task { await coordinator.transactionListViewModel.load() }
-                    }
+            }
+            .onChange(of: selectedTransaction) {
+                if selectedTransaction == nil {
+                    Task { await coordinator.transactionListViewModel.load() }
+                }
             }
             .sheet(item: $editTransaction) { transaction in
                 TransactionEditView(transaction: transaction, coordinator: coordinator)

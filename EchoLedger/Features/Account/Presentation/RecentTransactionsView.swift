@@ -15,22 +15,25 @@ struct RecentTransactionsView: View {
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
     let onDelete: (Transaction) -> Void
+    let onTap: (Transaction) -> Void
     let onTapTransfer: (Transfer) -> Void
     let onDeleteTransfer: (Transfer) -> Void
     let onEditTransfer: (Transfer) -> Void
 
     var body: some View {
         Section("Dernières transactions") {
-            ForEach(items) { item in
+            ForEach(Array(items.enumerated()), id: \.element.id) { index, item in
                 TransactionListItemView(
                     item: item,
                     accountNames: accountNames,
                     onEdit: onEdit,
                     onDelete: onDelete,
+                    onTap: onTap,
                     onTapTransfer: onTapTransfer,
                     onDeleteTransfer: onDeleteTransfer,
                     onEditTransfer: onEditTransfer
                 )
+                .cascadeRow(index: index)
             }
         }
     }
@@ -46,6 +49,7 @@ struct RecentTransactionsView: View {
                 accountNames: accountNames,
                 onEdit: { _ in },
                 onDelete: { _ in },
+                onTap: { _ in },
                 onTapTransfer: { _ in },
                 onDeleteTransfer: { _ in },
                 onEditTransfer: { _ in }

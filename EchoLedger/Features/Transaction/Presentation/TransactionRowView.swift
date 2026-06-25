@@ -11,31 +11,34 @@ import SwiftUI
 struct TransactionRowView: View {
 
     let transaction: Transaction
+    let onTap: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
 
     var body: some View {
-        NavigationLink(value: transaction) {
-        HStack {
-            let name = transaction.category.icon
-            Image(systemName: name)
-                .frame(width: 32)
+        Button(action: onTap) {
+            HStack {
+                let name = transaction.category.icon
+                Image(systemName: name)
+                    .frame(width: 32)
 
-            VStack(alignment: .leading) {
-                Text(transaction.label)
-                    .font(.body)
-                Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading) {
+                    Text(transaction.label)
+                        .font(.body)
+                    Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Text(transaction.totalAmount.toEuro)
+                    .foregroundStyle(transaction.color)
+                    .fontWeight(transaction.isExpense ? .regular : .semibold)
             }
-
-            Spacer()
-
-            Text(transaction.totalAmount.toEuro)
-                .foregroundStyle(transaction.color)
-                .fontWeight(transaction.isExpense ? .regular : .semibold)
+            .contentShape(Rectangle())
         }
-        }
+        .buttonStyle(.plain)
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
                 Task {
@@ -50,7 +53,6 @@ struct TransactionRowView: View {
                 Label("Modifier", systemImage: "pencil")
             }
         }
-
     }
 }
 
@@ -59,6 +61,7 @@ struct TransactionRowView: View {
         List {
             TransactionRowView(
                 transaction: PreviewData.transactionCourses,
+                onTap: {},
                 onEdit: {},
                 onDelete: {}
             )

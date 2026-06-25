@@ -47,6 +47,7 @@ struct TransferRowView: View {
                 Text(transfer.amount.toEuro)
                     .foregroundStyle(Color.primary)
             }
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .swipeActions(edge: .trailing) {

@@ -16,6 +16,7 @@ struct AccountDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
     @State private var editTransaction: Transaction?
+    @State private var selectedTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
     @State private var editTransfer: Transfer?
 
@@ -74,6 +75,7 @@ struct AccountDetailView: View {
                         accountNames: viewModel.accountNames,
                         onEdit: { editTransaction = $0 },
                         onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                        onTap: { selectedTransaction = $0 },
                         onTapTransfer: { transfer in
                             selectedTransfer = transfer
                         },
@@ -100,7 +102,7 @@ struct AccountDetailView: View {
         } message: {
             Text("Le compte sera masqué de la liste principale. Les transactions existantes restent accessibles.")
         }
-        .navigationDestination(for: Transaction.self) { transaction in
+        .navigationDestination(item: $selectedTransaction) { transaction in
             TransactionDetailView(transaction: transaction, coordinator: coordinator)
         }
         .sheet(isPresented: $showEditForm) {
