@@ -14,6 +14,8 @@ struct ExpensePieChartView: View {
 
     let data: [CategorySlice]
 
+    @State private var animator = PieChartAnimator()
+
     private var total: Double {
         data.reduce(0) { $0 + $1.total }
     }
@@ -23,9 +25,11 @@ struct ExpensePieChartView: View {
             Text("Dépenses par catégorie")
                 .font(.headline)
 
-            Chart(data, id: \.category) { item in
+            Chart(Array(data.enumerated()), id: \.element.id) { index, item in
                 SectorMark(
-                    angle: .value("Montant", item.total),
+                    angle: .value("Montant",
+                                  index < animator.visibleSlices ? item.total : 0
+                                 ),
                     innerRadius: .ratio(0.5),
                     angularInset: 1.5
                 )
@@ -75,6 +79,9 @@ struct ExpensePieChartView: View {
             }
         }
         .padding(.vertical, 4)
+        .onAppear {
+            animator.start(count: data.count)
+        }
     }
 }
 
