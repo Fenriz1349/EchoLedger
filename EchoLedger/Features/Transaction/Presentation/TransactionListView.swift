@@ -18,36 +18,35 @@ struct TransactionListView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(coordinator.transactionListViewModel.sections) { section in
-                    Section(section.title) {
-                        ForEach(Array(section.items.enumerated()), id: \.element.id) { index, item in
-                            TransactionListItemView(
-                                item: item,
-                                accountNames: coordinator.transactionListViewModel.accountNames,
-                                onEdit: { editTransaction = $0 },
-                                onDelete: { transaction in
-                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
-                                },
-                                onTap: { selectedTransaction = $0 },
-                                onTapTransfer: { transfer in
-                                    selectedTransfer = transfer
-                                },
-                                onDeleteTransfer: { transfer in
-                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
-                                },
-                                onEditTransfer: { editTransfer = $0 }
-                            )
-                            .cascadeRow(index: index)
-                            .echoRowStyle()
+            ScrollView {
+                LazyVStack(spacing: 8) {
+                    ForEach(coordinator.transactionListViewModel.sections) { section in
+                        Section(section.title) {
+                            ForEach(Array(section.items.enumerated()), id: \.element.id) { index, item in
+                                TransactionListItemView(
+                                    item: item,
+                                    accountNames: coordinator.transactionListViewModel.accountNames,
+                                    onEdit: { editTransaction = $0 },
+                                    onDelete: { transaction in
+                                        Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                    },
+                                    onTap: { selectedTransaction = $0 },
+                                    onTapTransfer: { transfer in
+                                        selectedTransfer = transfer
+                                    },
+                                    onDeleteTransfer: { transfer in
+                                        Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                                    },
+                                    onEditTransfer: { editTransfer = $0 }
+                                )
+                                .cascadeRow(index: index)
+                                .echoRowStyle()
+                            }
                         }
                     }
                 }
+                .padding(.bottom, 72)
             }
-            .listStyle(.plain)
-            .listRowSpacing(8)
-            .contentMargins(.bottom, 72, for: .scrollContent)
-            .scrollBounceBehavior(.always)
             .overlay {
                 if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")

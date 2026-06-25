@@ -26,10 +26,10 @@ struct IncomePieChartView: View {
                 .font(.headline)
 
             Chart(Array(data.enumerated()), id: \.element.id) { index, item in
+                let value = item.total * animator.progress[safe: index, default: 0]
+
                 SectorMark(
-                    angle: .value("Montant",
-                                  index < animator.visibleSlices ? item.total : 0
-                                 ),
+                    angle: .value("Montant", value),
                     innerRadius: .ratio(0.5),
                     angularInset: 1.5
                 )
@@ -49,6 +49,11 @@ struct IncomePieChartView: View {
                 }
             }
             .frame(height: 220)
+            .modifier(
+                VisibilityObserver {
+                    animator.start(for: data.count)
+                }
+            )
 
             // Full legend — every category with its share.
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 6) {
@@ -78,9 +83,6 @@ struct IncomePieChartView: View {
             }
         }
         .padding(.vertical, 4)
-        .onAppear {
-            animator.start(count: data.count)
-        }
     }
 }
 

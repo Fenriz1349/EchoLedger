@@ -14,7 +14,7 @@ final class BarChartAnimator {
 
     var visibleItems = 0
 
-    func start(count: Int, delay: Double = 0.1) {
+    func start(for count: Int, delay: Double = 0.1) {
         visibleItems = 0
 
         for index in 0..<count {

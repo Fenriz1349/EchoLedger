@@ -57,11 +57,13 @@ struct MonthlyFlowChartView: View {
                 }
             }
             .frame(height: 240)
+            .modifier(
+                VisibilityObserver {
+                    animator.start(for: data.count)
+                }
+            )
         }
         .padding(.vertical, 4)
-        .onAppear {
-            animator.start(count: data.count)
-        }
     }
 }
 

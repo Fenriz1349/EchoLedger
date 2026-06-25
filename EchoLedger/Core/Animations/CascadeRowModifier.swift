@@ -26,11 +26,17 @@ struct CascadeRowModifier: ViewModifier {
         content
             .opacity(appeared ? 1 : 0)
             .offset(x: appeared ? 0 : -slideDistance)
-            .onAppear {
-                let delay = Double(min(index, maxStaggeredRows)) * staggerStep
-                withAnimation(.easeOut(duration: 0.35).delay(delay)) { appeared = true }
-            }
+            .animation(.easeOut(duration: 0.35).delay(delay()), value: appeared)
+            .modifier(
+                VisibilityObserver {
+                    appeared = true
+                }
+            )
     }
+
+    private func delay() -> Double {
+            Double(min(index, maxStaggeredRows)) * staggerStep
+        }
 }
 
 extension View {

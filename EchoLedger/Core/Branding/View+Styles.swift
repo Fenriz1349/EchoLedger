@@ -14,11 +14,11 @@ extension View {
     /// - Parameter cornerRadius: The row's corner radius (lower = more rectangular).
     func echoRowStyle(cornerRadius: CGFloat = 6) -> some View {
         self
-            .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-            .listRowBackground(
+            .padding(.horizontal, 16)
+            .padding(.vertical, 6)
+            .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color(.secondarySystemGroupedBackground))
             )
-            .listRowSeparator(.hidden)
     }
 }
