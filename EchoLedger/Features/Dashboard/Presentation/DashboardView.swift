@@ -23,11 +23,10 @@ struct DashboardView: View {
                     Section {
                         HStack {
                             Text("Solde total")
-                                .font(.headline)
                             Spacer()
                             AnimatedAmountView(value: coordinator.dashboardViewModel.graphsViewModel.totalBalance)
-                                .font(.title2)
                         }
+                        .font(.headline)
                     }
 
                     // MARK: Monthly income / expense
@@ -35,15 +34,6 @@ struct DashboardView: View {
                         Section {
                             MonthlyFlowChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
-                            )
-                        }
-                    }
-
-                    // MARK: Per-account breakdown
-                    if !coordinator.dashboardViewModel.graphsViewModel.accountBalances.isEmpty {
-                        Section {
-                            AccountBalanceChartView(
-                                items: coordinator.dashboardViewModel.graphsViewModel.accountBalances
                             )
                         }
                     }

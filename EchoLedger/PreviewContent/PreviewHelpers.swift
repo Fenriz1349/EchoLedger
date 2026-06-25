@@ -95,12 +95,14 @@ struct PreviewHelpers {
         seedUser()
         seedInstitutionsAndAccounts()
         seedTransactions()
-        return AppCoordinator(
+        let coordinator = AppCoordinator(
             container: container,
             user: PreviewData.user,
             onSignOut: {},
             onSessionUpdated: { _ in }
         )
+        Task { await coordinator.loadData() }
+        return coordinator
     }
 
     /// - Returns: A UserProfileViewModel with the preview user pre-seeded in SwiftData.
