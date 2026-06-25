@@ -43,10 +43,7 @@ struct AccountFormContent: View {
                         TextField("0,00€", text: $viewModel.initialBalanceText)
                             .keyboardType(.decimalPad)
                             .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
-                        Text(viewModel.isInitialBalanceExpense ? "Négatif" : "Positif")
-                        Toggle("", isOn: $viewModel.isInitialBalanceExpense)
-                            .labelsHidden()
-                            .tint(.red)
+                        SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
                 }
             }
