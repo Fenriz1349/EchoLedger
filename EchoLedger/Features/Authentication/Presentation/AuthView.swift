@@ -54,6 +54,18 @@ struct AuthView: View {
                     lastNameValidator: viewModel.isValidName,
                     confirmPasswordValidator: viewModel.isValidConfirmPassword
                 )
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Button("Fermer") { UIView.dismissKeyboard() }
+                        Spacer()
+                        Button(viewModel.isSignUp ? "Créer mon compte" : "Se connecter") {
+                            UIView.dismissKeyboard()
+                            Task { await viewModel.submit() }
+                        }
+                        .fontWeight(.semibold)
+                        .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                    }
+                }
 
                 // MARK: Password Reset
                 if !viewModel.isSignUp {
