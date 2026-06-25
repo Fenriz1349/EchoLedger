@@ -74,16 +74,18 @@ struct TransactionDetailView: View {
                     Image(systemName: "pencil")
                 }
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(role: .destructive) {
-                    Task {
-                        await coordinator.transactionListViewModel.delete(currentTransaction)
-                        dismiss()
+            if currentTransaction.category != .initialBalance {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(role: .destructive) {
+                        Task {
+                            await coordinator.transactionListViewModel.delete(currentTransaction)
+                            dismiss()
+                        }
+                    } label: {
+                        Image(systemName: "trash")
                     }
-                } label: {
-                    Image(systemName: "trash")
+                    .tint(.red)
                 }
-                .tint(.red)
             }
         }
         .task(id: currentTransaction.id) {

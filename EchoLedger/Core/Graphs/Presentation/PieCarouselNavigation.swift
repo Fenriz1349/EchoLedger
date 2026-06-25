@@ -33,7 +33,7 @@ struct PieCarouselNavigation: View {
 
             Spacer()
 
-            Text(Calendar.current.monthYearLabel(for: months[currentIndex].month))
+            Text(Calendar.monthYearLabel(for: months[currentIndex].month))
                 .font(.headline)
                 .animation(.easeInOut(duration: 0.2), value: currentIndex)
 
