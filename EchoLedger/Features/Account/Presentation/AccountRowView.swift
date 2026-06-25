@@ -20,9 +20,7 @@ struct AccountRowView: View {
             Image(systemName: account.category.icon)
             Text(account.name)
             Spacer()
-            Text(balance.toEuro)
-                .foregroundStyle(balance >= 0 ? Color.green : Color.red)
-                .fontWeight(balance >= 0 ? .regular : .semibold)
+            AnimatedAmountView(value: balance)
         }
         .swipeActions(edge: .trailing) {
             if let onArchive {

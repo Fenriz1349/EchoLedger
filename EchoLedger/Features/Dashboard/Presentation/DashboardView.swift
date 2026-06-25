@@ -25,13 +25,8 @@ struct DashboardView: View {
                             Text("Solde total")
                                 .font(.headline)
                             Spacer()
-                            Text(coordinator.dashboardViewModel.graphsViewModel.totalBalance.toEuro)
+                            AnimatedAmountView(value: coordinator.dashboardViewModel.graphsViewModel.totalBalance)
                                 .font(.title2)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(
-                                    coordinator.dashboardViewModel.graphsViewModel.totalBalance >= 0
-                                    ? Color.green : Color.red
-                                )
                         }
                     }
 

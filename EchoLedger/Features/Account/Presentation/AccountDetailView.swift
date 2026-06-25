@@ -31,10 +31,9 @@ struct AccountDetailView: View {
                 // MARK: Balance
                 Section("Solde") {
                     HStack {
-                        Text(viewModel.graphsViewModel.totalBalance.toEuro)
+                        AnimatedAmountView(value: viewModel.graphsViewModel.totalBalance)
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundStyle(viewModel.graphsViewModel.totalBalance >= 0 ? Color.green : Color.red)
                         Spacer()
                         Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
                             .foregroundStyle(.secondary)
