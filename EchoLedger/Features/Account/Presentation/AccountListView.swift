@@ -21,6 +21,7 @@ struct AccountListView: View {
                     AccountGroupList(
                         items: coordinator.accountListViewModel.institutionsWithAccounts,
                         balances: coordinator.accountListViewModel.balances,
+                        percentages: coordinator.accountListViewModel.percentages,
                         onEdit: { sheet = .edit($0) },
                         onArchive: { account in Task { await coordinator.accountListViewModel.archive(account) } },
                         onEditInstitution: { sheet = .editInstitution($0) }
@@ -60,6 +61,8 @@ struct AccountListView: View {
                         }
                     }
                 }
+                .listStyle(.plain)
+                .listRowSpacing(8)
                 .refreshable {
                     await coordinator.accountListViewModel.refresh()
                 }

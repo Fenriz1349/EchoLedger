@@ -16,6 +16,7 @@ struct AccountDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showEditForm = false
     @State private var editTransaction: Transaction?
+    @State private var selectedTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
     @State private var editTransfer: Transfer?
 
@@ -30,10 +31,9 @@ struct AccountDetailView: View {
                 // MARK: Balance
                 Section("Solde") {
                     HStack {
-                        Text(viewModel.graphsViewModel.totalBalance.toEuro)
+                        AnimatedAmountView(value: viewModel.graphsViewModel.totalBalance)
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundStyle(viewModel.graphsViewModel.totalBalance >= 0 ? Color.green : Color.red)
                         Spacer()
                         Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
                             .foregroundStyle(.secondary)
@@ -74,6 +74,7 @@ struct AccountDetailView: View {
                         accountNames: viewModel.accountNames,
                         onEdit: { editTransaction = $0 },
                         onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                        onTap: { selectedTransaction = $0 },
                         onTapTransfer: { transfer in
                             selectedTransfer = transfer
                         },
@@ -100,7 +101,7 @@ struct AccountDetailView: View {
         } message: {
             Text("Le compte sera masqué de la liste principale. Les transactions existantes restent accessibles.")
         }
-        .navigationDestination(for: Transaction.self) { transaction in
+        .navigationDestination(item: $selectedTransaction) { transaction in
             TransactionDetailView(transaction: transaction, coordinator: coordinator)
         }
         .sheet(isPresented: $showEditForm) {

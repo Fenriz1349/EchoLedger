@@ -29,7 +29,12 @@ struct TransactionDetailView: View {
         List {
             Section("Informations") {
                 LabeledContent("Label", value: currentTransaction.label)
-                LabeledContent("Montant", value: currentTransaction.totalAmount.toEuro)
+                HStack {
+                    Text("Montant")
+                    Spacer()
+                    AnimatedAmountView(value: currentTransaction.totalAmount, color: .secondary)
+                        .foregroundStyle(.secondary)
+                }
                 LabeledContent("Date", value: currentTransaction.date.formatted(date: .long, time: .omitted))
                 HStack {
                     Text("Catégorie")

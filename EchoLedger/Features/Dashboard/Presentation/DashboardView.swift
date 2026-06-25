@@ -23,16 +23,10 @@ struct DashboardView: View {
                     Section {
                         HStack {
                             Text("Solde total")
-                                .font(.headline)
                             Spacer()
-                            Text(coordinator.dashboardViewModel.graphsViewModel.totalBalance.toEuro)
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(
-                                    coordinator.dashboardViewModel.graphsViewModel.totalBalance >= 0
-                                    ? Color.green : Color.red
-                                )
+                            AnimatedAmountView(value: coordinator.dashboardViewModel.graphsViewModel.totalBalance)
                         }
+                        .font(.headline)
                     }
 
                     // MARK: Monthly income / expense
@@ -40,15 +34,6 @@ struct DashboardView: View {
                         Section {
                             MonthlyFlowChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
-                            )
-                        }
-                    }
-
-                    // MARK: Per-account breakdown
-                    if !coordinator.dashboardViewModel.graphsViewModel.accountBalances.isEmpty {
-                        Section {
-                            AccountBalanceChartView(
-                                items: coordinator.dashboardViewModel.graphsViewModel.accountBalances
                             )
                         }
                     }

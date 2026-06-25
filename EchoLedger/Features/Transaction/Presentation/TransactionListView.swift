@@ -12,36 +12,41 @@ struct TransactionListView: View {
 
     let coordinator: AppCoordinator
     @State private var editTransaction: Transaction?
+    @State private var selectedTransaction: Transaction?
     @State private var selectedTransfer: Transfer?
     @State private var editTransfer: Transfer?
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(coordinator.transactionListViewModel.sections) { section in
-                    Section(section.title) {
-                        ForEach(section.items) { item in
-                            TransactionListItemView(
-                                item: item,
-                                accountNames: coordinator.transactionListViewModel.accountNames,
-                                onEdit: { editTransaction = $0 },
-                                onDelete: { transaction in
-                                    Task { await coordinator.transactionListViewModel.delete(transaction) }
-                                },
-                                onTapTransfer: { transfer in
-                                    selectedTransfer = transfer
-                                },
-                                onDeleteTransfer: { transfer in
-                                    Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
-                                },
-                                onEditTransfer: { editTransfer = $0 }
-                            )
+            ScrollView {
+                LazyVStack(spacing: 8) {
+                    ForEach(coordinator.transactionListViewModel.sections) { section in
+                        Section(section.title) {
+                            ForEach(Array(section.items.enumerated()), id: \.element.id) { index, item in
+                                TransactionListItemView(
+                                    item: item,
+                                    accountNames: coordinator.transactionListViewModel.accountNames,
+                                    onEdit: { editTransaction = $0 },
+                                    onDelete: { transaction in
+                                        Task { await coordinator.transactionListViewModel.delete(transaction) }
+                                    },
+                                    onTap: { selectedTransaction = $0 },
+                                    onTapTransfer: { transfer in
+                                        selectedTransfer = transfer
+                                    },
+                                    onDeleteTransfer: { transfer in
+                                        Task { await coordinator.transactionListViewModel.deleteTransfer(transfer) }
+                                    },
+                                    onEditTransfer: { editTransfer = $0 }
+                                )
+                                .cascadeRow(index: index)
+                                .echoRowStyle()
+                            }
                         }
                     }
                 }
+                .padding(.bottom, 72)
             }
-            .contentMargins(.bottom, 72, for: .scrollContent)
-            .scrollBounceBehavior(.always)
             .overlay {
                 if coordinator.transactionListViewModel.transactions.isEmpty {
                     Text("Aucune transaction pour le moment")
@@ -61,11 +66,13 @@ struct TransactionListView: View {
                 prompt: "Rechercher une transaction"
             )
             .navigationTitle("Transactions")
-            .navigationDestination(for: Transaction.self) { transaction in
+            .navigationDestination(item: $selectedTransaction) { transaction in
                 TransactionDetailView(transaction: transaction, coordinator: coordinator)
-                    .onDisappear {
-                        Task { await coordinator.transactionListViewModel.load() }
-                    }
+            }
+            .onChange(of: selectedTransaction) {
+                if selectedTransaction == nil {
+                    Task { await coordinator.transactionListViewModel.load() }
+                }
             }
             .sheet(item: $editTransaction) { transaction in
                 TransactionEditView(transaction: transaction, coordinator: coordinator)

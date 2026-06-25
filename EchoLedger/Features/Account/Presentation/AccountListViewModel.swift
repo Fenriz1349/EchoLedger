@@ -40,6 +40,24 @@ final class AccountListViewModel {
         }
     }
 
+    /// Each active account's share of its sign group: positive accounts → share of the total positive
+    /// balance, negative accounts → share of the total negative balance. Always 0...1; archived excluded.
+    var percentages: [UUID: Double] {
+        let activeBalances = accounts.map { balances[$0.id] ?? 0 }
+        let positiveTotal = activeBalances.filter { $0 > 0 }.reduce(0, +)
+        let negativeTotal = activeBalances.filter { $0 < 0 }.reduce(0, +)
+        var result: [UUID: Double] = [:]
+        for account in accounts {
+            let balance = balances[account.id] ?? 0
+            if balance > 0 {
+                result[account.id] = positiveTotal > 0 ? balance / positiveTotal : 0
+            } else if balance < 0 {
+                result[account.id] = negativeTotal < 0 ? balance / negativeTotal : 0
+            }
+        }
+        return result
+    }
+
     private let toasty: ToastyManager
     private let getInstitutions: GetInstitutions
     private let getAccounts: GetAccounts
