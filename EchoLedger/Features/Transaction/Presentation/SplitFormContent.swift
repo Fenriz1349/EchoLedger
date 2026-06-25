@@ -1,5 +1,5 @@
 //
-//  SplitFormView.swift
+//  SplitFormContent.swift
 //  EchoLedger
 //
 //  Created by Julien Cotte on 03/04/2026.

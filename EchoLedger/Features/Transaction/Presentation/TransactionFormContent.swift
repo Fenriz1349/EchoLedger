@@ -19,7 +19,7 @@ struct TransactionFormContent: View {
                     .foregroundStyle(.secondary)
             } else {
                 ForEach($viewModel.splits) { $split in
-                    SplitFormView(
+                    SplitFormContent(
                         split: $split,
                         availableAccounts: viewModel.availableAccounts,
                         onDelete: viewModel.splits.count > 1 ? {
