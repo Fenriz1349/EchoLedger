@@ -30,13 +30,14 @@ struct SplitFormView: View {
                     }
                     split.amount = filtered.toDouble
                 }
-            Divider()
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts) { item in
                     Text(item.displayLabel)
                         .tag(item.account.id)
                 }
             }
+            .pickerStyle(.menu)
+            .labelsHidden()
         }
         .swipeActions {
             if let onDelete {

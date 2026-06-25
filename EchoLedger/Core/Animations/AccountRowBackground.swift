@@ -36,6 +36,11 @@ struct AccountRowBackground: View {
                     barFraction = percentage
                 }
             }
+            .onChange(of: percentage) { _, newValue in
+                withAnimation(.easeOut(duration: 0.6)) {
+                    barFraction = newValue
+                }
+            }
     }
 }
 

@@ -14,25 +14,6 @@ struct TransactionFormContent: View {
 
     var body: some View {
         Section("Montant") {
-            HStack {
-                DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
-
-                Toggle(viewModel.isExpense ? "Dépense" : "Revenue", isOn: $viewModel.isIncome)
-                    .tint(.green)
-                    .fixedSize()
-            }
-            Picker("Catégorie", selection: $viewModel.category) {
-                ForEach(viewModel.categoryList, id: \.self) { category in
-                    Label(category.name, systemImage: category.icon).tag(category)
-                }
-            }
-        }
-
-        Section("Label") {
-            TextField("Optionnel", text: $viewModel.label)
-        }
-
-        Section("Compte") {
             if viewModel.availableAccounts.isEmpty {
                 Text("Aucun comptes disponibles")
                     .foregroundStyle(.secondary)
@@ -58,23 +39,32 @@ struct TransactionFormContent: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 }
+            }
+        }
+
+        Section {
+            HStack {
                 Button {
                     if let account = viewModel.nextAvailableAccount {
                         viewModel.addSplit(for: account)
                     }
                 } label: {
-                    Label("Ajouter un split", systemImage: "plus")
+                    Label("Split", systemImage: "plus")
                 }
+                .buttonStyle(.borderless)
                 .disabled(viewModel.nextAvailableAccount == nil)
-            }
 
-            Button {
-                withAnimation { viewModel.showAddAccountForm.toggle() }
-            } label: {
-                Label(
-                    viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
-                    systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
-                )
+                Spacer()
+
+                Button {
+                    withAnimation { viewModel.showAddAccountForm.toggle() }
+                } label: {
+                    Label(
+                        viewModel.showAddAccountForm ? "Annuler" : "Nouveau compte",
+                        systemImage: viewModel.showAddAccountForm ? "xmark" : "plus"
+                    )
+                }
+                .buttonStyle(.borderless)
             }
         }
 
@@ -88,6 +78,24 @@ struct TransactionFormContent: View {
                         Task { await viewModel.loadAccounts() }
                     }
                 }
+        }
+
+        Section("Détails") {
+            Picker(selection: $viewModel.category) {
+                ForEach(viewModel.categoryList, id: \.self) { category in
+                    Label(category.name, systemImage: category.icon).tag(category)
+                }
+            } label: {
+                Label("Catégorie", systemImage: viewModel.category.icon)
+            }
+
+            SegmentedToggle(selection: $viewModel.isIncome, style: .transaction)
+
+            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+        }
+
+        Section("Label") {
+            TextField("Optionnel", text: $viewModel.label)
         }
 
         TransactionAttachmentSection(viewModel: viewModel)

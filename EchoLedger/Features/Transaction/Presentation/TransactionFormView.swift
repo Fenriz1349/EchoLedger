@@ -25,6 +25,16 @@ struct TransactionFormView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Button("Fermer") { UIView.dismissKeyboard() }
+                    Spacer()
+                    Button(viewModel.existingTransaction == nil ? "Ajouter" : "Modifier") {
+                        UIView.dismissKeyboard()
+                        Task { await viewModel.submit() }
+                    }
+                    .fontWeight(.semibold)
+                    .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                }
             }
             .task {
                 await viewModel.loadAccounts()
