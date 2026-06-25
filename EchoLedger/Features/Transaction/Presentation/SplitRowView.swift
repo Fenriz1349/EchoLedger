@@ -26,8 +26,7 @@ struct SplitRowView: View {
                 }
             }
             Spacer()
-            Text(amount.toEuro)
-                .foregroundStyle(.secondary)
+                AnimatedAmountView(value: amount, color: .secondary)
         }
     }
 }

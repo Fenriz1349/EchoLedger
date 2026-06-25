@@ -32,8 +32,7 @@ struct TransactionRowView: View {
 
                 Spacer()
 
-                Text(transaction.totalAmount.toEuro)
-                    .foregroundStyle(transaction.color)
+                AnimatedAmountView(value: transaction.totalAmount, color: transaction.color)
                     .fontWeight(transaction.isExpense ? .regular : .semibold)
             }
             .contentShape(Rectangle())
