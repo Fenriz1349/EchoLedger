@@ -36,7 +36,7 @@ struct EchoLedgerLoader: View {
                 let elapsed = waveStart.map { timeline.date.timeIntervalSince($0) } ?? 0
 
                 ZStack {
-                    Color("BackgroundColor").ignoresSafeArea()
+                    Color.clear
 
                     HStack(spacing: barWidth) {
                         ForEach(bars.indices, id: \.self) { barIndex in
