@@ -31,7 +31,7 @@ struct DashboardView: View {
                     .listRowBackground(Color.echoCard)
 
                     // MARK: Monthly income / expense
-                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
+                    if coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.contains(where: { $0.hasData }) {
                         Section {
                             MonthlyFlowChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
@@ -77,9 +77,9 @@ struct DashboardView: View {
                 .refreshable {
                     await coordinator.dashboardViewModel.refresh()
                 }
-                .echoBackground()
                 .navigationTitle("Tableau de bord")
             }
+            .echoBackground()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
