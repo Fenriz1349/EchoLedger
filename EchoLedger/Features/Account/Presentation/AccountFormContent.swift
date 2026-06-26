@@ -42,10 +42,15 @@ struct AccountFormContent: View {
             if viewModel.existingAccount == nil {
                 Section("Solde initial") {
                     HStack {
-                        Text(viewModel.isInitialBalanceExpense ? "-" : "")
-                        TextField("0,00€", text: $viewModel.initialBalanceText)
-                            .keyboardType(.decimalPad)
-                            .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
+                        CustomTextField(
+                            placeholder: "0,00€",
+                            text: $viewModel.initialBalanceText,
+                            type: .decimal,
+                            colors: .echo,
+                            showErrorOnlyWhenTriggered: false,
+                            cornerRadius: .echoCorner,
+                            hasShadow: false
+                        )
                         SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
                 }
