@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CustomTextFields
 
 /// A single editable row representing one split of a transaction across an account.
 struct SplitFormContent: View {
@@ -18,18 +19,24 @@ struct SplitFormContent: View {
 
     var body: some View {
         HStack {
-            TextField("0,00€", text: $amountText)
-                .keyboardType(.decimalPad)
-                .onAppear {
-                    amountText = split.amount == 0 ? "": String(split.amount)
+            CustomTextField(
+                placeholder: "0,00€",
+                text: $amountText,
+                type: .decimal,
+                colors: .echo,
+                cornerRadius: .echoCorner,
+                hasShadow: false
+            )
+            .onAppear {
+                amountText = split.amount == 0 ? "": String(split.amount)
+            }
+            .onChange(of: amountText) { _, newValue in
+                let filtered = newValue.numericOnly
+                if filtered != newValue {
+                    amountText = filtered
                 }
-                .onChange(of: amountText) { _, newValue in
-                    let filtered = newValue.numericOnly
-                    if filtered != newValue {
-                        amountText = filtered
-                    }
-                    split.amount = filtered.toDouble
-                }
+                split.amount = filtered.toDouble
+            }
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts) { item in
                     Text(item.displayLabel)

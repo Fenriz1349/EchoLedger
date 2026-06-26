@@ -51,6 +51,7 @@ struct AccountFormContent: View {
                             cornerRadius: .echoCorner,
                             hasShadow: false
                         )
+                        .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
                         SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
                 }

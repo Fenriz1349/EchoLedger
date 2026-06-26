@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CustomLabels
+import CustomTextFields
 
 /// Form to create an internal transfer between two active accounts.
 struct TransferFormView: View {
@@ -44,16 +45,29 @@ struct TransferFormView: View {
 
                         Section("Montant") {
                             HStack {
-                                TextField("0,00€", text: $viewModel.amountText)
-                                    .keyboardType(.decimalPad)
-                                    .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
+                                CustomTextField(
+                                    placeholder: "0,00€",
+                                    text: $viewModel.amountText,
+                                    type: .decimal,
+                                    colors: .echo,
+                                    cornerRadius: .echoCorner,
+                                    hasShadow: false
+                                )
+                                .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
                             }
                             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                         }
                         .listRowBackground(Color.echoCard)
 
                         Section("Description (optionnel)") {
-                            TextField("Ex : virement livret", text: $viewModel.label)
+                            CustomTextField(
+                                placeholder: "Ex : virement livret",
+                                text: $viewModel.label,
+                                type: .alphaNumber,
+                                colors: .echo,
+                                cornerRadius: .echoCorner,
+                                hasShadow: false
+                            )
                         }
                         .listRowBackground(Color.echoCard)
 

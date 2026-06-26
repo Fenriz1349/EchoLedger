@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CustomLabels
+import CustomTextFields
 
 /// Dedicated editor for an account's initial balance transaction.
 /// Reuses TransactionFormViewModel so the whole transaction is updated (no data loss),
@@ -26,15 +27,21 @@ struct InitialBalanceFormView: View {
                     }
                     HStack {
                         Text(viewModel.isExpense ? "-" : "")
-                        TextField("0,00€", text: $amountText)
-                            .keyboardType(.decimalPad)
-                            .onChange(of: amountText) { _, newValue in
-                                let filtered = newValue.numericOnly
-                                if filtered != newValue {
-                                    amountText = filtered
-                                }
-                                viewModel.setInitialBalanceAmount(filtered.toDouble)
+                        CustomTextField(
+                            placeholder: "0,00€",
+                            text: $amountText,
+                            type: .decimal,
+                            colors: .echo,
+                            cornerRadius: .echoCorner,
+                            hasShadow: false
+                        )
+                        .onChange(of: amountText) { _, newValue in
+                            let filtered = newValue.numericOnly
+                            if filtered != newValue {
+                                amountText = filtered
                             }
+                            viewModel.setInitialBalanceAmount(filtered.toDouble)
+                        }
                         Text(viewModel.isExpense ? "Négatif" : "Positif")
                         Toggle("", isOn: $viewModel.isExpense)
                             .labelsHidden()
