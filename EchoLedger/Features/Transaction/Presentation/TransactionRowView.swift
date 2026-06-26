@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A single list row displaying a transaction with a NavigationLink and swipe actions for edit and delete.
+/// A single tappable transaction row with trailing swipe actions for edit and delete.
 struct TransactionRowView: View {
 
     let transaction: Transaction
@@ -16,7 +16,13 @@ struct TransactionRowView: View {
     let onDelete: () -> Void
 
     var body: some View {
-        Button(action: onTap) {
+        SwipeRow(
+            actions: [
+                .init(label: "Modifier", systemImage: "pencil", tint: .blue, action: onEdit),
+                .init(label: "Supprimer", systemImage: "trash", tint: .red, action: onDelete)
+            ],
+            onTap: onTap
+        ) {
             HStack {
                 let name = transaction.category.icon
                 Image(systemName: name)
@@ -34,22 +40,6 @@ struct TransactionRowView: View {
 
                 AnimatedAmountView(value: transaction.totalAmount, color: transaction.color)
                     .fontWeight(transaction.isExpense ? .regular : .semibold)
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                Task {
-                    onDelete()
-                }
-            } label: {
-                Label("Supprimer", systemImage: "trash")
-            }
-            Button {
-                onEdit()
-            } label: {
-                Label("Modifier", systemImage: "pencil")
             }
         }
     }
