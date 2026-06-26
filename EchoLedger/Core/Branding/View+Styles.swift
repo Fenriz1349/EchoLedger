@@ -18,7 +18,7 @@ extension View {
             .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color("RowBackgroundColor"))
+                    .fill(Color("CardBackgroundColor"))
                     .shadow(color: .black.opacity(0.08), radius: 3, x: 0, y: 1)
             )
             .overlay(

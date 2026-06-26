@@ -28,6 +28,7 @@ struct DashboardView: View {
                         }
                         .font(.headline)
                     }
+                    .listRowBackground(Color.echoCard)
 
                     // MARK: Monthly income / expense
                     if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
@@ -36,6 +37,7 @@ struct DashboardView: View {
                                 data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Monthly pie carousel
@@ -49,6 +51,7 @@ struct DashboardView: View {
                                 onSwipe: { coordinator.dashboardViewModel.graphsViewModel.handlePieSwipe($0) }
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Expense chart
@@ -58,6 +61,7 @@ struct DashboardView: View {
                                 data: coordinator.dashboardViewModel.graphsViewModel.expenseTotals
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Income chart
@@ -67,11 +71,13 @@ struct DashboardView: View {
                                 data: coordinator.dashboardViewModel.graphsViewModel.incomeTotals
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
                 }
                 .refreshable {
                     await coordinator.dashboardViewModel.refresh()
                 }
+                .echoBackground()
                 .navigationTitle("Tableau de bord")
             }
         }
