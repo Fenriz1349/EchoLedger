@@ -27,6 +27,16 @@ struct AccountFormView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Annuler") { dismiss() }
                 }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Button("Fermer") { UIView.dismissKeyboard() }
+                    Spacer()
+                    Button(viewModel.existingAccount == nil ? "Ajouter" : "Modifier") {
+                        UIView.dismissKeyboard()
+                        Task { await viewModel.submit() }
+                    }
+                    .fontWeight(.semibold)
+                    .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                }
             }
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }

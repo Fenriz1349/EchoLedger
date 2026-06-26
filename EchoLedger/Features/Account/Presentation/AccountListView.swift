@@ -88,7 +88,7 @@ struct AccountListView: View {
             }
             .onChange(of: sheet) {
                 if sheet == nil {
-                    Task { await coordinator.accountListViewModel.load() }
+                    Task { await coordinator.loadData() }
                 }
             }
         }

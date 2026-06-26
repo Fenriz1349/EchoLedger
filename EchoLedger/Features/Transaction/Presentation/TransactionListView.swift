@@ -71,7 +71,7 @@ struct TransactionListView: View {
             }
             .onChange(of: selectedTransaction) {
                 if selectedTransaction == nil {
-                    Task { await coordinator.transactionListViewModel.load() }
+                    Task { await coordinator.loadData() }
                 }
             }
             .sheet(item: $editTransaction) { transaction in
@@ -79,7 +79,7 @@ struct TransactionListView: View {
             }
             .onChange(of: editTransaction) {
                 if editTransaction == nil {
-                    Task { await coordinator.transactionListViewModel.load() }
+                    Task { await coordinator.loadData() }
                 }
             }
             .navigationDestination(item: $selectedTransfer) { transfer in
@@ -87,7 +87,7 @@ struct TransactionListView: View {
             }
             .onChange(of: selectedTransfer) {
                 if selectedTransfer == nil {
-                    Task { await coordinator.transactionListViewModel.load() }
+                    Task { await coordinator.loadData() }
                 }
             }
             .sheet(item: $editTransfer) { transfer in
@@ -95,7 +95,7 @@ struct TransactionListView: View {
             }
             .onChange(of: editTransfer) {
                 if editTransfer == nil {
-                    Task { await coordinator.transactionListViewModel.load() }
+                    Task { await coordinator.loadData() }
                 }
             }
         }

@@ -121,7 +121,7 @@ final class TransactionListViewModel {
                 let dateComponents = calendar.dateComponents([.year, .month], from: date)
                 let year = dateComponents.year ?? 2000
                 let month = dateComponents.month ?? 1
-                key = date.formatted(.dateTime.month(.wide).year()).capitalized
+                key = Calendar.monthYearLabel(for: date)
                 // Newer months get a lower order so they appear first after "Ce mois"
                 order = 3 + (3000 - year) * 12 + (12 - month)
             }

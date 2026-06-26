@@ -28,7 +28,7 @@ extension Calendar {
     }
 
     /// Full French month + year label for `date` — e.g. "Juin 2026". Used in carousel headers.
-    func monthYearLabel(for date: Date) -> String {
+    static func monthYearLabel(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "fr_FR")
         formatter.dateFormat = "MMMM yyyy"
