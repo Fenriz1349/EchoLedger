@@ -16,16 +16,58 @@ struct UserProfileAnonymousView: View {
     @Bindable var viewModel: UserProfileViewModel
 
     var body: some View {
-
         NavigationStack {
-            AnonymousHeaderView(dayInDemo: viewModel.daysRemainingInDemo)
+            ScrollView {
+                VStack(spacing: 24) {
+                    AnonymousHeaderView(dayInDemo: viewModel.daysRemainingInDemo)
 
-            Button {
-                viewModel.showDeleteAlert = true
-            } label: {
-                CustomButtonLabel(message: "Arrêter l'essai", color: .orange, isSelected: false)
+                    Button {
+                        viewModel.showDeleteAlert = true
+                    } label: {
+                        CustomButtonLabel(message: "Arrêter l'essai", color: .orange, isSelected: false)
+                    }
+                    .disabled(viewModel.isLoading)
+
+                    Divider()
+
+                    Text("Créer un compte permanent")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    AuthFormContent(
+                        isSignUp: .constant(true),
+                        firstName: $viewModel.linkFirstName,
+                        lastName: $viewModel.linkLastName,
+                        email: $viewModel.linkEmail,
+                        password: $viewModel.linkPassword,
+                        confirmPassword: $viewModel.linkConfirmPassword,
+                        firstNameState: $viewModel.linkFirstNameState,
+                        lastNameState: $viewModel.linkLastNameState,
+                        emailState: $viewModel.linkEmailState,
+                        passwordState: $viewModel.linkPasswordState,
+                        confirmPasswordState: $viewModel.linkConfirmPasswordState,
+                        firstNameValidator: viewModel.isValidName,
+                        lastNameValidator: viewModel.isValidName,
+                        confirmPasswordValidator: viewModel.isValidConfirmPassword
+                    )
+
+                    Button {
+                        Task { await viewModel.linkAccount() }
+                    } label: {
+                        CustomButtonLabel(
+                            message: "Créer mon compte",
+                            color: .accentColor,
+                            isSelected: viewModel.isLinkFormValid
+                        )
+                    }
+                    .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
             }
-            .disabled(viewModel.isLoading)
+            .scrollDismissesKeyboard(.immediately)
+            .echoBackground()
             .alert("Arrêter l'essai ?", isPresented: $viewModel.showDeleteAlert) {
                 Button("Arrêter", role: .destructive) {
                     Task { await viewModel.deleteUserProfile() }
@@ -34,40 +76,6 @@ struct UserProfileAnonymousView: View {
             } message: {
                 Text("Votre session de démo et ses données seront définitivement supprimées.")
             }
-
-            Form {
-                Text("Créer un compte permanent")
-                    .font(.headline)
-
-                AuthFormContent(
-                    isSignUp: .constant(true),
-                    firstName: $viewModel.linkFirstName,
-                    lastName: $viewModel.linkLastName,
-                    email: $viewModel.linkEmail,
-                    password: $viewModel.linkPassword,
-                    confirmPassword: $viewModel.linkConfirmPassword,
-                    firstNameState: $viewModel.linkFirstNameState,
-                    lastNameState: $viewModel.linkLastNameState,
-                    emailState: $viewModel.linkEmailState,
-                    passwordState: $viewModel.linkPasswordState,
-                    confirmPasswordState: $viewModel.linkConfirmPasswordState,
-                    firstNameValidator: viewModel.isValidName,
-                    lastNameValidator: viewModel.isValidName,
-                    confirmPasswordValidator: viewModel.isValidConfirmPassword
-                )
-
-                Button {
-                    Task { await viewModel.linkAccount() }
-                } label: {
-                    CustomButtonLabel(
-                        message: "Créer mon compte",
-                        color: .accentColor,
-                        isSelected: viewModel.isLinkFormValid
-                    )
-                }
-                .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
-            }
-            .scrollDismissesKeyboard(.immediately)
         }
         .overlay {
             if viewModel.isLoading {

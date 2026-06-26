@@ -65,6 +65,7 @@ struct TransactionListView: View {
                 text: Bindable(coordinator.transactionListViewModel).searchText,
                 prompt: "Rechercher une transaction"
             )
+            .echoBackground()
             .navigationTitle("Transactions")
             .navigationDestination(item: $selectedTransaction) { transaction in
                 TransactionDetailView(transaction: transaction, coordinator: coordinator)

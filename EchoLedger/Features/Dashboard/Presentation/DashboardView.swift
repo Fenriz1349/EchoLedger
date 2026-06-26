@@ -28,14 +28,16 @@ struct DashboardView: View {
                         }
                         .font(.headline)
                     }
+                    .listRowBackground(Color.echoCard)
 
                     // MARK: Monthly income / expense
-                    if !coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.isEmpty {
+                    if coordinator.dashboardViewModel.graphsViewModel.monthlyFlows.contains(where: { $0.hasData }) {
                         Section {
                             MonthlyFlowChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.monthlyFlows
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Monthly pie carousel
@@ -49,6 +51,7 @@ struct DashboardView: View {
                                 onSwipe: { coordinator.dashboardViewModel.graphsViewModel.handlePieSwipe($0) }
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Expense chart
@@ -58,6 +61,7 @@ struct DashboardView: View {
                                 data: coordinator.dashboardViewModel.graphsViewModel.expenseTotals
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
 
                     // MARK: Income chart
@@ -67,6 +71,7 @@ struct DashboardView: View {
                                 data: coordinator.dashboardViewModel.graphsViewModel.incomeTotals
                             )
                         }
+                        .listRowBackground(Color.echoCard)
                     }
                 }
                 .refreshable {
@@ -74,6 +79,7 @@ struct DashboardView: View {
                 }
                 .navigationTitle("Tableau de bord")
             }
+            .echoBackground()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

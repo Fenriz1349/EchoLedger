@@ -17,27 +17,24 @@ struct OfflineView: View {
     let onRetry: () -> Void
 
     var body: some View {
-        ZStack {
-            Color("BackgroundColor").ignoresSafeArea()
+        VStack(spacing: 24) {
+            AppHeaderView()
 
             VStack(spacing: 24) {
-                AppHeaderView()
+                Text("Pas de connexion internet.\nReconnecte-toi pour accéder à tes données.")
+                    .font(.subheadline)
+                    .foregroundStyle(.accent)
+                    .multilineTextAlignment(.center)
 
-                VStack(spacing: 24) {
-                    Text("Pas de connexion internet.\nReconnecte-toi pour accéder à tes données.")
-                        .font(.subheadline)
-                        .foregroundStyle(.accent)
-                        .multilineTextAlignment(.center)
-
-                    Button {
-                        onRetry()
-                    } label: {
-                        CustomButtonLabel(message: "Réessayer", color: .accentColor, isSelected: false)
-                    }
+                Button {
+                    onRetry()
+                } label: {
+                    CustomButtonLabel(message: "Réessayer", color: .accentColor, isSelected: false)
                 }
-                .padding(.horizontal, 32)
             }
+            .padding(.horizontal, 32)
         }
+        .echoBackground()
         .onChange(of: networkMonitor?.isConnected ?? false) { _, connected in
             if connected { onRetry() }
         }

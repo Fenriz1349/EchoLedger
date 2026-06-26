@@ -24,9 +24,12 @@ struct AccountFormContent: View {
                     errorMessage: "Le nom doit contenir au moins 2 caractères.",
                     validationState: $viewModel.nameState,
                     colors: .echo,
-                    showErrorOnlyWhenTriggered: false
+                    showErrorOnlyWhenTriggered: false,
+                    cornerRadius: .echoCorner,
+                    hasShadow: false
                 )
                 .listRowInsets(EdgeInsets())
+                .padding(.top)
                 .padding(.horizontal)
 
                 Picker("Categorie", selection: $viewModel.category) {
@@ -39,10 +42,16 @@ struct AccountFormContent: View {
             if viewModel.existingAccount == nil {
                 Section("Solde initial") {
                     HStack {
-                        Text(viewModel.isInitialBalanceExpense ? "-" : "")
-                        TextField("0,00€", text: $viewModel.initialBalanceText)
-                            .keyboardType(.decimalPad)
-                            .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
+                        CustomTextField(
+                            placeholder: "0,00€",
+                            text: $viewModel.initialBalanceText,
+                            type: .decimal,
+                            colors: .echo,
+                            showErrorOnlyWhenTriggered: false,
+                            cornerRadius: .echoCorner,
+                            hasShadow: false
+                        )
+                        .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
                         SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
                 }
@@ -140,6 +149,7 @@ struct AccountFormContent: View {
             }
         }
         .task { await viewModel.loadInstitutions() }
+        .listRowBackground(Color.echoCard)
     }
 }
 

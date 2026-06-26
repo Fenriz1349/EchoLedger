@@ -26,7 +26,9 @@ struct InstitutionFormContent: View {
                 errorMessage: "Le nom doit contenir au moins 2 caractères.",
                 validationState: $viewModel.nameState,
                 colors: .echo,
-                showErrorOnlyWhenTriggered: false
+                showErrorOnlyWhenTriggered: false,
+                cornerRadius: .echoCorner,
+                hasShadow: false
             )
 
             Picker("Categorie", selection: $viewModel.category) {
@@ -94,8 +96,8 @@ struct InstitutionFormContent: View {
             }
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(Color.echoCard)
+        .clipShape(RoundedRectangle(cornerRadius: .echoCorner))
     }
 }
 

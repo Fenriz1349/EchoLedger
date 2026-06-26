@@ -14,11 +14,13 @@ struct SegmentedToggle: View {
     enum Style {
         case transaction
         case account
+        case authentication
 
         var falseLabel: String {
             switch self {
             case .transaction: "Dépense"
             case .account: "Positif"
+            case .authentication: "Connexion"
             }
         }
 
@@ -26,6 +28,7 @@ struct SegmentedToggle: View {
             switch self {
             case .transaction: "Revenue"
             case .account: "Négatif"
+            case .authentication: "Inscription"
             }
         }
 
@@ -34,6 +37,7 @@ struct SegmentedToggle: View {
             switch self {
             case .transaction: nil
             case .account: .green
+            case .authentication: nil
             }
         }
 
@@ -42,6 +46,7 @@ struct SegmentedToggle: View {
             switch self {
             case .transaction: .green
             case .account: .red
+            case .authentication: nil
             }
         }
     }

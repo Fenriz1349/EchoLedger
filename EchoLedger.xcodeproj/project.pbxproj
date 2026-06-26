@@ -149,6 +149,8 @@
 		682C6C5F2FBF54ED00AE9F62 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682C6C5E2FBF54ED00AE9F62 /* DashboardViewModel.swift */; };
 		682E0A882FEE640100356179 /* SwipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682E0A872FEE640100356179 /* SwipeRow.swift */; };
 		682E0A892FEE640100356179 /* SwipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682E0A872FEE640100356179 /* SwipeRow.swift */; };
+		682E0A8C2FEE868800356179 /* Color+Echo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682E0A8B2FEE868800356179 /* Color+Echo.swift */; };
+		682E0A8D2FEE868800356179 /* Color+Echo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682E0A8B2FEE868800356179 /* Color+Echo.swift */; };
 		683133A52F61736A004AA5E4 /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A42F61736A004AA5E4 /* TransactionCategory.swift */; };
 		683133A72F617913004AA5E4 /* GetTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A62F617913004AA5E4 /* GetTransaction.swift */; };
 		683133A92F617951004AA5E4 /* GetTransactionsByCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683133A82F617951004AA5E4 /* GetTransactionsByCategory.swift */; };
@@ -624,6 +626,7 @@
 		682C6C5C2FBF394F00AE9F62 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		682C6C5E2FBF54ED00AE9F62 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		682E0A872FEE640100356179 /* SwipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeRow.swift; sourceTree = "<group>"; };
+		682E0A8B2FEE868800356179 /* Color+Echo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Echo.swift"; sourceTree = "<group>"; };
 		683133A42F61736A004AA5E4 /* TransactionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCategory.swift; sourceTree = "<group>"; };
 		683133A62F617913004AA5E4 /* GetTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransaction.swift; sourceTree = "<group>"; };
 		683133A82F617951004AA5E4 /* GetTransactionsByCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByCategory.swift; sourceTree = "<group>"; };
@@ -993,6 +996,7 @@
 				681760B42FE4FB97005873D2 /* AppNameView.swift */,
 				681760AD2FE4F9F6005873D2 /* AppHeaderView.swift */,
 				6849E9A02FEC22450026A13E /* View+Styles.swift */,
+				682E0A8B2FEE868800356179 /* Color+Echo.swift */,
 			);
 			path = Branding;
 			sourceTree = "<group>";
@@ -1987,6 +1991,7 @@
 				683821A12FC8684600CA6761 /* DocumentRemoteSource.swift in Sources */,
 				683820F52FC8432000CA6761 /* AccountSheet.swift in Sources */,
 				683820F62FC8432000CA6761 /* ResetPassword.swift in Sources */,
+				682E0A8D2FEE868800356179 /* Color+Echo.swift in Sources */,
 				683820F72FC8432000CA6761 /* InstitutionError.swift in Sources */,
 				683821AC2FC86C5300CA6761 /* DocumentResult.swift in Sources */,
 				683821A82FC86BF700CA6761 /* AttachmentType.swift in Sources */,
@@ -2206,6 +2211,7 @@
 				6813141E2FD2B9FE00F74B8D /* EchoProgressView.swift in Sources */,
 				6807E5822F922C450099DCE4 /* AuthStoring.swift in Sources */,
 				683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */,
+				682E0A8C2FEE868800356179 /* Color+Echo.swift in Sources */,
 				683276022F9BA22200DA5796 /* ResetPassword.swift in Sources */,
 				681314172FD2B34100F74B8D /* DocumentPickerView.swift in Sources */,
 				68C8116D2FDC394D0077D42B /* ChartDataCalculator.swift in Sources */,

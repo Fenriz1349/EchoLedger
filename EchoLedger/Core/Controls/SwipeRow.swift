@@ -37,27 +37,28 @@ struct SwipeRow<Content: View>: View {
     var body: some View {
         accessible(
             ZStack(alignment: .trailing) {
-                HStack(spacing: buttonSpacing) {
-                    ForEach(actions) { action in actionButton(action) }
-                }
-                .padding(.horizontal, groupPadding)
-                .frame(height: rowHeight)
-                .background(
-                    GeometryReader { geo in
-                        Color.clear
-                            .onAppear { actionsWidth = geo.size.width }
-                            .onChange(of: geo.size.width) { _, width in actionsWidth = width }
+                if willDelete, let last = actions.last {
+                    deleteCapsule(last)
+                        .frame(width: max(0, -offset))
+                } else {
+                    HStack(spacing: buttonSpacing) {
+                        ForEach(actions) { action in actionButton(action) }
                     }
-                )
-                .opacity(isOpen && !willDelete ? 1 : 0)
-
-                if willDelete {
-                    deleteOverlay
+                    .padding(.horizontal, groupPadding)
+                    .frame(height: rowHeight)
+                    .background(
+                        GeometryReader { geo in
+                            Color.clear
+                                .onAppear { actionsWidth = geo.size.width }
+                                .onChange(of: geo.size.width) { _, width in actionsWidth = width }
+                        }
+                    )
+                    .offset(x: max(0, revealWidth + offset))
+                    .opacity(isOpen ? 1 : 0)
                 }
 
                 content()
                     .frame(maxWidth: .infinity)
-                    .background(Color(.secondarySystemGroupedBackground))
                     .background(
                         GeometryReader { geo in
                             Color.clear
@@ -80,22 +81,19 @@ struct SwipeRow<Content: View>: View {
         )
     }
 
-    /// Full-width destructive bar shown once past the threshold, signalling release-to-delete.
-    @ViewBuilder
-    private var deleteOverlay: some View {
-        if let last = actions.last {
-            ZStack(alignment: .trailing) {
-                Capsule().fill(last.tint)
-                HStack(spacing: 6) {
-                    Image(systemName: last.systemImage)
-                    Text(last.label)
-                }
-                .font(.subheadline.weight(.medium))
-                .foregroundStyle(.white)
-                .padding(.horizontal, 24)
+    /// Destructive capsule that fills the revealed area in delete mode, signalling release-to-delete.
+    private func deleteCapsule(_ action: Action) -> some View {
+        ZStack(alignment: .trailing) {
+            Capsule().fill(action.tint)
+            HStack(spacing: 6) {
+                Image(systemName: action.systemImage)
+                Text(action.label)
             }
-            .frame(height: rowHeight)
+            .font(.subheadline.weight(.medium))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 24)
         }
+        .frame(height: rowHeight)
     }
 
     private func actionButton(_ action: Action) -> some View {
