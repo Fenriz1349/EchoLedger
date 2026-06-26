@@ -25,7 +25,7 @@ struct AccountRowView: View {
                 .fontWeight(balance >= 0 ? .regular : .semibold)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 2)
-                .background(Color(.secondarySystemGroupedBackground), in: Capsule())
+                .background(Color("RowBackgroundColor"), in: Capsule())
         }
         .swipeActions(edge: .trailing) {
             if let onArchive {
