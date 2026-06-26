@@ -12,13 +12,7 @@ import CustomTextFields
 /// The authentication screen handling both sign-in and account creation.
 struct AuthView: View {
 
-    @State private var viewModel: AuthViewModel
-
-    /// Stores the injected view model in `@State` so the typed input survives re-renders.
-    /// No construction here — the view model is built by `AppEntryViewModel.makeAuthViewModel()`.
-    init(viewModel: AuthViewModel) {
-        _viewModel = State(initialValue: viewModel)
-    }
+    @State var viewModel: AuthViewModel
 
     var body: some View {
         @Bindable var viewModel = viewModel
