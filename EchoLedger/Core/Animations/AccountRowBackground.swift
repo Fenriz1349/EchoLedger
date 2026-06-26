@@ -22,7 +22,7 @@ struct AccountRowBackground: View {
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: cornerRadius)
         shape
-            .fill(Color("CardBackgroundColor"))
+            .fill(Color.echoCard)
             .overlay(alignment: .leading) {
                 GeometryReader { geo in
                     Rectangle()

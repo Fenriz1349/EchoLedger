@@ -18,7 +18,7 @@ extension View {
             .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color("CardBackgroundColor"))
+                    .fill(Color.echoCard)
                     .shadow(color: .black.opacity(0.08), radius: 3, x: 0, y: 1)
             )
             .overlay(
@@ -32,7 +32,7 @@ extension View {
     /// Apply after `refreshable`/`searchable` so those stay attached to the scroll view.
     func echoBackground() -> some View {
         ZStack {
-            Color("BackgroundColor").ignoresSafeArea()
+            Color.echoBackground.ignoresSafeArea()
             self.scrollContentBackground(.hidden)
         }
     }

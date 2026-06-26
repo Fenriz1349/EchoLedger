@@ -15,7 +15,7 @@ struct EchoProgressView: View {
             EchoLedgerLoader()
                 .frame(width: 80, height: 80)
                 .padding(20)
-                .background(Color("BackgroundColor"), in: RoundedRectangle(cornerRadius: 28))
+                .background(Color.echoBackground, in: RoundedRectangle(cornerRadius: 28))
         }
     }
 }
