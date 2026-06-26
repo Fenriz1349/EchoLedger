@@ -37,3 +37,9 @@ extension View {
         }
     }
 }
+
+extension CGFloat {
+
+    /// EchoLedger's standard corner radius for fields and inner cards.
+    static let echoCorner: CGFloat = 12
+}

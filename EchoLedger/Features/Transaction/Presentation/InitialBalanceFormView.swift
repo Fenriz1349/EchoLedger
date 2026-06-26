@@ -41,6 +41,7 @@ struct InitialBalanceFormView: View {
                             .tint(.red)
                     }
                 }
+                .listRowBackground(Color.echoCard)
 
                 Button {
                     Task { await viewModel.submit() }
@@ -67,6 +68,7 @@ struct InitialBalanceFormView: View {
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }
             }
+            .echoBackground()
         }
     }
 }

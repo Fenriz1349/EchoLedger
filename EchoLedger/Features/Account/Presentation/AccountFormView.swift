@@ -41,6 +41,7 @@ struct AccountFormView: View {
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }
             }
+            .echoBackground()
         }
     }
 }

@@ -40,6 +40,7 @@ struct TransferFormView: View {
                                 }
                             }
                         }
+                        .listRowBackground(Color.echoCard)
 
                         Section("Montant") {
                             HStack {
@@ -49,10 +50,12 @@ struct TransferFormView: View {
                             }
                             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                         }
+                        .listRowBackground(Color.echoCard)
 
                         Section("Description (optionnel)") {
                             TextField("Ex : virement livret", text: $viewModel.label)
                         }
+                        .listRowBackground(Color.echoCard)
 
                         Section {
                             Button {
@@ -87,6 +90,7 @@ struct TransferFormView: View {
             .task {
                 await viewModel.loadAccounts()
             }
+            .echoBackground()
         }
         .overlay {
             if viewModel.isLoading {
