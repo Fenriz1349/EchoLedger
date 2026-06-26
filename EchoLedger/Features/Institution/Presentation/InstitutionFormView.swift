@@ -30,6 +30,7 @@ struct InstitutionFormView: View {
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }
             }
+            .echoBackground()
         }
     }
 }

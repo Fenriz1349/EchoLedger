@@ -18,7 +18,7 @@ struct AvatarCircleView: View {
 
     var body: some View {
         Circle()
-            .fill(Color(.secondarySystemBackground))
+            .fill(Color.echoBackground)
             .overlay {
                 if let imageData, let uiImage = UIImage(data: imageData) {
                     Image(uiImage: uiImage)

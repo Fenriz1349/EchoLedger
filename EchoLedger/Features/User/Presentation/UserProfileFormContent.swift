@@ -25,7 +25,9 @@ struct UserProfileFormContent: View {
                 errorMessage: "Le prénom est requis.",
                 validationState: $viewModel.firstNameEditState,
                 colors: .echo,
-                showErrorOnlyWhenTriggered: false
+                showErrorOnlyWhenTriggered: false,
+                cornerRadius: .echoCorner,
+                hasShadow: false
             )
             CustomTextField(
                 header: "Nom",
@@ -36,7 +38,9 @@ struct UserProfileFormContent: View {
                 errorMessage: "Le nom est requis.",
                 validationState: $viewModel.lastNameEditState,
                 colors: .echo,
-                showErrorOnlyWhenTriggered: false
+                showErrorOnlyWhenTriggered: false,
+                cornerRadius: .echoCorner,
+                hasShadow: false
             )
 
             HStack {

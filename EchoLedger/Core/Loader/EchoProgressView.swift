@@ -12,7 +12,10 @@ struct EchoProgressView: View {
     var body: some View {
         ZStack {
             Color.black.opacity(0.8).ignoresSafeArea()
-            EchoLedgerLoader().frame(width: 80, height: 80)
+            EchoLedgerLoader()
+                .frame(width: 80, height: 80)
+                .padding(20)
+                .background(Color.echoBackground, in: RoundedRectangle(cornerRadius: 28))
         }
     }
 }

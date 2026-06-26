@@ -14,7 +14,7 @@ struct AppNameView: View {
         Text("EchoLedger")
             .font(.system(.largeTitle, design: .rounded).weight(.heavy))
             .foregroundStyle(
-                LinearGradient(colors: [Color(.accentHard), Color(.accentSoft)],
+                LinearGradient(colors: [Color.echoAccentHard, Color.echoAccentSoft],
                                startPoint: .leading, endPoint: .trailing)
             )
     }

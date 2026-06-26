@@ -17,6 +17,7 @@ struct TransactionFormView: View {
         NavigationStack {
             Form {
                 TransactionFormContent(viewModel: viewModel)
+                    .listRowBackground(Color.echoCard)
             }
             .scrollDismissesKeyboard(.immediately)
             .navigationTitle(viewModel.existingTransaction == nil ? "Nouvelle transaction" :"Modifier la transaction")
@@ -42,6 +43,7 @@ struct TransactionFormView: View {
             .onChange(of: viewModel.isSuccess) {
                 if viewModel.isSuccess { dismiss() }
             }
+            .echoBackground()
         }
     }
 }

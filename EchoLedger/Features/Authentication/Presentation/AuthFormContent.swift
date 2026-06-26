@@ -40,7 +40,9 @@ struct AuthFormContent: View {
                     errorMessage: "Le prénom est requis.",
                     validationState: $firstNameState,
                     colors: .echo,
-                    showErrorOnlyWhenTriggered: false
+                    showErrorOnlyWhenTriggered: false,
+                    cornerRadius: .echoCorner,
+                    hasShadow: false
                 )
                 CustomTextField(
                     placeholder: "Nom",
@@ -50,7 +52,9 @@ struct AuthFormContent: View {
                     errorMessage: "Le nom est requis.",
                     validationState: $lastNameState,
                     colors: .echo,
-                    showErrorOnlyWhenTriggered: false
+                    showErrorOnlyWhenTriggered: false,
+                    cornerRadius: .echoCorner,
+                    hasShadow: false
                 )
             }
             CustomTextField(
@@ -60,7 +64,9 @@ struct AuthFormContent: View {
                 errorMessage: "Adresse email invalide.",
                 validationState: $emailState,
                 colors: .echo,
-                showErrorOnlyWhenTriggered: false
+                showErrorOnlyWhenTriggered: false,
+                cornerRadius: .echoCorner,
+                hasShadow: false
             )
             CustomTextField(
                 placeholder: "Mot de passe",
@@ -69,7 +75,9 @@ struct AuthFormContent: View {
                 errorMessage: AuthError.weakPassword.errorDescription,
                 validationState: $passwordState,
                 colors: .echo,
-                showErrorOnlyWhenTriggered: false
+                showErrorOnlyWhenTriggered: false,
+                cornerRadius: .echoCorner,
+                hasShadow: false
             )
             if isSignUp {
                 CustomTextField(
@@ -80,7 +88,9 @@ struct AuthFormContent: View {
                     errorMessage: AuthError.passwordsDoNotMatch.errorDescription,
                     validationState: $confirmPasswordState,
                     colors: .echo,
-                    showErrorOnlyWhenTriggered: false
+                    showErrorOnlyWhenTriggered: false,
+                    cornerRadius: .echoCorner,
+                    hasShadow: false
                 )
             }
         }

@@ -44,6 +44,7 @@ struct TransactionDetailView: View {
                 }
                 LabeledContent("Type", value: currentTransaction.isExpense ? "Dépense" : "Revenu")
             }
+            .listRowBackground(Color.echoCard)
 
             if !currentTransaction.splits.isEmpty {
                 Section("Répartition") {
@@ -55,6 +56,7 @@ struct TransactionDetailView: View {
                         )
                     }
                 }
+                .listRowBackground(Color.echoCard)
             }
 
             if currentTransaction.attachmentURL != nil {
@@ -66,6 +68,7 @@ struct TransactionDetailView: View {
             }
 
         }
+        .echoBackground()
         .navigationTitle(currentTransaction.label)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

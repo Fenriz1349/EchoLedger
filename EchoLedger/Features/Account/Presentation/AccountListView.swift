@@ -66,6 +66,7 @@ struct AccountListView: View {
                 .refreshable {
                     await coordinator.accountListViewModel.refresh()
                 }
+                .echoBackground()
             }
             .navigationTitle("Comptes")
             .navigationDestination(for: Account.self) { account in

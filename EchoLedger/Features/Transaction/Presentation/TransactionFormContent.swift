@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CustomLabels
+import CustomTextFields
 
 struct TransactionFormContent: View {
 
@@ -94,8 +95,15 @@ struct TransactionFormContent: View {
             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
         }
 
-        Section("Label") {
-            TextField("Optionnel", text: $viewModel.label)
+        Section("Label( optionnel)") {
+            CustomTextField(
+                placeholder: "Ex : Boulangerie, vettement...",
+                text: $viewModel.label,
+                type: .alphaNumber,
+                colors: .echo,
+                cornerRadius: .echoCorner,
+                hasShadow: false
+            )
         }
 
         TransactionAttachmentSection(viewModel: viewModel)
