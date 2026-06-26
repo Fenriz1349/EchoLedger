@@ -28,12 +28,7 @@ struct AuthView: View {
             AppHeaderView()
                 .padding(.top, 40)
 
-            // MARK: Toggle
-            Picker("", selection: $viewModel.isSignUp) {
-                Text("Connexion").tag(false)
-                Text("Inscription").tag(true)
-            }
-            .pickerStyle(.segmented)
+            SegmentedToggle(selection: $viewModel.isSignUp, style: .authentication)
 
             AuthFormContent(
                 isSignUp: $viewModel.isSignUp,
