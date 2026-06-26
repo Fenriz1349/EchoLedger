@@ -18,7 +18,22 @@ extension View {
             .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color(.secondarySystemGroupedBackground))
+                    .fill(Color("RowBackgroundColor"))
+                    .shadow(color: .black.opacity(0.08), radius: 3, x: 0, y: 1)
             )
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
+            )
+    }
+
+    /// EchoLedger's brand-tinted screen background, edge to edge.
+    /// Hides the default list/scroll background so cards (`echoRowStyle`) sit on the brand surface.
+    /// Apply after `refreshable`/`searchable` so those stay attached to the scroll view.
+    func echoBackground() -> some View {
+        ZStack {
+            Color("BackgroundColor").ignoresSafeArea()
+            self.scrollContentBackground(.hidden)
+        }
     }
 }
