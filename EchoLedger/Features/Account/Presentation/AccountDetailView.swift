@@ -40,6 +40,7 @@ struct AccountDetailView: View {
                             .font(.subheadline)
                     }
                 }
+                .listRowBackground(Color.echoCard)
 
                 // MARK: Monthly pie carousel
                 if !viewModel.graphsViewModel.monthlyPieData.isEmpty {
@@ -52,6 +53,7 @@ struct AccountDetailView: View {
                             onSwipe: { viewModel.graphsViewModel.handlePieSwipe($0) }
                         )
                     }
+                    .listRowBackground(Color.echoCard)
                 }
 
                 // MARK: Charts
@@ -59,12 +61,14 @@ struct AccountDetailView: View {
                     Section {
                         ExpensePieChartView(data: viewModel.graphsViewModel.expenseTotals)
                     }
+                    .listRowBackground(Color.echoCard)
                 }
 
                 if !viewModel.graphsViewModel.incomeTotals.isEmpty {
                     Section {
                         IncomePieChartView(data: viewModel.graphsViewModel.incomeTotals)
                     }
+                    .listRowBackground(Color.echoCard)
                 }
 
                 // MARK: Recent transactions
@@ -83,6 +87,7 @@ struct AccountDetailView: View {
                     )
                 }
             }
+            .echoBackground()
         }
         .navigationTitle(viewModel.account.name)
         .navigationBarTitleDisplayMode(.inline)

@@ -38,7 +38,9 @@ struct TransferDetailView: View {
                     LabeledContent("Description", value: viewModel.transfer.label)
                 }
             }
+            .listRowBackground(Color.echoCard)
         }
+        .echoBackground()
         .navigationTitle("Transfert")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

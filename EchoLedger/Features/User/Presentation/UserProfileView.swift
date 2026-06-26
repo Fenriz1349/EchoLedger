@@ -54,6 +54,7 @@ struct UserProfileView: View {
             } message: {
                 Text("Cette action est irréversible. Toutes vos données seront supprimées.")
             }
+            .echoBackground()
         }
         .overlay {
             if viewModel.isLoading || viewModel.isUploadingAvatar {
