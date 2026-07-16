@@ -14,7 +14,8 @@ struct TransactionListItemView: View {
     let item: TransactionListItem
     let accountNames: [UUID: String]
     let onEdit: (Transaction) -> Void
-    let onDelete: (Transaction) -> Void
+    /// Nil when the item may not be deleted (an initial balance lives with its account).
+    let onDelete: ((Transaction) -> Void)?
     let onTap: (Transaction) -> Void
     let onTapTransfer: (Transfer) -> Void
     let onDeleteTransfer: (Transfer) -> Void
@@ -27,7 +28,7 @@ struct TransactionListItemView: View {
                 transaction: transaction,
                 onTap: { onTap(transaction) },
                 onEdit: { onEdit(transaction) },
-                onDelete: { onDelete(transaction) }
+                onDelete: onDelete.map { delete in { delete(transaction) } }
             )
         case .transfer(let transfer):
             TransferRowView(

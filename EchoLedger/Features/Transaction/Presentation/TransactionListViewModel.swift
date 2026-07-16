@@ -33,10 +33,10 @@ final class TransactionListViewModel {
         selectedNature != .all || selectedCategory != nil || selectedAccountId != nil
     }
 
-    /// Only transactions whose date has arrived. Future-dated ones (scheduled
-    /// recurrences) are hidden from the list and aggregates until their day passes.
+    /// Only transactions whose date has arrived and that belong in the list. Future-dated ones
+    /// (scheduled recurrences) are hidden until their day passes; initial balances live on their account.
     private var effectiveTransactions: [Transaction] {
-        transactions.filter { $0.isEffective() }
+        transactions.filter { $0.isEffective() && $0.category.isListed }
     }
 
     /// Categories present in the current transaction list, excluding internal ones.

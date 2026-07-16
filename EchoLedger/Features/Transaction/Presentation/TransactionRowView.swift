@@ -13,16 +13,11 @@ struct TransactionRowView: View {
     let transaction: Transaction
     let onTap: () -> Void
     let onEdit: () -> Void
-    let onDelete: () -> Void
+    /// Nil when the transaction may not be deleted (an initial balance lives with its account).
+    let onDelete: (() -> Void)?
 
     var body: some View {
-        SwipeRow(
-            actions: [
-                .init(label: "Modifier", systemImage: "pencil", tint: .blue, action: onEdit),
-                .init(label: "Supprimer", systemImage: "trash", tint: .red, action: onDelete)
-            ],
-            onTap: onTap
-        ) {
+        Button(action: onTap) {
             HStack {
                 let name = transaction.category.icon
                 Image(systemName: name)
@@ -41,6 +36,23 @@ struct TransactionRowView: View {
                 AnimatedAmountView(value: transaction.totalAmount, color: transaction.color)
                     .fontWeight(transaction.isExpense ? .regular : .semibold)
             }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .swipeActions(edge: .trailing) {
+            if let onDelete {
+                Button(role: .destructive) {
+                    onDelete()
+                } label: {
+                    Label("Supprimer", systemImage: "trash")
+                }
+            }
+            Button {
+                onEdit()
+            } label: {
+                Label("Modifier", systemImage: "pencil")
+            }
+            .tint(.blue)
         }
     }
 }

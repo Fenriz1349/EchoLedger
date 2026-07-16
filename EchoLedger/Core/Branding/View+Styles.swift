@@ -7,28 +7,31 @@
 
 import SwiftUI
 
+/// The single definition of EchoLedger's list-row card: brand surface with a hairline border.
+/// Specialised row backgrounds build on it (see `AccountRowBackground`).
+struct EchoRowCard: View {
+
+    var cornerRadius: CGFloat = 6
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: cornerRadius)
+        shape
+            .fill(Color.echoCard)
+            .overlay(shape.strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5))
+    }
+}
+
 extension View {
 
-    /// EchoLedger's unified list-row look: tight insets, rounded background and no separator.
+    /// EchoLedger's unified list-row card, applied as the row background.
     /// Pair it with `.cascadeRow(index:)` for the staggered entrance.
     /// - Parameter cornerRadius: The row's corner radius (lower = more rectangular).
     func echoRowStyle(cornerRadius: CGFloat = 6) -> some View {
-        self
-            .padding(.horizontal, 16)
-            .padding(.vertical, 6)
-            .background(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color.echoCard)
-                    .shadow(color: .black.opacity(0.08), radius: 3, x: 0, y: 1)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
-            )
+        listRowBackground(EchoRowCard(cornerRadius: cornerRadius))
     }
 
     /// EchoLedger's brand-tinted screen background, edge to edge.
-    /// Hides the default list/scroll background so cards (`echoRowStyle`) sit on the brand surface.
+    /// Hides the default list/scroll background so the row cards sit on the brand surface.
     /// Apply after `refreshable`/`searchable` so those stay attached to the scroll view.
     func echoBackground() -> some View {
         ZStack {

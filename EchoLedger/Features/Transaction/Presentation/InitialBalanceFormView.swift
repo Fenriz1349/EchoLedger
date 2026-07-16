@@ -26,7 +26,6 @@ struct InitialBalanceFormView: View {
                         LabeledContent("Compte", value: accountLabel)
                     }
                     HStack {
-                        Text(viewModel.isExpense ? "-" : "")
                         CustomTextField(
                             placeholder: "0,00€",
                             text: $amountText,
@@ -42,11 +41,10 @@ struct InitialBalanceFormView: View {
                             }
                             viewModel.setInitialBalanceAmount(filtered.toDouble)
                         }
-                        Text(viewModel.isExpense ? "Négatif" : "Positif")
-                        Toggle("", isOn: $viewModel.isExpense)
-                            .labelsHidden()
-                            .tint(.red)
+                        SegmentedToggle(selection: $viewModel.isExpense, style: .account)
                     }
+
+                    DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                 }
                 .listRowBackground(Color.echoCard)
 

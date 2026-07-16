@@ -34,7 +34,9 @@ struct RecentTransactionsView: View {
                     onEditTransfer: onEditTransfer
                 )
                 .cascadeRow(index: index)
-                .listRowBackground(Color.echoCard)
+                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                .listRowSeparator(.hidden)
+                .echoRowStyle()
             }
         }
     }

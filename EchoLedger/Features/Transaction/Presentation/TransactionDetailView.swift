@@ -28,7 +28,7 @@ struct TransactionDetailView: View {
     var body: some View {
         List {
             Section("Informations") {
-                LabeledContent("Label", value: currentTransaction.label)
+                LabeledContent("Libellé", value: currentTransaction.label)
                 HStack {
                     Text("Montant")
                     Spacer()

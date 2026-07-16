@@ -82,6 +82,12 @@ enum TransactionCategory: String, CaseIterable, Codable {
         self != .transfer && self != .initialBalance
     }
 
+    /// Whether this category appears in the transaction lists.
+    /// An initial balance is account setup, shown and edited from its own account — not activity.
+    var isListed: Bool {
+        self != .initialBalance
+    }
+
     /// Fixed color for charts. Avoids red and green — reserved for balance display.
     var color: Color {
         switch self {

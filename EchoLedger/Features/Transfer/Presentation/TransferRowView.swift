@@ -19,13 +19,7 @@ struct TransferRowView: View {
     let onEdit: () -> Void
 
     var body: some View {
-        SwipeRow(
-            actions: [
-                .init(label: "Modifier", systemImage: "pencil", tint: .blue, action: onEdit),
-                .init(label: "Supprimer", systemImage: "trash", tint: .red, action: onDelete)
-            ],
-            onTap: onTap
-        ) {
+        Button(action: onTap) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 4) {
@@ -53,6 +47,21 @@ struct TransferRowView: View {
                 Text(transfer.amount.toEuro)
                     .foregroundStyle(Color.primary)
             }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+                onDelete()
+            } label: {
+                Label("Supprimer", systemImage: "trash")
+            }
+            Button {
+                onEdit()
+            } label: {
+                Label("Modifier", systemImage: "pencil")
+            }
+            .tint(.blue)
         }
     }
 }
