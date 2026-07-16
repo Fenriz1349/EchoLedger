@@ -87,6 +87,7 @@ struct AccountDetailView: View {
                     )
                 }
             }
+            .listRowSpacing(8)
             .echoBackground()
         }
         .navigationTitle(viewModel.account.name)

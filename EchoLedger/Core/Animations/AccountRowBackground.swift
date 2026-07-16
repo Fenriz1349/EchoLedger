@@ -21,19 +21,15 @@ struct AccountRowBackground: View {
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: cornerRadius)
-        shape
-            .fill(Color.echoCard)
+        EchoRowCard(cornerRadius: cornerRadius)
             .overlay(alignment: .leading) {
                 GeometryReader { geo in
                     Rectangle()
                         .fill(color.opacity(0.18))
                         .frame(width: barFraction * geo.size.width)
                 }
+                .clipShape(shape)
             }
-            .clipShape(shape)
-            .overlay(
-                shape.strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
-            )
             .onAppear {
                 withAnimation(.easeOut(duration: 0.6).delay(Double(index) * 0.08)) {
                     barFraction = percentage

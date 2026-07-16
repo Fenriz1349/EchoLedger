@@ -87,7 +87,7 @@ final class AccountDetailViewModel {
 
             let allTransactions = try await getTransactions.execute(for: userId)
 
-            recentItems = TransactionListItem.group(allTransactions)
+            recentItems = TransactionListItem.group(allTransactions.filter { $0.isEffective() })
                 .filter { item in
                     switch item {
                     case .single(let transaction):

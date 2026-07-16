@@ -20,18 +20,12 @@ struct AnimatedAmountView: View {
     var body: some View {
         CountingAmountText(value: animated)
             .foregroundStyle(color ?? value.balanceColor)
-            .onChange(of: value) { _, newValue in
-                withAnimation(.easeOut(duration: duration)) {
-                    animated = newValue
-                }
+            .onAppear {
+                withAnimation(.easeOut(duration: duration)) { animated = value }
             }
-            .modifier(
-                VisibilityObserver {
-                    withAnimation(.easeOut(duration: duration)) {
-                        animated = value
-                    }
-                }
-            )
+            .onChange(of: value) { _, newValue in
+                withAnimation(.easeOut(duration: duration)) { animated = newValue }
+            }
     }
 }
 
