@@ -39,8 +39,30 @@ struct AccountDetailView: View {
                             .foregroundStyle(.secondary)
                             .font(.subheadline)
                     }
+
                 }
                 .listRowBackground(Color.echoCard)
+
+                // MARK: Initial balance
+                if let initial = viewModel.initialBalanceTransaction {
+                    Section("Solde initial") {
+                        TransactionListItemView(
+                            item: .single(initial),
+                            accountNames: viewModel.accountNames,
+                            onEdit: { editTransaction = $0 },
+                            onDelete: nil,
+                            onTap: { selectedTransaction = $0 },
+                            onTapTransfer: { transfer in
+                                selectedTransfer = transfer
+                            },
+                            onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } },
+                            onEditTransfer: { editTransfer = $0 }
+                        )
+                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                        .listRowSeparator(.hidden)
+                        .echoRowStyle()
+                    }
+                }
 
                 // MARK: Monthly pie carousel
                 if !viewModel.graphsViewModel.monthlyPieData.isEmpty {

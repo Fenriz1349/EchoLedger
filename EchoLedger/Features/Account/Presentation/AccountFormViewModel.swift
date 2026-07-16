@@ -21,6 +21,8 @@ final class AccountFormViewModel {
     var selectedInstitution: Institution?
     var initialBalanceText: String = ""
     var isInitialBalanceExpense: Bool = false
+    /// Date of the initial balance transaction: the account's real opening date, not today.
+    var initialBalanceDate: Date = Date()
 
     // MARK: UI State
     var existingAccount: Account?
@@ -219,7 +221,7 @@ final class AccountFormViewModel {
                 let input = AddTransactionInput(
                     userId: userId,
                     label: "Solde initial",
-                    date: Date(),
+                    date: initialBalanceDate,
                     totalAmount: amount,
                     note: nil,
                     isExpense: isInitialBalanceExpense,

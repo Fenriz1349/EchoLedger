@@ -13,7 +13,8 @@ struct TransactionRowView: View {
     let transaction: Transaction
     let onTap: () -> Void
     let onEdit: () -> Void
-    let onDelete: () -> Void
+    /// Nil when the transaction may not be deleted (an initial balance lives with its account).
+    let onDelete: (() -> Void)?
 
     var body: some View {
         Button(action: onTap) {
@@ -39,10 +40,12 @@ struct TransactionRowView: View {
         }
         .buttonStyle(.plain)
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                onDelete()
-            } label: {
-                Label("Supprimer", systemImage: "trash")
+            if let onDelete {
+                Button(role: .destructive) {
+                    onDelete()
+                } label: {
+                    Label("Supprimer", systemImage: "trash")
+                }
             }
             Button {
                 onEdit()

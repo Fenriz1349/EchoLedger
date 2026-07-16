@@ -95,7 +95,7 @@ struct TransactionFormContent: View {
             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
         }
 
-        Section("Label( optionnel)") {
+        Section("Libellé (optionnel)") {
             CustomTextField(
                 placeholder: "Ex : Boulangerie, vettement...",
                 text: $viewModel.label,

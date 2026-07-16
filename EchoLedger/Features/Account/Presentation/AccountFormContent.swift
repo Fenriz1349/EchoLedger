@@ -54,6 +54,8 @@ struct AccountFormContent: View {
                         .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
                         SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
+
+                    DatePicker("Date", selection: $viewModel.initialBalanceDate, displayedComponents: .date)
                 }
             }
 

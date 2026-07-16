@@ -18,6 +18,8 @@ final class AccountDetailViewModel {
     // MARK: State
 
     var recentItems: [TransactionListItem] = []
+    /// The account's initial balance transaction, surfaced so the detail can offer to edit it.
+    var initialBalanceTransaction: Transaction?
     var accountNames: [UUID: String] = [:]
     var showArchiveAlert = false
     var onNotFound: (() -> Void)?
@@ -87,7 +89,13 @@ final class AccountDetailViewModel {
 
             let allTransactions = try await getTransactions.execute(for: userId)
 
-            recentItems = TransactionListItem.group(allTransactions.filter { $0.isEffective() })
+            initialBalanceTransaction = allTransactions.first {
+                $0.category == .initialBalance && $0.belongs(to: account.id)
+            }
+
+            recentItems = TransactionListItem.group(
+                allTransactions.filter { $0.isEffective() && $0.category.isListed }
+            )
                 .filter { item in
                     switch item {
                     case .single(let transaction):
