@@ -456,6 +456,7 @@
 		685A1F0F2F5AEC0F0009B885 /* SyncManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */; };
 		685A1F112F5AECD60009B885 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1F102F5AECD60009B885 /* SyncManager.swift */; };
 		68617AAA300A6012007C5731 /* AccountTransactionBalanceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68617AA9300A6012007C5731 /* AccountTransactionBalanceIntegrationTests.swift */; };
+		68617AAC300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */; };
 		6868A66D2F6D9CC90038A612 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A66C2F6D9CC90038A612 /* UserModel.swift */; };
 		6868A66F2F6D9D000038A612 /* InstitutionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A66E2F6D9D000038A612 /* InstitutionModel.swift */; };
 		6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868A6702F6D9D2C0038A612 /* AccountModel.swift */; };
@@ -777,6 +778,7 @@
 		685A1F0E2F5AEC0F0009B885 /* SyncManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManagerProtocol.swift; sourceTree = "<group>"; };
 		685A1F102F5AECD60009B885 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		68617AA9300A6012007C5731 /* AccountTransactionBalanceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTransactionBalanceIntegrationTests.swift; sourceTree = "<group>"; };
+		68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccountsIntegrationTests.swift; sourceTree = "<group>"; };
 		6868A66C2F6D9CC90038A612 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		6868A66E2F6D9D000038A612 /* InstitutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionModel.swift; sourceTree = "<group>"; };
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
@@ -1718,6 +1720,7 @@
 			isa = PBXGroup;
 			children = (
 				68617AA9300A6012007C5731 /* AccountTransactionBalanceIntegrationTests.swift */,
+				68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */,
 			);
 			path = Integration;
 			sourceTree = "<group>";
@@ -1987,6 +1990,7 @@
 				681760C02FE546F7005873D2 /* UnarchiveInstitutionTests.swift in Sources */,
 				683133C02F61A4AE004AA5E4 /* TransactionDouble.swift in Sources */,
 				6825B6F92FE949E2003170FC /* UnarchiveAccountTests.swift in Sources */,
+				68617AAC300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift in Sources */,
 				68617AAA300A6012007C5731 /* AccountTransactionBalanceIntegrationTests.swift in Sources */,
 				6825B7132FE95165003170FC /* DeleteUserRuleTests.swift in Sources */,
 				6813E82C2F6D968E00344774 /* UpdateAccountTests.swift in Sources */,
