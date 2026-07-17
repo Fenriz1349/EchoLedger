@@ -70,6 +70,8 @@ final class GetTransactionsByDateRangeTests: XCTestCase {
             try await useCase.execute(for: userId, from: Date(), to: date(daysAgo: 7))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidDateRange)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "La date de début doit être antérieure à la date de fin.")
         }
     }
 }

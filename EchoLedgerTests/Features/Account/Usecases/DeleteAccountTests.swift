@@ -41,6 +41,7 @@ final class DeleteAccountTests: XCTestCase {
             try await repository.fetch(by: accountId)
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 
@@ -50,6 +51,7 @@ final class DeleteAccountTests: XCTestCase {
             try await useCase.execute(id: UUID())
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 }

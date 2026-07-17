@@ -69,6 +69,7 @@ final class GetTransactionTests: XCTestCase {
             try await useCase.execute(id: UUID())
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 
@@ -79,6 +80,7 @@ final class GetTransactionTests: XCTestCase {
             try await useCase.execute(id: UUID())
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 }

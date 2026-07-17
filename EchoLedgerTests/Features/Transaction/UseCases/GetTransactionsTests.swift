@@ -71,6 +71,7 @@ final class GetTransactionsTests: XCTestCase {
             try await useCase.execute(for: userId)
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 }

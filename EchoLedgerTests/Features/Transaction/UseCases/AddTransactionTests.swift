@@ -76,6 +76,8 @@ final class AddTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(label: ""))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .emptyLabel)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Le libellé de la transaction ne peut pas être vide.")
         }
     }
 
@@ -85,6 +87,8 @@ final class AddTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(label: "   "))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .emptyLabel)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Le libellé de la transaction ne peut pas être vide.")
         }
     }
 
@@ -96,6 +100,7 @@ final class AddTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Le montant total doit être positif.")
         }
     }
 
@@ -106,6 +111,7 @@ final class AddTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Le montant total doit être positif.")
         }
     }
 
@@ -116,6 +122,8 @@ final class AddTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(splits: []))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .missingSplits)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Une transaction doit avoir au moins une ventilation.")
         }
     }
 
@@ -125,6 +133,8 @@ final class AddTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidSplitAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Le montant d'une ventilation doit être positif.")
         }
     }
 
@@ -135,6 +145,8 @@ final class AddTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 20)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .splitAmountMismatch)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "La somme des ventilations ne correspond pas au montant total.")
         }
     }
 }

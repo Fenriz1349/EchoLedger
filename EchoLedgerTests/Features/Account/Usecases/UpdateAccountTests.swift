@@ -69,6 +69,8 @@ final class UpdateAccountTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: "A"))
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooShort)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Le nom du compte doit contenir au moins 2 caractères.")
         }
     }
 
@@ -79,6 +81,8 @@ final class UpdateAccountTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooLong)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Le nom du compte ne peut pas dépasser 50 caractères.")
         }
     }
 
@@ -90,6 +94,8 @@ final class UpdateAccountTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: "PEL"))
         ) { error in
             XCTAssertEqual(error as? AccountError, .duplicateName)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Un compte avec ce nom existe déjà dans cet établissement.")
         }
     }
 }

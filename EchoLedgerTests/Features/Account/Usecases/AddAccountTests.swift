@@ -58,6 +58,8 @@ final class AddAccountTests: XCTestCase {
             try await useCase.execute(institutionId: institutionId, name: "", category: .savings)
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooShort)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Le nom du compte doit contenir au moins 2 caractères.")
         }
     }
 
@@ -67,6 +69,8 @@ final class AddAccountTests: XCTestCase {
             try await useCase.execute(institutionId: institutionId, name: "A", category: .savings)
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooShort)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Le nom du compte doit contenir au moins 2 caractères.")
         }
     }
 
@@ -77,6 +81,8 @@ final class AddAccountTests: XCTestCase {
             try await useCase.execute(institutionId: institutionId, name: longName, category: .savings)
         ) { error in
             XCTAssertEqual(error as? AccountError, .nameTooLong)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Le nom du compte ne peut pas dépasser 50 caractères.")
         }
     }
 
@@ -96,6 +102,8 @@ final class AddAccountTests: XCTestCase {
             try await useCase.execute(institutionId: institutionId, name: "Livret A", category: .savings)
         ) { error in
             XCTAssertEqual(error as? AccountError, .duplicateName)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Un compte avec ce nom existe déjà dans cet établissement.")
         }
     }
 
@@ -106,6 +114,8 @@ final class AddAccountTests: XCTestCase {
             try await useCase.execute(institutionId: institutionId, name: "livret a", category: .savings)
         ) { error in
             XCTAssertEqual(error as? AccountError, .duplicateName)
+            XCTAssertEqual((error as? AccountError)?.errorDescription,
+                          "Un compte avec ce nom existe déjà dans cet établissement.")
         }
     }
 

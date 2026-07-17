@@ -69,6 +69,8 @@ final class UpdateInstitutionTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: "A"))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooShort)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription,
+                          "Le nom de l'établissement doit contenir au moins 2 caractères.")
         }
     }
 
@@ -79,6 +81,8 @@ final class UpdateInstitutionTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .nameTooLong)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription,
+                          "Le nom de l'établissement ne peut pas dépasser 50 caractères.")
         }
     }
 
@@ -91,6 +95,8 @@ final class UpdateInstitutionTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, name: "Caisse d'Épargne"))
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .duplicateName)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription,
+                          "Un établissement avec ce nom existe déjà.")
         }
     }
 }

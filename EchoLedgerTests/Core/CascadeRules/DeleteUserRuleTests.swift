@@ -72,6 +72,7 @@ final class DeleteUserRuleTests: XCTestCase {
             try await userRepository.fetchCurrent()
         ) { error in
             XCTAssertEqual(error as? UserError, .notFound)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Utilisateur introuvable.")
         }
     }
 
@@ -92,6 +93,7 @@ final class DeleteUserRuleTests: XCTestCase {
             try await institutionRepository.fetch(by: institutionId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription, "Établissement introuvable.")
         }
     }
 }

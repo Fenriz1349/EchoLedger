@@ -119,6 +119,7 @@ final class GetAccountBalanceTests: XCTestCase {
             try await useCase.execute(accountId: UUID(), userId: userId)
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 }

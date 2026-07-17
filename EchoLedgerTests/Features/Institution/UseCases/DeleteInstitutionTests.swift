@@ -41,6 +41,7 @@ final class DeleteInstitutionTests: XCTestCase {
             try await repository.fetch(by: institutionId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription, "Établissement introuvable.")
         }
     }
 
@@ -50,6 +51,7 @@ final class DeleteInstitutionTests: XCTestCase {
             try await useCase.execute(id: UUID())
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription, "Établissement introuvable.")
         }
     }
 }
