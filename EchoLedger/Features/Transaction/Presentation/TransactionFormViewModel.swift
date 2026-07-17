@@ -18,7 +18,7 @@ final class TransactionFormViewModel {
     private let toasty: ToastyManager
     private let addTransaction: AddTransaction
     private let updateTransaction: UpdateTransaction
-    private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let getAccountsSortedByRecency: GetAccountsSortedByRecency
     private let uploadTransactionDocument: UploadTransactionDocument
     private let getTransactionDocument: GetTransactionDocument
     private let deleteDocument: DeleteDocument
@@ -56,6 +56,13 @@ final class TransactionFormViewModel {
     var nextAvailableAccount: Account? {
         let usedIds = Set(splits.map(\.accountId))
         return availableAccounts.first { !usedIds.contains($0.account.id) }?.account
+    }
+
+    /// Accounts selectable for the split at `splitId` — every available account except those
+    /// already used by the transaction's other splits. The split keeps its own current account.
+    func accountOptions(forSplit splitId: UUID) -> [AccountDisplayItem] {
+        let usedByOthers = Set(splits.filter { $0.id != splitId }.map(\.accountId))
+        return availableAccounts.filter { !usedByOthers.contains($0.account.id) }
     }
 
     // MARK: Computed
@@ -111,14 +118,13 @@ final class TransactionFormViewModel {
     ///   - toasty: Toaster to display message to user.
     ///   - addTransaction: UseCase for creating a new transaction.
     ///   - updateTransaction: UseCase to update a existing transaction.
-    ///   - getInstitutions: UseCase for fetching institutions.
-    ///   - getAccounts: UseCase for fetching accounts per institution.
+    ///   - getAccountsSortedByRecency: UseCase for fetching accounts ordered by last use.
     ///   - userId: The identifier of the current user.
     init(
         toasty: ToastyManager,
         addTransaction: AddTransaction,
         updateTransaction: UpdateTransaction,
-        getAccountsWithInstitution: GetAccountsWithInstitution,
+        getAccountsSortedByRecency: GetAccountsSortedByRecency,
         uploadTransactionDocument: UploadTransactionDocument,
         getTransactionDocument: GetTransactionDocument,
         deleteDocument: DeleteDocument,
@@ -130,7 +136,7 @@ final class TransactionFormViewModel {
         self.toasty = toasty
         self.addTransaction = addTransaction
         self.updateTransaction = updateTransaction
-        self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.getAccountsSortedByRecency = getAccountsSortedByRecency
         self.uploadTransactionDocument = uploadTransactionDocument
         self.getTransactionDocument = getTransactionDocument
         self.deleteDocument = deleteDocument
@@ -146,12 +152,12 @@ final class TransactionFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all available accounts and resolves their institution names.
-    /// In create mode, initialises the first split automatically.
+    /// Loads all available accounts, ordered by last use, and resolves their institution names.
+    /// In create mode, initialises the first split on the most recently used account.
     func loadAccounts() async {
         do {
             let filter: AccountFilter = existingTransaction == nil ? .active : .all
-            let items = try await getAccountsWithInstitution.execute(for: userId, filter: filter)
+            let items = try await getAccountsSortedByRecency.execute(for: userId, filter: filter)
 
             if isInitialBalance,
                let accountId = splits.first?.accountId,

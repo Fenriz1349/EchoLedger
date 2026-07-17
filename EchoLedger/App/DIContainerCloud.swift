@@ -84,6 +84,7 @@ final class DIContainer {
     let deleteTransaction: DeleteTransaction
     let getTransactionsByCategory: GetTransactionsByCategory
     let getTransactionsByDateRange: GetTransactionsByDateRange
+    let getAccountsSortedByRecency: GetAccountsSortedByRecency
 
     // MARK: Use Cases — Document
     let uploadTransactionDocument: UploadTransactionDocument
@@ -193,6 +194,10 @@ final class DIContainer {
         self.deleteTransaction = DeleteTransaction(repository: transactionCloud, deleteDocument: deleteDocument)
         self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionCloud)
         self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionCloud)
+        self.getAccountsSortedByRecency = GetAccountsSortedByRecency(
+            getAccountsWithInstitution: getAccountsWithInstitution,
+            getTransactions: getTransactions
+        )
 
         // MARK: Cascade Rules — orchestrate cross-aggregate deletion above the features
         let getTransactionsByAccount = GetTransactionsByAccount(getTransactions: getTransactions)

@@ -162,7 +162,7 @@ struct PreviewHelpers {
             toasty: container.toasty,
             addTransaction: container.addTransaction,
             updateTransaction: container.updateTransaction,
-            getAccountsWithInstitution: container.getAccountsWithInstitution,
+            getAccountsSortedByRecency: container.getAccountsSortedByRecency,
             uploadTransactionDocument: container.uploadTransactionDocument,
             getTransactionDocument: container.getTransactionDocument,
             deleteDocument: container.deleteDocument,

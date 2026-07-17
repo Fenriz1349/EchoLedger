@@ -16,8 +16,8 @@ final class TransferFormViewModel {
 
     // MARK: Form State
 
-    var sourceAccount: Account?
-    var destinationAccount: Account?
+    var sourceAccountId: UUID?
+    var destinationAccountId: UUID?
     var amountText: String = ""
     var date: Date = Date()
     var label: String = ""
@@ -33,9 +33,22 @@ final class TransferFormViewModel {
 
     /// True when the form has enough data to submit.
     var isFormValid: Bool {
-        guard let source = sourceAccount,
-              let destination = destinationAccount else { return false }
-        return source.id != destination.id && amountText.toDouble > 0
+        guard let sourceAccountId, let destinationAccountId else { return false }
+        return sourceAccountId != destinationAccountId && amountText.toDouble > 0
+    }
+
+    /// Accounts selectable as source — every available account except the current destination.
+    /// Never excludes the current source itself, even if it transiently matches the destination
+    /// mid-swap, so the Picker's selection always has a matching tag.
+    var sourceOptions: [AccountDisplayItem] {
+        availableAccounts.filter { $0.account.id != destinationAccountId || $0.account.id == sourceAccountId }
+    }
+
+    /// Accounts selectable as destination — every available account except the current source.
+    /// Never excludes the current destination itself, even if it transiently matches the source
+    /// mid-swap, so the Picker's selection always has a matching tag.
+    var destinationOptions: [AccountDisplayItem] {
+        availableAccounts.filter { $0.account.id != sourceAccountId || $0.account.id == destinationAccountId }
     }
 
     private var trimmedLabel: String {
@@ -52,7 +65,7 @@ final class TransferFormViewModel {
     private let toasty: ToastyManager
     private let transferBetweenAccounts: TransferBetweenAccounts
     private let updateTransfer: UpdateTransfer
-    private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let getAccountsSortedByRecency: GetAccountsSortedByRecency
     private let userId: UUID
 
     // MARK: Init
@@ -61,22 +74,21 @@ final class TransferFormViewModel {
     ///   - toasty: Toaster to display messages to the user.
     ///   - transferBetweenAccounts: UseCase for creating the transfer transactions.
     ///   - updateTransfer: UseCase for updating an existing transfer.
-    ///   - getInstitutions: UseCase for fetching institutions.
-    ///   - getAccounts: UseCase for fetching accounts per institution.
+    ///   - getAccountsSortedByRecency: UseCase for fetching accounts ordered by last use.
     ///   - userId: The identifier of the current user.
     ///   - existingTransfer: The transfer to edit. Nil for creation mode.
     init(
         toasty: ToastyManager,
         transferBetweenAccounts: TransferBetweenAccounts,
         updateTransfer: UpdateTransfer,
-        getAccountsWithInstitution: GetAccountsWithInstitution,
+        getAccountsSortedByRecency: GetAccountsSortedByRecency,
         userId: UUID,
         existingTransfer: Transfer? = nil
     ) {
         self.toasty = toasty
         self.transferBetweenAccounts = transferBetweenAccounts
         self.updateTransfer = updateTransfer
-        self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.getAccountsSortedByRecency = getAccountsSortedByRecency
         self.userId = userId
         self.existingTransfer = existingTransfer
 
@@ -89,26 +101,33 @@ final class TransferFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all active accounts available for transfer, resolves their institution names,
-    /// and pre-selects existing accounts in edit mode.
+    /// Loads all active accounts available for transfer, ordered by last use, resolves their
+    /// institution names, and pre-selects existing accounts in edit mode.
     func loadAccounts() async {
         do {
-            let items = try await getAccountsWithInstitution.execute(for: userId, filter: .active)
+            let items = try await getAccountsSortedByRecency.execute(for: userId, filter: .active)
             availableAccounts = items
 
             if let existingTransfer {
-                sourceAccount = items.first {
+                sourceAccountId = items.first {
                     $0.account.id == existingTransfer.source.splits.first?.accountId
-                }?.account
-                destinationAccount = items.first {
+                }?.account.id
+                destinationAccountId = items.first {
                     $0.account.id == existingTransfer.destination.splits.first?.accountId
-                }?.account
+                }?.account.id
             }
-            if sourceAccount == nil { sourceAccount = items.first?.account }
-            if destinationAccount == nil { destinationAccount = items.dropFirst().first?.account }
+            if sourceAccountId == nil { sourceAccountId = items.first?.account.id }
+            if destinationAccountId == nil {
+                destinationAccountId = items.first { $0.account.id != sourceAccountId }?.account.id
+            }
         } catch {
             toasty.showError(error)
         }
+    }
+
+    /// Swaps the source and destination accounts.
+    func swapAccounts() {
+        swap(&sourceAccountId, &destinationAccountId)
     }
 
     /// Strips any non-numeric character from the amount field, keeping digits and a single separator.
@@ -123,13 +142,13 @@ final class TransferFormViewModel {
     /// Validates and submits the transfer (create or update).
     func submit() async {
         guard isFormValid,
-              let source = sourceAccount,
-              let destination = destinationAccount else { return }
+              let sourceAccountId,
+              let destinationAccountId else { return }
 
         isLoading = true
         let input = TransferFormInput(
-            sourceAccountId: source.id,
-            destinationAccountId: destination.id,
+            sourceAccountId: sourceAccountId,
+            destinationAccountId: destinationAccountId,
             amount: amountText.toDouble,
             date: date,
             label: trimmedLabel,

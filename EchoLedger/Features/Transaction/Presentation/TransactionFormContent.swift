@@ -22,7 +22,7 @@ struct TransactionFormContent: View {
                 ForEach($viewModel.splits) { $split in
                     SplitFormContent(
                         split: $split,
-                        availableAccounts: viewModel.availableAccounts,
+                        availableAccounts: viewModel.accountOptions(forSplit: split.id),
                         onDelete: viewModel.splits.count > 1 ? {
                             if let index = viewModel.splits.firstIndex(where: { $0.id == split.id }) {
                                 viewModel.removeSplit(at: index)
