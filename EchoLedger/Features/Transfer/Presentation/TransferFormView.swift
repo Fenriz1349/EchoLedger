@@ -20,24 +20,35 @@ struct TransferFormView: View {
             Group {
                     Form {
                         Section("Comptes") {
-                            Picker("De", selection: $viewModel.sourceAccount) {
-                                Text("—").tag(Optional<Account>.none)
-                                ForEach(viewModel.availableAccounts) { item in
-                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                    )
-                                        .tag(Optional(item.account))
+                            VStack(spacing: 0) {
+                                Picker("De", selection: $viewModel.sourceAccountId) {
+                                    ForEach(viewModel.sourceOptions) { item in
+                                        Text(item.displayLabel).tag(Optional(item.account.id))
+                                    }
                                 }
+                                .padding(.vertical, 6)
+                                Divider()
+                                Picker("Vers", selection: $viewModel.destinationAccountId) {
+                                    ForEach(viewModel.destinationOptions) { item in
+                                        Text(item.displayLabel).tag(Optional(item.account.id))
+                                    }
+                                }
+                                .padding(.vertical, 6)
                             }
-                            Picker("Vers", selection: $viewModel.destinationAccount) {
-                                Text("—").tag(Optional<Account>.none)
-                                ForEach(viewModel.availableAccounts) { item in
-                                    (Text(item.account.name) + Text(" • \(item.institutionName)")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                    )
-                                        .tag(Optional(item.account))
+                            .overlay {
+                                GeometryReader { proxy in
+                                    Button {
+                                        viewModel.swapAccounts()
+                                    } label: {
+                                        Image(systemName: "arrow.up.arrow.down")
+                                            .font(.body.weight(.semibold))
+                                            .foregroundStyle(Color.echoAccentHard)
+                                            .frame(width: 40, height: 40)
+                                            .background(Color.echoAccentSoft,
+                                                       in: RoundedRectangle(cornerRadius: .echoCorner))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .position(x: proxy.size.width / 4, y: proxy.size.height / 2)
                                 }
                             }
                         }
