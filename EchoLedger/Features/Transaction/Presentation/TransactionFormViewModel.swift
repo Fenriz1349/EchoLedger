@@ -58,6 +58,13 @@ final class TransactionFormViewModel {
         return availableAccounts.first { !usedIds.contains($0.account.id) }?.account
     }
 
+    /// Accounts selectable for the split at `splitId` — every available account except those
+    /// already used by the transaction's other splits. The split keeps its own current account.
+    func accountOptions(forSplit splitId: UUID) -> [AccountDisplayItem] {
+        let usedByOthers = Set(splits.filter { $0.id != splitId }.map(\.accountId))
+        return availableAccounts.filter { !usedByOthers.contains($0.account.id) }
+    }
+
     // MARK: Computed
 
     /// The first validation rule the form currently fails, or nil when it is ready to submit.
