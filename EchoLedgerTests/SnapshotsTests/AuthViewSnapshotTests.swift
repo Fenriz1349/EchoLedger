@@ -25,10 +25,10 @@ final class AuthViewSnapshotTests: XCTestCase {
 
         let sut = AuthView(viewModel: viewModel).asViewController()
 
-        record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "AUTH_light")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "AUTH_dark")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraSmall)), named: "AUTH_light_XS")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .dark, contentSize: .accessibilityExtraExtraExtraLarge)),
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "AUTH_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "AUTH_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraSmall)), named: "AUTH_light_XS")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark, contentSize: .accessibilityExtraExtraExtraLarge)),
               named: "AUTH_dark_XXXL")
     }
 }
