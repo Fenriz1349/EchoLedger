@@ -69,6 +69,7 @@ final class DeleteInstitutionRuleTests: XCTestCase {
             try await institutionRepository.fetch(by: institutionId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription, "Établissement introuvable.")
         }
     }
 
@@ -80,6 +81,7 @@ final class DeleteInstitutionRuleTests: XCTestCase {
             try await accountRepository.fetch(by: accountId)
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 
@@ -91,6 +93,7 @@ final class DeleteInstitutionRuleTests: XCTestCase {
             try await transactionRepository.fetch(by: transactionId)
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 }

@@ -82,6 +82,7 @@ final class UpdateTransferTests: XCTestCase {
             try await useCase.execute(transfer, input: makeInput(amount: 0))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Le montant total doit être positif.")
         }
     }
 }

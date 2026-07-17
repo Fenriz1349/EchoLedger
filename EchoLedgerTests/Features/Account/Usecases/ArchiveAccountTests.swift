@@ -49,6 +49,7 @@ final class ArchiveAccountTests: XCTestCase {
             try await useCase.execute(id: UUID())
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 }

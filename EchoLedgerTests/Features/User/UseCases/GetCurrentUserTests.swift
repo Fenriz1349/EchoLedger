@@ -43,6 +43,7 @@ final class GetCurrentUserTests: XCTestCase {
             try await useCase.execute()
         ) { error in
             XCTAssertEqual(error as? UserError, .notFound)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Utilisateur introuvable.")
         }
     }
 
@@ -53,6 +54,7 @@ final class GetCurrentUserTests: XCTestCase {
             try await useCase.execute()
         ) { error in
             XCTAssertEqual(error as? UserError, .notFound)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Utilisateur introuvable.")
         }
     }
 }

@@ -62,6 +62,7 @@ final class UpdateUserTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, firstName: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? UserError, .nameTooLong)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Le nom ne peut pas dépasser 50 caractères.")
         }
     }
 
@@ -73,6 +74,7 @@ final class UpdateUserTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, lastName: String(repeating: "A", count: 51)))
         ) { error in
             XCTAssertEqual(error as? UserError, .nameTooLong)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Le nom ne peut pas dépasser 50 caractères.")
         }
     }
 
@@ -84,6 +86,7 @@ final class UpdateUserTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, email: "notanemail"))
         ) { error in
             XCTAssertEqual(error as? UserError, .invalidEmail)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "L'adresse email n'est pas valide.")
         }
     }
 }

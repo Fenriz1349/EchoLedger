@@ -58,6 +58,7 @@ final class DeleteAccountRuleTests: XCTestCase {
             try await accountRepository.fetch(by: accountId)
         ) { error in
             XCTAssertEqual(error as? AccountError, .notFound)
+            XCTAssertEqual((error as? AccountError)?.errorDescription, "Compte introuvable.")
         }
     }
 
@@ -73,6 +74,7 @@ final class DeleteAccountRuleTests: XCTestCase {
             try await transactionRepository.fetch(by: txnId)
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 

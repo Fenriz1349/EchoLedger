@@ -63,6 +63,7 @@ final class DeleteTransferTests: XCTestCase {
             try await useCase.execute(makeTransfer())
         ) { error in
             XCTAssertEqual(error as? TransactionError, .notFound)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Transaction introuvable.")
         }
     }
 }

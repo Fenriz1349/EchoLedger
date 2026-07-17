@@ -65,6 +65,7 @@ final class GetInstitutionsTests: XCTestCase {
             try await useCase.execute(for: userId)
         ) { error in
             XCTAssertEqual(error as? InstitutionError, .notFound)
+            XCTAssertEqual((error as? InstitutionError)?.errorDescription, "Établissement introuvable.")
         }
     }
 }

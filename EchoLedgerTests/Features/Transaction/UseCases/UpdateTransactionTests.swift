@@ -94,6 +94,8 @@ final class UpdateTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, label: ""))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .emptyLabel)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Le libellé de la transaction ne peut pas être vide.")
         }
     }
 
@@ -106,6 +108,7 @@ final class UpdateTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidTotalAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription, "Le montant total doit être positif.")
         }
     }
 
@@ -116,6 +119,8 @@ final class UpdateTransactionTests: XCTestCase {
             try await useCase.execute(makeInput(id: id, splits: []))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .missingSplits)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Une transaction doit avoir au moins une ventilation.")
         }
     }
 
@@ -127,6 +132,8 @@ final class UpdateTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 0)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .invalidSplitAmount)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "Le montant d'une ventilation doit être positif.")
         }
     }
 
@@ -139,6 +146,8 @@ final class UpdateTransactionTests: XCTestCase {
                                                 splits: [TransactionSplit(accountId: UUID(), amount: 10)]))
         ) { error in
             XCTAssertEqual(error as? TransactionError, .splitAmountMismatch)
+            XCTAssertEqual((error as? TransactionError)?.errorDescription,
+                          "La somme des ventilations ne correspond pas au montant total.")
         }
     }
 }

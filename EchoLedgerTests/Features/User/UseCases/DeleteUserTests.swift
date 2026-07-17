@@ -44,6 +44,7 @@ final class DeleteUserTests: XCTestCase {
         try await useCase.execute(id: id)
         await XCTAssertThrowsErrorAsync(try await repository.fetchCurrent()) { error in
             XCTAssertEqual(error as? UserError, .notFound)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Utilisateur introuvable.")
         }
     }
 
@@ -53,6 +54,7 @@ final class DeleteUserTests: XCTestCase {
         try await useCase.execute(id: id)
         await XCTAssertThrowsErrorAsync(try await repository.fetchCurrent()) { error in
             XCTAssertEqual(error as? UserError, .notFound)
+            XCTAssertEqual((error as? UserError)?.errorDescription, "Utilisateur introuvable.")
         }
     }
 
