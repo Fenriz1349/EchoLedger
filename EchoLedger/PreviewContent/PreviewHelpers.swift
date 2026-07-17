@@ -163,6 +163,7 @@ struct PreviewHelpers {
             addTransaction: container.addTransaction,
             updateTransaction: container.updateTransaction,
             getAccountsWithInstitution: container.getAccountsWithInstitution,
+            getLastUsedAccount: container.getLastUsedAccount,
             uploadTransactionDocument: container.uploadTransactionDocument,
             getTransactionDocument: container.getTransactionDocument,
             deleteDocument: container.deleteDocument,

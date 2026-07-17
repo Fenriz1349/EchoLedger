@@ -146,6 +146,7 @@ extension DIContainer {
             transferBetweenAccounts: transferBetweenAccounts,
             updateTransfer: updateTransfer,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            getLastUsedAccount: getLastUsedAccount,
             userId: userId,
             existingTransfer: existing
         )
@@ -173,6 +174,7 @@ extension DIContainer {
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            getLastUsedAccount: getLastUsedAccount,
             uploadTransactionDocument: uploadTransactionDocument,
             getTransactionDocument: getTransactionDocument,
             deleteDocument: deleteDocument,

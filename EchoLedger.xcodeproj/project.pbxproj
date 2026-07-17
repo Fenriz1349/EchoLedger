@@ -483,6 +483,9 @@
 		68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */; };
 		68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
 		68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
+		68CFAF63300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */; };
+		68CFAF64300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */; };
+		68CFAF66300A074B00444AA3 /* GetLastUsedAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -774,6 +777,8 @@
 		68C8116F2FDC39580077D42B /* GetChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChartData.swift; sourceTree = "<group>"; };
 		68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyFlowChartView.swift; sourceTree = "<group>"; };
 		68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Extension.swift"; sourceTree = "<group>"; };
+		68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLastUsedAccount.swift; sourceTree = "<group>"; };
+		68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLastUsedAccountTests.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -1169,6 +1174,7 @@
 				683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */,
 				681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */,
 				6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */,
+				68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */,
 				683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */,
 				681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */,
 			);
@@ -1634,6 +1640,7 @@
 				683133A82F617951004AA5E4 /* GetTransactionsByCategory.swift */,
 				683133AA2F617970004AA5E4 /* GetTransactionsByDateRange.swift */,
 				681C55C12FE6870500339E87 /* GetTransactionsByAccount.swift */,
+				68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */,
 				684497172F753D8100337F74 /* UpdateTransactionInput.swift */,
 				685A1EFA2F5AEB1C0009B885 /* UpdateTransaction.swift */,
 				685A1EFC2F5AEB240009B885 /* DeleteTransaction.swift */,
@@ -1928,6 +1935,7 @@
 				6825B6F72FE949D5003170FC /* DeleteAccountTests.swift in Sources */,
 				681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */,
 				6813E8262F6D963900344774 /* AddAccountTests.swift in Sources */,
+				68CFAF66300A074B00444AA3 /* GetLastUsedAccountTests.swift in Sources */,
 				6813E8332F6D96D300344774 /* GetCurrentUserTests.swift in Sources */,
 				6813E80D2F6D3CDC00344774 /* UpdateInstitutionTests.swift in Sources */,
 				6813E8302F6D96B200344774 /* GetAccountBalanceTests.swift in Sources */,
@@ -2138,6 +2146,7 @@
 				687DD6702FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */,
 				68C811712FDC39580077D42B /* GetChartData.swift in Sources */,
 				687DD67A2FDD440500B281FF /* GraphsViewModel.swift in Sources */,
+				68CFAF63300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */,
 				682B0AA72FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
 				683D5FE32FE426E00049D07D /* DownloadImage.swift in Sources */,
 				6835BD8B2FED621E00F1A372 /* View+Extension.swift in Sources */,
@@ -2248,6 +2257,7 @@
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
+				68CFAF64300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */,
 				6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */,
 				68467C952FD19F4500144A84 /* DocumentError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,

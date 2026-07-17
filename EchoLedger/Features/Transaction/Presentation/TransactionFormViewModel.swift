@@ -19,6 +19,7 @@ final class TransactionFormViewModel {
     private let addTransaction: AddTransaction
     private let updateTransaction: UpdateTransaction
     private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let getLastUsedAccount: GetLastUsedAccount
     private let uploadTransactionDocument: UploadTransactionDocument
     private let getTransactionDocument: GetTransactionDocument
     private let deleteDocument: DeleteDocument
@@ -111,14 +112,15 @@ final class TransactionFormViewModel {
     ///   - toasty: Toaster to display message to user.
     ///   - addTransaction: UseCase for creating a new transaction.
     ///   - updateTransaction: UseCase to update a existing transaction.
-    ///   - getInstitutions: UseCase for fetching institutions.
-    ///   - getAccounts: UseCase for fetching accounts per institution.
+    ///   - getAccountsWithInstitution: UseCase for fetching accounts paired with their institution.
+    ///   - getLastUsedAccount: UseCase resolving the account to default the first split to.
     ///   - userId: The identifier of the current user.
     init(
         toasty: ToastyManager,
         addTransaction: AddTransaction,
         updateTransaction: UpdateTransaction,
         getAccountsWithInstitution: GetAccountsWithInstitution,
+        getLastUsedAccount: GetLastUsedAccount,
         uploadTransactionDocument: UploadTransactionDocument,
         getTransactionDocument: GetTransactionDocument,
         deleteDocument: DeleteDocument,
@@ -131,6 +133,7 @@ final class TransactionFormViewModel {
         self.addTransaction = addTransaction
         self.updateTransaction = updateTransaction
         self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.getLastUsedAccount = getLastUsedAccount
         self.uploadTransactionDocument = uploadTransactionDocument
         self.getTransactionDocument = getTransactionDocument
         self.deleteDocument = deleteDocument
@@ -147,7 +150,8 @@ final class TransactionFormViewModel {
     // MARK: Actions
 
     /// Loads all available accounts and resolves their institution names.
-    /// In create mode, initialises the first split automatically.
+    /// In create mode, initialises the first split on the last used account, defaulting
+    /// to the first account alphabetically when the user has no transaction yet.
     func loadAccounts() async {
         do {
             let filter: AccountFilter = existingTransaction == nil ? .active : .all
@@ -161,8 +165,12 @@ final class TransactionFormViewModel {
                 availableAccounts = items
             }
 
-            if existingTransaction == nil, let first = items.first {
-                addSplit(for: first.account)
+            if existingTransaction == nil {
+                let lastUsedTransaction = try await getLastUsedAccount.execute(for: userId)
+                let lastUsedItem = items.first { $0.account.id == lastUsedTransaction?.splits.first?.accountId }
+                if let account = (lastUsedItem ?? items.first)?.account {
+                    addSplit(for: account)
+                }
             }
         } catch {
             toasty.showError(error)
