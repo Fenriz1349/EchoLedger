@@ -492,7 +492,6 @@
 		68CFAF7A300A297D00444AA3 /* AccountListViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF79300A297D00444AA3 /* AccountListViewSnapshotTests.swift */; };
 		68CFAF7C300A298800444AA3 /* UserProfileViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7B300A298800444AA3 /* UserProfileViewSnapshotTests.swift */; };
 		68CFAF7E300A299100444AA3 /* AuthViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */; };
-		68CFAF80300A299C00444AA3 /* TransactionFormViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7F300A299C00444AA3 /* TransactionFormViewSnapshotTests.swift */; };
 		68CFAF9E300A317000444AA3 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
@@ -792,7 +791,6 @@
 		68CFAF79300A297D00444AA3 /* AccountListViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewSnapshotTests.swift; sourceTree = "<group>"; };
 		68CFAF7B300A298800444AA3 /* UserProfileViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewSnapshotTests.swift; sourceTree = "<group>"; };
 		68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewSnapshotTests.swift; sourceTree = "<group>"; };
-		68CFAF7F300A299C00444AA3 /* TransactionFormViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFormViewSnapshotTests.swift; sourceTree = "<group>"; };
 		68CFAF81300A2B3A00444AA3 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
 		68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestCase.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
@@ -1746,7 +1744,6 @@
 				68CFAF79300A297D00444AA3 /* AccountListViewSnapshotTests.swift */,
 				68CFAF7B300A298800444AA3 /* UserProfileViewSnapshotTests.swift */,
 				68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */,
-				68CFAF7F300A299C00444AA3 /* TransactionFormViewSnapshotTests.swift */,
 				68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */,
 			);
 			path = SnapshotsTests;
@@ -1987,7 +1984,6 @@
 				681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */,
 				6825B70D2FE95132003170FC /* UnarchiveInstitutionRuleTests.swift in Sources */,
 				683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */,
-				68CFAF80300A299C00444AA3 /* TransactionFormViewSnapshotTests.swift in Sources */,
 				6825B7002FE94DDF003170FC /* TransferBetweenAccountsTests.swift in Sources */,
 				6813E82E2F6D969F00344774 /* ArchiveAccountTests.swift in Sources */,
 				6813E8352F6D96E300344774 /* UpdateUserTests.swift in Sources */,
