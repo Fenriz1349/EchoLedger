@@ -514,6 +514,13 @@
 			remoteGlobalIDString = 6857E3C22F51AB4200913E12;
 			remoteInfo = EchoLedger;
 		};
+		68FC67E5300A58E600EEF747 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 683820CD2FC8432000CA6761;
+			remoteInfo = EchoLedgerCloud;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1799,6 +1806,7 @@
 			);
 			dependencies = (
 				683133B52F61A1A9004AA5E4 /* PBXTargetDependency */,
+				68FC67E6300A58E600EEF747 /* PBXTargetDependency */,
 			);
 			name = EchoLedgerTests;
 			packageProductDependencies = (
@@ -2441,6 +2449,11 @@
 			isa = PBXTargetDependency;
 			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
 			targetProxy = 683133B42F61A1A9004AA5E4 /* PBXContainerItemProxy */;
+		};
+		68FC67E6300A58E600EEF747 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 683820CD2FC8432000CA6761 /* EchoLedgerCloud */;
+			targetProxy = 68FC67E5300A58E600EEF747 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
