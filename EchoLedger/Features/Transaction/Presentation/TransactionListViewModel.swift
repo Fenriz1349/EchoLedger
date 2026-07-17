@@ -177,7 +177,8 @@ final class TransactionListViewModel {
             transactions = try await getTransactions.execute(for: userId)
 
             let allItems = try await getAccountsWithInstitution.execute(for: userId, filter: .all)
-            availableAccounts = allItems.filter { !$0.account.isArchived }
+            let sortedItems = AccountRecencySorter.sort(allItems, using: transactions)
+            availableAccounts = sortedItems.filter { !$0.account.isArchived }
             institutionNames = Dictionary(uniqueKeysWithValues: allItems.map { ($0.account.id, $0.institutionName) })
 
             for transaction in transactions {

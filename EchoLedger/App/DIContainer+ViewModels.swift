@@ -145,8 +145,7 @@ extension DIContainer {
             toasty: toasty,
             transferBetweenAccounts: transferBetweenAccounts,
             updateTransfer: updateTransfer,
-            getAccountsWithInstitution: getAccountsWithInstitution,
-            getLastUsedAccount: getLastUsedAccount,
+            getAccountsSortedByRecency: getAccountsSortedByRecency,
             userId: userId,
             existingTransfer: existing
         )
@@ -173,8 +172,7 @@ extension DIContainer {
             toasty: toasty,
             addTransaction: addTransaction,
             updateTransaction: updateTransaction,
-            getAccountsWithInstitution: getAccountsWithInstitution,
-            getLastUsedAccount: getLastUsedAccount,
+            getAccountsSortedByRecency: getAccountsSortedByRecency,
             uploadTransactionDocument: uploadTransactionDocument,
             getTransactionDocument: getTransactionDocument,
             deleteDocument: deleteDocument,

@@ -483,9 +483,11 @@
 		68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */; };
 		68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
 		68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
-		68CFAF63300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */; };
-		68CFAF64300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */; };
-		68CFAF66300A074B00444AA3 /* GetLastUsedAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */; };
+		68CFAF68300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */; };
+		68CFAF69300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */; };
+		68CFAF6B300A0D5400444AA3 /* GetAccountsSortedByRecency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */; };
+		68CFAF6C300A0D5400444AA3 /* GetAccountsSortedByRecency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */; };
+		68CFAF6E300A0D8D00444AA3 /* AccountRecencySorterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF6D300A0D8D00444AA3 /* AccountRecencySorterTests.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -777,8 +779,9 @@
 		68C8116F2FDC39580077D42B /* GetChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChartData.swift; sourceTree = "<group>"; };
 		68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyFlowChartView.swift; sourceTree = "<group>"; };
 		68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Extension.swift"; sourceTree = "<group>"; };
-		68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLastUsedAccount.swift; sourceTree = "<group>"; };
-		68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLastUsedAccountTests.swift; sourceTree = "<group>"; };
+		68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRecencySorter.swift; sourceTree = "<group>"; };
+		68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsSortedByRecency.swift; sourceTree = "<group>"; };
+		68CFAF6D300A0D8D00444AA3 /* AccountRecencySorterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRecencySorterTests.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -951,6 +954,7 @@
 			isa = PBXGroup;
 			children = (
 				6813E81F2F6D946E00344774 /* AccountDouble.swift */,
+				68CFAF6D300A0D8D00444AA3 /* AccountRecencySorterTests.swift */,
 				6813E8242F6D962B00344774 /* Usecases */,
 			);
 			path = Account;
@@ -1174,7 +1178,6 @@
 				683133C72F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift */,
 				681CA8642F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift */,
 				6825B6FC2FE94C2F003170FC /* GetTransactionsByAccountTests.swift */,
-				68CFAF65300A074B00444AA3 /* GetLastUsedAccountTests.swift */,
 				683133C32F61A59E004AA5E4 /* UpdateTransactionTests.swift */,
 				681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */,
 			);
@@ -1429,6 +1432,7 @@
 				6813E81A2F6D913200344774 /* GetAccounts.swift */,
 				6813E81C2F6D919D00344774 /* GetAccountBalance.swift */,
 				682B0AA52FC96E3100BFB539 /* GetAccountsWithInstitution.swift */,
+				68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */,
 				6844971F2F753EBE00337F74 /* UpdateAccountInput.swift */,
 				685A1E892F5ACF700009B885 /* UpdateAccount.swift */,
 				685A1E872F5ACF700009B885 /* ArchiveAccount.swift */,
@@ -1447,6 +1451,7 @@
 				685A1E8D2F5ACF700009B885 /* AccountCategory.swift */,
 				685A1E822F5ACF700009B885 /* AccountError.swift */,
 				685A1E842F5ACF700009B885 /* AccountProviding.swift */,
+				68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */,
 				685A1E8A2F5ACF700009B885 /* UseCases */,
 			);
 			path = Domain;
@@ -1640,7 +1645,6 @@
 				683133A82F617951004AA5E4 /* GetTransactionsByCategory.swift */,
 				683133AA2F617970004AA5E4 /* GetTransactionsByDateRange.swift */,
 				681C55C12FE6870500339E87 /* GetTransactionsByAccount.swift */,
-				68CFAF62300A072E00444AA3 /* GetLastUsedAccount.swift */,
 				684497172F753D8100337F74 /* UpdateTransactionInput.swift */,
 				685A1EFA2F5AEB1C0009B885 /* UpdateTransaction.swift */,
 				685A1EFC2F5AEB240009B885 /* DeleteTransaction.swift */,
@@ -1934,8 +1938,8 @@
 				6813E8072F6D3C4B00344774 /* GetInstitutionTests.swift in Sources */,
 				6825B6F72FE949D5003170FC /* DeleteAccountTests.swift in Sources */,
 				681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */,
+				68CFAF6E300A0D8D00444AA3 /* AccountRecencySorterTests.swift in Sources */,
 				6813E8262F6D963900344774 /* AddAccountTests.swift in Sources */,
-				68CFAF66300A074B00444AA3 /* GetLastUsedAccountTests.swift in Sources */,
 				6813E8332F6D96D300344774 /* GetCurrentUserTests.swift in Sources */,
 				6813E80D2F6D3CDC00344774 /* UpdateInstitutionTests.swift in Sources */,
 				6813E8302F6D96B200344774 /* GetAccountBalanceTests.swift in Sources */,
@@ -2061,6 +2065,7 @@
 				683821272FC8432000CA6761 /* TransactionRemoteSource.swift in Sources */,
 				683821282FC8432000CA6761 /* ResolveSession.swift in Sources */,
 				683821292FC8432000CA6761 /* UpdateInstitution.swift in Sources */,
+				68CFAF6B300A0D5400444AA3 /* GetAccountsSortedByRecency.swift in Sources */,
 				6838212A2FC8432000CA6761 /* User.swift in Sources */,
 				6838212B2FC8432000CA6761 /* SignInWithEmail.swift in Sources */,
 				6838212D2FC8432000CA6761 /* AccountError.swift in Sources */,
@@ -2135,6 +2140,7 @@
 				683821602FC8432000CA6761 /* UpdateUser.swift in Sources */,
 				683821912FC84ABC00CA6761 /* PreviewHelpersCloud.swift in Sources */,
 				683821612FC8432000CA6761 /* TransactionSplit.swift in Sources */,
+				68CFAF69300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */,
 				6849E99E2FEBDECC0026A13E /* CascadeRowModifier.swift in Sources */,
 				681C55D72FE69CD100339E87 /* UnarchiveAccountRule.swift in Sources */,
 				683821622FC8432000CA6761 /* UnarchiveInstitution.swift in Sources */,
@@ -2146,7 +2152,6 @@
 				687DD6702FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */,
 				68C811712FDC39580077D42B /* GetChartData.swift in Sources */,
 				687DD67A2FDD440500B281FF /* GraphsViewModel.swift in Sources */,
-				68CFAF63300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */,
 				682B0AA72FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
 				683D5FE32FE426E00049D07D /* DownloadImage.swift in Sources */,
 				6835BD8B2FED621E00F1A372 /* View+Extension.swift in Sources */,
@@ -2251,13 +2256,13 @@
 				681C55CB2FE6921000339E87 /* DeleteUser.swift in Sources */,
 				687DD66D2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
 				684497372F75743F00337F74 /* InstitutionFormContent.swift in Sources */,
+				68CFAF6C300A0D5400444AA3 /* GetAccountsSortedByRecency.swift in Sources */,
 				6835BD762FED0F8100F1A372 /* AnimatedAmountView.swift in Sources */,
 				68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
 				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
-				68CFAF64300A072E00444AA3 /* GetLastUsedAccount.swift in Sources */,
 				6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */,
 				68467C952FD19F4500144A84 /* DocumentError.swift in Sources */,
 				685A1F012F5AEB680009B885 /* TransactionLocalSource.swift in Sources */,
@@ -2284,6 +2289,7 @@
 				685A1EDF2F5AE6F90009B885 /* InstitutionRemoteSource.swift in Sources */,
 				681760AF2FE4F9F6005873D2 /* AppHeaderView.swift in Sources */,
 				683276072F9BB03A00DA5796 /* UserProfileView.swift in Sources */,
+				68CFAF68300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */,
 				681C55C62FE6873A00339E87 /* DeleteAccountRule.swift in Sources */,
 				68C811742FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */,
 				683D5FE42FE426E00049D07D /* DownloadImage.swift in Sources */,

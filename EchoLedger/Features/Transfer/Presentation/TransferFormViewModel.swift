@@ -52,8 +52,7 @@ final class TransferFormViewModel {
     private let toasty: ToastyManager
     private let transferBetweenAccounts: TransferBetweenAccounts
     private let updateTransfer: UpdateTransfer
-    private let getAccountsWithInstitution: GetAccountsWithInstitution
-    private let getLastUsedAccount: GetLastUsedAccount
+    private let getAccountsSortedByRecency: GetAccountsSortedByRecency
     private let userId: UUID
 
     // MARK: Init
@@ -62,24 +61,21 @@ final class TransferFormViewModel {
     ///   - toasty: Toaster to display messages to the user.
     ///   - transferBetweenAccounts: UseCase for creating the transfer transactions.
     ///   - updateTransfer: UseCase for updating an existing transfer.
-    ///   - getAccountsWithInstitution: UseCase for fetching accounts paired with their institution.
-    ///   - getLastUsedAccount: UseCase resolving the account to default the source picker to.
+    ///   - getAccountsSortedByRecency: UseCase for fetching accounts ordered by last use.
     ///   - userId: The identifier of the current user.
     ///   - existingTransfer: The transfer to edit. Nil for creation mode.
     init(
         toasty: ToastyManager,
         transferBetweenAccounts: TransferBetweenAccounts,
         updateTransfer: UpdateTransfer,
-        getAccountsWithInstitution: GetAccountsWithInstitution,
-        getLastUsedAccount: GetLastUsedAccount,
+        getAccountsSortedByRecency: GetAccountsSortedByRecency,
         userId: UUID,
         existingTransfer: Transfer? = nil
     ) {
         self.toasty = toasty
         self.transferBetweenAccounts = transferBetweenAccounts
         self.updateTransfer = updateTransfer
-        self.getAccountsWithInstitution = getAccountsWithInstitution
-        self.getLastUsedAccount = getLastUsedAccount
+        self.getAccountsSortedByRecency = getAccountsSortedByRecency
         self.userId = userId
         self.existingTransfer = existingTransfer
 
@@ -92,11 +88,11 @@ final class TransferFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all active accounts available for transfer, resolves their institution names,
-    /// and pre-selects existing accounts in edit mode, or the last used account otherwise.
+    /// Loads all active accounts available for transfer, ordered by last use, resolves their
+    /// institution names, and pre-selects existing accounts in edit mode.
     func loadAccounts() async {
         do {
-            let items = try await getAccountsWithInstitution.execute(for: userId, filter: .active)
+            let items = try await getAccountsSortedByRecency.execute(for: userId, filter: .active)
             availableAccounts = items
 
             if let existingTransfer {
@@ -107,11 +103,7 @@ final class TransferFormViewModel {
                     $0.account.id == existingTransfer.destination.splits.first?.accountId
                 }?.account
             }
-            if sourceAccount == nil {
-                let lastUsedTransaction = try await getLastUsedAccount.execute(for: userId)
-                let lastUsedItem = items.first { $0.account.id == lastUsedTransaction?.splits.first?.accountId }
-                sourceAccount = (lastUsedItem ?? items.first)?.account
-            }
+            if sourceAccount == nil { sourceAccount = items.first?.account }
             if destinationAccount == nil {
                 destinationAccount = items.first { $0.account.id != sourceAccount?.id }?.account
             }
