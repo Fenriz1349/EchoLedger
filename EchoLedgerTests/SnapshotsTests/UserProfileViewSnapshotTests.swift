@@ -21,11 +21,11 @@ final class UserProfileViewSnapshotTests: XCTestCase {
             .environment(PreviewHelpers.container)
             .asViewController()
 
-        record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "USER_PROFILE_light")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "USER_PROFILE_dark")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraSmall)),
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "USER_PROFILE_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "USER_PROFILE_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraSmall)),
               named: "USER_PROFILE_light_XS")
-        record(snapshot: sut.snapshot(for: .iPhone(style: .dark, contentSize: .accessibilityExtraExtraExtraLarge)),
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark, contentSize: .accessibilityExtraExtraExtraLarge)),
               named: "USER_PROFILE_dark_XXXL")
     }
 }
