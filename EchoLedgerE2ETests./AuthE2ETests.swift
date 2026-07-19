@@ -48,4 +48,45 @@ final class AuthE2ETests: XCTestCase {
         let signInUid = try await authRemoteSource.signInWithEmail(email: testEmail, password: testPassword)
         XCTAssertEqual(signInUid, signUpUid)
     }
+
+    /// Verifies that linking an anonymous session to an email/password keeps the same uid.
+    func test_anonymousSignIn_thenLinkToPermanentAccount_keepsUid() async throws {
+        let anonymousUid = try await authRemoteSource.signInAnonymously()
+        XCTAssertFalse(anonymousUid.isEmpty)
+
+        try await authRemoteSource.linkAnonymousToEmail(email: testEmail, password: testPassword)
+        try authRemoteSource.signOut()
+
+        let signInUid = try await authRemoteSource.signInWithEmail(email: testEmail, password: testPassword)
+        XCTAssertEqual(signInUid, anonymousUid)
+    }
+
+    /// Verifies that signing in with the wrong password is rejected by the real Auth service.
+    func test_signIn_wrongPassword_throwsInvalidCredentials() async throws {
+        _ = try await authRemoteSource.createUserProfile(email: testEmail, password: testPassword)
+        try authRemoteSource.signOut()
+
+        do {
+            _ = try await authRemoteSource.signInWithEmail(email: testEmail, password: "WrongPassword1!")
+            XCTFail("Expected signIn to throw for a wrong password")
+        } catch let error as AuthError {
+            XCTAssertEqual(error, .invalidCredentials)
+        }
+
+        // Sign back in so tearDown can clean up the account it created.
+        _ = try await authRemoteSource.signInWithEmail(email: testEmail, password: testPassword)
+    }
+
+    /// Verifies that a deleted account can no longer sign in.
+    func test_deleteCurrentUser_accountNoLongerExists() async throws {
+        _ = try await authRemoteSource.createUserProfile(email: testEmail, password: testPassword)
+        try await authRemoteSource.deleteCurrentUser()
+
+        do {
+            _ = try await authRemoteSource.signInWithEmail(email: testEmail, password: testPassword)
+            XCTFail("Expected signIn to fail after account deletion")
+        } catch let error as AuthError {
+            XCTAssertEqual(error, .invalidCredentials)
+        }
+    }
 }
