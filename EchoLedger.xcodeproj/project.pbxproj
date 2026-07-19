@@ -472,6 +472,7 @@
 		687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */; };
 		687DD6792FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
 		687DD67A2FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
+		68C2A044300D4ECA00AA47A9 /* AuthE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 		68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
 		68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
@@ -517,6 +518,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6857E3C22F51AB4200913E12;
 			remoteInfo = EchoLedger;
+		};
+		68617AB9300A8488007C5731 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6857E3C22F51AB4200913E12;
+			remoteInfo = EchoLedger;
+		};
+		68C2A047300D525100AA47A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 683820CD2FC8432000CA6761;
+			remoteInfo = EchoLedgerCloud;
 		};
 		68FC67E5300A58E600EEF747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -783,6 +798,7 @@
 		68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccountsIntegrationTests.swift; sourceTree = "<group>"; };
 		68617AAD300A6180007C5731 /* UpdateTransactionBalanceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTransactionBalanceIntegrationTests.swift; sourceTree = "<group>"; };
 		68617AAF300A6228007C5731 /* ArchiveInstitutionCascadeIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveInstitutionCascadeIntegrationTests.swift; sourceTree = "<group>"; };
+		68617AB5300A8488007C5731 /* EchoLedgerE2ETests..xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoLedgerE2ETests..xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6868A66C2F6D9CC90038A612 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		6868A66E2F6D9D000038A612 /* InstitutionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionModel.swift; sourceTree = "<group>"; };
 		6868A6702F6D9D2C0038A612 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
@@ -792,6 +808,7 @@
 		687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselPageIndicator.swift; sourceTree = "<group>"; };
 		687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselNavigation.swift; sourceTree = "<group>"; };
 		687DD6782FDD440500B281FF /* GraphsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsViewModel.swift; sourceTree = "<group>"; };
+		68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthE2ETests.swift; sourceTree = "<group>"; };
 		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
 		68C811642FDC37110077D42B /* Transaction+Effective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Effective.swift"; sourceTree = "<group>"; };
 		68C811692FDC39410077D42B /* ChartModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModels.swift; sourceTree = "<group>"; };
@@ -852,6 +869,13 @@
 				684497312F756E0B00337F74 /* CustomLabels in Frameworks */,
 				6813E8162F6D51ED00344774 /* FirebaseFirestore in Frameworks */,
 				683821A42FC8695000CA6761 /* FirebaseStorage in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		68617AB2300A8488007C5731 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1409,10 +1433,12 @@
 				681CA8542F62C0EE002E1EF7 /* EchoLedger.xctestplan */,
 				6857E3D42F51B70300913E12 /* EchoLedger */,
 				683133BA2F61A1D3004AA5E4 /* EchoLedgerTests */,
+				68C2A043300D4ECA00AA47A9 /* EchoLedgerE2ETests. */,
 				681B47002F7F9138000CC7C4 /* EchoLedger.app */,
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
 				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
 				683821A22FC8695000CA6761 /* Frameworks */,
+				68617AB5300A8488007C5731 /* EchoLedgerE2ETests..xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1731,6 +1757,14 @@
 			path = Integration;
 			sourceTree = "<group>";
 		};
+		68C2A043300D4ECA00AA47A9 /* EchoLedgerE2ETests. */ = {
+			isa = PBXGroup;
+			children = (
+				68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */,
+			);
+			path = EchoLedgerE2ETests.;
+			sourceTree = "<group>";
+		};
 		68C811672FDC392B0077D42B /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -1885,6 +1919,27 @@
 			productReference = 681B47002F7F9138000CC7C4 /* EchoLedger.app */;
 			productType = "com.apple.product-type.application";
 		};
+		68617AB4300A8488007C5731 /* EchoLedgerE2ETests. */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 68617ABB300A8488007C5731 /* Build configuration list for PBXNativeTarget "EchoLedgerE2ETests." */;
+			buildPhases = (
+				68617AB1300A8488007C5731 /* Sources */,
+				68617AB2300A8488007C5731 /* Frameworks */,
+				68617AB3300A8488007C5731 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				68617ABA300A8488007C5731 /* PBXTargetDependency */,
+				68C2A048300D525100AA47A9 /* PBXTargetDependency */,
+			);
+			name = EchoLedgerE2ETests.;
+			packageProductDependencies = (
+			);
+			productName = EchoLedgerE2ETests.;
+			productReference = 68617AB5300A8488007C5731 /* EchoLedgerE2ETests..xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1892,7 +1947,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2620;
+				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					683133AF2F61A1A8004AA5E4 = {
@@ -1901,6 +1956,10 @@
 					};
 					6857E3C22F51AB4200913E12 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					68617AB4300A8488007C5731 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 683820CD2FC8432000CA6761;
 					};
 				};
 			};
@@ -1927,6 +1986,7 @@
 				6857E3C22F51AB4200913E12 /* EchoLedger */,
 				683133AF2F61A1A8004AA5E4 /* EchoLedgerTests */,
 				683820CD2FC8432000CA6761 /* EchoLedgerCloud */,
+				68617AB4300A8488007C5731 /* EchoLedgerE2ETests. */,
 			);
 		};
 /* End PBXProject section */
@@ -1956,6 +2016,13 @@
 				685A1EB72F5ACF700009B885 /* Assets.xcassets in Resources */,
 				685A1EB82F5ACF700009B885 /* Localizable.xcstrings in Resources */,
 				681314232FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		68617AB3300A8488007C5731 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2466,6 +2533,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		68617AB1300A8488007C5731 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68C2A044300D4ECA00AA47A9 /* AuthE2ETests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2473,6 +2548,16 @@
 			isa = PBXTargetDependency;
 			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
 			targetProxy = 683133B42F61A1A9004AA5E4 /* PBXContainerItemProxy */;
+		};
+		68617ABA300A8488007C5731 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
+			targetProxy = 68617AB9300A8488007C5731 /* PBXContainerItemProxy */;
+		};
+		68C2A048300D525100AA47A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 683820CD2FC8432000CA6761 /* EchoLedgerCloud */;
+			targetProxy = 68C2A047300D525100AA47A9 /* PBXContainerItemProxy */;
 		};
 		68FC67E6300A58E600EEF747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2785,6 +2870,48 @@
 			};
 			name = Release;
 		};
+		68617ABC300A8488007C5731 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F435NP2676;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.juliencotte.EchoLedgerE2ETests-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EchoLedgerCloud.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EchoLedgerCloud";
+			};
+			name = Debug;
+		};
+		68617ABD300A8488007C5731 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F435NP2676;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.juliencotte.EchoLedgerE2ETests-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EchoLedgerCloud.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EchoLedgerCloud";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2820,6 +2947,15 @@
 			buildConfigurations = (
 				6857E3CF2F51AB4400913E12 /* Debug */,
 				6857E3D02F51AB4400913E12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		68617ABB300A8488007C5731 /* Build configuration list for PBXNativeTarget "EchoLedgerE2ETests." */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68617ABC300A8488007C5731 /* Debug */,
+				68617ABD300A8488007C5731 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
