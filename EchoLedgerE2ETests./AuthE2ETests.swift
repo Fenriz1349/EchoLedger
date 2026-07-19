@@ -22,11 +22,7 @@ final class AuthE2ETests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // The host app (EchoLedgerCloud) already calls FirebaseApp.configure() at launch with its
-        // real GoogleService-Info.plist — reconfiguring here would just log an error and no-op.
-        // Redirecting the already-configured Auth instance to the emulator is enough, as long as
-        // no real Auth network call has happened yet (verified: app launch only reads the local
-        // cached session, no network).
+        // The host app already configures Firebase at launch; just redirect Auth to the emulator.
         if !Self.isConfigured {
             Auth.auth().useEmulator(withHost: "127.0.0.1", port: 9099)
             Self.isConfigured = true
