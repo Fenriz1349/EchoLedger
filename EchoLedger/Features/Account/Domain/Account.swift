@@ -1,35 +1,53 @@
 //
 //  Account.swift
-//  CatLedger
+//  EchoLedger
 //
 //  Created by Julien Cotte on 18/11/2025.
 //
 
-import SwiftData
 import Foundation
 
-@Model
-class Account {
-    @Attribute(.unique) var id: UUID
-    var name: String
-    var type: AccountType
-    var initialBalance: Double
-    var createdAt: Date
+/// Represents a financial account belonging to an Institution.
+/// Balance is not stored — it is computed on demand via GetAccountBalance.
+struct Account: Identifiable, Equatable, Codable, Sendable, Hashable {
 
-    @Relationship
-    var institution: Institution
+    let id: UUID
+    let institutionId: UUID
+    let name: String
+    let category: AccountCategory
+    let isArchived: Bool
+    /// Date of the last local modification. Nil for records created before sync was introduced.
+    let updatedAt: Date?
 
-    @Relationship(deleteRule: .cascade)
-    var transactions: [Transaction] = []
-
-    init(name: String,
-         initialBalance: Double,
-         institution: Institution) {
-        self.id = UUID()
+    /// Creates a new Account.
+    /// - Parameters:
+    ///   - id: Unique identifier. Defaults to a new UUID.
+    ///   - institutionId: The identifier of the institution this account belongs to.
+    ///   - name: Human-readable name of the account (e.g. "Livret A").
+    ///   - category: Category of the account.
+    ///   - isArchived: Bool to archive an account.
+    ///   - updatedAt: Last modification date. Nil for legacy records.
+    init(
+        id: UUID = UUID(),
+        institutionId: UUID,
+        name: String,
+        category: AccountCategory,
+        isArchived: Bool = false,
+        updatedAt: Date? = nil
+    ) {
+        self.id = id
+        self.institutionId = institutionId
         self.name = name
-        self.type = .unknown
-        self.initialBalance = initialBalance
-        self.createdAt = Date()
-        self.institution = institution
+        self.category = category
+        self.isArchived = isArchived
+        self.updatedAt = updatedAt
+    }
+}
+
+extension Account {
+
+    /// True when the account belongs to the given institution.
+    func belongs(to institutionId: UUID) -> Bool {
+        self.institutionId == institutionId
     }
 }

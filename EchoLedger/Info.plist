@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>EchoLedger utilise la caméra pour vos photos de profil et pièces jointes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>EchoLedger accède à votre bibliothèque pour vos photos de profil et pièces jointes.</string>
+</dict>
+</plist>

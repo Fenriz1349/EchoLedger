@@ -6,3 +6,313 @@
 //
 
 import Foundation
+import SwiftData
+import Toasty
+
+/// Assembles and provides all dependencies for the application.
+/// Acts as the single source of truth for dependency injection.
+@MainActor
+@Observable
+final class DIContainer {
+
+    // MARK: SwiftData Stack
+    let modelContainer: ModelContainer
+
+    private var modelContext: ModelContext {
+        modelContainer.mainContext
+    }
+
+    // MARK: Local Sources
+    private let userLocalSource: UserLocalSource
+    private let institutionLocalSource: InstitutionLocalSource
+    private let accountLocalSource: AccountLocalSource
+    private let transactionLocalSource: TransactionLocalSource
+
+    // MARK: Remote Sources
+    let userRemote = UserRemoteSource()
+    let institutionRemote = InstitutionRemoteSource()
+    let accountRemote = AccountRemoteSource()
+    let transactionRemote = TransactionRemoteSource()
+
+    // MARK: Auth
+    let authStoring: AuthProviding
+    var authSession: AuthSession
+
+    // MARK: User
+    let userId: UUID
+
+    // MARK: Toasty
+    let toasty: ToastyManager
+
+    // MARK: Network
+    let networkMonitor: NetworkMonitor
+
+    // MARK: Sync
+    let syncManager: SyncManager
+
+    // MARK: Storings
+    let userStoring: UserProviding
+    let institutionStoring: InstitutionProviding
+    let accountStoring: AccountProviding
+    let transactionStoring: TransactionProviding
+
+    // MARK: Use Cases — Auth
+    let signOut: SignOut
+    let deleteUserRule: DeleteUserRule
+    let linkAnonymousAccount: LinkAnonymousAccount
+    let resetPassword: ResetPassword
+
+    // MARK: Use Cases — User
+    let getCurrentUser: GetCurrentUser
+    let updateUser: UpdateUser
+
+    // MARK: Use Cases — Institution
+    let addInstitution: AddInstitution
+    let getInstitutions: GetInstitutions
+    let getInstitution: GetInstitution
+    let updateInstitution: UpdateInstitution
+    let archiveInstitutionRule: ArchiveInstitutionRule
+    let unarchiveInstitutionRule: UnarchiveInstitutionRule
+    let deleteInstitutionRule: DeleteInstitutionRule
+
+    // MARK: Use Cases — Account
+    let addAccount: AddAccount
+    let getAccounts: GetAccounts
+    let getAccount: GetAccount
+    let updateAccount: UpdateAccount
+    let archiveAccount: ArchiveAccount
+    let unarchiveAccountRule: UnarchiveAccountRule
+    let getAccountBalance: GetAccountBalance
+    let getAccountsWithInstitution: GetAccountsWithInstitution
+    let deleteAccountRule: DeleteAccountRule
+
+    // MARK: Use Cases — Transfer
+    let transferBetweenAccounts: TransferBetweenAccounts
+    let deleteTransfer: DeleteTransfer
+    let updateTransfer: UpdateTransfer
+
+    // MARK: Use Cases — Transaction
+    let addTransaction: AddTransaction
+    let getTransactions: GetTransactions
+    let getTransaction: GetTransaction
+    let updateTransaction: UpdateTransaction
+    let deleteTransaction: DeleteTransaction
+    let getTransactionsByCategory: GetTransactionsByCategory
+    let getTransactionsByDateRange: GetTransactionsByDateRange
+    let getAccountsSortedByRecency: GetAccountsSortedByRecency
+
+    // MARK: Use Cases — Document
+    let uploadTransactionDocument: UploadTransactionDocument
+    let uploadAvatarPhoto: UploadAvatarPhoto
+    let deleteDocument: DeleteDocument
+    let getTransactionDocument: GetTransactionDocument
+    let downloadImage: DownloadImage
+
+    // MARK: Use Cases — Charts
+    let getChartData: GetChartData
+
+    // MARK: Use Cases — Reload
+    let refreshFromRemote: RefreshFromRemote
+
+    // MARK: Init
+
+    /// Creates the container with all resolved dependencies.
+    /// - Parameters:
+    ///   - userId: The stable UUID derived from the authentication session.
+    ///   - toasty: The shared toast notification manager.
+    ///   - authStoring: The authentication provider used for sign-out and account deletion.
+    ///   - authSession: The current authentication session.
+    ///   - networkMonitor: The shared connectivity monitor used to gate remote writes.
+    ///   - inMemory: If true, SwiftData stores data in memory only. Defaults to false.
+    init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
+         authSession: AuthSession, networkMonitor: NetworkMonitor, inMemory: Bool = false) {
+        self.userId = userId
+        self.toasty = toasty
+        self.authStoring = authStoring
+        self.authSession = authSession
+        self.networkMonitor = networkMonitor
+
+        // MARK: SwiftData Stack
+        let schema = Schema([
+            UserModel.self,
+            InstitutionModel.self,
+            AccountModel.self,
+            TransactionModel.self,
+            TransactionSplitModel.self
+        ])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
+        do {
+            self.modelContainer = try ModelContainer(for: schema, configurations: config)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+
+        let context = modelContainer.mainContext
+
+        // MARK: Local Sources
+        let userLocal = UserLocalSource(context: context)
+        let institutionLocal = InstitutionLocalSource(context: context)
+        let accountLocal = AccountLocalSource(context: context)
+        let transactionLocal = TransactionLocalSource(context: context)
+
+        self.userLocalSource = userLocal
+        self.institutionLocalSource = institutionLocal
+        self.accountLocalSource = accountLocal
+        self.transactionLocalSource = transactionLocal
+
+        // MARK: Storings
+        let userStore = UserStoring(local: userLocal, remote: userRemote, userId: userId)
+        let institutionStore = InstitutionStoring(local: institutionLocal,
+                                                  remote: institutionRemote, userId: userId)
+        let accountStore = AccountStoring(local: accountLocal,
+                                          remote: accountRemote, userId: userId)
+        let transactionStore = TransactionStoring(local: transactionLocal,
+                                                  remote: transactionRemote, userId: userId)
+
+        self.userStoring = userStore
+        self.institutionStoring = institutionStore
+        self.accountStoring = accountStore
+        self.transactionStoring = transactionStore
+
+        // MARK: Sync
+        self.syncManager = SyncManager(
+            userId: userId,
+            institutionRemote: institutionRemote,
+            accountRemote: accountRemote,
+            transactionRemote: transactionRemote,
+            institutionLocal: institutionLocal,
+            accountLocal: accountLocal,
+            transactionLocal: transactionLocal
+        )
+
+        // MARK: Document source (needed by the delete use cases below)
+        let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
+        self.deleteDocument = DeleteDocument(documentSource: documentSource)
+
+        // MARK: Use Cases — Auth
+        self.signOut = SignOut(repository: authStoring)
+        self.linkAnonymousAccount = LinkAnonymousAccount(repository: authStoring)
+        self.resetPassword = ResetPassword(repository: authStoring)
+
+        // MARK: Use Cases — User
+        self.getCurrentUser = GetCurrentUser(repository: userStore)
+        self.updateUser = UpdateUser(repository: userStore)
+
+        // MARK: Use Cases — Institution
+        self.addInstitution = AddInstitution(repository: institutionStore)
+        self.getInstitutions = GetInstitutions(repository: institutionStore)
+        self.getInstitution = GetInstitution(repository: institutionStore)
+        self.updateInstitution = UpdateInstitution(repository: institutionStore)
+        let archiveInstitution = ArchiveInstitution(repository: institutionStore)
+        let unarchiveInstitution = UnarchiveInstitution(repository: institutionStore)
+
+        // MARK: Use Cases — Account
+        self.addAccount = AddAccount(repository: accountStore)
+        self.getAccounts = GetAccounts(repository: accountStore)
+        self.getAccount = GetAccount(repository: accountStore)
+        self.updateAccount = UpdateAccount(repository: accountStore)
+        self.archiveAccount = ArchiveAccount(repository: accountStore)
+        let unarchiveAccount = UnarchiveAccount(repository: accountStore)
+        self.getAccountBalance = GetAccountBalance(
+            accountRepository: accountStore,
+            transactionRepository: transactionStore
+        )
+        self.getAccountsWithInstitution = GetAccountsWithInstitution(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts
+        )
+
+        // MARK: Cascade Rules — archive/unarchive
+        self.archiveInstitutionRule = ArchiveInstitutionRule(
+            getAccounts: getAccounts,
+            archiveAccount: archiveAccount,
+            archiveInstitution: archiveInstitution
+        )
+        self.unarchiveInstitutionRule = UnarchiveInstitutionRule(
+            getAccounts: getAccounts,
+            unarchiveAccount: unarchiveAccount,
+            unarchiveInstitution: unarchiveInstitution
+        )
+        self.unarchiveAccountRule = UnarchiveAccountRule(
+            getAccount: getAccount,
+            unarchiveAccount: unarchiveAccount,
+            getInstitution: getInstitution,
+            unarchiveInstitution: unarchiveInstitution
+        )
+
+        // MARK: Use Cases — Transfer
+        self.transferBetweenAccounts = TransferBetweenAccounts(repository: transactionStore)
+        self.deleteTransfer = DeleteTransfer(repository: transactionStore)
+        self.updateTransfer = UpdateTransfer(repository: transactionStore)
+
+        // MARK: Use Cases — Transaction
+        self.addTransaction = AddTransaction(repository: transactionStore)
+        self.getTransactions = GetTransactions(repository: transactionStore)
+        self.getTransaction = GetTransaction(repository: transactionStore)
+        self.updateTransaction = UpdateTransaction(repository: transactionStore)
+        self.deleteTransaction = DeleteTransaction(repository: transactionStore, deleteDocument: deleteDocument)
+        self.getTransactionsByCategory = GetTransactionsByCategory(repository: transactionStore)
+        self.getTransactionsByDateRange = GetTransactionsByDateRange(repository: transactionStore)
+        self.getAccountsSortedByRecency = GetAccountsSortedByRecency(
+            getAccountsWithInstitution: getAccountsWithInstitution,
+            getTransactions: getTransactions
+        )
+
+        // MARK: Cascade Rules — orchestrate cross-aggregate deletion above the features
+        let getTransactionsByAccount = GetTransactionsByAccount(getTransactions: getTransactions)
+        let deleteAccount = DeleteAccount(repository: accountStore)
+        self.deleteAccountRule = DeleteAccountRule(
+            getTransactionsByAccount: getTransactionsByAccount,
+            deleteTransaction: deleteTransaction,
+            updateTransaction: updateTransaction,
+            deleteAccount: deleteAccount,
+            userId: userId
+        )
+        let deleteInstitution = DeleteInstitution(repository: institutionStore)
+        self.deleteInstitutionRule = DeleteInstitutionRule(
+            getAccounts: getAccounts,
+            deleteAccountRule: deleteAccountRule,
+            deleteInstitution: deleteInstitution
+        )
+        let deleteUser = DeleteUser(repository: userStore, deleteDocument: deleteDocument)
+        let deleteUserProfile = DeleteUserProfile(
+            repository: authStoring,
+            deleteDocument: deleteDocument,
+            userId: userId
+        )
+        self.deleteUserRule = DeleteUserRule(
+            getInstitutions: getInstitutions,
+            deleteInstitutionRule: deleteInstitutionRule,
+            deleteUser: deleteUser,
+            deleteUserProfile: deleteUserProfile,
+            userId: userId
+        )
+
+        // MARK: Use Cases — Document
+        self.uploadTransactionDocument = UploadTransactionDocument(
+            documentSource: documentSource,
+            transactionRepository: transactionStore,
+            userId: userId
+        )
+        self.uploadAvatarPhoto = UploadAvatarPhoto(
+            documentSource: documentSource,
+            userRepository: userStore,
+            userId: userId
+        )
+        self.getTransactionDocument = GetTransactionDocument()
+        self.downloadImage = DownloadImage(documentSource: documentSource, networkMonitor: networkMonitor)
+
+        // MARK: Use Cases — Charts
+        self.getChartData = GetChartData(
+            getInstitutions: getInstitutions,
+            getAccounts: getAccounts,
+            getTransactions: getTransactions,
+            userId: userId
+        )
+
+        // MARK: Use Cases — Reload
+        // No-op on the classic target: reading from remote into local is the job of
+        // SyncManager (the real local↔remote sync), not of a cache-warming reload.
+        self.refreshFromRemote = RefreshFromRemote(refreshables: [])
+    }
+}

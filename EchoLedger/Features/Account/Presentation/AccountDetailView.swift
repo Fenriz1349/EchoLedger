@@ -1,0 +1,182 @@
+//
+//  AccountDetailView.swift
+//  EchoLedger
+//
+//  Created by Julien Cotte on 10/04/2026.
+//
+
+import SwiftUI
+import CustomLabels
+
+/// Shows the full details of an account: balance, recent transactions, charts, and archive toggle.
+struct AccountDetailView: View {
+
+    @State private var viewModel: AccountDetailViewModel
+    let coordinator: AppCoordinator
+    @Environment(\.dismiss) private var dismiss
+    @State private var showEditForm = false
+    @State private var editTransaction: Transaction?
+    @State private var selectedTransaction: Transaction?
+    @State private var selectedTransfer: Transfer?
+    @State private var editTransfer: Transfer?
+
+    init(account: Account, coordinator: AppCoordinator) {
+        self.coordinator = coordinator
+        _viewModel = State(wrappedValue: coordinator.makeAccountDetailViewModel(account: account))
+    }
+
+    var body: some View {
+        Group {
+            List {
+                // MARK: Balance
+                Section("Solde") {
+                    HStack {
+                        AnimatedAmountView(value: viewModel.graphsViewModel.totalBalance)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Label(viewModel.account.category.name, systemImage: viewModel.account.category.icon)
+                            .foregroundStyle(.secondary)
+                            .font(.subheadline)
+                    }
+
+                }
+                .listRowBackground(Color.echoCard)
+
+                // MARK: Initial balance
+                if let initial = viewModel.initialBalanceTransaction {
+                    Section("Solde initial") {
+                        TransactionListItemView(
+                            item: .single(initial),
+                            accountNames: viewModel.accountNames,
+                            onEdit: { editTransaction = $0 },
+                            onDelete: nil,
+                            onTap: { selectedTransaction = $0 },
+                            onTapTransfer: { transfer in
+                                selectedTransfer = transfer
+                            },
+                            onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } },
+                            onEditTransfer: { editTransfer = $0 }
+                        )
+                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                        .listRowSeparator(.hidden)
+                        .echoRowStyle()
+                    }
+                }
+
+                // MARK: Monthly pie carousel
+                if !viewModel.graphsViewModel.monthlyPieData.isEmpty {
+                    Section {
+                        MonthlyPieCarouselView(
+                            months: viewModel.graphsViewModel.monthlyPieData,
+                            currentIndex: viewModel.graphsViewModel.selectedPieIndex,
+                            onPrevious: { viewModel.graphsViewModel.goToPreviousPie() },
+                            onNext: { viewModel.graphsViewModel.goToNextPie() },
+                            onSwipe: { viewModel.graphsViewModel.handlePieSwipe($0) }
+                        )
+                    }
+                    .listRowBackground(Color.echoCard)
+                }
+
+                // MARK: Charts
+                if !viewModel.graphsViewModel.expenseTotals.isEmpty {
+                    Section {
+                        ExpensePieChartView(data: viewModel.graphsViewModel.expenseTotals)
+                    }
+                    .listRowBackground(Color.echoCard)
+                }
+
+                if !viewModel.graphsViewModel.incomeTotals.isEmpty {
+                    Section {
+                        IncomePieChartView(data: viewModel.graphsViewModel.incomeTotals)
+                    }
+                    .listRowBackground(Color.echoCard)
+                }
+
+                // MARK: Recent transactions
+                if !viewModel.recentItems.isEmpty {
+                    RecentTransactionsView(
+                        items: viewModel.recentItems,
+                        accountNames: viewModel.accountNames,
+                        onEdit: { editTransaction = $0 },
+                        onDelete: { transaction in Task { await viewModel.delete(transaction) } },
+                        onTap: { selectedTransaction = $0 },
+                        onTapTransfer: { transfer in
+                            selectedTransfer = transfer
+                        },
+                        onDeleteTransfer: { transfer in Task { await viewModel.deleteTransfer(transfer) } },
+                        onEditTransfer: { editTransfer = $0 }
+                    )
+                }
+            }
+            .listRowSpacing(8)
+            .echoBackground()
+        }
+        .navigationTitle(viewModel.account.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showEditForm = true } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+        }
+        .alert("Archiver ce compte ?", isPresented: $viewModel.showArchiveAlert) {
+            Button("Archiver", role: .destructive) {
+                Task { await viewModel.archive() }
+            }
+            Button("Annuler", role: .cancel) {}
+        } message: {
+            Text("Le compte sera masqué de la liste principale. Les transactions existantes restent accessibles.")
+        }
+        .navigationDestination(item: $selectedTransaction) { transaction in
+            TransactionDetailView(transaction: transaction, coordinator: coordinator)
+        }
+        .sheet(isPresented: $showEditForm) {
+            AccountFormView(viewModel: coordinator.makeAccountFormViewModel(existing: viewModel.account))
+        }
+        .sheet(item: $editTransaction) { transaction in
+            TransactionEditView(transaction: transaction, coordinator: coordinator)
+        }
+        .onChange(of: showEditForm) {
+            if !showEditForm {
+                Task { await viewModel.load() }
+            }
+        }
+        .onChange(of: editTransaction) {
+            if editTransaction == nil {
+                Task { await viewModel.load() }
+            }
+        }
+        .navigationDestination(item: $selectedTransfer) { transfer in
+            TransferDetailView(transfer: transfer, coordinator: coordinator)
+        }
+        .sheet(item: $editTransfer) { transfer in
+            TransferFormView(viewModel: coordinator.makeTransferFormViewModel(existing: transfer))
+        }
+        .onChange(of: editTransfer) {
+            if editTransfer == nil {
+                Task { await viewModel.load() }
+            }
+        }
+        .onChange(of: selectedTransfer) {
+            if selectedTransfer == nil {
+                Task { await viewModel.load() }
+            }
+        }
+        .task {
+            viewModel.onNotFound = { dismiss() }
+            await viewModel.load()
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        AccountDetailView(
+            account: PreviewData.accountCourant,
+            coordinator: PreviewHelpers.appCoordinator
+        )
+    }
+    .environment(PreviewHelpers.container)
+}

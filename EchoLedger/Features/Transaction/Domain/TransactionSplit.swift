@@ -7,23 +7,23 @@
 
 import Foundation
 
-import SwiftData
-import Foundation
+/// Represents the allocation of a portion of a Transaction to a specific Account.
+/// Acts as a join entity between Transaction and Account.
+/// The sum of all splits for a given transaction must equal the transaction's totalAmount.
+struct TransactionSplit: Identifiable, Equatable, Codable, Hashable {
 
-@Model
-class TransactionSplit {
-    @Attribute(.unique) var id: UUID
+    let id: UUID
+    var accountId: UUID
     var amount: Double
-    var date: Date
-    var comment: String
-    
-    var account: [Account]?
 
-    init(amount: Double, date: Date, comment: String, account: [Account]?) {
-        self.id = UUID()
+    /// Creates a new TransactionSplit.
+    /// - Parameters:
+    ///   - id: Unique identifier. Defaults to a new UUID.
+    ///   - accountId: The identifier of the Account this split is allocated to.
+    ///   - amount: The portion of the total transaction amount for this account. Must be positive.
+    init(id: UUID = UUID(), accountId: UUID, amount: Double) {
+        self.id = id
+        self.accountId = accountId
         self.amount = amount
-        self.date = date
-        self.comment = comment
-        self.account = account
     }
 }
