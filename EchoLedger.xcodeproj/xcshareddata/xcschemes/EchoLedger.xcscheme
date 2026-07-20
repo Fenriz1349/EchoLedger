@@ -46,6 +46,17 @@
                ReferencedContainer = "container:EchoLedger.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "68617AB4300A8488007C5731"
+               BuildableName = "EchoLedgerE2ETests..xctest"
+               BlueprintName = "EchoLedgerE2ETests."
+               ReferencedContainer = "container:EchoLedger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "90BE2998-931D-4031-87F8-F907CB2C159C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:EchoLedger.xcodeproj",
+        "identifier" : "68617AB4300A8488007C5731",
+        "name" : "EchoLedgerE2ETests."
+      }
+    }
+  ],
+  "version" : 1
+}

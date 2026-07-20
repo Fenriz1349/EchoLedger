@@ -23,12 +23,22 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <TestPlanReference
                reference = "container:EchoLedger.xctestplan">
+            </TestPlanReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <TestPlanReference
+               reference = "container:EchoLedgerE2E.xctestplan">
             </TestPlanReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,7 +50,11 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:EchoLedger.xctestplan">
+            reference = "container:EchoLedger.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:EchoLedgerE2E.xctestplan">
          </TestPlanReference>
       </TestPlans>
    </TestAction>

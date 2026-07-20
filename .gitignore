@@ -12,3 +12,8 @@ DerivedData/
 # MacOS
 .DS_Store
 .scannerwork
+
+# Firebase emulator
+firebase-debug.log
+firebase-debug.json
+firestore-debug.log
