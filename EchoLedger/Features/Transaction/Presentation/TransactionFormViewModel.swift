@@ -24,6 +24,7 @@ final class TransactionFormViewModel {
     private let deleteDocument: DeleteDocument
     private let userId: UUID
     private let authSession: AuthSession
+    private let onAdd: () -> Void
 
     // MARK: Form State
     var existingTransaction: Transaction?
@@ -131,7 +132,8 @@ final class TransactionFormViewModel {
         userId: UUID,
         authSession: AuthSession,
         addAccountFormViewModel: AccountFormViewModel,
-        existingTransaction: Transaction? = nil
+        existingTransaction: Transaction? = nil,
+        onAdd: @escaping () -> Void = {}
     ) {
         self.toasty = toasty
         self.addTransaction = addTransaction
@@ -144,6 +146,7 @@ final class TransactionFormViewModel {
         self.authSession = authSession
         self.existingTransaction = existingTransaction
         self.addAccountFormViewModel = addAccountFormViewModel
+        self.onAdd = onAdd
 
         if let existing = self.existingTransaction {
             prefillTransaction(with: existing)
@@ -256,6 +259,7 @@ final class TransactionFormViewModel {
                 try await update(existingTransaction)
             } else {
                 try await create()
+                onAdd()
             }
             isSuccess = true
         } catch {

@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
 
     @Environment(DIContainer.self) private var container
-    let coordinator: AppCoordinator
+    @Bindable var coordinator: AppCoordinator
     @State private var selectedTab: AppTab = .dashboard
 
     init(coordinator: AppCoordinator) {
@@ -67,10 +67,7 @@ struct ContentView: View {
         }
         .ignoresSafeArea(.keyboard)
         .sheet(
-            isPresented: Binding(
-                get: { coordinator.transactionListViewModel.showAddTransaction },
-                set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
-            ),
+            isPresented: $coordinator.transactionListViewModel.showAddTransaction,
             onDismiss: { Task { await coordinator.loadData() } }
         ) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
@@ -80,6 +77,9 @@ struct ContentView: View {
                 selectedTab = old
                 coordinator.transactionListViewModel.showAddTransaction = true
             }
+        }
+        .overlay {
+            SuccessCheckmarkView(isPresented: $coordinator.transactionListViewModel.showSuccessCheckmark)
         }
     }
 }

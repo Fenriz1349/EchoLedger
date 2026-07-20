@@ -167,7 +167,10 @@ extension DIContainer {
     }
 
     /// Creates a TransactionFormViewModel. Pass an existing transaction to pre-fill the form for editing.
-    func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
+    func makeTransactionFormViewModel(
+        existing: Transaction? = nil,
+        onAdd: @escaping () -> Void = {}
+    ) -> TransactionFormViewModel {
         TransactionFormViewModel(
             toasty: toasty,
             addTransaction: addTransaction,
@@ -179,7 +182,8 @@ extension DIContainer {
             userId: userId,
             authSession: authSession,
             addAccountFormViewModel: makeAccountFormViewModel(),
-            existingTransaction: existing
+            existingTransaction: existing,
+            onAdd: onAdd
         )
     }
 }

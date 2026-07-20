@@ -14,6 +14,7 @@ import Toasty
 final class TransactionListViewModel {
 
     var showAddTransaction = false
+    var showSuccessCheckmark = false
     var transactions: [Transaction] = []
     var accountNames: [UUID: String] = [:]
     var institutionNames: [UUID: String] = [:]

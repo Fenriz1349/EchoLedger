@@ -472,6 +472,8 @@
 		687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */; };
 		687DD6792FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
 		687DD67A2FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
+		68BE53E8300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BE53E7300E3BDE00FA5DEE /* SuccessCheckmarkView.swift */; };
+		68BE53E9300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BE53E7300E3BDE00FA5DEE /* SuccessCheckmarkView.swift */; };
 		68C2A044300D4ECA00AA47A9 /* AuthE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */; };
 		68C2A04A300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C2A049300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
@@ -802,6 +804,7 @@
 		687DD66F2FDD370C00B281FF /* PieCarouselPageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselPageIndicator.swift; sourceTree = "<group>"; };
 		687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselNavigation.swift; sourceTree = "<group>"; };
 		687DD6782FDD440500B281FF /* GraphsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsViewModel.swift; sourceTree = "<group>"; };
+		68BE53E7300E3BDE00FA5DEE /* SuccessCheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessCheckmarkView.swift; sourceTree = "<group>"; };
 		68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthE2ETests.swift; sourceTree = "<group>"; };
 		68C2A049300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreLifecycleE2ETests.swift; sourceTree = "<group>"; };
 		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
@@ -1418,6 +1421,7 @@
 				6835BD772FED183500F1A372 /* AccountRowBackground.swift */,
 				6835BD7A2FED1D8E00F1A372 /* BarChartAnimator.swift */,
 				6835BD7D2FED276900F1A372 /* PieChartAnimator.swift */,
+				68BE53E7300E3BDE00FA5DEE /* SuccessCheckmarkView.swift */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -2287,6 +2291,7 @@
 				682B0AA72FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
 				683D5FE32FE426E00049D07D /* DownloadImage.swift in Sources */,
 				6835BD8B2FED621E00F1A372 /* View+Extension.swift in Sources */,
+				68BE53E9300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */,
 				683821682FC8432000CA6761 /* AuthLocalSource.swift in Sources */,
 				683D5FDD2FE4136F0049D07D /* NetworkMonitor.swift in Sources */,
 				6835BD842FED314100F1A372 /* VisibilityObserver.swift in Sources */,
@@ -2392,6 +2397,7 @@
 				6835BD762FED0F8100F1A372 /* AnimatedAmountView.swift in Sources */,
 				68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */,
 				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
+				68BE53E8300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */,
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
