@@ -99,7 +99,9 @@ final class AppCoordinator {
     /// - Parameter existing: An optional transaction to pre-fill the form for editing.
     /// - Returns: A configured TransactionFormViewModel.
     func makeTransactionFormViewModel(existing: Transaction? = nil) -> TransactionFormViewModel {
-        container.makeTransactionFormViewModel(existing: existing)
+        container.makeTransactionFormViewModel(existing: existing) { [weak self] in
+            self?.transactionListViewModel.showSuccessCheckmark = true
+        }
     }
 
     /// - Parameter transaction: The transaction whose attachment should be displayed.
