@@ -473,6 +473,7 @@
 		687DD6792FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
 		687DD67A2FDD440500B281FF /* GraphsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DD6782FDD440500B281FF /* GraphsViewModel.swift */; };
 		68C2A044300D4ECA00AA47A9 /* AuthE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */; };
+		68C2A04A300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C2A049300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift */; };
 		68C4D7792F6C37E1008F1304 /* CustomTextFields in Frameworks */ = {isa = PBXBuildFile; productRef = 68C4D7782F6C37E1008F1304 /* CustomTextFields */; };
 		68C811622FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
 		68C811632FDBD55C0077D42B /* AnonymousHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */; };
@@ -513,13 +514,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		683133B42F61A1A9004AA5E4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6857E3C22F51AB4200913E12;
-			remoteInfo = EchoLedger;
-		};
-		68617AB9300A8488007C5731 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
 			proxyType = 1;
@@ -809,6 +803,7 @@
 		687DD6722FDD384800B281FF /* PieCarouselNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCarouselNavigation.swift; sourceTree = "<group>"; };
 		687DD6782FDD440500B281FF /* GraphsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsViewModel.swift; sourceTree = "<group>"; };
 		68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthE2ETests.swift; sourceTree = "<group>"; };
+		68C2A049300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreLifecycleE2ETests.swift; sourceTree = "<group>"; };
 		68C811612FDBD55C0077D42B /* AnonymousHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousHeaderView.swift; sourceTree = "<group>"; };
 		68C811642FDC37110077D42B /* Transaction+Effective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Effective.swift"; sourceTree = "<group>"; };
 		68C811692FDC39410077D42B /* ChartModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModels.swift; sourceTree = "<group>"; };
@@ -1761,6 +1756,7 @@
 			isa = PBXGroup;
 			children = (
 				68C2A042300D4ECA00AA47A9 /* AuthE2ETests.swift */,
+				68C2A049300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift */,
 			);
 			path = EchoLedgerE2ETests.;
 			sourceTree = "<group>";
@@ -1930,7 +1926,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				68617ABA300A8488007C5731 /* PBXTargetDependency */,
 				68C2A048300D525100AA47A9 /* PBXTargetDependency */,
 			);
 			name = EchoLedgerE2ETests.;
@@ -2537,6 +2532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68C2A04A300D5A4900AA47A9 /* FirestoreLifecycleE2ETests.swift in Sources */,
 				68C2A044300D4ECA00AA47A9 /* AuthE2ETests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2548,11 +2544,6 @@
 			isa = PBXTargetDependency;
 			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
 			targetProxy = 683133B42F61A1A9004AA5E4 /* PBXContainerItemProxy */;
-		};
-		68617ABA300A8488007C5731 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
-			targetProxy = 68617AB9300A8488007C5731 /* PBXContainerItemProxy */;
 		};
 		68C2A048300D525100AA47A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

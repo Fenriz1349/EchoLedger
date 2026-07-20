@@ -33,6 +33,9 @@ final class AuthE2ETests: XCTestCase {
 
     override func tearDown() async throws {
         try? await authRemoteSource.deleteCurrentUser()
+        let localSource = AuthLocalSource()
+        localSource.clearUserId()
+        localSource.clearAnonymousCreationDate()
         authRemoteSource = nil
         try await super.tearDown()
     }
