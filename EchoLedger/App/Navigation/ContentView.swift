@@ -67,7 +67,10 @@ struct ContentView: View {
         }
         .ignoresSafeArea(.keyboard)
         .sheet(
-            isPresented: $coordinator.transactionListViewModel.showAddTransaction,
+            isPresented: Binding(
+                get: { coordinator.transactionListViewModel.showAddTransaction },
+                set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
+            ),
             onDismiss: { Task { await coordinator.loadData() } }
         ) {
             TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
@@ -79,7 +82,12 @@ struct ContentView: View {
             }
         }
         .overlay {
-            SuccessCheckmarkView(isPresented: $coordinator.transactionListViewModel.showSuccessCheckmark)
+            SuccessCheckmarkView(
+                isPresented: Binding(
+                    get: { coordinator.transactionListViewModel.showSuccessCheckmark },
+                    set: { coordinator.transactionListViewModel.showSuccessCheckmark = $0 }
+                )
+            )
         }
     }
 }
