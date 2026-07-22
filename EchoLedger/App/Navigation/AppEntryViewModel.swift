@@ -158,7 +158,9 @@ final class AppEntryViewModel {
                 }
             )
 
-            #if !CLOUD_TARGET
+            #if CLOUD_TARGET
+            try? await newContainer.refreshFromRemote.execute()
+            #else
             await newContainer.syncManager.sync()
             #endif
 
