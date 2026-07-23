@@ -6,10 +6,10 @@
 ![SwiftData](https://img.shields.io/badge/Persistence-SwiftData-purple)
 ![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)
 ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-green)
-![Version](https://img.shields.io/badge/Version-0.16.2-blue)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
-A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, local persistence via **SwiftData**, and remote storage via **Firebase**.
+A personal finance tracking iOS app built as a school project. The primary goal is learning and applying **Clean Architecture with a UseCase pattern**, backed by **Firebase** and, on the Classic target, local persistence via **SwiftData**. See *Targets, Data & Sync* below for how the two shipped targets differ.
 
 ---
 
@@ -173,11 +173,18 @@ App
 - [x] Auth screen reworked — segmented Connexion/Inscription, primary CTA fills when valid, demo as secondary
 - [x] Pull-to-refresh works on empty lists
 
+### Phase 8 — Picker ergonomics, animations & test pyramid (v1.0.0)
+
+- [x] Account pickers (transaction splits, transfer source/destination) sorted by most-recently-used instead of alphabetically (`AccountRecencySorter`)
+- [x] Mutual exclusion between a transaction's splits — an account already used in another split of the same transaction is filtered out of the picker
+- [x] Transfer form — swap button (⇅) between source and destination accounts
+- [x] Success animation on transaction creation — a "+" rising from the add button, morphing into a checkmark, then fading out (`SuccessCheckmarkView`)
+- [x] Full test pyramid completed — unit, integration, snapshot (see *Testing*) and end-to-end tests against real Firebase emulators
+- [x] Code-quality pass — SonarQube-driven fixes, English-only comments, doc-comment coverage audit across the whole codebase
+
 ### Upcoming
 
-- [ ] **Finalize `SyncManager`** — tombstones for correct cross-device deletions (1.0 blocker)
-- [ ] Test suite — review and expand coverage on the critical paths (sync, balances, deletions)
-- [ ] Animations — charts, list appearance, transaction add
+- [ ] **Finalize `SyncManager`** — tombstones for correct cross-device deletions (Classic target)
 - [ ] Swipe-to-navigate (optional)
 - [ ] iPad layout support
 
@@ -185,10 +192,12 @@ App
 
 ## Targets, Data & Sync
 
-The app ships as **two targets** sharing the same Domain and UseCases:
+The app is built as **two Xcode targets**, sharing the same Domain, UseCases and most of the Presentation layer — only the Data layer differs:
 
-- **Classic** — SwiftData is the local source of truth, synced to Firestore by `SyncManager`. Offline-first: reads and writes always work locally.
-- **Cloud** — Firestore-only, **cache-first**: reads come from the on-device Firestore cache (instant, offline-capable); an explicit *reload* warms the cache from the server. Remote writes are guarded by a real reachability check (`NetworkMonitor`) so they fail fast offline instead of queuing silently.
+- **`EchoLedger` (Classic)** — SwiftData is the local source of truth, synced to Firestore by `SyncManager`. Offline-first: reads and writes always work locally, then sync in the background.
+- **`EchoLedgerCloud` (Cloud)** — Firestore-only, no local database. Reads are **cache-first**: the on-device Firestore cache serves data instantly and works offline for consultation; an explicit *reload* warms the cache from the server. Remote writes are guarded by a real reachability check (`NetworkMonitor`) so they fail fast offline instead of being silently queued by Firestore's own offline write cache — a deliberate choice to keep write feedback honest rather than optimistic.
+
+`EchoLedgerCloud` is the target used for the current academic delivery (simpler data flow, fully covered by the test suite below). `EchoLedger` (Classic) remains the actively maintained long-term target and is not being discontinued — the two coexist by design, sharing the same business logic through the Domain/UseCases layers.
 
 ### Reload vs Sync
 
@@ -197,7 +206,7 @@ The app ships as **two targets** sharing the same Domain and UseCases:
 
 ### SyncManager status
 
-`SyncManager` is currently **additive** (last-write-wins on `updatedAt`, **no destructive deletes**), after a data-loss bug where absence was wrongly inferred as deletion. Cross-device **deletions are not yet propagated** — the real reconciliation via soft-delete **tombstones** is the main remaining work before a 1.0. Firestore PITR (7-day retention) is enabled as a safety net.
+`SyncManager` is currently **additive** (last-write-wins on `updatedAt`, **no destructive deletes**), after a data-loss bug where absence was wrongly inferred as deletion. Cross-device **deletions are not yet propagated** — the real reconciliation via soft-delete **tombstones** is the main remaining work item for the Classic target. Firestore PITR (7-day retention) is enabled as a safety net in the meantime.
 
 | Situation | Action |
 |---|---|
@@ -207,6 +216,21 @@ The app ships as **two targets** sharing the same Domain and UseCases:
 | Missing on one side | **No delete** (additive) — pending tombstones |
 
 Accounts are never hard-deleted (archived instead).
+
+---
+
+## Testing
+
+The test suite follows a pyramid, split across three targets:
+
+| Level | Target | Approach |
+|---|---|---|
+| Unit | `EchoLedgerTests` | Each UseCase tested in isolation against in-memory doubles (`AccountDouble`, `TransactionDouble`, `InstitutionDouble`, ...) — no SwiftData, no Firebase |
+| Integration | `EchoLedgerTests/Integration` | Several real UseCases chained together against shared in-memory doubles (e.g. add an account, add a transaction, verify the balance) — validates that UseCases compose correctly |
+| Snapshot | `EchoLedgerTests/SnapshotsTests` | Hand-rolled snapshot testing (no third-party dependency) — renders key screens to a `UIImage` and compares against a stored reference, in light/dark mode and at the smallest/largest Dynamic Type sizes |
+| End-to-end | `EchoLedgerE2ETests.` | Real Firebase Auth + Firestore, run exclusively against the **local emulator suite** (`firebase.json`) — zero risk of touching production data. Covers sign-up/sign-in, anonymous-to-permanent account linking, and a full CRUD lifecycle (institution → account → transaction) |
+
+Run unit, integration, and snapshot tests with the standard `EchoLedgerCloud` scheme (⌘U). E2E tests require the Firebase emulators running locally (`firebase emulators:start`) and use a dedicated, non-default test plan so they never run accidentally alongside the regular suite.
 
 ---
 
@@ -230,7 +254,7 @@ EchoLedger/
 │   │   ├── ArchiveInstitutionRule.swift
 │   │   ├── UnarchiveInstitutionRule.swift
 │   │   └── UnarchiveAccountRule.swift
-│   ├── Sync/
+│   ├── Sync/                  (Classic target only)
 │   │   ├── Domain/
 │   │   │   ├── SyncManager.swift
 │   │   │   ├── SyncManagerProtocol.swift
@@ -238,6 +262,23 @@ EchoLedger/
 │   │   │   └── SyncMetadata.swift
 │   │   └── Presentation/
 │   │       └── SyncButton.swift
+│   ├── Network/
+│   │   ├── Domain/
+│   │   │   ├── NetworkMonitor.swift
+│   │   │   ├── RemoteRefreshable.swift
+│   │   │   ├── OfflineError.swift
+│   │   │   └── UseCases/RefreshFromRemote.swift
+│   │   └── Presentation/OfflineView.swift
+│   ├── Document/               (Storage upload/download — attachments & avatars)
+│   │   ├── Domain/UseCases/
+│   │   └── Presentation/
+│   ├── Graphs/                 (pure chart math + presentation)
+│   │   ├── Domain/ChartDataCalculator.swift, ChartModels.swift, UseCases/GetChartData.swift
+│   │   └── Presentation/GraphsViewModel.swift, ExpensePieChartView.swift, MonthlyFlowChartView.swift, ...
+│   ├── Animations/              (SuccessCheckmarkView, chart animators, list row transitions)
+│   ├── Branding/                (AppLogoView, AppHeaderView, Color+Echo, shared styles)
+│   ├── Controls/                (SegmentedToggle)
+│   ├── Extensions/              (Array, Calendar, Color, Double, String, View)
 │   └── Loader/
 │       └── EchoLedgerLoader.swift
 ├── Features/
@@ -345,8 +386,18 @@ EchoLedger/
 │           └── DashboardView.swift
 ├── PreviewContent/
 │   ├── PreviewData.swift
-│   ├── PreviewHelpers.swift
+│   ├── PreviewHelpers.swift (+ PreviewHelpersCloud)
 │   └── PreviewAuthStoring.swift
+
+EchoLedgerTests/
+├── Features/            (unit tests, mirrors EchoLedger/Features/)
+├── Core/                 (unit tests for CascadeRules, Document, Graphs)
+├── Integration/          (chained real UseCases against shared doubles)
+└── SnapshotsTests/        (hand-rolled snapshot testing, see SnapshotTestCase.swift)
+
+EchoLedgerE2ETests./     (real Firebase Auth + Firestore, emulator-only)
+├── AuthE2ETests.swift
+└── FirestoreLifecycleE2ETests.swift
 ```
 
 ---
