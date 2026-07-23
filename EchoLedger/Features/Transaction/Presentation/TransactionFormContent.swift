@@ -9,6 +9,8 @@ import SwiftUI
 import CustomLabels
 import CustomTextFields
 
+/// Form body for creating or editing a transaction: splits, category, date, label, and attachment.
+/// Embedded in `TransactionFormView`'s `Form` so it can share the same scroll container.
 struct TransactionFormContent: View {
 
     @Bindable var viewModel: TransactionFormViewModel

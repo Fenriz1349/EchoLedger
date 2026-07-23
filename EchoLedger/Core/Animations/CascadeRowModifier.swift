@@ -22,6 +22,7 @@ struct CascadeRowModifier: ViewModifier {
     /// How far to the left the row starts before sliding into place.
     private let slideDistance: CGFloat = 120
 
+    /// Fades and slides the row into place once, with a delay proportional to `index` (capped at `maxStaggeredRows`).
     func body(content: Content) -> some View {
         content
             .opacity(appeared ? 1 : 0)

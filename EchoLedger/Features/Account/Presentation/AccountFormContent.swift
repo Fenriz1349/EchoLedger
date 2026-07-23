@@ -9,6 +9,8 @@ import SwiftUI
 import CustomTextFields
 import CustomLabels
 
+/// Form fields for creating or editing an account: name, category, initial balance,
+/// institution selection, and archive/delete actions when editing.
 struct AccountFormContent: View {
 
     @Bindable var viewModel: AccountFormViewModel

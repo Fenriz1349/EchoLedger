@@ -10,6 +10,8 @@ import FirebaseCore
 import Toasty
 
 // MARK: - AppDelegate
+
+/// UIKit app delegate used only to configure Firebase before SwiftUI takes over the launch sequence.
 class AppDelegate: NSObject, UIApplicationDelegate {
 
     /// Configures Firebase at app launch.
@@ -22,6 +24,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 // MARK: - EchoLedgerApp
+
+/// Application entry point; owns the app-wide singletons and wires them into the root view.
 @main
 struct EchoLedgerApp: App {
 

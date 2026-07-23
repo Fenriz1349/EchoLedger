@@ -8,10 +8,12 @@
 import Foundation
 import FirebaseFirestore
 
+/// Handles all Firestore read and write operations for the Institution feature.
 final class InstitutionRemoteSource {
 
     private lazy var firestore = Firestore.firestore()
 
+    /// Returns the Firestore collection reference holding this user's institutions.
     private func collection(for userId: UUID) -> CollectionReference {
         firestore.collection("users").document(userId.uuidString)
           .collection("institutions")
@@ -100,6 +102,7 @@ final class InstitutionRemoteSource {
 
     // MARK: Private
 
+    /// Serializes a domain Institution into a Firestore-compatible dictionary.
     private func encode(_ institution: Institution) -> [String: Any] {
         var data: [String: Any] = [
             "id": institution.id.uuidString,
@@ -115,6 +118,7 @@ final class InstitutionRemoteSource {
         return data
     }
 
+    /// Deserializes a Firestore document into a domain Institution, or nil if required fields are missing.
     private func decode(_ data: [String: Any]) -> Institution? {
         guard
             let idString = data["id"] as? String,

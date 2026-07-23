@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Full-screen dimmed overlay showing the animated brand loader, used for in-app blocking operations.
 struct EchoProgressView: View {
 
     var body: some View {

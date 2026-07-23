@@ -12,7 +12,7 @@ import SwiftUI
 struct AnimatedAmountView: View {
 
     let value: Double
-    var color: Color? = nil
+    var color: Color?
     var duration: Double = 0.8
 
     @State private var animated: Double = 0

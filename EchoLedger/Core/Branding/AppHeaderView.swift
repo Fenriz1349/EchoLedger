@@ -9,7 +9,7 @@ import SwiftUI
 
 /// AppLogo and AppName to uniformaze all headers
 struct AppHeaderView: View {
-    
+
     var body: some View {
         VStack(spacing: 8) {
             AppLogoView()

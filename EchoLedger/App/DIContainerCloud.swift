@@ -101,6 +101,13 @@ final class DIContainer {
 
     // MARK: Init
 
+    /// Creates the container with all resolved dependencies, wiring every storing directly to Firestore.
+    /// - Parameters:
+    ///   - userId: The stable UUID derived from the authentication session.
+    ///   - toasty: The shared toast notification manager.
+    ///   - authStoring: The authentication provider used for sign-out and account deletion.
+    ///   - authSession: The current authentication session.
+    ///   - networkMonitor: The shared connectivity monitor used to gate remote writes.
     init(userId: UUID, toasty: ToastyManager, authStoring: AuthProviding,
          authSession: AuthSession, networkMonitor: NetworkMonitor) {
         self.userId = userId

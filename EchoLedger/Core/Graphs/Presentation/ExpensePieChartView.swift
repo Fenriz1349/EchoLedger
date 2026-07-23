@@ -27,7 +27,7 @@ struct ExpensePieChartView: View {
 
             Chart(Array(data.enumerated()), id: \.element.id) { index, item in
                 let value = item.total * animator.progress[safe: index, default: 0]
-                
+
                 SectorMark(
                     angle: .value("Montant", value),
                     innerRadius: .ratio(0.5),

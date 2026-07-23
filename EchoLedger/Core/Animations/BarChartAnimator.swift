@@ -14,6 +14,10 @@ final class BarChartAnimator {
 
     var visibleItems = 0
 
+    /// Reveals items one by one, incrementing `visibleItems` on a timer so each bar animates in after the previous one.
+    /// - Parameters:
+    ///   - count: Total number of items to reveal.
+    ///   - delay: Time between two consecutive reveals.
     func start(for count: Int, delay: Double = 0.1) {
         visibleItems = 0
 

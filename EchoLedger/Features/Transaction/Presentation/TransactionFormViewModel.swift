@@ -241,6 +241,7 @@ final class TransactionFormViewModel {
         removeExistingAttachment = true
     }
 
+    /// Shows a toast explaining that document attachment is unavailable on the Simulator.
     func showSimulatorWarning() {
         toasty.showInfo(DocumentError.simulatorNotSupported.errorDescription ?? "")
     }

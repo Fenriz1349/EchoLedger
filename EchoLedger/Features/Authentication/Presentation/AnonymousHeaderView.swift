@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Banner shown to anonymous users reminding them of the demo session's remaining time.
 struct AnonymousHeaderView: View {
 
     let dayInDemo: Int?

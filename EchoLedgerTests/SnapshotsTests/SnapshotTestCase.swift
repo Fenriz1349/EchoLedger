@@ -46,7 +46,9 @@ private final class SnapshotWindow: UIWindow {
     private var configuration: SnapshotConfiguration = .iPhone(style: .light)
 
     convenience init(configuration: SnapshotConfiguration, root: UIViewController) {
-        let dummyScene = (UIWindowScene.self as NSObject.Type).init() as! UIWindowScene
+        guard let dummyScene = (UIWindowScene.self as NSObject.Type).init() as? UIWindowScene else {
+            fatalError("Failed to create a dummy UIWindowScene for snapshot rendering.")
+        }
         self.init(windowScene: dummyScene)
         self.frame = CGRect(origin: .zero, size: configuration.size)
         self.configuration = configuration
