@@ -9,8 +9,8 @@ import SwiftUI
 import UIKit
 
 /// Wraps UIImagePickerController to access the device camera.
-/// Non disponible sur simulateur — protégé par UIImagePickerController.isSourceTypeAvailable(.camera).
-/// Compresse la photo capturée en JPEG avant d'appeler onImageSelected.
+/// Not available on simulator — guarded by UIImagePickerController.isSourceTypeAvailable(.camera).
+/// Compresses the captured photo to JPEG before calling onImageSelected.
 struct CameraPickerView: UIViewControllerRepresentable {
 
     let onImageSelected: (Data) -> Void
@@ -32,6 +32,7 @@ struct CameraPickerView: UIViewControllerRepresentable {
 
     // MARK: - Coordinator
 
+    /// Bridges UIImagePickerController's delegate callbacks back to the SwiftUI view.
     final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
         private let parent: CameraPickerView
@@ -40,6 +41,7 @@ struct CameraPickerView: UIViewControllerRepresentable {
             self.parent = parent
         }
 
+        /// Compresses the captured photo to JPEG, forwards it via onImageSelected, then dismisses.
         func imagePickerController(
             _ picker: UIImagePickerController,
             didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]

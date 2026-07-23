@@ -30,6 +30,8 @@ final class NetworkMonitor {
     /// internet access and backend availability in one shot.
     private let reachabilityURL = URL(string: "https://firestore.googleapis.com")!
 
+    /// Starts the underlying `NWPathMonitor`, updating `isConnected` on the main actor as the
+    /// interface status changes.
     init() {
         monitor.pathUpdateHandler = { [weak self] path in
             let connected = path.status == .satisfied

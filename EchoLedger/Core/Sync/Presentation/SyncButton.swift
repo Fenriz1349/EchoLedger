@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Shows the last sync time and a button to trigger a manual sync, spinning the loader while it runs.
 struct SyncButton: View {
     let syncManager: SyncManager
 

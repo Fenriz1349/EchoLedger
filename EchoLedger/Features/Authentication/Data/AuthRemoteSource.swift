@@ -94,6 +94,7 @@ final class AuthRemoteSource {
 
     // MARK: Private
 
+    /// Maps a Firebase Auth NSError to the corresponding domain `AuthError` case.
     private func mapFirebaseError(_ error: NSError) -> AuthError {
         switch AuthErrorCode(rawValue: error.code) {
         case .emailAlreadyInUse:                return .emailAlreadyInUse

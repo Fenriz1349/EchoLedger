@@ -15,6 +15,7 @@ struct VisibilityObserver: ViewModifier {
     let onVisible: () -> Void
     @State private var hasTriggered = false
 
+    /// Wraps content with a clear GeometryReader that checks visibility on appear and on every frame change.
     func body(content: Content) -> some View {
         content
             .background(

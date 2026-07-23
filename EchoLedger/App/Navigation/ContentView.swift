@@ -94,6 +94,7 @@ struct ContentView: View {
     }
 }
 
+/// The tabs of the main TabView, including the disabled placeholder tab used for the floating add button.
 private enum AppTab: Hashable {
     case dashboard, transactions, add, accounts, profile
 }
