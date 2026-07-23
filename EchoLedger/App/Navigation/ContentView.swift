@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// The main tab-based screen shown once a user session is active.
 struct ContentView: View {
 
     @Environment(DIContainer.self) private var container
@@ -71,10 +72,11 @@ struct ContentView: View {
                 get: { coordinator.transactionListViewModel.showAddTransaction },
                 set: { coordinator.transactionListViewModel.showAddTransaction = $0 }
             ),
-            onDismiss: { Task { await coordinator.loadData() } }
-        ) {
-            TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
-        }
+            onDismiss: { Task { await coordinator.loadData() } },
+            content: {
+                TransactionFormView(viewModel: coordinator.makeTransactionFormViewModel())
+            }
+        )
         .onChange(of: selectedTab) { old, new in
             if new == .add {
                 selectedTab = old

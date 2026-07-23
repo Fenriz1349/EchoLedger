@@ -89,7 +89,8 @@ final class DeleteTransactionTests: XCTestCase {
         documentDeleting.errorToThrow = StubError.failed
         await XCTAssertThrowsErrorAsync(try await useCase.execute(id: id))
         let stillThere = try await repository.fetch(by: id)
-        XCTAssertEqual(stillThere.id, id)
+        let stillThereId = stillThere.id
+        XCTAssertEqual(stillThereId, id)
     }
 }
 

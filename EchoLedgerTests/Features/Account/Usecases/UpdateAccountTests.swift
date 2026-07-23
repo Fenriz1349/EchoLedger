@@ -88,7 +88,7 @@ final class UpdateAccountTests: XCTestCase {
 
     /// Verifies that updating with a name already used by another account throws duplicateName.
     func test_execute_duplicateName_throwsDuplicateName() async throws {
-        try await seedAccount(name: "PEL")
+        _ = try await seedAccount(name: "PEL")
         let id = try await seedAccount(name: "Livret A")
         await XCTAssertThrowsErrorAsync(
             try await useCase.execute(makeInput(id: id, name: "PEL"))

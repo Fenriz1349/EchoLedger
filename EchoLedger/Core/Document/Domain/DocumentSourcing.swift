@@ -11,7 +11,10 @@ import Foundation
 /// of reaching Firebase Storage. The concrete `DocumentRemoteSource` is exercised only in
 /// integration tests.
 protocol DocumentSourcing {
-    func uploadTransactionAttachment(_ data: Data, mimeType: String, userId: UUID, transactionId: UUID) async throws -> String
+    func uploadTransactionAttachment(_ data: Data,
+                                     mimeType: String,
+                                     userId: UUID,
+                                     transactionId: UUID) async throws -> String
     func uploadAvatarPhoto(_ data: Data, userId: UUID) async throws -> String
     func downloadImageData(urlString: String) async throws -> Data
     func deleteDocument(urlString: String) async throws

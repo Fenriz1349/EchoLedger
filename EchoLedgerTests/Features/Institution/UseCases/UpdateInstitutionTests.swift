@@ -89,7 +89,7 @@ final class UpdateInstitutionTests: XCTestCase {
     // MARK: Duplicate Validation
     /// Verifies that updating with a name already used by another institution throws duplicateName.
     func test_execute_duplicateName_throwsDuplicateName() async throws {
-        try await seedInstitution(name: "Caisse d'Épargne")
+        _ = try await seedInstitution(name: "Caisse d'Épargne")
         let id = try await seedInstitution(name: "BNP Paribas")
         await XCTAssertThrowsErrorAsync(
             try await useCase.execute(makeInput(id: id, name: "Caisse d'Épargne"))

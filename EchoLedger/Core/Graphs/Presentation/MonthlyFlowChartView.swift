@@ -14,7 +14,7 @@ import Charts
 struct MonthlyFlowChartView: View {
 
     let data: [MonthlyFlow]
-    
+
     @State private var animator = BarChartAnimator()
 
     var body: some View {

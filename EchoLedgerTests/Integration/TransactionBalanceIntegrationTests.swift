@@ -1,5 +1,5 @@
 //
-//  AccountTransactionBalanceIntegrationTests.swift
+//  TransactionBalanceIntegrationTests.swift
 //  EchoLedgerTests
 //
 //  Created by Julien Cotte on 17/07/2026.
@@ -11,7 +11,7 @@ import XCTest
 /// Chains AddAccount, AddTransaction and GetAccountBalance against shared in-memory repositories
 /// (no SwiftData, no Firebase) to verify these use cases integrate correctly with one another.
 @MainActor
-final class AccountTransactionBalanceIntegrationTests: XCTestCase {
+final class TransactionBalanceIntegrationTests: XCTestCase {
 
     private var accountRepository: AccountDouble!
     private var transactionRepository: TransactionDouble!
