@@ -50,8 +50,7 @@ final class InstitutionDouble: InstitutionProviding {
         }
         store[index] = institution
     }
-    
-    
+
     /// Marks the matching institution as archived in the store.
     func archive(by id: UUID) async throws {
         if let error = errorToThrow { throw error }

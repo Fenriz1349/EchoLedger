@@ -13,6 +13,7 @@ final class UserRemoteSource {
 
     private lazy var firestore = Firestore.firestore()
 
+    /// Builds a reference to the given user's document in the `users` collection.
     private func document(for userId: UUID) -> DocumentReference {
         firestore.collection("users").document(userId.uuidString)
     }
@@ -76,6 +77,8 @@ final class UserRemoteSource {
 
     // MARK: Private
 
+    /// Decodes a raw Firestore document dictionary into a domain `User`.
+    /// - Returns: nil if any required field is missing or malformed.
     private func decode(_ data: [String: Any]) -> User? {
         guard
             let idString = data["id"] as? String,
@@ -86,6 +89,9 @@ final class UserRemoteSource {
         return User(id: id, displayName: displayName, email: email, photoURL: data["photoURL"] as? String)
     }
 
+    /// Encodes a domain `User` into a Firestore-compatible dictionary.
+    /// When `forMerge` is true, a nil `photoURL` is written as `FieldValue.delete()` so a merge
+    /// write actually clears the field instead of leaving the stale server value untouched.
     private func encode(_ user: User, forMerge: Bool = false) -> [String: Any] {
         var data: [String: Any] = [
             "id": user.id.uuidString,

@@ -11,6 +11,7 @@ import SwiftUI
 /// Fills the active segment with its meaning color (a nil side keeps a neutral thumb).
 struct SegmentedToggle: View {
 
+    /// The set of contexts this toggle can be styled for, each with its own labels and fill colors.
     enum Style {
         case transaction
         case account
@@ -82,11 +83,13 @@ struct SegmentedToggle: View {
         .buttonStyle(.plain)
     }
 
+    /// Text color for a segment: secondary when unselected, primary on a neutral fill, white on a colored fill.
     private func foreground(fill: Color?, isSelected: Bool) -> Color {
         guard isSelected else { return .secondary }
         return fill == nil ? .primary : .white
     }
 
+    /// Background shape for a segment: none when unselected, a filled rounded rect (colored or neutral) when selected.
     @ViewBuilder
     private func background(fill: Color?, isSelected: Bool) -> some View {
         if isSelected {

@@ -27,6 +27,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
         Coordinator(onDocumentSelected: onDocumentSelected, dismiss: dismiss)
     }
 
+    /// Bridges UIDocumentPickerViewController's delegate callbacks back to the SwiftUI view.
     final class Coordinator: NSObject, UIDocumentPickerDelegate {
 
         let onDocumentSelected: (Data) -> Void
@@ -37,6 +38,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             self.dismiss = dismiss
         }
 
+        /// Reads the picked file through its security-scoped resource and forwards the raw data.
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first,
                   url.startAccessingSecurityScopedResource() else { return }

@@ -75,6 +75,8 @@ final class TransactionRemoteSource {
 
     // MARK: Private
 
+    /// Decodes a Firestore document dictionary into a domain Transaction.
+    /// - Returns: `nil` if any required field is missing or malformed.
     private func decode(_ data: [String: Any]) -> Transaction? {
         guard
             let idString = data["id"] as? String,
@@ -106,6 +108,8 @@ final class TransactionRemoteSource {
         )
     }
 
+    /// Decodes a single split entry from a Firestore document into a domain TransactionSplit.
+    /// - Returns: `nil` if any required field is missing or malformed.
     private func decodeSplit(_ data: [String: Any]) -> TransactionSplit? {
         guard
             let idString = data["id"] as? String,

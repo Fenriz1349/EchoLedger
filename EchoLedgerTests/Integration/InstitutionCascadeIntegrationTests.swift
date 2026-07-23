@@ -1,5 +1,5 @@
 //
-//  ArchiveInstitutionCascadeIntegrationTests.swift
+//  InstitutionCascadeIntegrationTests.swift
 //  EchoLedgerTests
 //
 //  Created by Julien Cotte on 17/07/2026.
@@ -11,7 +11,7 @@ import XCTest
 /// Chains AddInstitution, AddAccount and ArchiveInstitutionRule against shared in-memory
 /// repositories to verify archiving an institution cascades to its account.
 @MainActor
-final class ArchiveInstitutionCascadeIntegrationTests: XCTestCase {
+final class InstitutionCascadeIntegrationTests: XCTestCase {
 
     private var institutionRepository: InstitutionDouble!
     private var accountRepository: AccountDouble!

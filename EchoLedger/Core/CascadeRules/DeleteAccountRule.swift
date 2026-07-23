@@ -53,7 +53,8 @@ final class DeleteAccountRule {
 
     /// Rebuilds the update input after dropping one account's split, recomputing the total so the
     /// splits-sum invariant still holds.
-    private func detach(_ transaction: Transaction, keeping remainingSplits: [TransactionSplit]) -> UpdateTransactionInput {
+    private func detach(_ transaction: Transaction,
+                        keeping remainingSplits: [TransactionSplit]) -> UpdateTransactionInput {
         UpdateTransactionInput(
             id: transaction.id,
             userId: transaction.userId,

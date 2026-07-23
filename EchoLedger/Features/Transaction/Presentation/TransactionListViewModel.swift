@@ -46,6 +46,7 @@ final class TransactionListViewModel {
         return TransactionCategory.allCases.filter { used.contains($0) && $0.isUserSelectable }
     }
 
+    /// Clears the nature, category, and account filters back to their defaults.
     func resetFilters() {
         selectedNature = .all
         selectedCategory = nil
@@ -59,6 +60,7 @@ final class TransactionListViewModel {
         }
     }
 
+    /// Whether `item` matches the currently selected nature filter (expense/income/transfer/all).
     private func passesNature(_ item: TransactionListItem) -> Bool {
         switch selectedNature {
         case .all: return true
@@ -72,12 +74,14 @@ final class TransactionListViewModel {
         }
     }
 
+    /// Whether `item` matches the currently selected category filter, or passes unfiltered when none is set.
     private func passesCategory(_ item: TransactionListItem) -> Bool {
         guard let category = selectedCategory else { return true }
         guard case .single(let transaction) = item else { return false }
         return transaction.category == category
     }
 
+    /// Whether `item`'s label contains the current search text (case-insensitive), or passes unfiltered when empty.
     private func passesSearch(_ item: TransactionListItem) -> Bool {
         guard !searchText.isEmpty else { return true }
         let query = searchText.lowercased()
@@ -87,6 +91,7 @@ final class TransactionListViewModel {
         }
     }
 
+    /// Whether `item` involves the currently selected account, or passes unfiltered when none is set.
     private func passesAccount(_ item: TransactionListItem) -> Bool {
         guard let accountId = selectedAccountId else { return true }
         switch item {

@@ -50,7 +50,9 @@ final class GetTransactionsByCategoryTests: XCTestCase {
         try await seedTransaction(category: .restaurant)
         let result = try await useCase.execute(for: userId, category: .restaurant)
         XCTAssertEqual(result.count, 2)
-        XCTAssertTrue(result.allSatisfy { $0.category == .restaurant })
+        for transaction in result {
+            XCTAssertEqual(transaction.category, .restaurant)
+        }
     }
 
     /// Verifies that an empty result is returned when no transactions match the category.

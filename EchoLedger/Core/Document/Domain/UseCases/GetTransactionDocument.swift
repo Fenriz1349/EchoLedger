@@ -12,6 +12,8 @@ import Foundation
 /// Always uses the document placeholder regardless of attachment type.
 final class GetTransactionDocument {
 
+    /// Builds the `DocumentResult` for a transaction's attachment, mapping the stored MIME type
+    /// to an `AttachmentType` and picking the matching placeholder.
     func execute(transaction: Transaction) -> DocumentResult {
         let attachmentType: AttachmentType? = transaction.attachmentContentType.map { mime in
             mime == "application/pdf" ? .pdf : .image

@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Bidirectional local↔remote sync between SwiftData and Firestore, with last-write-wins conflict
+/// resolution. See `SyncManagerProtocol` for the public contract.
 @MainActor
 @Observable
 final class SyncManager: SyncManagerProtocol {
@@ -67,6 +69,9 @@ final class SyncManager: SyncManagerProtocol {
 
     // MARK: - Orchestration
 
+    /// Fetches remote and local state for all three collections, then reconciles each in turn:
+    /// records present locally are pushed/pulled by conflict resolution, records remote-only are
+    /// pulled in.
     private func performSync(pivot: Date?) async throws {
         let remoteInstitutions = try await institutionRemote.fetchAll(for: userId)
         let remoteAccounts     = try await accountRemote.fetchAll(for: userId)
@@ -95,6 +100,8 @@ final class SyncManager: SyncManagerProtocol {
 
     // MARK: - Local → Remote
 
+    /// Reconciles each local institution against its remote counterpart: local wins pushes the
+    /// update, remote wins upserts it locally, and a local-only record is pushed rather than deleted.
     private func syncLocalInstitutions(
         _ locals: [Institution],
         remoteMap: [UUID: Institution],
@@ -116,6 +123,8 @@ final class SyncManager: SyncManagerProtocol {
         }
     }
 
+    /// Reconciles each local account against its remote counterpart, same last-write-wins rule as
+    /// `syncLocalInstitutions`.
     private func syncLocalAccounts(
         _ locals: [Account],
         remoteMap: [UUID: Account]
@@ -133,6 +142,8 @@ final class SyncManager: SyncManagerProtocol {
         }
     }
 
+    /// Reconciles each local transaction against its remote counterpart, same last-write-wins rule
+    /// as `syncLocalInstitutions`.
     private func syncLocalTransactions(
         _ locals: [Transaction],
         remoteMap: [UUID: Transaction],
@@ -154,6 +165,7 @@ final class SyncManager: SyncManagerProtocol {
 
     // MARK: - Remote → Local
 
+    /// Pulls in institutions that exist remotely but not locally.
     private func syncRemoteOnlyInstitutions(
         _ remotes: [Institution],
         localIds: Set<UUID>,
@@ -173,6 +185,7 @@ final class SyncManager: SyncManagerProtocol {
         }
     }
 
+    /// Pulls in transactions that exist remotely but not locally.
     private func syncRemoteOnlyTransactions(
         _ remotes: [Transaction],
         localIds: Set<UUID>,

@@ -103,9 +103,6 @@ final class AccountLocalSource {
         try context.save()
     }
 
-    /// Inserts a new account locally if it does not exist, or updates it if it does.
-    /// - Parameter account: The domain Account to insert or update.
-    /// - Throws: A SwiftData error if the operation fails.
     /// Permanently deletes an account from local storage.
     /// - Parameter id: The unique identifier of the account to delete.
     /// - Throws: `AccountError.notFound` if no account matches the identifier.
@@ -121,6 +118,9 @@ final class AccountLocalSource {
         try context.save()
     }
 
+    /// Inserts a new account locally if it does not exist, or updates it if it does.
+    /// - Parameter account: The domain Account to insert or update.
+    /// - Throws: A SwiftData error if the operation fails.
     func upsert(_ account: Account) throws {
         let id = account.id
         var descriptor = FetchDescriptor<AccountModel>(
