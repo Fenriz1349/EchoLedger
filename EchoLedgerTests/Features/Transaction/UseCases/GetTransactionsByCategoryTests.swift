@@ -51,7 +51,8 @@ final class GetTransactionsByCategoryTests: XCTestCase {
         let result = try await useCase.execute(for: userId, category: .restaurant)
         XCTAssertEqual(result.count, 2)
         for transaction in result {
-            XCTAssertEqual(transaction.category, .restaurant)
+            let category = await transaction.category
+            XCTAssertEqual(category, .restaurant)
         }
     }
 

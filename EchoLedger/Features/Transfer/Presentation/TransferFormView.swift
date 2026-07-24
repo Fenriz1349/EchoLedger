@@ -18,90 +18,83 @@ struct TransferFormView: View {
     var body: some View {
         NavigationStack {
             Group {
-                    Form {
-                        Section("Comptes") {
-                            VStack(spacing: 0) {
-                                Picker("De", selection: $viewModel.sourceAccountId) {
-                                    ForEach(viewModel.sourceOptions) { item in
-                                        Text(item.displayLabel).tag(Optional(item.account.id))
-                                    }
-                                }
-                                .padding(.vertical, 6)
+                Form {
+                    Section("Comptes") {
+                        HStack (spacing: 12) {
+                            Button {
+                                viewModel.swapAccounts()
+                            } label: {
+                                Image(systemName: "arrow.up.arrow.down")
+                                    .font(.body.weight(.semibold))
+                                    .foregroundStyle(Color.echoAccentHard)
+                                    .frame(width: 36, height: 36)
+                                    .background(Color.echoAccentSoft,
+                                                in: RoundedRectangle(cornerRadius: .echoCorner))
+                            }
+                            .buttonStyle(.plain)
+                            
+                            VStack {
+                                TransferFormRowView(source: "De",
+                                                    options: viewModel.sourceOptions,
+                                                    selection: $viewModel.sourceAccountId)
                                 Divider()
-                                Picker("Vers", selection: $viewModel.destinationAccountId) {
-                                    ForEach(viewModel.destinationOptions) { item in
-                                        Text(item.displayLabel).tag(Optional(item.account.id))
-                                    }
-                                }
-                                .padding(.vertical, 6)
-                            }
-                            .overlay {
-                                GeometryReader { proxy in
-                                    Button {
-                                        viewModel.swapAccounts()
-                                    } label: {
-                                        Image(systemName: "arrow.up.arrow.down")
-                                            .font(.body.weight(.semibold))
-                                            .foregroundStyle(Color.echoAccentHard)
-                                            .frame(width: 40, height: 40)
-                                            .background(Color.echoAccentSoft,
-                                                       in: RoundedRectangle(cornerRadius: .echoCorner))
-                                    }
-                                    .buttonStyle(.plain)
-                                    .position(x: proxy.size.width / 4, y: proxy.size.height / 2)
-                                }
+                                TransferFormRowView(source: "Vers",
+                                                    options: viewModel.destinationOptions,
+                                                    selection: $viewModel.destinationAccountId)
                             }
                         }
-                        .listRowBackground(Color.echoCard)
+                    }
+                    .listRowBackground(Color.echoCard)
+                    .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
 
-                        Section("Montant") {
-                            HStack {
-                                CustomTextField(
-                                    placeholder: "0,00€",
-                                    text: $viewModel.amountText,
-                                    type: .decimal,
-                                    colors: .echo,
-                                    cornerRadius: .echoCorner,
-                                    hasShadow: false
-                                )
-                                .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
-                            }
-                            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
-                        }
-                        .listRowBackground(Color.echoCard)
-
-                        Section("Description (optionnel)") {
+                    Section("Montant") {
+                        HStack {
                             CustomTextField(
-                                placeholder: "Ex : virement livret",
-                                text: $viewModel.label,
-                                type: .alphaNumber,
+                                placeholder: "0,00€",
+                                text: $viewModel.amountText,
+                                type: .decimal,
                                 colors: .echo,
                                 cornerRadius: .echoCorner,
                                 hasShadow: false
                             )
+                            .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
                         }
-                        .listRowBackground(Color.echoCard)
-
-                        Section {
-                            Button {
-                                Task { await viewModel.submit() }
-                            } label: {
-                                CustomButtonLabel(
-                                    iconLeading: "arrow.left.arrow.right",
-                                    message: viewModel.isEditing ? "Modifier le transfert" : "Transférer",
-                                    color: .accentColor,
-                                    isSelected: viewModel.isFormValid
-                                )
-                            }
-                            .buttonStyle(.plain)
-                            .disabled(!viewModel.isFormValid || viewModel.isLoading)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.horizontal)
-                        }
+                        DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
                     }
-                    .scrollDismissesKeyboard(.immediately)
+                    .listRowBackground(Color.echoCard)
+
+                    Section("Description (optionnel)") {
+                        CustomTextField(
+                            placeholder: "Ex : virement livret",
+                            text: $viewModel.label,
+                            type: .alphaNumber,
+                            colors: .echo,
+                            cornerRadius: .echoCorner,
+                            hasShadow: false
+                        )
+                    }
+                    .listRowBackground(Color.echoCard)
+
+                    Section {
+                        Button {
+                            Task { await viewModel.submit() }
+                        } label: {
+                            CustomButtonLabel(
+                                iconLeading: "arrow.left.arrow.right",
+                                message: viewModel.isEditing ? "Modifier le transfert" : "Transférer",
+                                color: .accentColor,
+                                isSelected: viewModel.isFormValid
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.horizontal)
+                    }
                 }
+                .scrollDismissesKeyboard(.immediately)
+            }
             .navigationTitle(viewModel.isEditing ? "Modifier le transfert" : "Transfert")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
