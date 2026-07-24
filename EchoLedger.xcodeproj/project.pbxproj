@@ -486,6 +486,8 @@
 		68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */; };
 		68C8117A2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
 		68C8117B2FDC5A6C0077D42B /* Calendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */; };
+		68CE171E30135DBD0010CBEE /* TransferFormRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CE171D30135DBD0010CBEE /* TransferFormRowView.swift */; };
+		68CE171F30135DBD0010CBEE /* TransferFormRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CE171D30135DBD0010CBEE /* TransferFormRowView.swift */; };
 		68CFAF68300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */; };
 		68CFAF69300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */; };
 		68CFAF6B300A0D5400444AA3 /* GetAccountsSortedByRecency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */; };
@@ -806,6 +808,7 @@
 		68C8116F2FDC39580077D42B /* GetChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChartData.swift; sourceTree = "<group>"; };
 		68C811732FDC4D390077D42B /* MonthlyFlowChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyFlowChartView.swift; sourceTree = "<group>"; };
 		68C811792FDC5A6C0077D42B /* Calendar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Extension.swift"; sourceTree = "<group>"; };
+		68CE171D30135DBD0010CBEE /* TransferFormRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormRowView.swift; sourceTree = "<group>"; };
 		68CFAF67300A0D3000444AA3 /* AccountRecencySorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRecencySorter.swift; sourceTree = "<group>"; };
 		68CFAF6A300A0D5400444AA3 /* GetAccountsSortedByRecency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountsSortedByRecency.swift; sourceTree = "<group>"; };
 		68CFAF6D300A0D8D00444AA3 /* AccountRecencySorterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRecencySorterTests.swift; sourceTree = "<group>"; };
@@ -1094,6 +1097,7 @@
 			children = (
 				6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */,
 				6824DCA12FC03704007375C0 /* TransferFormView.swift */,
+				68CE171D30135DBD0010CBEE /* TransferFormRowView.swift */,
 				6824DCA52FC03E25007375C0 /* TransferRowView.swift */,
 				6824DCAD2FC049D0007375C0 /* TransferDetailViewModel.swift */,
 				6824DCAF2FC049D9007375C0 /* TransferDetailView.swift */,
@@ -2213,6 +2217,7 @@
 				6838213C2FC8432000CA6761 /* SyncError.swift in Sources */,
 				6838213D2FC8432000CA6761 /* AppEntryView.swift in Sources */,
 				68128E7F2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */,
+				68CE171F30135DBD0010CBEE /* TransferFormRowView.swift in Sources */,
 				68C8116E2FDC394D0077D42B /* ChartDataCalculator.swift in Sources */,
 				6838213E2FC8432000CA6761 /* AuthProviding.swift in Sources */,
 				683821412FC8432000CA6761 /* AuthFormContent.swift in Sources */,
@@ -2491,6 +2496,7 @@
 				685A1EB32F5ACF700009B885 /* ContentView.swift in Sources */,
 				685A1EB52F5ACF700009B885 /* Account.swift in Sources */,
 				6844973F2F757AC400337F74 /* AccountFormView.swift in Sources */,
+				68CE171E30135DBD0010CBEE /* TransferFormRowView.swift in Sources */,
 				685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */,
 				685A1EF02F5AEA9F0009B885 /* TransactionSplit.swift in Sources */,
 				682B0AA62FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
