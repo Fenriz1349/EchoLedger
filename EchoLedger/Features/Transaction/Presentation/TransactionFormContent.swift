@@ -98,8 +98,6 @@ struct TransactionFormContent: View {
 
         if viewModel.showAddAccountForm {
             AccountFormContent(viewModel: viewModel.addAccountFormViewModel)
-                .scrollDisabled(true)
-                .listRowInsets(EdgeInsets())
                 .onChange(of: viewModel.addAccountFormViewModel.isSuccess) {
                     if viewModel.addAccountFormViewModel.isSuccess {
                         viewModel.showAddAccountForm = false
