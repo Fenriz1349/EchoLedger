@@ -45,6 +45,31 @@ struct TransactionFormContent: View {
             }
         }
 
+        Section("Libellé") {
+            CustomTextField(
+                placeholder: "Ex : Boulangerie, vêtement...",
+                text: $viewModel.label,
+                type: .alphaNumber,
+                colors: .echo,
+                cornerRadius: .echoCorner,
+                hasShadow: false
+            )
+        }
+
+        Section("Détails") {
+            Picker(selection: $viewModel.category) {
+                ForEach(viewModel.categoryList, id: \.self) { category in
+                    Label(category.name, systemImage: category.icon).tag(category)
+                }
+            } label: {
+                Label("Catégorie", systemImage: viewModel.category.icon)
+            }
+
+            SegmentedToggle(selection: $viewModel.isIncome, style: .transaction)
+
+            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+        }
+
         Section {
             HStack {
                 Button {
@@ -81,31 +106,6 @@ struct TransactionFormContent: View {
                         Task { await viewModel.loadAccounts() }
                     }
                 }
-        }
-
-        Section("Détails") {
-            Picker(selection: $viewModel.category) {
-                ForEach(viewModel.categoryList, id: \.self) { category in
-                    Label(category.name, systemImage: category.icon).tag(category)
-                }
-            } label: {
-                Label("Catégorie", systemImage: viewModel.category.icon)
-            }
-
-            SegmentedToggle(selection: $viewModel.isIncome, style: .transaction)
-
-            DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
-        }
-
-        Section("Libellé (optionnel)") {
-            CustomTextField(
-                placeholder: "Ex : Boulangerie, vettement...",
-                text: $viewModel.label,
-                type: .alphaNumber,
-                colors: .echo,
-                cornerRadius: .echoCorner,
-                hasShadow: false
-            )
         }
 
         TransactionAttachmentSection(viewModel: viewModel)
