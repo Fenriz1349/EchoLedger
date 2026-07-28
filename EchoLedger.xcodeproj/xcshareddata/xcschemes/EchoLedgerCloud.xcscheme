@@ -57,6 +57,19 @@
             reference = "container:EchoLedgerE2E.xctestplan">
          </TestPlanReference>
       </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "683BD8E53018D05B00CDC125"
+               BuildableName = "EchoLedgerCloudUITests.xctest"
+               BlueprintName = "EchoLedgerCloudUITests"
+               ReferencedContainer = "container:EchoLedger.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
