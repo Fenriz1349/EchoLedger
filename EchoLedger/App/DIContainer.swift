@@ -77,6 +77,7 @@ final class DIContainer {
     let archiveInstitutionRule: ArchiveInstitutionRule
     let unarchiveInstitutionRule: UnarchiveInstitutionRule
     let deleteInstitutionRule: DeleteInstitutionRule
+    let retireInstitutionRule: RetireInstitutionRule
 
     // MARK: Use Cases — Account
     let addAccount: AddAccount
@@ -88,6 +89,7 @@ final class DIContainer {
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
     let deleteAccountRule: DeleteAccountRule
+    let retireAccountRule: RetireAccountRule
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -187,6 +189,11 @@ final class DIContainer {
         self.accountStoring = accountStore
         self.transactionStoring = transactionStore
         self.deletedEntityStoring = deletedEntityStore
+
+        // MARK: Use Cases — DeletedEntities
+        self.recordDeletedEntity = RecordDeletedEntity(repository: deletedEntityStore)
+        self.getDeletedEntity = GetDeletedEntity(repository: deletedEntityStore)
+        self.purgeDeletedEntities = PurgeDeletedEntities(repository: deletedEntityStore)
 
         // MARK: Sync
         self.syncManager = SyncManager(
@@ -288,6 +295,21 @@ final class DIContainer {
             deleteAccountRule: deleteAccountRule,
             deleteInstitution: deleteInstitution
         )
+
+        // MARK: Lifecycle Rules — delete while preserving transaction history
+        self.retireAccountRule = RetireAccountRule(
+            getAccount: getAccount,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteAccount: deleteAccount
+        )
+        self.retireInstitutionRule = RetireInstitutionRule(
+            getInstitution: getInstitution,
+            getAccounts: getAccounts,
+            retireAccountRule: retireAccountRule,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteInstitution: deleteInstitution
+        )
+
         let deleteUser = DeleteUser(repository: userStore, deleteDocument: deleteDocument)
         let deleteUserProfile = DeleteUserProfile(
             repository: authStoring,
@@ -328,10 +350,5 @@ final class DIContainer {
         // No-op on the classic target: reading from remote into local is the job of
         // SyncManager (the real local↔remote sync), not of a cache-warming reload.
         self.refreshFromRemote = RefreshFromRemote(refreshables: [])
-
-        // MARK: Use Cases — DeletedEntities
-        self.recordDeletedEntity = RecordDeletedEntity(repository: deletedEntityStore)
-        self.getDeletedEntity = GetDeletedEntity(repository: deletedEntityStore)
-        self.purgeDeletedEntities = PurgeDeletedEntities(repository: deletedEntityStore)
     }
 }
