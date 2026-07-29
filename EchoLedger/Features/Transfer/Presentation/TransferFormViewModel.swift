@@ -101,11 +101,13 @@ final class TransferFormViewModel {
 
     // MARK: Actions
 
-    /// Loads all active accounts available for transfer, ordered by last use, resolves their
-    /// institution names, and pre-selects existing accounts in edit mode.
+    /// Loads accounts available for transfer, ordered by last use, resolves their institution
+    /// names, and pre-selects existing accounts in edit mode. New transfers only offer active
+    /// accounts; editing offers all of them, so a since-archived account isn't lost or swapped.
     func loadAccounts() async {
         do {
-            let items = try await getAccountsSortedByRecency.execute(for: userId, filter: .active)
+            let filter: AccountFilter = existingTransfer == nil ? .active : .all
+            let items = try await getAccountsSortedByRecency.execute(for: userId, filter: filter)
             availableAccounts = items
 
             if let existingTransfer {
