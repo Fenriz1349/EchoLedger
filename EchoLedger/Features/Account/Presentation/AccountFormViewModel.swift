@@ -160,7 +160,6 @@ final class AccountFormViewModel {
             isArchived = true
             toasty.showSuccess("Compte archivé.")
         } catch {
-            isArchived = false
             toasty.showError(error)
         }
         isLoading = false
@@ -182,20 +181,9 @@ final class AccountFormViewModel {
             isArchived = false
             toasty.showSuccess("Compte désarchivé.")
         } catch {
-            isArchived = true
             toasty.showError(error)
         }
         isLoading = false
-    }
-
-    /// Dispatches to `archive()`/`unarchive()` — `isArchived` already holds the toggle's target
-    /// value by the time `onChange` fires, so it reflects where we're going, not where we were.
-    func archiveOrUnarchive() async {
-        if isArchived {
-            await archive()
-        } else {
-            await unarchive()
-        }
     }
 
     /// Permanently deletes the account and all its linked transactions.

@@ -152,7 +152,6 @@ final class InstitutionFormViewModel {
             isSuccess = true
             isArchived  = true
         } catch {
-            isArchived = false
             toasty.showError(error)
         }
         isLoading = false
@@ -168,20 +167,9 @@ final class InstitutionFormViewModel {
             isSuccess = true
             isArchived = false
         } catch {
-            isArchived = true
             toasty.showError(error)
         }
         isLoading = false
-    }
-
-    /// Dispatches to `archive()`/`unarchive()` — `isArchived` already holds the toggle's target
-    /// value by the time `onChange` fires, so it reflects where we're going, not where we were.
-    func archiveOrUnarchive() async {
-        if isArchived {
-            await archive()
-        } else {
-            await unarchive()
-        }
     }
 
     /// Permanently deletes the institution and all its accounts and transactions.

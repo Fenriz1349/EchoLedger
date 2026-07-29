@@ -59,14 +59,17 @@ struct SegmentedToggle: View {
 
     @Binding var selection: Bool
     let style: Style
+    /// When provided, a tap reports the target value here instead of writing `selection` directly —
+    /// lets the caller flip `selection` only once the underlying action actually succeeds.
+    var onSelect: ((Bool) -> Void)? = nil
 
     var body: some View {
         HStack(spacing: 0) {
             segment(label: style.falseLabel, fill: style.falseFill, isSelected: !selection) {
-                selection = false
+                if let onSelect { onSelect(false) } else { selection = false }
             }
             segment(label: style.trueLabel, fill: style.trueFill, isSelected: selection) {
-                selection = true
+                if let onSelect { onSelect(true) } else { selection = true }
             }
         }
         .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 9))
