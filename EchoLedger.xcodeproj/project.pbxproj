@@ -527,6 +527,8 @@
 		68CFAF7C300A298800444AA3 /* UserProfileViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7B300A298800444AA3 /* UserProfileViewSnapshotTests.swift */; };
 		68CFAF7E300A299100444AA3 /* AuthViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */; };
 		68CFAF9E300A317000444AA3 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */; };
+		68D5D32D301A771B001FB2C3 /* RetireAccountRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */; };
+		68D5D32F301A7725001FB2C3 /* RetireInstitutionRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -873,6 +875,8 @@
 		68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewSnapshotTests.swift; sourceTree = "<group>"; };
 		68CFAF81300A2B3A00444AA3 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
 		68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestCase.swift; sourceTree = "<group>"; };
+		68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireAccountRuleTests.swift; sourceTree = "<group>"; };
+		68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireInstitutionRuleTests.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -1217,6 +1221,8 @@
 				6825B7082FE9510D003170FC /* DeleteAccountRuleTests.swift */,
 				6825B7102FE95159003170FC /* DeleteInstitutionRuleTests.swift */,
 				6825B7122FE95165003170FC /* DeleteUserRuleTests.swift */,
+				68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */,
+				68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */,
 			);
 			path = LifecycleRules;
 			sourceTree = "<group>";
@@ -2222,6 +2228,7 @@
 				6825B7162FE95521003170FC /* ChartDataCalculatorTests.swift in Sources */,
 				681760C02FE546F7005873D2 /* UnarchiveInstitutionTests.swift in Sources */,
 				683133C02F61A4AE004AA5E4 /* TransactionDouble.swift in Sources */,
+				68D5D32D301A771B001FB2C3 /* RetireAccountRuleTests.swift in Sources */,
 				6825B6F92FE949E2003170FC /* UnarchiveAccountTests.swift in Sources */,
 				68617AAC300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift in Sources */,
 				68617AAA300A6012007C5731 /* TransactionBalanceIntegrationTests.swift in Sources */,
@@ -2241,6 +2248,7 @@
 				68592137301A2EB000719DF3 /* RecordDeletedEntityTests.swift in Sources */,
 				68CFAF7A300A297D00444AA3 /* AccountListViewSnapshotTests.swift in Sources */,
 				681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */,
+				68D5D32F301A7725001FB2C3 /* RetireInstitutionRuleTests.swift in Sources */,
 				6825B70D2FE95132003170FC /* UnarchiveInstitutionRuleTests.swift in Sources */,
 				683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */,
 				6825B7002FE94DDF003170FC /* TransferBetweenAccountsTests.swift in Sources */,
