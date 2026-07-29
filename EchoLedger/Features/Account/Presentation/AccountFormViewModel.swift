@@ -43,7 +43,7 @@ final class AccountFormViewModel {
     private let updateAccount: UpdateAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccountRule
-    private let deleteAccount: DeleteAccountRule
+    private let deleteAccount: RetireAccountRule
     private let addTransaction: AddTransaction
     private let getInstitutions: GetInstitutions
     private let userId: UUID
@@ -90,7 +90,7 @@ final class AccountFormViewModel {
         updateAccount: UpdateAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccountRule,
-        deleteAccount: DeleteAccountRule,
+        deleteAccount: RetireAccountRule,
         addTransaction: AddTransaction,
         getInstitutions: GetInstitutions,
         addInstitutionFormViewModel: InstitutionFormViewModel,

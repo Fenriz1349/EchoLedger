@@ -50,7 +50,7 @@ final class InstitutionFormViewModel {
     private let updateInstitution: UpdateInstitution
     private let archiveInstitution: ArchiveInstitutionRule
     private let unarchiveInstitution: UnarchiveInstitutionRule
-    private let deleteInstitution: DeleteInstitutionRule
+    private let deleteInstitution: RetireInstitutionRule
     private let getInstitutions: GetInstitutions
     private let userId: UUID
     private let existingInstitution: Institution?
@@ -76,7 +76,7 @@ final class InstitutionFormViewModel {
         updateInstitution: UpdateInstitution,
         archiveInstitution: ArchiveInstitutionRule,
         unarchiveInstitution: UnarchiveInstitutionRule,
-        deleteInstitution: DeleteInstitutionRule,
+        deleteInstitution: RetireInstitutionRule,
         getInstitutions: GetInstitutions,
         userId: UUID,
         existingInstitution: Institution? = nil,
