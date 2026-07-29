@@ -1081,7 +1081,7 @@
 			path = Branding;
 			sourceTree = "<group>";
 		};
-		681C55C02FE686D800339E87 /* CascadeRules */ = {
+		681C55C02FE686D800339E87 /* LifecycleRules */ = {
 			isa = PBXGroup;
 			children = (
 				681C55D02FE69CBE00339E87 /* ArchiveInstitutionRule.swift */,
@@ -1091,7 +1091,7 @@
 				681C55C72FE68C6A00339E87 /* DeleteInstitutionRule.swift */,
 				681C55CD2FE6922A00339E87 /* DeleteUserRule.swift */,
 			);
-			path = CascadeRules;
+			path = LifecycleRules;
 			sourceTree = "<group>";
 		};
 		6824DC972FC036AE007375C0 /* Transfer */ = {
@@ -1740,7 +1740,7 @@
 				6849E99C2FEBDEC10026A13E /* Animations */,
 				683821922FC867FF00CA6761 /* Document */,
 				682C6C4F2FBF301700AE9F62 /* Graphs */,
-				681C55C02FE686D800339E87 /* CascadeRules */,
+				681C55C02FE686D800339E87 /* LifecycleRules */,
 				68EF99F42FA3849200FEBC1A /* Loader */,
 				68128E772FE2A58B00A568B5 /* Network */,
 				685A1F092F5AEBF50009B885 /* Sync */,
