@@ -20,6 +20,7 @@ final class InstitutionFormViewModel {
     var name = ""
     var category: InstitutionCategory = .bank
     var nameState: ValidationState = .neutral
+    var isArchived: Bool = false
 
     // MARK: UI State
     var errorMessage: String?
@@ -31,7 +32,6 @@ final class InstitutionFormViewModel {
     // MARK: Computed
 
     var isEditing: Bool { existingInstitution != nil }
-    var isArchived: Bool { existingInstitution?.isArchived ?? false }
 
     /// A name is valid when it has at least 2 non-whitespace characters.
     /// Shared by the text field (display) and `isFormValid` (gating) so both stay in sync.
@@ -94,9 +94,15 @@ final class InstitutionFormViewModel {
         self.onAdd = onAdd
 
         if let existing = existingInstitution {
-            self.name = existing.name
-            self.category = existing.category
+            prefill(with: existing)
         }
+    }
+    
+    /// Prefills the form with an existing institution's data.
+    private func prefill(with institution: Institution) {
+        name = institution.name
+        category = institution.category
+        isArchived = institution.isArchived
     }
 
     // MARK: Actions
@@ -144,6 +150,7 @@ final class InstitutionFormViewModel {
             try await archiveInstitution.execute(id: existing.id)
             toasty.showSuccess("Établissement archivé.")
             isSuccess = true
+            isArchived  = true
         } catch {
             toasty.showError(error)
         }
@@ -158,6 +165,7 @@ final class InstitutionFormViewModel {
             try await unarchiveInstitution.execute(id: existing.id)
             toasty.showSuccess("Établissement désarchivé.")
             isSuccess = true
+            isArchived = false
         } catch {
             toasty.showError(error)
         }

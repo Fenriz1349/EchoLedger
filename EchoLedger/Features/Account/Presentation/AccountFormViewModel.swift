@@ -18,6 +18,7 @@ final class AccountFormViewModel {
     var name = ""
     var nameState: ValidationState = .neutral
     var category: AccountCategory = .checking
+    var isArchived = false
     var selectedInstitution: Institution?
     var initialBalanceText: String = ""
     var isInitialBalanceExpense: Bool = false
@@ -35,7 +36,6 @@ final class AccountFormViewModel {
 
     // MARK: Computed
     var isEditing: Bool { existingAccount != nil }
-    var isArchived: Bool { existingAccount?.isArchived ?? false }
 
     // MARK: Dependencies
     private let toasty: ToastyManager
@@ -124,6 +124,7 @@ final class AccountFormViewModel {
     private func prefill(with account: Account) {
         name = account.name
         category = account.category
+        isArchived = account.isArchived
     }
 
     // MARK: Actions
@@ -156,6 +157,7 @@ final class AccountFormViewModel {
                 category: existing.category,
                 isArchived: true
             )
+            isArchived = true
             toasty.showSuccess("Compte archivé.")
         } catch {
             toasty.showError(error)
@@ -176,6 +178,7 @@ final class AccountFormViewModel {
                 category: existing.category,
                 isArchived: false
             )
+            isArchived = false
             toasty.showSuccess("Compte désarchivé.")
         } catch {
             toasty.showError(error)
