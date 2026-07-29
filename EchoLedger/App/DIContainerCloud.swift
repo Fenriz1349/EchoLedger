@@ -21,6 +21,7 @@ final class DIContainer {
     let institutionRemote = InstitutionRemoteSource()
     let accountRemote = AccountRemoteSource()
     let transactionRemote = TransactionRemoteSource()
+    let deletedEntityRemote = DeletedEntityRemoteSource()
 
     // MARK: Auth
     let authStoring: AuthProviding
@@ -40,6 +41,7 @@ final class DIContainer {
     let institutionStoring: InstitutionProviding
     let accountStoring: AccountProviding
     let transactionStoring: TransactionProviding
+    let deletedEntityStoring: DeletedEntityProviding
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
@@ -99,6 +101,11 @@ final class DIContainer {
     // MARK: Use Cases — Reload
     let refreshFromRemote: RefreshFromRemote
 
+    // MARK: Use Cases — DeletedEntities
+    let recordDeletedEntity: RecordDeletedEntity
+    let getDeletedEntity: GetDeletedEntity
+    let purgeDeletedEntities: PurgeDeletedEntities
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies, wiring every storing directly to Firestore.
@@ -127,11 +134,14 @@ final class DIContainer {
                                                networkMonitor: networkMonitor)
         let transactionCloud = TransactionCloudStoring(remote: transactionRemote, userId: userId,
                                                        networkMonitor: networkMonitor)
+        let deletedEntityCloud = DeletedEntityCloudStoring(remote: deletedEntityRemote, userId: userId,
+                                                           networkMonitor: networkMonitor)
 
         self.userStoring = userCloud
         self.institutionStoring = institutionCloud
         self.accountStoring = accountCloud
         self.transactionStoring = transactionCloud
+        self.deletedEntityStoring = deletedEntityCloud
 
         // MARK: Document source (needed by the delete use cases below)
         let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
@@ -264,5 +274,10 @@ final class DIContainer {
         self.refreshFromRemote = RefreshFromRemote(
             refreshables: [transactionCloud, accountCloud, institutionCloud]
         )
+
+        // MARK: Use Cases — DeletedEntities
+        self.recordDeletedEntity = RecordDeletedEntity(repository: deletedEntityCloud)
+        self.getDeletedEntity = GetDeletedEntity(repository: deletedEntityCloud)
+        self.purgeDeletedEntities = PurgeDeletedEntities(repository: deletedEntityCloud)
     }
 }
