@@ -419,8 +419,10 @@
 		68592123301A28B300719DF3 /* DeletedEntityLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */; };
 		68592125301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */; };
 		68592126301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */; };
-		68592128301A298700719DF3 /* DeletedEntityCloudStoring..swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring..swift */; };
-		68592129301A298700719DF3 /* DeletedEntityCloudStoring..swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring..swift */; };
+		68592128301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */; };
+		68592129301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */; };
+		6859212B301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */; };
+		6859212C301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
 		685A1EA82F5ACF700009B885 /* UpdateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E892F5ACF700009B885 /* UpdateAccount.swift */; };
@@ -773,7 +775,8 @@
 		6859211E301A289D00719DF3 /* DeletedEntityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityModel.swift; sourceTree = "<group>"; };
 		68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityLocalSource.swift; sourceTree = "<group>"; };
 		68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityRemoteSource.swift; sourceTree = "<group>"; };
-		68592127301A298700719DF3 /* DeletedEntityCloudStoring..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityCloudStoring..swift; sourceTree = "<group>"; };
+		68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityCloudStoring.swift; sourceTree = "<group>"; };
+		6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurgeDeletedEntities.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		685A1E822F5ACF700009B885 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
 		685A1E842F5ACF700009B885 /* AccountProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProviding.swift; sourceTree = "<group>"; };
@@ -1532,7 +1535,7 @@
 			children = (
 				6859211E301A289D00719DF3 /* DeletedEntityModel.swift */,
 				68592114301A283700719DF3 /* DeletedEntityStoring.swift */,
-				68592127301A298700719DF3 /* DeletedEntityCloudStoring..swift */,
+				68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */,
 				68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */,
 				68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */,
 			);
@@ -1544,6 +1547,7 @@
 			children = (
 				68592118301A285600719DF3 /* RecordDeletedEntity.swift */,
 				6859211B301A286200719DF3 /* GetDeletedEntity.swift */,
+				6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -2275,7 +2279,7 @@
 				681760BB2FE5408B005873D2 /* DocumentSourcing.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
 				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
-				68592129301A298700719DF3 /* DeletedEntityCloudStoring..swift in Sources */,
+				68592129301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
 				683821002FC8432000CA6761 /* GetAccount.swift in Sources */,
 				683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */,
@@ -2348,6 +2352,7 @@
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
 				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
+				6859212C301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */,
 				6838219D2FC8683C00CA6761 /* DeleteDocument.swift in Sources */,
 				683821382FC8432000CA6761 /* TransferRowView.swift in Sources */,
 				683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */,
@@ -2531,7 +2536,7 @@
 				682C6C5D2FBF394F00AE9F62 /* TransactionRowView.swift in Sources */,
 				683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */,
 				6835BD782FED183500F1A372 /* AccountRowBackground.swift in Sources */,
-				68592128301A298700719DF3 /* DeletedEntityCloudStoring..swift in Sources */,
+				68592128301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */,
 				683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */,
 				681C55CB2FE6921000339E87 /* DeleteUser.swift in Sources */,
 				687DD66D2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
@@ -2605,6 +2610,7 @@
 				682C6C4E2FBF1E3D00AE9F62 /* AccountGroupList.swift in Sources */,
 				683BD8DE3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */,
 				681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */,
+				6859212B301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */,
 				68000F6A2F76D14500B30EB6 /* DIContainer+ViewModels.swift in Sources */,
 				6807E5862F926C0D0099DCE4 /* SyncError.swift in Sources */,
 				68EF99F82FA3968500FEBC1A /* AppEntryView.swift in Sources */,

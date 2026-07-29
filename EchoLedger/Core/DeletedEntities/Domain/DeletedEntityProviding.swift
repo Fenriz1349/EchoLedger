@@ -20,4 +20,8 @@ protocol DeletedEntityProviding {
     /// - Parameter id: The identifier the entity had before being deleted.
     /// - Returns: The matching trace, or `nil` if this id was never deleted (or predates this feature).
     func fetch(by id: UUID) async throws -> DeletedEntity?
+
+    /// Permanently removes every deleted-entity trace for the current user.
+    /// Called when the user itself is deleted, since subcollections aren't cascaded automatically.
+    func purge() async throws
 }
