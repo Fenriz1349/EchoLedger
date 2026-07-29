@@ -22,7 +22,7 @@ enum TransactionNatureFilter: CaseIterable, Identifiable {
         case .all:      return "Tous"
         case .expense:  return "Dépenses"
         case .income:   return "Revenus"
-        case .transfer: return "Virements"
+        case .transfer: return "Transferts"
         }
     }
 
