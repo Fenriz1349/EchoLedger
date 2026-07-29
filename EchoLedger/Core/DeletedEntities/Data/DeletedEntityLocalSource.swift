@@ -32,7 +32,8 @@ final class DeletedEntityLocalSource {
     /// Persists a new deleted-entity trace locally.
     /// - Parameter entity: The domain DeletedEntity to save.
     func save(_ entity: DeletedEntity) throws {
-        let model = DeletedEntityModel(id: entity.id, name: entity.name, kind: entity.kind.rawValue)
+        let model = DeletedEntityModel(id: entity.id, name: entity.name, kind: entity.kind.rawValue,
+                                       institutionName: entity.institutionName)
         context.insert(model)
         try context.save()
     }

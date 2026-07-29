@@ -21,4 +21,14 @@ struct DeletedEntity: Identifiable, Equatable, Codable, Sendable {
     let id: UUID
     let name: String
     let kind: DeletedEntityKind
+    /// The institution's name at the time of deletion, captured only for `.account` — its
+    /// institution may still exist, but the account no longer does to join against it.
+    let institutionName: String?
+
+    init(id: UUID, name: String, kind: DeletedEntityKind, institutionName: String? = nil) {
+        self.id = id
+        self.name = name
+        self.kind = kind
+        self.institutionName = institutionName
+    }
 }

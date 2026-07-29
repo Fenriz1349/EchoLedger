@@ -243,6 +243,7 @@ final class DIContainer {
         // MARK: Lifecycle Rules — delete while preserving transaction history
         self.retireAccountRule = RetireAccountRule(
             getAccount: getAccount,
+            getInstitution: getInstitution,
             recordDeletedEntity: recordDeletedEntity,
             deleteAccount: deleteAccount
         )

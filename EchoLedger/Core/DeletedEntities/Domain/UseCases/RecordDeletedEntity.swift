@@ -22,7 +22,8 @@ final class RecordDeletedEntity {
     ///   - id: The identifier the entity had before deletion.
     ///   - name: The entity's name at the time of deletion.
     ///   - kind: Whether this was an account or an institution.
-    func execute(id: UUID, name: String, kind: DeletedEntityKind) async throws {
-        try await repository.save(DeletedEntity(id: id, name: name, kind: kind))
+    ///   - institutionName: The account's institution name at deletion time. Nil for institutions.
+    func execute(id: UUID, name: String, kind: DeletedEntityKind, institutionName: String? = nil) async throws {
+        try await repository.save(DeletedEntity(id: id, name: name, kind: kind, institutionName: institutionName))
     }
 }

@@ -161,6 +161,7 @@ extension DIContainer {
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            getDeletedEntity: getDeletedEntity,
             refreshFromRemote: refreshFromRemote,
             userId: userId
         )

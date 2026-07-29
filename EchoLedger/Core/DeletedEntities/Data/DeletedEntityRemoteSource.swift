@@ -66,17 +66,21 @@ final class DeletedEntityRemoteSource {
             let kind = DeletedEntityKind(rawValue: kindRaw)
         else { return nil }
 
-        return DeletedEntity(id: id, name: name, kind: kind)
+        return DeletedEntity(id: id, name: name, kind: kind, institutionName: data["institutionName"] as? String)
     }
 
     /// Encodes a domain DeletedEntity into a Firestore-compatible dictionary.
     /// - Parameter entity: The entity to encode.
     /// - Returns: A dictionary representation of the entity.
     private func encode(_ entity: DeletedEntity) -> [String: Any] {
-        [
+        var data: [String: Any] = [
             "id": entity.id.uuidString,
             "name": entity.name,
             "kind": entity.kind.rawValue
         ]
+        if let institutionName = entity.institutionName {
+            data["institutionName"] = institutionName
+        }
+        return data
     }
 }

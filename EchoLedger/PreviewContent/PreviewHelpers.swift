@@ -187,6 +187,7 @@ struct PreviewHelpers {
             deleteTransaction: container.deleteTransaction,
             getAccount: container.getAccount,
             getAccountsWithInstitution: container.getAccountsWithInstitution,
+            getDeletedEntity: container.getDeletedEntity,
             refreshFromRemote: container.refreshFromRemote,
             userId: container.userId
         )
