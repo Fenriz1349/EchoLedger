@@ -118,18 +118,12 @@ struct AccountFormContent: View {
 
             if viewModel.isEditing {
                 Section {
-                    Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(
-                        get: { viewModel.isArchived },
-                        set: { isArchived in
+                    SegmentedToggle(selection: $viewModel.isArchived, style: .archive)
+                        .onChange(of: viewModel.isArchived) {
                             Task {
-                                if isArchived {
-                                    await viewModel.archive()
-                                } else {
-                                    await viewModel.unarchive()
-                                }
+                                await viewModel.archiveOrUnarchive()
                             }
                         }
-                    ))
                     .disabled(viewModel.isLoading)
 
                     Button(role: .destructive) {

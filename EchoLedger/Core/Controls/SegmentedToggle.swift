@@ -16,12 +16,14 @@ struct SegmentedToggle: View {
         case transaction
         case account
         case authentication
+        case archive
 
         var falseLabel: String {
             switch self {
             case .transaction: "Dépense"
             case .account: "Positif"
             case .authentication: "Connexion"
+            case .archive: "Actif"
             }
         }
 
@@ -30,6 +32,7 @@ struct SegmentedToggle: View {
             case .transaction: "Revenue"
             case .account: "Négatif"
             case .authentication: "Inscription"
+            case .archive: "Archivé"
             }
         }
 
@@ -39,6 +42,7 @@ struct SegmentedToggle: View {
             case .transaction: nil
             case .account: .green
             case .authentication: nil
+            case .archive: .green
             }
         }
 
@@ -48,6 +52,7 @@ struct SegmentedToggle: View {
             case .transaction: .green
             case .account: .red
             case .authentication: nil
+            case .archive: .red
             }
         }
     }

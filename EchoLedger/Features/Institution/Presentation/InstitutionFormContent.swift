@@ -53,18 +53,12 @@ struct InstitutionFormContent: View {
             .listRowSeparator(.hidden)
 
             if viewModel.isEditing {
-                Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(
-                    get: { viewModel.isArchived },
-                    set: { isArchived in
+                SegmentedToggle(selection: $viewModel.isArchived, style: .archive)
+                    .onChange(of: viewModel.isArchived) {
                         Task {
-                            if isArchived {
-                                await viewModel.archive()
-                            } else {
-                                await viewModel.unarchive()
-                            }
+                            await viewModel.archiveOrUnarchive()
                         }
                     }
-                ))
                 .disabled(viewModel.isLoading)
                 .padding(.horizontal, 4)
 
