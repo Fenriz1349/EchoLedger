@@ -65,6 +65,8 @@ struct UserProfileAnonymousView: View {
                 .padding(.horizontal, 24)
                 .padding(.top, 30)
                 .padding(.bottom, 40)
+                .contentShape(Rectangle())
+                .onTapGesture { UIView.dismissKeyboard() }
             }
             .scrollDismissesKeyboard(.immediately)
             .echoBackground()

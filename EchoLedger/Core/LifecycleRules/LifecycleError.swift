@@ -7,8 +7,7 @@
 
 import Foundation
 
-/// Identifies which step of a multi-step LifecycleRule failed, so a toast can say more than
-/// "une erreur est survenue" — e.g. which stage of full account deletion broke.
+/// Identifies which step of a multi-step LifecycleRule failed,
 enum LifecycleError: Error, Equatable, LocalizedError {
 
     /// Thrown when the Storage files sweep fails.
