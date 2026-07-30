@@ -66,7 +66,7 @@ struct InstitutionFormContent: View {
                 .padding(.horizontal, 4)
 
                 Button(role: .destructive) {
-                    viewModel.showDeleteAlert = true
+                    viewModel.showDeleteDialog = true
                 } label: {
                     CustomButtonLabel(
                         iconLeading: "trash",
@@ -76,13 +76,41 @@ struct InstitutionFormContent: View {
                     )
                 }
                 .disabled(viewModel.isLoading)
-                .alert("Supprimer l'établissement ?", isPresented: $viewModel.showDeleteAlert) {
-                    Button("Supprimer", role: .destructive) {
-                        Task { await viewModel.delete() }
+                .confirmationDialog(
+                    "Supprimer l'établissement ?",
+                    isPresented: $viewModel.showDeleteDialog,
+                    titleVisibility: .visible
+                ) {
+                    Button("Garder l'historique") {
+                        viewModel.pendingDeleteMode = .keepHistory
+                    }
+                    Button("Tout supprimer", role: .destructive) {
+                        viewModel.pendingDeleteMode = .everything
                     }
                     Button("Annuler", role: .cancel) {}
+                }
+                .alert(
+                    "Confirmer la suppression",
+                    isPresented: Binding(
+                        get: { viewModel.pendingDeleteMode != nil },
+                        set: { if !$0 { viewModel.pendingDeleteMode = nil } }
+                    )
+                ) {
+                    Button("Supprimer", role: .destructive) {
+                        if let mode = viewModel.pendingDeleteMode {
+                            Task { await viewModel.delete(mode: mode) }
+                        }
+                    }
+                    Button("Annuler", role: .cancel) {
+                        viewModel.pendingDeleteMode = nil
+                    }
                 } message: {
-                    Text("L'établissement, tous ses comptes et toutes les transactions associées seront définitivement supprimés. Cette action est irréversible.")
+                    switch viewModel.pendingDeleteMode {
+                    case .everything:
+                        Text("L'établissement, tous ses comptes et toutes les transactions associées seront définitivement supprimés. Cette action est irréversible.")
+                    default:
+                        Text("L'établissement et ses comptes seront supprimés mais toutes les transactions resteront visibles dans l'historique.")
+                    }
                 }
             }
 

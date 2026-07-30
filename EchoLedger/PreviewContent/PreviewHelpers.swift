@@ -148,7 +148,7 @@ struct PreviewHelpers {
             getAccounts: container.getAccounts,
             archiveAccount: container.archiveAccount,
             unarchiveAccount: container.unarchiveAccountRule,
-            deleteAccount: container.deleteAccountRule,
+            deleteAccount: container.retireAccountRule,
             getAccountBalance: container.getAccountBalance,
             refreshFromRemote: container.refreshFromRemote,
             userId: container.userId
@@ -187,6 +187,7 @@ struct PreviewHelpers {
             deleteTransaction: container.deleteTransaction,
             getAccount: container.getAccount,
             getAccountsWithInstitution: container.getAccountsWithInstitution,
+            getDeletedEntity: container.getDeletedEntity,
             refreshFromRemote: container.refreshFromRemote,
             userId: container.userId
         )

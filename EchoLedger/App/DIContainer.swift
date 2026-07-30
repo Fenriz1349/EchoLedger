@@ -27,12 +27,14 @@ final class DIContainer {
     private let institutionLocalSource: InstitutionLocalSource
     private let accountLocalSource: AccountLocalSource
     private let transactionLocalSource: TransactionLocalSource
+    private let deletedEntityLocalSource: DeletedEntityLocalSource
 
     // MARK: Remote Sources
     let userRemote = UserRemoteSource()
     let institutionRemote = InstitutionRemoteSource()
     let accountRemote = AccountRemoteSource()
     let transactionRemote = TransactionRemoteSource()
+    let deletedEntityRemote = DeletedEntityRemoteSource()
 
     // MARK: Auth
     let authStoring: AuthProviding
@@ -55,6 +57,7 @@ final class DIContainer {
     let institutionStoring: InstitutionProviding
     let accountStoring: AccountProviding
     let transactionStoring: TransactionProviding
+    let deletedEntityStoring: DeletedEntityProviding
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
@@ -74,6 +77,7 @@ final class DIContainer {
     let archiveInstitutionRule: ArchiveInstitutionRule
     let unarchiveInstitutionRule: UnarchiveInstitutionRule
     let deleteInstitutionRule: DeleteInstitutionRule
+    let retireInstitutionRule: RetireInstitutionRule
 
     // MARK: Use Cases — Account
     let addAccount: AddAccount
@@ -85,6 +89,7 @@ final class DIContainer {
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
     let deleteAccountRule: DeleteAccountRule
+    let retireAccountRule: RetireAccountRule
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -114,6 +119,11 @@ final class DIContainer {
     // MARK: Use Cases — Reload
     let refreshFromRemote: RefreshFromRemote
 
+    // MARK: Use Cases — DeletedEntities
+    let recordDeletedEntity: RecordDeletedEntity
+    let getDeletedEntity: GetDeletedEntity
+    let purgeDeletedEntities: PurgeDeletedEntities
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies.
@@ -138,7 +148,8 @@ final class DIContainer {
             InstitutionModel.self,
             AccountModel.self,
             TransactionModel.self,
-            TransactionSplitModel.self
+            TransactionSplitModel.self,
+            DeletedEntityModel.self
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
         do {
@@ -154,11 +165,13 @@ final class DIContainer {
         let institutionLocal = InstitutionLocalSource(context: context)
         let accountLocal = AccountLocalSource(context: context)
         let transactionLocal = TransactionLocalSource(context: context)
+        let deletedEntityLocal = DeletedEntityLocalSource(context: context)
 
         self.userLocalSource = userLocal
         self.institutionLocalSource = institutionLocal
         self.accountLocalSource = accountLocal
         self.transactionLocalSource = transactionLocal
+        self.deletedEntityLocalSource = deletedEntityLocal
 
         // MARK: Storings
         let userStore = UserStoring(local: userLocal, remote: userRemote, userId: userId)
@@ -168,11 +181,19 @@ final class DIContainer {
                                           remote: accountRemote, userId: userId)
         let transactionStore = TransactionStoring(local: transactionLocal,
                                                   remote: transactionRemote, userId: userId)
+        let deletedEntityStore = DeletedEntityStoring(local: deletedEntityLocal,
+                                                      remote: deletedEntityRemote, userId: userId)
 
         self.userStoring = userStore
         self.institutionStoring = institutionStore
         self.accountStoring = accountStore
         self.transactionStoring = transactionStore
+        self.deletedEntityStoring = deletedEntityStore
+
+        // MARK: Use Cases — DeletedEntities
+        self.recordDeletedEntity = RecordDeletedEntity(repository: deletedEntityStore)
+        self.getDeletedEntity = GetDeletedEntity(repository: deletedEntityStore)
+        self.purgeDeletedEntities = PurgeDeletedEntities(repository: deletedEntityStore)
 
         // MARK: Sync
         self.syncManager = SyncManager(
@@ -274,6 +295,22 @@ final class DIContainer {
             deleteAccountRule: deleteAccountRule,
             deleteInstitution: deleteInstitution
         )
+
+        // MARK: Lifecycle Rules — delete while preserving transaction history
+        self.retireAccountRule = RetireAccountRule(
+            getAccount: getAccount,
+            getInstitution: getInstitution,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteAccount: deleteAccount
+        )
+        self.retireInstitutionRule = RetireInstitutionRule(
+            getInstitution: getInstitution,
+            getAccounts: getAccounts,
+            retireAccountRule: retireAccountRule,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteInstitution: deleteInstitution
+        )
+
         let deleteUser = DeleteUser(repository: userStore, deleteDocument: deleteDocument)
         let deleteUserProfile = DeleteUserProfile(
             repository: authStoring,

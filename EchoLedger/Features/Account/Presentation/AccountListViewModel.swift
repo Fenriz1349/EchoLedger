@@ -63,7 +63,7 @@ final class AccountListViewModel {
     private let getAccounts: GetAccounts
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccountRule
-    private let deleteAccount: DeleteAccountRule
+    private let deleteAccount: RetireAccountRule
     private let getAccountBalance: GetAccountBalance
     private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
@@ -84,7 +84,7 @@ final class AccountListViewModel {
         getAccounts: GetAccounts,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccountRule,
-        deleteAccount: DeleteAccountRule,
+        deleteAccount: RetireAccountRule,
         getAccountBalance: GetAccountBalance,
         refreshFromRemote: RefreshFromRemote,
         userId: UUID) {

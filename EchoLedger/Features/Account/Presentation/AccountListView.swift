@@ -19,17 +19,18 @@ struct AccountListView: View {
             Group {
                 List {
                     // MARK: Total balance
-                    Section {
-                        if !coordinator.accountListViewModel.institutionsWithAccounts.isEmpty {
+                    if !coordinator.accountListViewModel.institutionsWithAccounts.isEmpty {
+                        Section {
                             HStack {
                                 Text("Solde total")
                                 Spacer()
                                 AnimatedAmountView(value: coordinator.dashboardViewModel.graphsViewModel.totalBalance)
                             }
                             .font(.headline)
+                            .listRowSeparator(.hidden)
+                            .echoRowStyle(cornerRadius: 25)
                         }
                     }
-                    .listRowBackground(Color.echoCard)
 
                     AccountGroupList(
                         items: coordinator.accountListViewModel.institutionsWithAccounts,

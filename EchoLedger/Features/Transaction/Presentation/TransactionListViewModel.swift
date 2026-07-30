@@ -148,6 +148,7 @@ final class TransactionListViewModel {
     private let deleteTransaction: DeleteTransaction
     private let getAccount: GetAccount
     private let getAccountsWithInstitution: GetAccountsWithInstitution
+    private let getDeletedEntity: GetDeletedEntity
     private let refreshFromRemote: RefreshFromRemote
     private let userId: UUID
 
@@ -157,6 +158,7 @@ final class TransactionListViewModel {
     ///   - deleteTransaction: UseCase for deleting one transaction.
     ///   - getAccount: UseCase for resolving a single account name.
     ///   - getAccountsWithInstitution: UseCase for building the flat list of AccountDisplayItem.
+    ///   - getDeletedEntity: UseCase for resolving a deleted account's name/institution as a fallback.
     ///   - refreshFromRemote: UseCase warming the remote data before a user-triggered reload.
     ///   - userId: The identifier of the current user.
     init(toasty: ToastyManager,
@@ -164,6 +166,7 @@ final class TransactionListViewModel {
          deleteTransaction: DeleteTransaction,
          getAccount: GetAccount,
          getAccountsWithInstitution: GetAccountsWithInstitution,
+         getDeletedEntity: GetDeletedEntity,
          refreshFromRemote: RefreshFromRemote,
          userId: UUID) {
         self.toasty = toasty
@@ -171,6 +174,7 @@ final class TransactionListViewModel {
         self.deleteTransaction = deleteTransaction
         self.getAccount = getAccount
         self.getAccountsWithInstitution = getAccountsWithInstitution
+        self.getDeletedEntity = getDeletedEntity
         self.refreshFromRemote = refreshFromRemote
         self.userId = userId
     }
@@ -231,8 +235,17 @@ final class TransactionListViewModel {
     }
 
     /// Resolves the account name for each split of a transaction and stores them in `accountNames`.
+    /// Checks the deleted-entity trace first, every time — an account can be deleted after its
+    /// name was already cached from when it was still live, so a stale cache entry must not
+    /// prevent the deletion from being detected on a later reload. Falls back to a live lookup
+    /// (cached from then on) only when no deleted-entity trace exists.
     func loadAccountNames(for transaction: Transaction) async {
         for split in transaction.splits {
+            if let deleted = try? await getDeletedEntity.execute(id: split.accountId) {
+                accountNames[split.accountId] = "\(deleted.name) (supprimé)"
+                institutionNames[split.accountId] = deleted.institutionName
+                continue
+            }
             guard accountNames[split.accountId] == nil else { continue }
             if let account = try? await getAccount.execute(id: split.accountId) {
                 accountNames[split.accountId] = account.name

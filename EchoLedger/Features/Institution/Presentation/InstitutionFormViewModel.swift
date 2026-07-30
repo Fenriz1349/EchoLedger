@@ -27,7 +27,8 @@ final class InstitutionFormViewModel {
     var isLoading = false
     var isSuccess = false
     var showArchiveAlert = false
-    var showDeleteAlert = false
+    var showDeleteDialog = false
+    var pendingDeleteMode: DeleteMode?
 
     // MARK: Computed
 
@@ -50,6 +51,7 @@ final class InstitutionFormViewModel {
     private let updateInstitution: UpdateInstitution
     private let archiveInstitution: ArchiveInstitutionRule
     private let unarchiveInstitution: UnarchiveInstitutionRule
+    private let retireInstitution: RetireInstitutionRule
     private let deleteInstitution: DeleteInstitutionRule
     private let getInstitutions: GetInstitutions
     private let userId: UUID
@@ -65,6 +67,7 @@ final class InstitutionFormViewModel {
     ///   - updateInstitution: UseCase for updating an existing institution.
     ///   - archiveInstitution: UseCase for archiving an institution and its accounts.
     ///   - unarchiveInstitution: UseCase for restoring an institution and its accounts.
+    ///   - retireInstitution: UseCase for deleting an institution while keeping its transactions.
     ///   - deleteInstitution: UseCase for permanently deleting an institution and all its data.
     ///   - getInstitutions: UseCase for fetching institutions after creation.
     ///   - userId: The identifier of the current user.
@@ -76,6 +79,7 @@ final class InstitutionFormViewModel {
         updateInstitution: UpdateInstitution,
         archiveInstitution: ArchiveInstitutionRule,
         unarchiveInstitution: UnarchiveInstitutionRule,
+        retireInstitution: RetireInstitutionRule,
         deleteInstitution: DeleteInstitutionRule,
         getInstitutions: GetInstitutions,
         userId: UUID,
@@ -87,6 +91,7 @@ final class InstitutionFormViewModel {
         self.updateInstitution = updateInstitution
         self.archiveInstitution = archiveInstitution
         self.unarchiveInstitution = unarchiveInstitution
+        self.retireInstitution = retireInstitution
         self.deleteInstitution = deleteInstitution
         self.getInstitutions = getInstitutions
         self.userId = userId
@@ -172,12 +177,17 @@ final class InstitutionFormViewModel {
         isLoading = false
     }
 
-    /// Permanently deletes the institution and all its accounts and transactions.
-    func delete() async {
+    /// Deletes the institution using the given mode: keeps its accounts' transactions, or erases everything.
+    func delete(mode: DeleteMode) async {
         guard let existing = existingInstitution else { return }
         isLoading = true
         do {
-            try await deleteInstitution.execute(id: existing.id)
+            switch mode {
+            case .keepHistory:
+                try await retireInstitution.execute(id: existing.id)
+            case .everything:
+                try await deleteInstitution.execute(id: existing.id)
+            }
             isSuccess = true
         } catch {
             toasty.showError(error)

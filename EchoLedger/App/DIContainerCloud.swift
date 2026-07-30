@@ -21,6 +21,7 @@ final class DIContainer {
     let institutionRemote = InstitutionRemoteSource()
     let accountRemote = AccountRemoteSource()
     let transactionRemote = TransactionRemoteSource()
+    let deletedEntityRemote = DeletedEntityRemoteSource()
 
     // MARK: Auth
     let authStoring: AuthProviding
@@ -40,6 +41,7 @@ final class DIContainer {
     let institutionStoring: InstitutionProviding
     let accountStoring: AccountProviding
     let transactionStoring: TransactionProviding
+    let deletedEntityStoring: DeletedEntityProviding
 
     // MARK: Use Cases — Auth
     let signOut: SignOut
@@ -59,6 +61,7 @@ final class DIContainer {
     let archiveInstitutionRule: ArchiveInstitutionRule
     let unarchiveInstitutionRule: UnarchiveInstitutionRule
     let deleteInstitutionRule: DeleteInstitutionRule
+    let retireInstitutionRule: RetireInstitutionRule
 
     // MARK: Use Cases — Account
     let addAccount: AddAccount
@@ -70,6 +73,7 @@ final class DIContainer {
     let getAccountBalance: GetAccountBalance
     let getAccountsWithInstitution: GetAccountsWithInstitution
     let deleteAccountRule: DeleteAccountRule
+    let retireAccountRule: RetireAccountRule
 
     // MARK: Use Cases — Transfer
     let transferBetweenAccounts: TransferBetweenAccounts
@@ -99,6 +103,11 @@ final class DIContainer {
     // MARK: Use Cases — Reload
     let refreshFromRemote: RefreshFromRemote
 
+    // MARK: Use Cases — DeletedEntities
+    let recordDeletedEntity: RecordDeletedEntity
+    let getDeletedEntity: GetDeletedEntity
+    let purgeDeletedEntities: PurgeDeletedEntities
+
     // MARK: Init
 
     /// Creates the container with all resolved dependencies, wiring every storing directly to Firestore.
@@ -127,11 +136,19 @@ final class DIContainer {
                                                networkMonitor: networkMonitor)
         let transactionCloud = TransactionCloudStoring(remote: transactionRemote, userId: userId,
                                                        networkMonitor: networkMonitor)
+        let deletedEntityCloud = DeletedEntityCloudStoring(remote: deletedEntityRemote, userId: userId,
+                                                           networkMonitor: networkMonitor)
 
         self.userStoring = userCloud
         self.institutionStoring = institutionCloud
         self.accountStoring = accountCloud
         self.transactionStoring = transactionCloud
+        self.deletedEntityStoring = deletedEntityCloud
+
+        // MARK: Use Cases — DeletedEntities
+        self.recordDeletedEntity = RecordDeletedEntity(repository: deletedEntityCloud)
+        self.getDeletedEntity = GetDeletedEntity(repository: deletedEntityCloud)
+        self.purgeDeletedEntities = PurgeDeletedEntities(repository: deletedEntityCloud)
 
         // MARK: Document source (needed by the delete use cases below)
         let documentSource = DocumentRemoteSource(networkMonitor: networkMonitor)
@@ -222,6 +239,22 @@ final class DIContainer {
             deleteAccountRule: deleteAccountRule,
             deleteInstitution: deleteInstitution
         )
+
+        // MARK: Lifecycle Rules — delete while preserving transaction history
+        self.retireAccountRule = RetireAccountRule(
+            getAccount: getAccount,
+            getInstitution: getInstitution,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteAccount: deleteAccount
+        )
+        self.retireInstitutionRule = RetireInstitutionRule(
+            getInstitution: getInstitution,
+            getAccounts: getAccounts,
+            retireAccountRule: retireAccountRule,
+            recordDeletedEntity: recordDeletedEntity,
+            deleteInstitution: deleteInstitution
+        )
+
         let deleteUser = DeleteUser(repository: userCloud, deleteDocument: deleteDocument)
         let deleteUserProfile = DeleteUserProfile(
             repository: authStoring,
