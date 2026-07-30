@@ -29,7 +29,8 @@ final class AccountFormViewModel {
     var existingAccount: Account?
     var institutions: [Institution] = []
     var showAddInstitutionForm = false
-    var showDeleteAlert = false
+    var showDeleteDialog = false
+    var pendingDeleteMode: DeleteMode?
     var errorMessage: String?
     var isLoading = false
     var isSuccess = false
@@ -43,7 +44,8 @@ final class AccountFormViewModel {
     private let updateAccount: UpdateAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccountRule
-    private let deleteAccount: RetireAccountRule
+    private let retireAccount: RetireAccountRule
+    private let deleteAccount: DeleteAccountRule
     private let addTransaction: AddTransaction
     private let getInstitutions: GetInstitutions
     private let userId: UUID
@@ -78,6 +80,7 @@ final class AccountFormViewModel {
     ///   - updateAccount: UseCase for updating an account.
     ///   - archiveAccount: UseCase for archiving an account.
     ///   - unarchiveAccount: UseCase for restoring an archived account.
+    ///   - retireAccount: UseCase for deleting an account while keeping its transactions.
     ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - addTransaction: UseCase for creating the initial balance transaction.
     ///   - getInstitutions: UseCase for fetching available institutions.
@@ -90,7 +93,8 @@ final class AccountFormViewModel {
         updateAccount: UpdateAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccountRule,
-        deleteAccount: RetireAccountRule,
+        retireAccount: RetireAccountRule,
+        deleteAccount: DeleteAccountRule,
         addTransaction: AddTransaction,
         getInstitutions: GetInstitutions,
         addInstitutionFormViewModel: InstitutionFormViewModel,
@@ -102,6 +106,7 @@ final class AccountFormViewModel {
         self.updateAccount = updateAccount
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
+        self.retireAccount = retireAccount
         self.deleteAccount = deleteAccount
         self.addTransaction = addTransaction
         self.getInstitutions = getInstitutions
@@ -186,12 +191,17 @@ final class AccountFormViewModel {
         isLoading = false
     }
 
-    /// Permanently deletes the account and all its linked transactions.
-    func delete() async {
+    /// Deletes the account using the given mode: keeps its transactions, or erases everything.
+    func delete(mode: DeleteMode) async {
         guard let existing = existingAccount else { return }
         isLoading = true
         do {
-            try await deleteAccount.execute(id: existing.id)
+            switch mode {
+            case .keepHistory:
+                try await retireAccount.execute(id: existing.id)
+            case .everything:
+                try await deleteAccount.execute(id: existing.id)
+            }
             isSuccess = true
         } catch {
             toasty.showError(error)
