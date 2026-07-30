@@ -27,8 +27,15 @@ final class NetworkMonitor {
     private let queue = DispatchQueue(label: "com.echoledger.networkmonitor")
 
     /// Pinged to confirm reachability. Firestore itself, so a successful response proves both
-    /// internet access and backend availability in one shot.
-    private let reachabilityURL = URL(string: "https://firestore.googleapis.com")!
+    /// internet access and backend availability in one shot. Redirected to the local emulator under
+    /// `--uitesting`, matching the Auth/Firestore SDK redirect in `EchoLedgerApp` — otherwise this
+    /// raw `URLSession` ping would silently hit real Google servers during UI tests.
+    private let reachabilityURL: URL = {
+        if ProcessInfo.processInfo.arguments.contains("--uitesting") {
+            return URL(string: "http://127.0.0.1:8080")!
+        }
+        return URL(string: "https://firestore.googleapis.com")!
+    }()
 
     /// Starts the underlying `NWPathMonitor`, updating `isConnected` on the main actor as the
     /// interface status changes.

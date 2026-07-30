@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "40C77DC4-59AD-471A-99AD-886B3514735B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:EchoLedger.xcodeproj",
+        "identifier" : "683BD8E53018D05B00CDC125",
+        "name" : "EchoLedgerCloudUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

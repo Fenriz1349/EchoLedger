@@ -56,6 +56,9 @@
          <TestPlanReference
             reference = "container:EchoLedgerE2E.xctestplan">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:EchoLedgerCloudUITests/EchoLedgerCloud.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

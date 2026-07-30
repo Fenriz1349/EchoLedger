@@ -44,6 +44,7 @@ struct AuthFormContent: View {
                     cornerRadius: .echoCorner,
                     hasShadow: false
                 )
+                .accessibilityIdentifier("authField.firstName")
                 CustomTextField(
                     placeholder: "Nom",
                     text: $lastName,
@@ -56,6 +57,7 @@ struct AuthFormContent: View {
                     cornerRadius: .echoCorner,
                     hasShadow: false
                 )
+                .accessibilityIdentifier("authField.lastName")
             }
             CustomTextField(
                 placeholder: "Email",
@@ -68,6 +70,7 @@ struct AuthFormContent: View {
                 cornerRadius: .echoCorner,
                 hasShadow: false
             )
+            .accessibilityIdentifier("authField.email")
             CustomTextField(
                 placeholder: "Mot de passe",
                 text: $password,
@@ -79,6 +82,7 @@ struct AuthFormContent: View {
                 cornerRadius: .echoCorner,
                 hasShadow: false
             )
+            .accessibilityIdentifier("authField.password")
             if isSignUp {
                 CustomTextField(
                     placeholder: "Confirmer le mot de passe",
@@ -92,6 +96,7 @@ struct AuthFormContent: View {
                     cornerRadius: .echoCorner,
                     hasShadow: false
                 )
+                .accessibilityIdentifier("authField.confirmPassword")
             }
         }
         .animation(.easeInOut(duration: 0.2), value: isSignUp)
