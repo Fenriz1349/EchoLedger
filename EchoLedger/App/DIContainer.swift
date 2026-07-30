@@ -311,13 +311,11 @@ final class DIContainer {
             deleteInstitution: deleteInstitution
         )
 
-        let deleteUser = DeleteUser(repository: userStore, deleteDocument: deleteDocument)
-        let deleteUserProfile = DeleteUserProfile(
-            repository: authStoring,
-            deleteDocument: deleteDocument,
-            userId: userId
-        )
+        let deleteUser = DeleteUser(repository: userStore)
+        let deleteUserProfile = DeleteUserProfile(repository: authStoring)
         self.deleteUserRule = DeleteUserRule(
+            deleteDocument: deleteDocument,
+            purgeDeletedEntities: purgeDeletedEntities,
             getInstitutions: getInstitutions,
             deleteInstitutionRule: deleteInstitutionRule,
             deleteUser: deleteUser,
