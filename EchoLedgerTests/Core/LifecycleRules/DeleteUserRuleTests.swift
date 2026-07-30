@@ -16,6 +16,7 @@ final class DeleteUserRuleTests: XCTestCase {
     private var institutionRepository: InstitutionDouble!
     private var accountRepository: AccountDouble!
     private var transactionRepository: TransactionDouble!
+    private var deletedEntityRepository: DeletedEntityDouble!
     private var rule: DeleteUserRule!
     private let userId = UUID()
 
@@ -26,6 +27,7 @@ final class DeleteUserRuleTests: XCTestCase {
         institutionRepository = InstitutionDouble()
         accountRepository = AccountDouble()
         transactionRepository = TransactionDouble()
+        deletedEntityRepository = DeletedEntityDouble()
 
         let deleteAccountRule = DeleteAccountRule(
             getTransactionsByAccount: GetTransactionsByAccount(getTransactions: GetTransactions(repository: transactionRepository)),
@@ -40,10 +42,12 @@ final class DeleteUserRuleTests: XCTestCase {
             deleteInstitution: DeleteInstitution(repository: institutionRepository)
         )
         rule = DeleteUserRule(
+            deleteDocument: DocumentDeletingDouble(),
+            purgeDeletedEntities: PurgeDeletedEntities(repository: deletedEntityRepository),
             getInstitutions: GetInstitutions(repository: institutionRepository),
             deleteInstitutionRule: deleteInstitutionRule,
-            deleteUser: DeleteUser(repository: userRepository, deleteDocument: DocumentDeletingDouble()),
-            deleteUserProfile: DeleteUserProfile(repository: authRepository, deleteDocument: DocumentDeletingDouble(), userId: userId),
+            deleteUser: DeleteUser(repository: userRepository),
+            deleteUserProfile: DeleteUserProfile(repository: authRepository),
             userId: userId
         )
     }
@@ -54,6 +58,7 @@ final class DeleteUserRuleTests: XCTestCase {
         institutionRepository = nil
         accountRepository = nil
         transactionRepository = nil
+        deletedEntityRepository = nil
         rule = nil
         super.tearDown()
     }

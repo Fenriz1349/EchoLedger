@@ -83,6 +83,9 @@ final class DocumentRemoteSource: DocumentSourcing {
     /// An already-absent file counts as success, so retries after a partial failure are safe.
     /// - Parameter urlString: The download URL of the document to delete.
     func deleteDocument(urlString: String) async throws {
+        #if targetEnvironment(simulator)
+        return  // No Storage files on the simulator (uploads are blocked); nothing to delete.
+        #else
         try await networkMonitor.verifyReachable()
         let reference = storage.reference(forURL: urlString)
         do {
@@ -92,6 +95,7 @@ final class DocumentRemoteSource: DocumentSourcing {
             guard nsError.domain == StorageErrorDomain,
                   nsError.code == StorageErrorCode.objectNotFound.rawValue else { throw error }
         }
+        #endif
     }
 
     /// Deletes every file under the user's Storage folder (`users/{userId}/`), recursively.
