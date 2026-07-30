@@ -17,3 +17,6 @@ DerivedData/
 firebase-debug.log
 firebase-debug.json
 firestore-debug.log
+
+# Firebase config
+GoogleService-Info.plist
