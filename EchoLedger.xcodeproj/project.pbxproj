@@ -360,6 +360,7 @@
 		683821C22FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */; };
 		68394BF8301B315C006A94BE /* DeleteMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BF7301B315C006A94BE /* DeleteMode.swift */; };
 		68394BF9301B315C006A94BE /* DeleteMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BF7301B315C006A94BE /* DeleteMode.swift */; };
+		68394BFB301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */; };
 		683BD8DD3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */; };
 		683BD8DE3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */; };
 		683BD8E03018CC6300CDC125 /* Transaction+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */; };
@@ -743,6 +744,7 @@
 		683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditButtonView.swift; sourceTree = "<group>"; };
 		683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentPlaceholder+View.swift"; sourceTree = "<group>"; };
 		68394BF7301B315C006A94BE /* DeleteMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMode.swift; sourceTree = "<group>"; };
+		68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeleteModeIntegrationTests.swift; sourceTree = "<group>"; };
 		683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionCategory+Color.swift"; sourceTree = "<group>"; };
 		683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Color.swift"; sourceTree = "<group>"; };
 		683BD8E63018D05B00CDC125 /* EchoLedgerCloudUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoLedgerCloudUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1885,6 +1887,7 @@
 				68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */,
 				68617AAD300A6180007C5731 /* UpdateTransactionBalanceIntegrationTests.swift */,
 				68617AAF300A6228007C5731 /* InstitutionCascadeIntegrationTests.swift */,
+				68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */,
 			);
 			path = Integration;
 			sourceTree = "<group>";
@@ -2262,6 +2265,7 @@
 				6825B6F52FE9327C003170FC /* DocumentDeletingDouble.swift in Sources */,
 				6825B70B2FE95127003170FC /* ArchiveInstitutionRuleTests.swift in Sources */,
 				6813E8232F6D961300344774 /* UserDouble.swift in Sources */,
+				68394BFB301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift in Sources */,
 				684497222F75410C00337F74 /* TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
