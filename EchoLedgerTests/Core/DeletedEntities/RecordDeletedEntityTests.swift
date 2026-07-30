@@ -26,6 +26,7 @@ final class RecordDeletedEntityTests: XCTestCase {
     }
 
     /// Verifies that recording a deleted entity persists it with the given id, name, and kind.
+    @MainActor
     func test_execute_savesEntityWithGivenValues() async throws {
         let id = UUID()
         try await useCase.execute(id: id, name: "Livret A", kind: .account)

@@ -26,6 +26,7 @@ final class GetDeletedEntityTests: XCTestCase {
     }
 
     /// Verifies that an existing deleted entity's trace is returned.
+    @MainActor
     func test_execute_existingId_returnsEntity() async throws {
         let id = UUID()
         try await repository.save(DeletedEntity(id: id, name: "BNP Paribas", kind: .institution))

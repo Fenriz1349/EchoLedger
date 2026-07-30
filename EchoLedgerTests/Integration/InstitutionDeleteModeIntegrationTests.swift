@@ -1,5 +1,5 @@
 //
-//  AccountDeleteModeIntegrationTests.swift
+//  InstitutionDeleteModeIntegrationTests.swift
 //  EchoLedgerTests
 //
 //  Created by Julien Cotte on 30/07/2026.
@@ -9,17 +9,17 @@ import XCTest
 import Toasty
 @testable import EchoLedger
 
-/// Verifies that AccountFormViewModel.delete(mode:) dispatches to the correct rule: the same kind
-/// of inversion bug once hit with archive/unarchive is possible here (keepHistory vs everything),
-/// so the effect on the linked transaction is checked end-to-end rather than just the dispatch.
+/// Verifies that InstitutionFormViewModel.delete(mode:) dispatches to the correct rule, checking
+/// the effect on the institution's linked account and transaction end-to-end rather than just the
+/// dispatch — the same kind of inversion bug once hit with archive/unarchive is possible here.
 @MainActor
-final class AccountDeleteModeIntegrationTests: XCTestCase {
+final class InstitutionDeleteModeIntegrationTests: XCTestCase {
 
-    private var accountRepository: AccountDouble!
     private var institutionRepository: InstitutionDouble!
+    private var accountRepository: AccountDouble!
     private var transactionRepository: TransactionDouble!
     private var deletedEntityRepository: DeletedEntityDouble!
-    private var viewModel: AccountFormViewModel!
+    private var viewModel: InstitutionFormViewModel!
     private let userId = UUID()
     private let institutionId = UUID()
     private var accountId = UUID()
@@ -27,15 +27,15 @@ final class AccountDeleteModeIntegrationTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        accountRepository = AccountDouble()
         institutionRepository = InstitutionDouble()
+        accountRepository = AccountDouble()
         transactionRepository = TransactionDouble()
         deletedEntityRepository = DeletedEntityDouble()
     }
 
     override func tearDown() {
-        accountRepository = nil
         institutionRepository = nil
+        accountRepository = nil
         transactionRepository = nil
         deletedEntityRepository = nil
         viewModel = nil
@@ -44,7 +44,7 @@ final class AccountDeleteModeIntegrationTests: XCTestCase {
 
     // MARK: Helpers
     /// Seeds an institution with one account and one transaction on that account, then builds an
-    /// AccountFormViewModel editing that account, wired with real rules over the shared doubles.
+    /// InstitutionFormViewModel editing that institution, wired with real rules over the shared doubles.
     private func seed() async throws {
         try await institutionRepository.save(TestData.institution(id: institutionId, userId: userId))
         accountId = UUID()
@@ -68,7 +68,21 @@ final class AccountDeleteModeIntegrationTests: XCTestCase {
             deleteAccount: DeleteAccount(repository: accountRepository),
             userId: userId
         )
-        let institutionFormViewModel = InstitutionFormViewModel(
+        let retireInstitutionRule = RetireInstitutionRule(
+            getInstitution: GetInstitution(repository: institutionRepository),
+            getAccounts: GetAccounts(repository: accountRepository),
+            retireAccountRule: retireAccountRule,
+            recordDeletedEntity: RecordDeletedEntity(repository: deletedEntityRepository),
+            deleteInstitution: DeleteInstitution(repository: institutionRepository)
+        )
+        let deleteInstitutionRule = DeleteInstitutionRule(
+            getAccounts: GetAccounts(repository: accountRepository),
+            deleteAccountRule: deleteAccountRule,
+            deleteInstitution: DeleteInstitution(repository: institutionRepository)
+        )
+
+        let institution = try await institutionRepository.fetch(by: institutionId)
+        viewModel = InstitutionFormViewModel(
             toasty: ToastyManager(),
             addInstitution: AddInstitution(repository: institutionRepository),
             updateInstitution: UpdateInstitution(repository: institutionRepository),
@@ -82,52 +96,27 @@ final class AccountDeleteModeIntegrationTests: XCTestCase {
                 unarchiveAccount: UnarchiveAccount(repository: accountRepository),
                 unarchiveInstitution: UnarchiveInstitution(repository: institutionRepository)
             ),
-            retireInstitution: RetireInstitutionRule(
-                getInstitution: GetInstitution(repository: institutionRepository),
-                getAccounts: GetAccounts(repository: accountRepository),
-                retireAccountRule: retireAccountRule,
-                recordDeletedEntity: RecordDeletedEntity(repository: deletedEntityRepository),
-                deleteInstitution: DeleteInstitution(repository: institutionRepository)
-            ),
-            deleteInstitution: DeleteInstitutionRule(
-                getAccounts: GetAccounts(repository: accountRepository),
-                deleteAccountRule: deleteAccountRule,
-                deleteInstitution: DeleteInstitution(repository: institutionRepository)
-            ),
+            retireInstitution: retireInstitutionRule,
+            deleteInstitution: deleteInstitutionRule,
             getInstitutions: GetInstitutions(repository: institutionRepository),
-            userId: userId
-        )
-
-        let account = try await accountRepository.fetch(by: accountId)
-        viewModel = AccountFormViewModel(
-            toasty: ToastyManager(),
-            addAccount: AddAccount(repository: accountRepository),
-            updateAccount: UpdateAccount(repository: accountRepository),
-            archiveAccount: ArchiveAccount(repository: accountRepository),
-            unarchiveAccount: UnarchiveAccountRule(
-                getAccount: GetAccount(repository: accountRepository),
-                unarchiveAccount: UnarchiveAccount(repository: accountRepository),
-                getInstitution: GetInstitution(repository: institutionRepository),
-                unarchiveInstitution: UnarchiveInstitution(repository: institutionRepository)
-            ),
-            retireAccount: retireAccountRule,
-            deleteAccount: deleteAccountRule,
-            addTransaction: AddTransaction(repository: transactionRepository),
-            getInstitutions: GetInstitutions(repository: institutionRepository),
-            addInstitutionFormViewModel: institutionFormViewModel,
             userId: userId,
-            existingAccount: account
+            existingInstitution: institution
         )
     }
 
     // MARK: Tests
 
-    /// Verifies that .keepHistory deletes the account but leaves its transaction untouched.
-    func test_delete_keepHistory_deletesAccountButKeepsTransaction() async throws {
+    /// Verifies that .keepHistory deletes the institution and its account but leaves the transaction untouched.
+    func test_delete_keepHistory_deletesInstitutionAndAccountButKeepsTransaction() async throws {
         try await seed()
 
         await viewModel.delete(mode: .keepHistory)
 
+        await XCTAssertThrowsErrorAsync(
+            try await institutionRepository.fetch(by: institutionId)
+        ) { error in
+            XCTAssertEqual(error as? InstitutionError, .notFound)
+        }
         await XCTAssertThrowsErrorAsync(
             try await accountRepository.fetch(by: accountId)
         ) { error in
@@ -137,12 +126,17 @@ final class AccountDeleteModeIntegrationTests: XCTestCase {
         XCTAssertEqual(transaction.id, transactionId)
     }
 
-    /// Verifies that .everything deletes both the account and its transaction.
-    func test_delete_everything_deletesAccountAndTransaction() async throws {
+    /// Verifies that .everything deletes the institution, its account, and its transaction.
+    func test_delete_everything_deletesInstitutionAccountAndTransaction() async throws {
         try await seed()
 
         await viewModel.delete(mode: .everything)
 
+        await XCTAssertThrowsErrorAsync(
+            try await institutionRepository.fetch(by: institutionId)
+        ) { error in
+            XCTAssertEqual(error as? InstitutionError, .notFound)
+        }
         await XCTAssertThrowsErrorAsync(
             try await accountRepository.fetch(by: accountId)
         ) { error in
