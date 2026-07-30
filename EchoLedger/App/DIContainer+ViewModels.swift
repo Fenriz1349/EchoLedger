@@ -53,6 +53,7 @@ extension DIContainer {
             updateInstitution: updateInstitution,
             archiveInstitution: archiveInstitutionRule,
             unarchiveInstitution: unarchiveInstitutionRule,
+            retireInstitution: retireInstitutionRule,
             deleteInstitution: deleteInstitutionRule,
             getInstitutions: getInstitutions,
             userId: userId,
@@ -71,7 +72,7 @@ extension DIContainer {
             getAccounts: getAccounts,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccountRule,
-            deleteAccount: deleteAccountRule,
+            deleteAccount: retireAccountRule,
             getAccountBalance: getAccountBalance,
             refreshFromRemote: refreshFromRemote,
             userId: userId
@@ -86,6 +87,7 @@ extension DIContainer {
             updateAccount: updateAccount,
             archiveAccount: archiveAccount,
             unarchiveAccount: unarchiveAccountRule,
+            retireAccount: retireAccountRule,
             deleteAccount: deleteAccountRule,
             addTransaction: addTransaction,
             getInstitutions: getInstitutions,
@@ -161,6 +163,7 @@ extension DIContainer {
             deleteTransaction: deleteTransaction,
             getAccount: getAccount,
             getAccountsWithInstitution: getAccountsWithInstitution,
+            getDeletedEntity: getDeletedEntity,
             refreshFromRemote: refreshFromRemote,
             userId: userId
         )

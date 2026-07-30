@@ -170,7 +170,7 @@ final class TransactionFormViewModel {
                 availableAccounts = items
             }
 
-            if existingTransaction == nil, let first = items.first {
+            if existingTransaction == nil, splits.isEmpty, let first = items.first {
                 addSplit(for: first.account)
             }
         } catch {

@@ -5,7 +5,7 @@
 //  Created by Julien Cotte on 18/11/2025.
 //
 
-import SwiftUI
+import Foundation
 
 /// Represents a real-world financial event (e.g. a restaurant meal).
 /// Belongs directly to a User. Account relationships are managed via splits.
@@ -58,17 +58,6 @@ struct Transaction: Identifiable, Equatable, Codable, Hashable {
 }
 
 extension Transaction {
-
-    /// Color to display in Transactions lists
-    var color: Color {
-        if self.category == .initialBalance && self.isExpense {
-            return .red
-        } else if !self.isExpense {
-            return .green
-        } else {
-            return .primary
-        }
-    }
 
     /// True when any of the transaction's splits is allocated to the given account.
     func belongs(to accountId: UUID) -> Bool {

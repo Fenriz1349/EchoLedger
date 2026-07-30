@@ -18,6 +18,7 @@ final class AccountFormViewModel {
     var name = ""
     var nameState: ValidationState = .neutral
     var category: AccountCategory = .checking
+    var isArchived = false
     var selectedInstitution: Institution?
     var initialBalanceText: String = ""
     var isInitialBalanceExpense: Bool = false
@@ -28,14 +29,14 @@ final class AccountFormViewModel {
     var existingAccount: Account?
     var institutions: [Institution] = []
     var showAddInstitutionForm = false
-    var showDeleteAlert = false
+    var showDeleteDialog = false
+    var pendingDeleteMode: DeleteMode?
     var errorMessage: String?
     var isLoading = false
     var isSuccess = false
 
     // MARK: Computed
     var isEditing: Bool { existingAccount != nil }
-    var isArchived: Bool { existingAccount?.isArchived ?? false }
 
     // MARK: Dependencies
     private let toasty: ToastyManager
@@ -43,6 +44,7 @@ final class AccountFormViewModel {
     private let updateAccount: UpdateAccount
     private let archiveAccount: ArchiveAccount
     private let unarchiveAccount: UnarchiveAccountRule
+    private let retireAccount: RetireAccountRule
     private let deleteAccount: DeleteAccountRule
     private let addTransaction: AddTransaction
     private let getInstitutions: GetInstitutions
@@ -78,6 +80,7 @@ final class AccountFormViewModel {
     ///   - updateAccount: UseCase for updating an account.
     ///   - archiveAccount: UseCase for archiving an account.
     ///   - unarchiveAccount: UseCase for restoring an archived account.
+    ///   - retireAccount: UseCase for deleting an account while keeping its transactions.
     ///   - deleteAccount: UseCase for permanently deleting an account and its transactions.
     ///   - addTransaction: UseCase for creating the initial balance transaction.
     ///   - getInstitutions: UseCase for fetching available institutions.
@@ -90,6 +93,7 @@ final class AccountFormViewModel {
         updateAccount: UpdateAccount,
         archiveAccount: ArchiveAccount,
         unarchiveAccount: UnarchiveAccountRule,
+        retireAccount: RetireAccountRule,
         deleteAccount: DeleteAccountRule,
         addTransaction: AddTransaction,
         getInstitutions: GetInstitutions,
@@ -102,6 +106,7 @@ final class AccountFormViewModel {
         self.updateAccount = updateAccount
         self.archiveAccount = archiveAccount
         self.unarchiveAccount = unarchiveAccount
+        self.retireAccount = retireAccount
         self.deleteAccount = deleteAccount
         self.addTransaction = addTransaction
         self.getInstitutions = getInstitutions
@@ -124,6 +129,7 @@ final class AccountFormViewModel {
     private func prefill(with account: Account) {
         name = account.name
         category = account.category
+        isArchived = account.isArchived
     }
 
     // MARK: Actions
@@ -156,6 +162,7 @@ final class AccountFormViewModel {
                 category: existing.category,
                 isArchived: true
             )
+            isArchived = true
             toasty.showSuccess("Compte archivé.")
         } catch {
             toasty.showError(error)
@@ -176,6 +183,7 @@ final class AccountFormViewModel {
                 category: existing.category,
                 isArchived: false
             )
+            isArchived = false
             toasty.showSuccess("Compte désarchivé.")
         } catch {
             toasty.showError(error)
@@ -183,12 +191,17 @@ final class AccountFormViewModel {
         isLoading = false
     }
 
-    /// Permanently deletes the account and all its linked transactions.
-    func delete() async {
+    /// Deletes the account using the given mode: keeps its transactions, or erases everything.
+    func delete(mode: DeleteMode) async {
         guard let existing = existingAccount else { return }
         isLoading = true
         do {
-            try await deleteAccount.execute(id: existing.id)
+            switch mode {
+            case .keepHistory:
+                try await retireAccount.execute(id: existing.id)
+            case .everything:
+                try await deleteAccount.execute(id: existing.id)
+            }
             isSuccess = true
         } catch {
             toasty.showError(error)

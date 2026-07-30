@@ -118,22 +118,19 @@ struct AccountFormContent: View {
 
             if viewModel.isEditing {
                 Section {
-                    Toggle(viewModel.isArchived ? "Archivé" : "Actif", isOn: Binding(
-                        get: { viewModel.isArchived },
-                        set: { isArchived in
-                            Task {
-                                if isArchived {
-                                    await viewModel.archive()
-                                } else {
-                                    await viewModel.unarchive()
-                                }
+                    SegmentedToggle(selection: $viewModel.isArchived, style: .archive) { target in
+                        Task {
+                            if target {
+                                await viewModel.archive()
+                            } else {
+                                await viewModel.unarchive()
                             }
                         }
-                    ))
+                    }
                     .disabled(viewModel.isLoading)
 
                     Button(role: .destructive) {
-                        viewModel.showDeleteAlert = true
+                        viewModel.showDeleteDialog = true
                     } label: {
                         CustomButtonLabel(iconLeading: "trash",
                                           message: "Supprimer le compte",
@@ -141,13 +138,41 @@ struct AccountFormContent: View {
                                           isSelected: false)
                     }
                     .disabled(viewModel.isLoading)
-                    .alert("Supprimer le compte ?", isPresented: $viewModel.showDeleteAlert) {
-                        Button("Supprimer", role: .destructive) {
-                            Task { await viewModel.delete() }
+                    .confirmationDialog(
+                        "Supprimer le compte ?",
+                        isPresented: $viewModel.showDeleteDialog,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Garder l'historique") {
+                            viewModel.pendingDeleteMode = .keepHistory
+                        }
+                        Button("Tout supprimer", role: .destructive) {
+                            viewModel.pendingDeleteMode = .everything
                         }
                         Button("Annuler", role: .cancel) {}
+                    }
+                    .alert(
+                        "Confirmer la suppression",
+                        isPresented: Binding(
+                            get: { viewModel.pendingDeleteMode != nil },
+                            set: { if !$0 { viewModel.pendingDeleteMode = nil } }
+                        )
+                    ) {
+                        Button("Supprimer", role: .destructive) {
+                            if let mode = viewModel.pendingDeleteMode {
+                                Task { await viewModel.delete(mode: mode) }
+                            }
+                        }
+                        Button("Annuler", role: .cancel) {
+                            viewModel.pendingDeleteMode = nil
+                        }
                     } message: {
-                        Text("Le compte et toutes ses transactions seront définitivement supprimés. Cette action est irréversible.")
+                        switch viewModel.pendingDeleteMode {
+                        case .everything:
+                            Text("Le compte et toutes ses transactions seront définitivement supprimés. Cette action est irréversible.")
+                        default:
+                            Text("Le compte sera supprimé mais ses transactions resteront visibles dans l'historique.")
+                        }
                     }
                 }
             }

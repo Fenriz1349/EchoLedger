@@ -67,14 +67,27 @@ final class GetChartDataTests: XCTestCase {
         XCTAssertEqual(Set(bundle.accountBalances.map { $0.account.id }), [acc1, acc2])
     }
 
-    /// Verifies that archived accounts are excluded.
-    func test_execute_excludesArchivedAccounts() async throws {
+    /// Verifies that archived accounts still count — they hold real balances and real history,
+    /// so hiding them from charts would misrepresent the user's actual data.
+    func test_execute_global_includesArchivedAccounts() async throws {
         let inst = UUID(), active = UUID(), archived = UUID()
         try await seedInstitution(id: inst)
         try await seedAccount(id: active, institutionId: inst)
         try await seedAccount(id: archived, institutionId: inst, isArchived: true)
         let bundle = try await useCase.execute(scope: .global)
-        XCTAssertEqual(bundle.accountBalances.map { $0.account.id }, [active])
+        XCTAssertEqual(Set(bundle.accountBalances.map { $0.account.id }), [active, archived])
+    }
+
+    /// Verifies that scoping to a specific archived account still resolves it — an archived
+    /// account's own detail screen must show its real balance, not an empty/zeroed result.
+    func test_execute_accountScope_includesArchivedAccount() async throws {
+        let inst = UUID(), archived = UUID()
+        try await seedInstitution(id: inst)
+        try await seedAccount(id: archived, institutionId: inst, isArchived: true)
+        try await seedTransaction(amount: 100, isExpense: false, accountId: archived)
+        let bundle = try await useCase.execute(scope: .account(archived))
+        XCTAssertEqual(bundle.accountBalances.map { $0.account.id }, [archived])
+        XCTAssertEqual(bundle.totalBalance, 100)
     }
 
     /// Verifies that future-dated transactions are excluded from the balances.

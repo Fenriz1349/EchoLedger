@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
+import FirebaseFirestore
 import Toasty
 
 // MARK: - AppDelegate
@@ -14,11 +16,24 @@ import Toasty
 /// UIKit app delegate used only to configure Firebase before SwiftUI takes over the launch sequence.
 class AppDelegate: NSObject, UIApplicationDelegate {
 
-    /// Configures Firebase at app launch.
+    /// Configures Firebase at app launch. Redirects Auth and Firestore to the local emulator suite
+    /// when launched with `--uitesting` (set by `EchoLedgerUITests`), so UI tests never touch
+    /// production data. DEBUG-only: absent from Release builds.
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil)
     -> Bool {
         FirebaseApp.configure()
+
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--uitesting") {
+            Auth.auth().useEmulator(withHost: "127.0.0.1", port: 9099)
+            let settings = Firestore.firestore().settings
+            settings.host = "127.0.0.1:8080"
+            settings.isSSLEnabled = false
+            Firestore.firestore().settings = settings
+        }
+        #endif
+
         return true
     }
 }

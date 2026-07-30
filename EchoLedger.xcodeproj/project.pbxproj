@@ -358,6 +358,14 @@
 		683821BF2FC8874E00CA6761 /* AvatarEditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */; };
 		683821C12FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */; };
 		683821C22FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */; };
+		68394BF8301B315C006A94BE /* DeleteMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BF7301B315C006A94BE /* DeleteMode.swift */; };
+		68394BF9301B315C006A94BE /* DeleteMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BF7301B315C006A94BE /* DeleteMode.swift */; };
+		68394BFB301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */; };
+		68394BFD301B3CF9006A94BE /* InstitutionDeleteModeIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68394BFC301B3CF9006A94BE /* InstitutionDeleteModeIntegrationTests.swift */; };
+		683BD8DD3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */; };
+		683BD8DE3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */; };
+		683BD8E03018CC6300CDC125 /* Transaction+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */; };
+		683BD8E13018CC6300CDC125 /* Transaction+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */; };
 		683C90952F88DE6100CE2A6D /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */; };
 		683C90972F88FBCD00CE2A6D /* AccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */; };
 		683C90992F89206F00CE2A6D /* AccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683C90982F89206F00CE2A6D /* AccountSheet.swift */; };
@@ -400,6 +408,31 @@
 		6849E9A12FEC22450026A13E /* View+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6849E9A02FEC22450026A13E /* View+Styles.swift */; };
 		6849E9A22FEC22450026A13E /* View+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6849E9A02FEC22450026A13E /* View+Styles.swift */; };
 		6857E3D62F51B70300913E12 /* EchoLedgerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */; };
+		6859210E301A27C900719DF3 /* DeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859210D301A27C900719DF3 /* DeletedEntity.swift */; };
+		6859210F301A27C900719DF3 /* DeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859210D301A27C900719DF3 /* DeletedEntity.swift */; };
+		68592111301A27D800719DF3 /* DeletedEntityProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592110301A27D800719DF3 /* DeletedEntityProviding.swift */; };
+		68592112301A27D800719DF3 /* DeletedEntityProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592110301A27D800719DF3 /* DeletedEntityProviding.swift */; };
+		68592116301A283700719DF3 /* DeletedEntityStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592114301A283700719DF3 /* DeletedEntityStoring.swift */; };
+		68592119301A285600719DF3 /* RecordDeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592118301A285600719DF3 /* RecordDeletedEntity.swift */; };
+		6859211A301A285600719DF3 /* RecordDeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592118301A285600719DF3 /* RecordDeletedEntity.swift */; };
+		6859211C301A286200719DF3 /* GetDeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859211B301A286200719DF3 /* GetDeletedEntity.swift */; };
+		6859211D301A286200719DF3 /* GetDeletedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859211B301A286200719DF3 /* GetDeletedEntity.swift */; };
+		68592120301A289D00719DF3 /* DeletedEntityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859211E301A289D00719DF3 /* DeletedEntityModel.swift */; };
+		68592123301A28B300719DF3 /* DeletedEntityLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */; };
+		68592125301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */; };
+		68592126301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */; };
+		68592128301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */; };
+		68592129301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */; };
+		6859212B301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */; };
+		6859212C301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */; };
+		6859212E301A2E2800719DF3 /* RetireAccountRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212D301A2E2800719DF3 /* RetireAccountRule.swift */; };
+		6859212F301A2E2800719DF3 /* RetireAccountRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859212D301A2E2800719DF3 /* RetireAccountRule.swift */; };
+		68592131301A2E3100719DF3 /* RetireInstitutionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592130301A2E3100719DF3 /* RetireInstitutionRule.swift */; };
+		68592132301A2E3100719DF3 /* RetireInstitutionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592130301A2E3100719DF3 /* RetireInstitutionRule.swift */; };
+		68592135301A2EA500719DF3 /* DeletedEntityDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592134301A2EA500719DF3 /* DeletedEntityDouble.swift */; };
+		68592137301A2EB000719DF3 /* RecordDeletedEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592136301A2EB000719DF3 /* RecordDeletedEntityTests.swift */; };
+		68592139301A2EB900719DF3 /* GetDeletedEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68592138301A2EB900719DF3 /* GetDeletedEntityTests.swift */; };
+		6859213B301A2EC800719DF3 /* PurgeDeletedEntitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6859213A301A2EC800719DF3 /* PurgeDeletedEntitiesTests.swift */; };
 		685A1EA62F5ACF700009B885 /* InstitutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E912F5ACF700009B885 /* InstitutionError.swift */; };
 		685A1EA72F5ACF700009B885 /* InstitutionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E932F5ACF700009B885 /* InstitutionProviding.swift */; };
 		685A1EA82F5ACF700009B885 /* UpdateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685A1E892F5ACF700009B885 /* UpdateAccount.swift */; };
@@ -498,6 +531,8 @@
 		68CFAF7C300A298800444AA3 /* UserProfileViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7B300A298800444AA3 /* UserProfileViewSnapshotTests.swift */; };
 		68CFAF7E300A299100444AA3 /* AuthViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */; };
 		68CFAF9E300A317000444AA3 /* SnapshotTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */; };
+		68D5D32D301A771B001FB2C3 /* RetireAccountRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */; };
+		68D5D32F301A7725001FB2C3 /* RetireInstitutionRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */; };
 		68EF99E12FA335C300FEBC1A /* UserProfileFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99E02FA335C300FEBC1A /* UserProfileFormContent.swift */; };
 		68EF99E22FA335C300FEBC1A /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */; };
 		68EF99E32FA335C300FEBC1A /* UserProfileAnonymousView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */; };
@@ -518,6 +553,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6857E3C22F51AB4200913E12;
 			remoteInfo = EchoLedger;
+		};
+		683BD8EC3018D05B00CDC125 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6857E3BB2F51AB4200913E12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 683820CD2FC8432000CA6761;
+			remoteInfo = EchoLedgerCloud;
 		};
 		68C2A047300D525100AA47A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -702,6 +744,12 @@
 		683821BA2FC8874200CA6761 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
 		683821BD2FC8874E00CA6761 /* AvatarEditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditButtonView.swift; sourceTree = "<group>"; };
 		683821C02FC88DDB00CA6761 /* DocumentPlaceholder+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentPlaceholder+View.swift"; sourceTree = "<group>"; };
+		68394BF7301B315C006A94BE /* DeleteMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMode.swift; sourceTree = "<group>"; };
+		68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeleteModeIntegrationTests.swift; sourceTree = "<group>"; };
+		68394BFC301B3CF9006A94BE /* InstitutionDeleteModeIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDeleteModeIntegrationTests.swift; sourceTree = "<group>"; };
+		683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionCategory+Color.swift"; sourceTree = "<group>"; };
+		683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+Color.swift"; sourceTree = "<group>"; };
+		683BD8E63018D05B00CDC125 /* EchoLedgerCloudUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoLedgerCloudUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		683C90942F88DE6100CE2A6D /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		683C90962F88FBCD00CE2A6D /* AccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailView.swift; sourceTree = "<group>"; };
 		683C90982F89206F00CE2A6D /* AccountSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSheet.swift; sourceTree = "<group>"; };
@@ -734,6 +782,22 @@
 		6849E99D2FEBDECC0026A13E /* CascadeRowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadeRowModifier.swift; sourceTree = "<group>"; };
 		6849E9A02FEC22450026A13E /* View+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Styles.swift"; sourceTree = "<group>"; };
 		6857E3D32F51B70300913E12 /* EchoLedgerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoLedgerApp.swift; sourceTree = "<group>"; };
+		6859210D301A27C900719DF3 /* DeletedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntity.swift; sourceTree = "<group>"; };
+		68592110301A27D800719DF3 /* DeletedEntityProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityProviding.swift; sourceTree = "<group>"; };
+		68592114301A283700719DF3 /* DeletedEntityStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityStoring.swift; sourceTree = "<group>"; };
+		68592118301A285600719DF3 /* RecordDeletedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDeletedEntity.swift; sourceTree = "<group>"; };
+		6859211B301A286200719DF3 /* GetDeletedEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeletedEntity.swift; sourceTree = "<group>"; };
+		6859211E301A289D00719DF3 /* DeletedEntityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityModel.swift; sourceTree = "<group>"; };
+		68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityLocalSource.swift; sourceTree = "<group>"; };
+		68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityRemoteSource.swift; sourceTree = "<group>"; };
+		68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityCloudStoring.swift; sourceTree = "<group>"; };
+		6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurgeDeletedEntities.swift; sourceTree = "<group>"; };
+		6859212D301A2E2800719DF3 /* RetireAccountRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireAccountRule.swift; sourceTree = "<group>"; };
+		68592130301A2E3100719DF3 /* RetireInstitutionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireInstitutionRule.swift; sourceTree = "<group>"; };
+		68592134301A2EA500719DF3 /* DeletedEntityDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntityDouble.swift; sourceTree = "<group>"; };
+		68592136301A2EB000719DF3 /* RecordDeletedEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDeletedEntityTests.swift; sourceTree = "<group>"; };
+		68592138301A2EB900719DF3 /* GetDeletedEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeletedEntityTests.swift; sourceTree = "<group>"; };
+		6859213A301A2EC800719DF3 /* PurgeDeletedEntitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurgeDeletedEntitiesTests.swift; sourceTree = "<group>"; };
 		685A1E7E2F5ACF700009B885 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		685A1E822F5ACF700009B885 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
 		685A1E842F5ACF700009B885 /* AccountProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProviding.swift; sourceTree = "<group>"; };
@@ -818,6 +882,8 @@
 		68CFAF7D300A299100444AA3 /* AuthViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewSnapshotTests.swift; sourceTree = "<group>"; };
 		68CFAF81300A2B3A00444AA3 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
 		68CFAF9D300A317000444AA3 /* SnapshotTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestCase.swift; sourceTree = "<group>"; };
+		68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireAccountRuleTests.swift; sourceTree = "<group>"; };
+		68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetireInstitutionRuleTests.swift; sourceTree = "<group>"; };
 		68EF99DD2FA335C300FEBC1A /* UserProfileActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileActionsView.swift; sourceTree = "<group>"; };
 		68EF99DE2FA335C300FEBC1A /* UserProfileAnonymousView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAnonymousView.swift; sourceTree = "<group>"; };
 		68EF99DF2FA335C300FEBC1A /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -830,6 +896,14 @@
 		68EF99F52FA3863400FEBC1A /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		68EF99F72FA3968500FEBC1A /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EchoLedgerCloudUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		683133AD2F61A1A8004AA5E4 /* Frameworks */ = {
@@ -849,6 +923,13 @@
 				683821742FC8432000CA6761 /* CustomLabels in Frameworks */,
 				683821752FC8432000CA6761 /* FirebaseFirestore in Frameworks */,
 				683821A62FC8695C00CA6761 /* FirebaseStorage in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683BD8E33018D05B00CDC125 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1046,21 +1127,26 @@
 				681760AD2FE4F9F6005873D2 /* AppHeaderView.swift */,
 				6849E9A02FEC22450026A13E /* View+Styles.swift */,
 				682E0A8B2FEE868800356179 /* Color+Echo.swift */,
+				683BD8DF3018CC6300CDC125 /* Transaction+Color.swift */,
+				683BD8DC3018CC3300CDC125 /* TransactionCategory+Color.swift */,
 			);
 			path = Branding;
 			sourceTree = "<group>";
 		};
-		681C55C02FE686D800339E87 /* CascadeRules */ = {
+		681C55C02FE686D800339E87 /* LifecycleRules */ = {
 			isa = PBXGroup;
 			children = (
+				68394BF7301B315C006A94BE /* DeleteMode.swift */,
 				681C55D02FE69CBE00339E87 /* ArchiveInstitutionRule.swift */,
 				681C55D32FE69CC900339E87 /* UnarchiveInstitutionRule.swift */,
 				681C55D62FE69CD100339E87 /* UnarchiveAccountRule.swift */,
 				681C55C42FE6873A00339E87 /* DeleteAccountRule.swift */,
 				681C55C72FE68C6A00339E87 /* DeleteInstitutionRule.swift */,
+				6859212D301A2E2800719DF3 /* RetireAccountRule.swift */,
+				68592130301A2E3100719DF3 /* RetireInstitutionRule.swift */,
 				681C55CD2FE6922A00339E87 /* DeleteUserRule.swift */,
 			);
-			path = CascadeRules;
+			path = LifecycleRules;
 			sourceTree = "<group>";
 		};
 		6824DC972FC036AE007375C0 /* Transfer */ = {
@@ -1109,7 +1195,8 @@
 			isa = PBXGroup;
 			children = (
 				6825B7142FE954C6003170FC /* Graphs */,
-				6825B7072FE95100003170FC /* CascadeRules */,
+				6825B7072FE95100003170FC /* LifecycleRules */,
+				68592133301A2E6100719DF3 /* DeletedEntities */,
 				6825B6F12FE93236003170FC /* Document */,
 			);
 			path = Core;
@@ -1133,7 +1220,7 @@
 			path = Transfer;
 			sourceTree = "<group>";
 		};
-		6825B7072FE95100003170FC /* CascadeRules */ = {
+		6825B7072FE95100003170FC /* LifecycleRules */ = {
 			isa = PBXGroup;
 			children = (
 				6825B70A2FE95127003170FC /* ArchiveInstitutionRuleTests.swift */,
@@ -1142,8 +1229,10 @@
 				6825B7082FE9510D003170FC /* DeleteAccountRuleTests.swift */,
 				6825B7102FE95159003170FC /* DeleteInstitutionRuleTests.swift */,
 				6825B7122FE95165003170FC /* DeleteUserRuleTests.swift */,
+				68D5D32C301A771B001FB2C3 /* RetireAccountRuleTests.swift */,
+				68D5D32E301A7725001FB2C3 /* RetireInstitutionRuleTests.swift */,
 			);
-			path = CascadeRules;
+			path = LifecycleRules;
 			sourceTree = "<group>";
 		};
 		6825B7142FE954C6003170FC /* Graphs */ = {
@@ -1430,8 +1519,10 @@
 				681B47002F7F9138000CC7C4 /* EchoLedger.app */,
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
 				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
+				683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */,
 				683821A22FC8695000CA6761 /* Frameworks */,
 				68617AB5300A8488007C5731 /* EchoLedgerE2ETests..xctest */,
+				683BD8E63018D05B00CDC125 /* EchoLedgerCloudUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1447,6 +1538,58 @@
 				681314222FD2D09600F74B8D /* GoogleService-Info.plist */,
 			);
 			path = EchoLedger;
+			sourceTree = "<group>";
+		};
+		6859210B301A277A00719DF3 /* DeletedEntities */ = {
+			isa = PBXGroup;
+			children = (
+				6859210C301A27BF00719DF3 /* Domain */,
+				68592113301A282800719DF3 /* Data */,
+			);
+			path = DeletedEntities;
+			sourceTree = "<group>";
+		};
+		6859210C301A27BF00719DF3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				6859210D301A27C900719DF3 /* DeletedEntity.swift */,
+				68592110301A27D800719DF3 /* DeletedEntityProviding.swift */,
+				68592117301A284D00719DF3 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		68592113301A282800719DF3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6859211E301A289D00719DF3 /* DeletedEntityModel.swift */,
+				68592114301A283700719DF3 /* DeletedEntityStoring.swift */,
+				68592127301A298700719DF3 /* DeletedEntityCloudStoring.swift */,
+				68592121301A28B300719DF3 /* DeletedEntityLocalSource.swift */,
+				68592124301A28C100719DF3 /* DeletedEntityRemoteSource.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		68592117301A284D00719DF3 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				68592118301A285600719DF3 /* RecordDeletedEntity.swift */,
+				6859211B301A286200719DF3 /* GetDeletedEntity.swift */,
+				6859212A301A2B0E00719DF3 /* PurgeDeletedEntities.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		68592133301A2E6100719DF3 /* DeletedEntities */ = {
+			isa = PBXGroup;
+			children = (
+				68592134301A2EA500719DF3 /* DeletedEntityDouble.swift */,
+				68592136301A2EB000719DF3 /* RecordDeletedEntityTests.swift */,
+				68592138301A2EB900719DF3 /* GetDeletedEntityTests.swift */,
+				6859213A301A2EC800719DF3 /* PurgeDeletedEntitiesTests.swift */,
+			);
+			path = DeletedEntities;
 			sourceTree = "<group>";
 		};
 		685A1E7F2F5ACF700009B885 /* Navigation */ = {
@@ -1703,12 +1846,13 @@
 			isa = PBXGroup;
 			children = (
 				681760B02FE4FB66005873D2 /* Branding */,
+				68EF99F42FA3849200FEBC1A /* Loader */,
 				682E0A8A2FEE653200356179 /* Controls */,
 				6849E99C2FEBDEC10026A13E /* Animations */,
 				683821922FC867FF00CA6761 /* Document */,
 				682C6C4F2FBF301700AE9F62 /* Graphs */,
-				681C55C02FE686D800339E87 /* CascadeRules */,
-				68EF99F42FA3849200FEBC1A /* Loader */,
+				681C55C02FE686D800339E87 /* LifecycleRules */,
+				6859210B301A277A00719DF3 /* DeletedEntities */,
 				68128E772FE2A58B00A568B5 /* Network */,
 				685A1F092F5AEBF50009B885 /* Sync */,
 				685A1F122F5AECE30009B885 /* Extensions */,
@@ -1745,6 +1889,8 @@
 				68617AAB300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift */,
 				68617AAD300A6180007C5731 /* UpdateTransactionBalanceIntegrationTests.swift */,
 				68617AAF300A6228007C5731 /* InstitutionCascadeIntegrationTests.swift */,
+				68394BFA301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift */,
+				68394BFC301B3CF9006A94BE /* InstitutionDeleteModeIntegrationTests.swift */,
 			);
 			path = Integration;
 			sourceTree = "<group>";
@@ -1887,6 +2033,29 @@
 			productReference = 6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */;
 			productType = "com.apple.product-type.application";
 		};
+		683BD8E53018D05B00CDC125 /* EchoLedgerCloudUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 683BD8EE3018D05B00CDC125 /* Build configuration list for PBXNativeTarget "EchoLedgerCloudUITests" */;
+			buildPhases = (
+				683BD8E23018D05B00CDC125 /* Sources */,
+				683BD8E33018D05B00CDC125 /* Frameworks */,
+				683BD8E43018D05B00CDC125 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				683BD8ED3018D05B00CDC125 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */,
+			);
+			name = EchoLedgerCloudUITests;
+			packageProductDependencies = (
+			);
+			productName = EchoLedgerCloudUITests;
+			productReference = 683BD8E63018D05B00CDC125 /* EchoLedgerCloudUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		6857E3C22F51AB4200913E12 /* EchoLedger */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6857E3CE2F51AB4400913E12 /* Build configuration list for PBXNativeTarget "EchoLedger" */;
@@ -1946,6 +2115,10 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 6857E3C22F51AB4200913E12;
 					};
+					683BD8E53018D05B00CDC125 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 683820CD2FC8432000CA6761;
+					};
 					6857E3C22F51AB4200913E12 = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -1979,6 +2152,7 @@
 				683133AF2F61A1A8004AA5E4 /* EchoLedgerTests */,
 				683820CD2FC8432000CA6761 /* EchoLedgerCloud */,
 				68617AB4300A8488007C5731 /* EchoLedgerE2ETests. */,
+				683BD8E53018D05B00CDC125 /* EchoLedgerCloudUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1998,6 +2172,13 @@
 				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
 				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
 				681314242FD2D09600F74B8D /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683BD8E43018D05B00CDC125 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2030,6 +2211,7 @@
 				681760BE2FE546E4005873D2 /* ArchiveInstitutionTests.swift in Sources */,
 				6813E8052F6D3C3300344774 /* GetInstitutionsTests.swift in Sources */,
 				6825B7092FE9510D003170FC /* DeleteAccountRuleTests.swift in Sources */,
+				68592139301A2EB900719DF3 /* GetDeletedEntityTests.swift in Sources */,
 				6813E80B2F6D3CC900344774 /* AddInstitutionTests.swift in Sources */,
 				68CFAF7E300A299100444AA3 /* AuthViewSnapshotTests.swift in Sources */,
 				681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */,
@@ -2040,6 +2222,7 @@
 				681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */,
 				6825B7112FE95159003170FC /* DeleteInstitutionRuleTests.swift in Sources */,
 				6813E82A2F6D967600344774 /* GetAccountTests.swift in Sources */,
+				68394BFD301B3CF9006A94BE /* InstitutionDeleteModeIntegrationTests.swift in Sources */,
 				68CFAF78300A297200444AA3 /* TransactionListViewSnapshotTests.swift in Sources */,
 				6825B7042FE94DF5003170FC /* DeleteTransferTests.swift in Sources */,
 				683133C82F61A5CB004AA5E4 /* GetTransactionsByCategoryTests.swift in Sources */,
@@ -2052,9 +2235,11 @@
 				6825B6FD2FE94C2F003170FC /* GetTransactionsByAccountTests.swift in Sources */,
 				68EF99EF2FA3461A00FEBC1A /* ExpireAnonymousSessionTests.swift in Sources */,
 				6825B6FB2FE949EE003170FC /* GetAccountsWithInstitutionTests.swift in Sources */,
+				68592135301A2EA500719DF3 /* DeletedEntityDouble.swift in Sources */,
 				6825B7162FE95521003170FC /* ChartDataCalculatorTests.swift in Sources */,
 				681760C02FE546F7005873D2 /* UnarchiveInstitutionTests.swift in Sources */,
 				683133C02F61A4AE004AA5E4 /* TransactionDouble.swift in Sources */,
+				68D5D32D301A771B001FB2C3 /* RetireAccountRuleTests.swift in Sources */,
 				6825B6F92FE949E2003170FC /* UnarchiveAccountTests.swift in Sources */,
 				68617AAC300A60DB007C5731 /* TransferBetweenAccountsIntegrationTests.swift in Sources */,
 				68617AAA300A6012007C5731 /* TransactionBalanceIntegrationTests.swift in Sources */,
@@ -2065,13 +2250,16 @@
 				6813E8072F6D3C4B00344774 /* GetInstitutionTests.swift in Sources */,
 				6825B6F72FE949D5003170FC /* DeleteAccountTests.swift in Sources */,
 				681CA8652F62CB4E002E1EF7 /* GetTransactionsByDateRangeTests.swift in Sources */,
+				6859213B301A2EC800719DF3 /* PurgeDeletedEntitiesTests.swift in Sources */,
 				68CFAF6E300A0D8D00444AA3 /* AccountRecencySorterTests.swift in Sources */,
 				6813E8262F6D963900344774 /* AddAccountTests.swift in Sources */,
 				6813E8332F6D96D300344774 /* GetCurrentUserTests.swift in Sources */,
 				6813E80D2F6D3CDC00344774 /* UpdateInstitutionTests.swift in Sources */,
 				6813E8302F6D96B200344774 /* GetAccountBalanceTests.swift in Sources */,
+				68592137301A2EB000719DF3 /* RecordDeletedEntityTests.swift in Sources */,
 				68CFAF7A300A297D00444AA3 /* AccountListViewSnapshotTests.swift in Sources */,
 				681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */,
+				68D5D32F301A7725001FB2C3 /* RetireInstitutionRuleTests.swift in Sources */,
 				6825B70D2FE95132003170FC /* UnarchiveInstitutionRuleTests.swift in Sources */,
 				683133C42F61A59E004AA5E4 /* UpdateTransactionTests.swift in Sources */,
 				6825B7002FE94DDF003170FC /* TransferBetweenAccountsTests.swift in Sources */,
@@ -2081,6 +2269,7 @@
 				6825B6F52FE9327C003170FC /* DocumentDeletingDouble.swift in Sources */,
 				6825B70B2FE95127003170FC /* ArchiveInstitutionRuleTests.swift in Sources */,
 				6813E8232F6D961300344774 /* UserDouble.swift in Sources */,
+				68394BFB301B3867006A94BE /* AccountDeleteModeIntegrationTests.swift in Sources */,
 				684497222F75410C00337F74 /* TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2094,6 +2283,7 @@
 				683D5FE82FE441820049D07D /* OfflineView.swift in Sources */,
 				683820D92FC8432000CA6761 /* ExpensePieChartView.swift in Sources */,
 				683820DC2FC8432000CA6761 /* TransferDetailViewModel.swift in Sources */,
+				68394BF8301B315C006A94BE /* DeleteMode.swift in Sources */,
 				683820DD2FC8432000CA6761 /* TransactionFormViewModel.swift in Sources */,
 				683820DE2FC8432000CA6761 /* UpdateTransaction.swift in Sources */,
 				681C55C32FE6870500339E87 /* GetTransactionsByAccount.swift in Sources */,
@@ -2108,6 +2298,7 @@
 				683820E92FC8432000CA6761 /* TransactionFilterBar.swift in Sources */,
 				683820EA2FC8432000CA6761 /* DashboardViewModel.swift in Sources */,
 				683820EB2FC8432000CA6761 /* GetTransactions.swift in Sources */,
+				683BD8E03018CC6300CDC125 /* Transaction+Color.swift in Sources */,
 				687DD6732FDD384900B281FF /* PieCarouselNavigation.swift in Sources */,
 				683820EC2FC8432000CA6761 /* EchoLedgerApp.swift in Sources */,
 				6835BD7C2FED1D8E00F1A372 /* BarChartAnimator.swift in Sources */,
@@ -2138,6 +2329,7 @@
 				681760BB2FE5408B005873D2 /* DocumentSourcing.swift in Sources */,
 				683820FD2FC8432000CA6761 /* UpdateAccount.swift in Sources */,
 				68467C942FD19F4500144A84 /* DocumentError.swift in Sources */,
+				68592129301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */,
 				683820FE2FC8432000CA6761 /* DeleteInstitution.swift in Sources */,
 				683821002FC8432000CA6761 /* GetAccount.swift in Sources */,
 				683821012FC8432000CA6761 /* AccountListViewModel.swift in Sources */,
@@ -2183,6 +2375,7 @@
 				683821212FC8432000CA6761 /* Double+Extension.swift in Sources */,
 				683821222FC8432000CA6761 /* Color+Extension.swift in Sources */,
 				683821232FC8432000CA6761 /* UpdateTransfer.swift in Sources */,
+				68592132301A2E3100719DF3 /* RetireInstitutionRule.swift in Sources */,
 				681760B62FE4FB97005873D2 /* AppNameView.swift in Sources */,
 				683821242FC8432000CA6761 /* InstitutionRemoteSource.swift in Sources */,
 				683821252FC8432000CA6761 /* UserProfileView.swift in Sources */,
@@ -2195,6 +2388,8 @@
 				6838212A2FC8432000CA6761 /* User.swift in Sources */,
 				6838212B2FC8432000CA6761 /* SignInWithEmail.swift in Sources */,
 				6838212D2FC8432000CA6761 /* AccountError.swift in Sources */,
+				68592126301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */,
+				683BD8DD3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */,
 				6838212E2FC8432000CA6761 /* TransactionFormView.swift in Sources */,
 				6838212F2FC8432000CA6761 /* Transaction.swift in Sources */,
 				683821302FC8432000CA6761 /* AddAccount.swift in Sources */,
@@ -2208,6 +2403,7 @@
 				683821362FC8432000CA6761 /* ArchiveInstitution.swift in Sources */,
 				683821BB2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				683821372FC8432000CA6761 /* UpdateTransactionInput.swift in Sources */,
+				6859212C301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */,
 				6838219D2FC8683C00CA6761 /* DeleteDocument.swift in Sources */,
 				683821382FC8432000CA6761 /* TransferRowView.swift in Sources */,
 				683821392FC8432000CA6761 /* AccountGroupList.swift in Sources */,
@@ -2231,6 +2427,7 @@
 				68128E7A2FE2A5B100A568B5 /* RemoteRefreshable.swift in Sources */,
 				683821482FC8432000CA6761 /* UserProfileFormContent.swift in Sources */,
 				683821492FC8432000CA6761 /* UserProfileHeaderView.swift in Sources */,
+				6859212E301A2E2800719DF3 /* RetireAccountRule.swift in Sources */,
 				681C82132FDA0A1C00807581 /* TransactionEditView.swift in Sources */,
 				68C811752FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */,
 				6838214B2FC8432000CA6761 /* TransferBetweenAccounts.swift in Sources */,
@@ -2258,6 +2455,7 @@
 				6838218E2FC8495B00CA6761 /* TransactionCloudStoring.swift in Sources */,
 				681C55D22FE69CBE00339E87 /* ArchiveInstitutionRule.swift in Sources */,
 				6838215D2FC8432000CA6761 /* ContentView.swift in Sources */,
+				68592111301A27D800719DF3 /* DeletedEntityProviding.swift in Sources */,
 				681C55C52FE6873A00339E87 /* DeleteAccountRule.swift in Sources */,
 				681760B32FE4FB8D005873D2 /* AppLogoView.swift in Sources */,
 				6838218C2FC8494900CA6761 /* InstitutionCloudStoring.swift in Sources */,
@@ -2275,6 +2473,7 @@
 				683821632FC8432000CA6761 /* TransactionNatureFilter.swift in Sources */,
 				683821642FC8432000CA6761 /* TransactionCategory.swift in Sources */,
 				683821652FC8432000CA6761 /* IncomePieChartView.swift in Sources */,
+				6859210F301A27C900719DF3 /* DeletedEntity.swift in Sources */,
 				683821672FC8432000CA6761 /* GetTransactionsByCategory.swift in Sources */,
 				687DD6702FDD370C00B281FF /* PieCarouselPageIndicator.swift in Sources */,
 				68C811712FDC39580077D42B /* GetChartData.swift in Sources */,
@@ -2283,6 +2482,7 @@
 				683D5FE32FE426E00049D07D /* DownloadImage.swift in Sources */,
 				6835BD8B2FED621E00F1A372 /* View+Extension.swift in Sources */,
 				68BE53E9300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */,
+				6859211C301A286200719DF3 /* GetDeletedEntity.swift in Sources */,
 				683821682FC8432000CA6761 /* AuthLocalSource.swift in Sources */,
 				683D5FDD2FE4136F0049D07D /* NetworkMonitor.swift in Sources */,
 				6835BD842FED314100F1A372 /* VisibilityObserver.swift in Sources */,
@@ -2296,6 +2496,14 @@
 				683821C22FC88DDB00CA6761 /* DocumentPlaceholder+View.swift in Sources */,
 				6838216E2FC8432000CA6761 /* TransactionFormContent.swift in Sources */,
 				6838216F2FC8432000CA6761 /* AccountRemoteSource.swift in Sources */,
+				68592119301A285600719DF3 /* RecordDeletedEntity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		683BD8E23018D05B00CDC125 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2379,6 +2587,7 @@
 				682C6C5D2FBF394F00AE9F62 /* TransactionRowView.swift in Sources */,
 				683275FC2F9B7A0500DA5796 /* AuthViewModel.swift in Sources */,
 				6835BD782FED183500F1A372 /* AccountRowBackground.swift in Sources */,
+				68592128301A298700719DF3 /* DeletedEntityCloudStoring.swift in Sources */,
 				683275FE2F9B7A2D00DA5796 /* AuthView.swift in Sources */,
 				681C55CB2FE6921000339E87 /* DeleteUser.swift in Sources */,
 				687DD66D2FDD336B00B281FF /* MonthlyPieCarouselView.swift in Sources */,
@@ -2389,6 +2598,7 @@
 				683821BC2FC8874200CA6761 /* AvatarCircleView.swift in Sources */,
 				68BE53E8300E3BDE00FA5DEE /* SuccessCheckmarkView.swift in Sources */,
 				683820CC2FC830DC00CA6761 /* InstitutionFormView.swift in Sources */,
+				68394BF9301B315C006A94BE /* DeleteMode.swift in Sources */,
 				6844971E2F753DD600337F74 /* UpdateUserInput.swift in Sources */,
 				685A1EC42F5AD9640009B885 /* UserError.swift in Sources */,
 				6824DCB82FC083E6007375C0 /* FilterPill.swift in Sources */,
@@ -2417,6 +2627,7 @@
 				681760AF2FE4F9F6005873D2 /* AppHeaderView.swift in Sources */,
 				683276072F9BB03A00DA5796 /* UserProfileView.swift in Sources */,
 				68CFAF68300A0D3000444AA3 /* AccountRecencySorter.swift in Sources */,
+				6859211D301A286200719DF3 /* GetDeletedEntity.swift in Sources */,
 				681C55C62FE6873A00339E87 /* DeleteAccountRule.swift in Sources */,
 				68C811742FDC4D390077D42B /* MonthlyFlowChartView.swift in Sources */,
 				683D5FE42FE426E00049D07D /* DownloadImage.swift in Sources */,
@@ -2433,6 +2644,7 @@
 				683D5FDB2FE3DA240049D07D /* AppEntryViewModel.swift in Sources */,
 				685A1EAD2F5ACF700009B885 /* Transaction.swift in Sources */,
 				685A1EAE2F5ACF700009B885 /* AddAccount.swift in Sources */,
+				68592123301A28B300719DF3 /* DeletedEntityLocalSource.swift in Sources */,
 				683275F32F9B662F00DA5796 /* SignInAnonymously.swift in Sources */,
 				685A1EF22F5AEAEC0009B885 /* TransactionProviding.swift in Sources */,
 				6849E99F2FEBDECC0026A13E /* CascadeRowModifier.swift in Sources */,
@@ -2442,12 +2654,15 @@
 				687DD6742FDD384900B281FF /* PieCarouselNavigation.swift in Sources */,
 				6835BD7E2FED276900F1A372 /* PieChartAnimator.swift in Sources */,
 				685A1EFF2F5AEB2F0009B885 /* TransactionStoring.swift in Sources */,
+				6859210E301A27C900719DF3 /* DeletedEntity.swift in Sources */,
 				6835BD852FED314100F1A372 /* VisibilityObserver.swift in Sources */,
 				683820C82FC82F8800CA6761 /* ArchiveInstitution.swift in Sources */,
 				684497182F753D8100337F74 /* UpdateTransactionInput.swift in Sources */,
 				6824DCA62FC03E25007375C0 /* TransferRowView.swift in Sources */,
 				682C6C4E2FBF1E3D00AE9F62 /* AccountGroupList.swift in Sources */,
+				683BD8DE3018CC3300CDC125 /* TransactionCategory+Color.swift in Sources */,
 				681B47052F7F9F27000CC7C4 /* String+Extension.swift in Sources */,
+				6859212B301A2B0E00719DF3 /* PurgeDeletedEntities.swift in Sources */,
 				68000F6A2F76D14500B30EB6 /* DIContainer+ViewModels.swift in Sources */,
 				6807E5862F926C0D0099DCE4 /* SyncError.swift in Sources */,
 				68EF99F82FA3968500FEBC1A /* AppEntryView.swift in Sources */,
@@ -2463,6 +2678,7 @@
 				683275F52F9B66F500DA5796 /* DeleteUserProfile.swift in Sources */,
 				685A1EB02F5ACF700009B885 /* AddInstitution.swift in Sources */,
 				683D5FE72FE441820049D07D /* OfflineView.swift in Sources */,
+				68592116301A283700719DF3 /* DeletedEntityStoring.swift in Sources */,
 				681C82122FDA0A1C00807581 /* TransactionEditView.swift in Sources */,
 				6824DCA42FC03E05007375C0 /* TransactionListItemView.swift in Sources */,
 				683821B42FC8841400CA6761 /* UserAvatarView.swift in Sources */,
@@ -2497,8 +2713,10 @@
 				685A1EB52F5ACF700009B885 /* Account.swift in Sources */,
 				6844973F2F757AC400337F74 /* AccountFormView.swift in Sources */,
 				68CE171E30135DBD0010CBEE /* TransferFormRowView.swift in Sources */,
+				68592120301A289D00719DF3 /* DeletedEntityModel.swift in Sources */,
 				685A1EC92F5AD9860009B885 /* UpdateUser.swift in Sources */,
 				685A1EF02F5AEA9F0009B885 /* TransactionSplit.swift in Sources */,
+				6859211A301A285600719DF3 /* RecordDeletedEntity.swift in Sources */,
 				682B0AA62FC96E3100BFB539 /* GetAccountsWithInstitution.swift in Sources */,
 				683820CA2FC82FA200CA6761 /* UnarchiveInstitution.swift in Sources */,
 				6835BD882FED5ABB00F1A372 /* SegmentedToggle.swift in Sources */,
@@ -2508,15 +2726,20 @@
 				682C6C532FBF302900AE9F62 /* IncomePieChartView.swift in Sources */,
 				6868A6712F6D9D2C0038A612 /* AccountModel.swift in Sources */,
 				683133A92F617951004AA5E4 /* GetTransactionsByCategory.swift in Sources */,
+				683BD8E13018CC6300CDC125 /* Transaction+Color.swift in Sources */,
 				682B0AAA2FC9790500BFB539 /* DeleteAccount.swift in Sources */,
 				6807E57E2F922C340099DCE4 /* AuthLocalSource.swift in Sources */,
+				68592131301A2E3100719DF3 /* RetireInstitutionRule.swift in Sources */,
+				68592125301A28C100719DF3 /* DeletedEntityRemoteSource.swift in Sources */,
 				68EF99F32FA383EB00FEBC1A /* LoadingView.swift in Sources */,
 				6813141B2FD2B4CD00F74B8D /* DocumentPickerSection.swift in Sources */,
 				685A1EBE2F5AD9350009B885 /* DIContainer.swift in Sources */,
 				685A1EB62F5ACF700009B885 /* Institution.swift in Sources */,
 				681760B22FE4FB8D005873D2 /* AppLogoView.swift in Sources */,
 				683821A92FC86BF700CA6761 /* AttachmentType.swift in Sources */,
+				68592112301A27D800719DF3 /* DeletedEntityProviding.swift in Sources */,
 				6807E5842F9266800099DCE4 /* SyncButton.swift in Sources */,
+				6859212F301A2E2800719DF3 /* RetireAccountRule.swift in Sources */,
 				684497392F75760600337F74 /* InstitutionFormViewModel.swift in Sources */,
 				68128E7E2FE2A60900A568B5 /* RefreshFromRemote.swift in Sources */,
 				683C909B2F892A3200CE2A6D /* TransactionFormContent.swift in Sources */,
@@ -2540,6 +2763,11 @@
 			isa = PBXTargetDependency;
 			target = 6857E3C22F51AB4200913E12 /* EchoLedger */;
 			targetProxy = 683133B42F61A1A9004AA5E4 /* PBXContainerItemProxy */;
+		};
+		683BD8ED3018D05B00CDC125 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 683820CD2FC8432000CA6761 /* EchoLedgerCloud */;
+			targetProxy = 683BD8EC3018D05B00CDC125 /* PBXContainerItemProxy */;
 		};
 		68C2A048300D525100AA47A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2617,7 +2845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2652,7 +2880,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2663,6 +2891,46 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		683BD8EF3018D05B00CDC125 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9J8B8CPN4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedgerCloudUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EchoLedgerCloud;
+			};
+			name = Debug;
+		};
+		683BD8F03018D05B00CDC125 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A9J8B8CPN4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedgerCloudUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EchoLedgerCloud;
 			};
 			name = Release;
 		};
@@ -2810,7 +3078,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2844,7 +3112,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2916,6 +3184,15 @@
 			buildConfigurations = (
 				6838217B2FC8432000CA6761 /* Debug */,
 				6838217C2FC8432000CA6761 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		683BD8EE3018D05B00CDC125 /* Build configuration list for PBXNativeTarget "EchoLedgerCloudUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				683BD8EF3018D05B00CDC125 /* Debug */,
+				683BD8F03018D05B00CDC125 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -16,12 +16,14 @@ struct SegmentedToggle: View {
         case transaction
         case account
         case authentication
+        case archive
 
         var falseLabel: String {
             switch self {
             case .transaction: "Dépense"
             case .account: "Positif"
             case .authentication: "Connexion"
+            case .archive: "Actif"
             }
         }
 
@@ -30,6 +32,7 @@ struct SegmentedToggle: View {
             case .transaction: "Revenue"
             case .account: "Négatif"
             case .authentication: "Inscription"
+            case .archive: "Archivé"
             }
         }
 
@@ -39,6 +42,7 @@ struct SegmentedToggle: View {
             case .transaction: nil
             case .account: .green
             case .authentication: nil
+            case .archive: .green
             }
         }
 
@@ -48,20 +52,24 @@ struct SegmentedToggle: View {
             case .transaction: .green
             case .account: .red
             case .authentication: nil
+            case .archive: .red
             }
         }
     }
 
     @Binding var selection: Bool
     let style: Style
+    /// When provided, a tap reports the target value here instead of writing `selection` directly —
+    /// lets the caller flip `selection` only once the underlying action actually succeeds.
+    var onSelect: ((Bool) -> Void)? = nil
 
     var body: some View {
         HStack(spacing: 0) {
             segment(label: style.falseLabel, fill: style.falseFill, isSelected: !selection) {
-                selection = false
+                if let onSelect { onSelect(false) } else { selection = false }
             }
             segment(label: style.trueLabel, fill: style.trueFill, isSelected: selection) {
-                selection = true
+                if let onSelect { onSelect(true) } else { selection = true }
             }
         }
         .background(Color(.tertiarySystemFill), in: RoundedRectangle(cornerRadius: 9))

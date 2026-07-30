@@ -93,6 +93,21 @@ struct AccountDetailView: View {
                     .listRowBackground(Color.echoCard)
                 }
 
+                // MARK: Archive
+                SegmentedToggle(
+                    selection: Binding(get: { viewModel.isArchived }, set: { _ in }),
+                    style: .archive
+                ) { target in
+                    Task {
+                        if target {
+                            await viewModel.archive()
+                        } else {
+                            await viewModel.unarchive()
+                        }
+                    }
+                }
+                .listRowBackground(Color.clear)
+
                 // MARK: Recent transactions
                 if !viewModel.recentItems.isEmpty {
                     RecentTransactionsView(
@@ -120,14 +135,6 @@ struct AccountDetailView: View {
                     Image(systemName: "pencil")
                 }
             }
-        }
-        .alert("Archiver ce compte ?", isPresented: $viewModel.showArchiveAlert) {
-            Button("Archiver", role: .destructive) {
-                Task { await viewModel.archive() }
-            }
-            Button("Annuler", role: .cancel) {}
-        } message: {
-            Text("Le compte sera masqué de la liste principale. Les transactions existantes restent accessibles.")
         }
         .navigationDestination(item: $selectedTransaction) { transaction in
             TransactionDetailView(transaction: transaction, coordinator: coordinator)

@@ -21,7 +21,6 @@ final class AccountDetailViewModel {
     /// The account's initial balance transaction, surfaced so the detail can offer to edit it.
     var initialBalanceTransaction: Transaction?
     var accountNames: [UUID: String] = [:]
-    var showArchiveAlert = false
     var onNotFound: (() -> Void)?
 
     /// Current version of the account, updated after archive/unarchive.
@@ -137,6 +136,7 @@ final class AccountDetailViewModel {
                 isArchived: true,
                 updatedAt: Date()
             )
+            toasty.showSuccess("Compte archivé.")
         } catch {
             toasty.showError(error)
         }
@@ -174,6 +174,7 @@ final class AccountDetailViewModel {
                 isArchived: false,
                 updatedAt: Date()
             )
+            toasty.showSuccess("Compte désarchivé.")
         } catch {
             toasty.showError(error)
         }

@@ -18,6 +18,7 @@ final class TransactionBalanceIntegrationTests: XCTestCase {
     private var addAccount: AddAccount!
     private var addTransaction: AddTransaction!
     private var getAccountBalance: GetAccountBalance!
+    private var archiveAccount: ArchiveAccount!
     private let userId = UUID()
     private let institutionId = UUID()
 
@@ -31,6 +32,7 @@ final class TransactionBalanceIntegrationTests: XCTestCase {
             accountRepository: accountRepository,
             transactionRepository: transactionRepository
         )
+        archiveAccount = ArchiveAccount(repository: accountRepository)
     }
 
     override func tearDown() {
@@ -39,6 +41,7 @@ final class TransactionBalanceIntegrationTests: XCTestCase {
         addAccount = nil
         addTransaction = nil
         getAccountBalance = nil
+        archiveAccount = nil
         super.tearDown()
     }
 
@@ -62,5 +65,30 @@ final class TransactionBalanceIntegrationTests: XCTestCase {
 
         let balance = try await getAccountBalance.execute(accountId: accountId, userId: userId)
         XCTAssertEqual(balance, 2000)
+    }
+
+    /// Verifies that archiving an account doesn't erase its balance — an archived account still
+    /// holds real money and real transaction history, so it must remain computable.
+    func test_archiveAccount_balanceStaysComputable() async throws {
+        try await addAccount.execute(institutionId: institutionId, name: "Livret A", category: .savings)
+        let accounts = try await accountRepository.fetchAll(for: institutionId)
+        let accountId = try XCTUnwrap(accounts.first?.id)
+
+        let input = AddTransactionInput(
+            userId: userId,
+            label: "Dépôt",
+            date: Date(),
+            totalAmount: 500,
+            note: nil,
+            isExpense: false,
+            category: .other,
+            splits: [TransactionSplit(accountId: accountId, amount: 500)]
+        )
+        try await addTransaction.execute(input)
+
+        try await archiveAccount.execute(id: accountId)
+
+        let balance = try await getAccountBalance.execute(accountId: accountId, userId: userId)
+        XCTAssertEqual(balance, 500)
     }
 }

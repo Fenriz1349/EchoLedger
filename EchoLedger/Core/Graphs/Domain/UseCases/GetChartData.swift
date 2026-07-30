@@ -46,12 +46,13 @@ final class GetChartData {
     /// - Parameter scope: `.global` for the whole portfolio, `.account(id)` for one account.
     /// - Returns: A bundle with every chart dataset for that scope.
     func execute(scope: ChartScope = .global) async throws -> ChartBundle {
-        // Active accounts across all institutions.
+        // All accounts across all institutions — archived accounts still hold real money and
+        // real history, so they count in balances and charts (only excluded from pickers).
         let institutions = try await getInstitutions.execute(for: userId)
-        var activeAccounts: [Account] = []
+        var allAccounts: [Account] = []
         for institution in institutions {
-            let accounts = try await getAccounts.execute(for: institution.id, filter: .active)
-            activeAccounts.append(contentsOf: accounts)
+            let accounts = try await getAccounts.execute(for: institution.id, filter: .all)
+            allAccounts.append(contentsOf: accounts)
         }
 
         // Single fetch; only effective (non-future) transactions feed the charts.
@@ -64,10 +65,10 @@ final class GetChartData {
         switch scope {
         case .global:
             accountId = nil
-            scopedAccounts = activeAccounts
+            scopedAccounts = allAccounts
         case .account(let id):
             accountId = id
-            scopedAccounts = activeAccounts.filter { $0.id == id }
+            scopedAccounts = allAccounts.filter { $0.id == id }
         }
 
         let balances = ChartDataCalculator.balancePerAccount(transactions, accounts: scopedAccounts)
