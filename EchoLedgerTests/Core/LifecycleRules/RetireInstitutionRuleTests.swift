@@ -95,7 +95,7 @@ final class RetireInstitutionRuleTests: XCTestCase {
         let recorded = try await deletedEntityRepository.fetch(by: accountId)
         XCTAssertEqual(recorded?.name, "Livret A")
         XCTAssertEqual(recorded?.kind, .account)
-        XCTAssertEqual(recorded?.institutionName, "BNP Paribas")
+        XCTAssertEqual(recorded?.institutionName, "Banque")
     }
 
     /// Verifies that the institution's own name is recorded before deletion.
@@ -105,7 +105,7 @@ final class RetireInstitutionRuleTests: XCTestCase {
         try await rule.execute(id: institutionId)
 
         let recorded = try await deletedEntityRepository.fetch(by: institutionId)
-        XCTAssertEqual(recorded?.name, "BNP Paribas")
+        XCTAssertEqual(recorded?.name, "Banque")
         XCTAssertEqual(recorded?.kind, .institution)
         XCTAssertNil(recorded?.institutionName)
     }
