@@ -96,6 +96,8 @@ struct AuthView: View {
         .padding(.horizontal, 24)
         .padding(.bottom, 40)
         .echoBackground()
+        .contentShape(Rectangle())
+        .onTapGesture { UIView.dismissKeyboard() }
         .overlay {
             if viewModel.isLoading {
                 EchoProgressView()
