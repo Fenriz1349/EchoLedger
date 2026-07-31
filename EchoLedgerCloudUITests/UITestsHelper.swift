@@ -18,13 +18,28 @@ extension XCUIApplication {
         _ = keyboards.element.waitForExistence(timeout: timeout)
     }
 
-    /// Dismisses the software keyboard via its Return key, if one is showing — trying both the
-    /// capitalized and lowercase accessibility labels since the exact one varies by keyboard type.
+    /// Dismisses the software keyboard via its Return key, if one is showing — trying the
+    /// accessibility labels of both English and French keyboards (the simulator's keyboard
+    /// language governs this label, independently of the app's own French UI).
     func dismissKeyboardIfNeeded() {
-        for label in ["Return", "return", "Done", "done"] where keyboards.buttons[label].exists {
+        let labels = ["Return", "return", "Done", "done", "Retour", "retour", "OK", "Terminé", "terminé"]
+        for label in labels where keyboards.buttons[label].exists {
             keyboards.buttons[label].tap()
             return
         }
+    }
+
+    /// Scrolls a `Form`/`List` down until the given element exists (it may not even be rendered
+    /// yet on a long form, since SwiftUI only materializes visible list content), then returns it.
+    /// - Returns: `true` if the element was found within the attempt budget.
+    @discardableResult
+    func scrollToElement(_ element: XCUIElement, maxSwipes: Int = 5) -> Bool {
+        var attempts = 0
+        while !element.exists && attempts < maxSwipes {
+            swipeUp()
+            attempts += 1
+        }
+        return element.exists
     }
 }
 
@@ -108,12 +123,12 @@ extension XCUIApplication {
     /// scenario that needs a populated dataset to exercise — persistence checks, deletion, etc.
     /// Assumes the app is already past sign-up/sign-in (see `signUpAndReachDashboard()`).
     func createFullDataset(
-        institutionName: String = "BNP Paribas",
-        firstAccountName: String = "Compte courant",
+        institutionName: String = "Banque Test",
+        firstAccountName: String = "Livret A",
         firstAccountInitialBalance: String = "1500",
-        secondAccountName: String = "Livret A",
+        secondAccountName: String = "Compte courant",
         secondAccountInitialBalance: String = "3000",
-        transactionLabel: String = "Courses",
+        transactionLabel: String = "Courses marché",
         transactionAmount: String = "42"
     ) {
         tabBars.buttons["tab.accounts"].tap()
@@ -171,7 +186,11 @@ extension XCUIApplication {
         waitForKeyboard()
         labelField.typeText(transactionLabel)
         dismissKeyboardIfNeeded()
-        buttons["button.transactionSubmit"].tap()
+
+        let transactionSubmitButton = buttons["button.transactionSubmit"]
+        XCTAssertTrue(scrollToElement(transactionSubmitButton),
+                      "Expected the transaction submit button to exist after scrolling the form.")
+        transactionSubmitButton.tap()
         XCTAssertTrue(tabBars.buttons["tab.dashboard"].waitForExistence(timeout: 5)
                       || tabBars.buttons["tab.transactions"].waitForExistence(timeout: 5))
 
