@@ -54,6 +54,7 @@ struct TransactionFormContent: View {
                 cornerRadius: .echoCorner,
                 hasShadow: false
             )
+            .accessibilityIdentifier("transactionField.label")
         }
 
         Section("Détails") {
@@ -64,10 +65,12 @@ struct TransactionFormContent: View {
             } label: {
                 Label("Catégorie", systemImage: viewModel.category.icon)
             }
+            .accessibilityIdentifier("transactionField.category")
 
             SegmentedToggle(selection: $viewModel.isIncome, style: .transaction)
 
             DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+                .accessibilityIdentifier("transactionField.date")
         }
 
         Section {
@@ -81,6 +84,7 @@ struct TransactionFormContent: View {
                 }
                 .buttonStyle(.borderless)
                 .disabled(viewModel.nextAvailableAccount == nil)
+                .accessibilityIdentifier("button.addSplit")
 
                 Spacer()
 
@@ -93,6 +97,7 @@ struct TransactionFormContent: View {
                     )
                 }
                 .buttonStyle(.borderless)
+                .accessibilityIdentifier("button.toggleNewAccount")
             }
         }
 
@@ -120,6 +125,7 @@ struct TransactionFormContent: View {
             )
         }
         .disabled(!viewModel.isFormValid || viewModel.isLoading)
+        .accessibilityIdentifier("button.transactionSubmit")
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
 

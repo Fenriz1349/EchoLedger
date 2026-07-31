@@ -37,6 +37,7 @@ struct SplitFormContent: View {
                 }
                 split.amount = filtered.toDouble
             }
+            .accessibilityIdentifier("transactionField.splitAmount")
             Picker("", selection: $split.accountId) {
                 ForEach(availableAccounts) { item in
                     Text(item.displayLabel)
@@ -45,6 +46,7 @@ struct SplitFormContent: View {
             }
             .pickerStyle(.menu)
             .labelsHidden()
+            .accessibilityIdentifier("transactionField.splitAccount")
         }
         .swipeActions {
             if let onDelete {

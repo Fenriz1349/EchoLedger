@@ -31,6 +31,7 @@ struct UserProfileActionsView: View {
                 CustomButtonLabel(message: "Se déconnecter", color: .orange, isSelected: false)
             }
             .disabled(viewModel.isLoading)
+            .accessibilityIdentifier("button.signOut")
 
             Button {
                 viewModel.showDeleteAlert = true
@@ -38,6 +39,7 @@ struct UserProfileActionsView: View {
                 CustomButtonLabel(message: "Supprimer mon compte", color: .red, isSelected: false)
             }
             .disabled(viewModel.isLoading)
+            .accessibilityIdentifier("button.deleteUserAccount")
         }
     }
 }

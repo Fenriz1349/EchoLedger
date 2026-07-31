@@ -25,6 +25,13 @@
         "identifier" : "683133AF2F61A1A8004AA5E4",
         "name" : "EchoLedgerTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:EchoLedger.xcodeproj",
+        "identifier" : "683BD8E53018D05B00CDC125",
+        "name" : "EchoLedgerCloudUITests"
+      }
     }
   ],
   "version" : 1

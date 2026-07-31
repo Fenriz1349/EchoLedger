@@ -32,7 +32,8 @@ struct TransferFormView: View {
                                                 in: RoundedRectangle(cornerRadius: .echoCorner))
                             }
                             .buttonStyle(.plain)
-                            
+                            .accessibilityIdentifier("button.swapTransferAccounts")
+
                             VStack {
                                 TransferFormRowView(source: "De",
                                                     options: viewModel.sourceOptions,
@@ -58,8 +59,10 @@ struct TransferFormView: View {
                                 hasShadow: false
                             )
                             .onChange(of: viewModel.amountText) { viewModel.sanitizeAmount() }
+                            .accessibilityIdentifier("transferField.amount")
                         }
                         DatePicker("Date", selection: $viewModel.date, displayedComponents: .date)
+                            .accessibilityIdentifier("transferField.date")
                     }
                     .listRowBackground(Color.echoCard)
 
@@ -72,6 +75,7 @@ struct TransferFormView: View {
                             cornerRadius: .echoCorner,
                             hasShadow: false
                         )
+                        .accessibilityIdentifier("transferField.label")
                     }
                     .listRowBackground(Color.echoCard)
 
@@ -88,6 +92,7 @@ struct TransferFormView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(!viewModel.isFormValid || viewModel.isLoading)
+                        .accessibilityIdentifier("button.transferSubmit")
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                         .padding(.horizontal)

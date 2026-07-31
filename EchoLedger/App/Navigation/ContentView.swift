@@ -21,11 +21,11 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             DashboardView(coordinator: coordinator)
-                .tabItem { Label("", systemImage: "chart.pie") }
+                .tabItem { Label("", systemImage: "chart.pie").accessibilityIdentifier("tab.dashboard") }
                 .tag(AppTab.dashboard)
 
             TransactionListView(coordinator: coordinator)
-                .tabItem { Label("", systemImage: "list.bullet") }
+                .tabItem { Label("", systemImage: "list.bullet").accessibilityIdentifier("tab.transactions") }
                 .tag(AppTab.transactions)
 
             Color.clear
@@ -33,16 +33,16 @@ struct ContentView: View {
                 .disabled(true)
 
             AccountListView(coordinator: coordinator)
-                .tabItem { Label("", systemImage: "building.columns") }
+                .tabItem { Label("", systemImage: "building.columns").accessibilityIdentifier("tab.accounts") }
                 .tag(AppTab.accounts)
 
             if container.authSession.isAnonymous {
                 UserProfileAnonymousView(viewModel: coordinator.userProfileViewModel)
-                    .tabItem { Label("", systemImage: "person.circle") }
+                    .tabItem { Label("", systemImage: "person.circle").accessibilityIdentifier("tab.profile") }
                     .tag(AppTab.profile)
             } else {
                 UserProfileView(viewModel: coordinator.userProfileViewModel)
-                    .tabItem { Label("", systemImage: "person.circle") }
+                    .tabItem { Label("", systemImage: "person.circle").accessibilityIdentifier("tab.profile") }
                     .tag(AppTab.profile)
             }
         }
@@ -64,6 +64,7 @@ struct ContentView: View {
                         )
                         .shadow(radius: 6)
                 }
+                .accessibilityIdentifier("button.addTransaction")
             }
         }
         .ignoresSafeArea(.keyboard)
