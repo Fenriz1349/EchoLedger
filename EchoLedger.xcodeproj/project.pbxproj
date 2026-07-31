@@ -96,8 +96,8 @@
 		681CA8672F62CB7F002E1EF7 /* GetTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */; };
 		681CA8692F62CBA5002E1EF7 /* GetTransactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */; };
 		681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */; };
-		681F33FC301C831E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F33FB301C831E00C31BF6 /* GoogleService-Info.plist */; };
-		681F33FD301C831E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F33FB301C831E00C31BF6 /* GoogleService-Info.plist */; };
+		681F3401301C916E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F3400301C916E00C31BF6 /* GoogleService-Info.plist */; };
+		681F3402301C916E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F3400301C916E00C31BF6 /* GoogleService-Info.plist */; };
 		6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
 		6824DC9D2FC036E0007375C0 /* TransferFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */; };
 		6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */; };
@@ -649,7 +649,7 @@
 		681CA8662F62CB7F002E1EF7 /* GetTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionTests.swift; sourceTree = "<group>"; };
 		681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsTests.swift; sourceTree = "<group>"; };
 		681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransactionTests.swift; sourceTree = "<group>"; };
-		681F33FB301C831E00C31BF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		681F3400301C916E00C31BF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccounts.swift; sourceTree = "<group>"; };
 		6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormInput.swift; sourceTree = "<group>"; };
 		6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormViewModel.swift; sourceTree = "<group>"; };
@@ -1538,7 +1538,7 @@
 				685A1EA52F5ACF700009B885 /* Resources */,
 				684497122F7537F600337F74 /* PreviewContent */,
 				6813E8172F6D535F00344774 /* Info.plist */,
-				681F33FB301C831E00C31BF6 /* GoogleService-Info.plist */,
+				681F3400301C916E00C31BF6 /* GoogleService-Info.plist */,
 			);
 			path = EchoLedger;
 			sourceTree = "<group>";
@@ -2175,7 +2175,7 @@
 			files = (
 				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
 				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
-				681F33FC301C831E00C31BF6 /* GoogleService-Info.plist in Resources */,
+				681F3401301C916E00C31BF6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2192,7 +2192,7 @@
 			files = (
 				685A1EB72F5ACF700009B885 /* Assets.xcassets in Resources */,
 				685A1EB82F5ACF700009B885 /* Localizable.xcstrings in Resources */,
-				681F33FD301C831E00C31BF6 /* GoogleService-Info.plist in Resources */,
+				681F3402301C916E00C31BF6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
