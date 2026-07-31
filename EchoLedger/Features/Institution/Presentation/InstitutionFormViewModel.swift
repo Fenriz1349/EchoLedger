@@ -102,7 +102,7 @@ final class InstitutionFormViewModel {
             prefill(with: existing)
         }
     }
-    
+
     /// Prefills the form with an existing institution's data.
     private func prefill(with institution: Institution) {
         name = institution.name

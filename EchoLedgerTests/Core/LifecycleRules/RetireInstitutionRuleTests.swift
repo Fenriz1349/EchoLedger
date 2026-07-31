@@ -50,9 +50,11 @@ final class RetireInstitutionRuleTests: XCTestCase {
     /// Seeds an institution with one account; returns the account's id.
     @discardableResult
     private func seedTree() async throws -> UUID {
-        try await institutionRepository.save(TestData.institution(id: institutionId, userId: userId, name: "BNP Paribas"))
+        try await institutionRepository.save(TestData.institution(id: institutionId, userId: userId, name: "Banque"))
         let accountId = UUID()
-        try await accountRepository.save(TestData.account(id: accountId, institutionId: institutionId, name: "Livret A"))
+        try await accountRepository.save(TestData.account(id: accountId,
+                                                          institutionId: institutionId,
+                                                          name: "Livret A"))
         return accountId
     }
 

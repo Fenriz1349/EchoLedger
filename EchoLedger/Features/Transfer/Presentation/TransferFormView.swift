@@ -20,7 +20,7 @@ struct TransferFormView: View {
             Group {
                 Form {
                     Section("Comptes") {
-                        HStack (spacing: 12) {
+                        HStack(spacing: 12) {
                             Button {
                                 viewModel.swapAccounts()
                             } label: {

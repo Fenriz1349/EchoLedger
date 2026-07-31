@@ -7,7 +7,8 @@
 
 import XCTest
 
-/// Exercises the full account lifecycle: demo mode, data creation, conversion to a permanent account (verifying the data persists through it), then deletion
+/// Exercises the full account lifecycle: demo mode, data creation, conversion to a permanent account
+/// (verifying the data persists through it), then deletion
 /// Regression-tests the `LinkAnonymousAccount` and `DeleteUserRule` flows end to end against the real app.
 final class UserLifecycleUITests: XCTestCase {
 
