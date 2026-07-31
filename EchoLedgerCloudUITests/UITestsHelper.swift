@@ -48,7 +48,7 @@ extension XCUIApplication {
     /// - Returns: The email used to sign up (randomised per call, since the emulator's Auth data
     ///   persists across launches — a fixed email would collide with a previous run's account).
     @discardableResult
-    func signUpAndReachDashboard(firstName: String = "Jean", lastName: String = "Dupont") -> String {
+    func signUpAndReachDashboard(firstName: String = "Bruce", lastName: String = "Wayne") -> String {
         launchArguments = ["--uitesting"]
         launch()
 
@@ -101,5 +101,89 @@ extension XCUIApplication {
         XCTAssertTrue(dashboardTab.waitForExistence(timeout: 10),
                       "Expected to reach the main app (dashboard tab) after sign-up.")
         return email
+    }
+
+    /// Creates one institution, two accounts in that institution, one transaction on the first
+    /// account, and one transfer from the first to the second account. Shared fixture data for any
+    /// scenario that needs a populated dataset to exercise — persistence checks, deletion, etc.
+    /// Assumes the app is already past sign-up/sign-in (see `signUpAndReachDashboard()`).
+    func createFullDataset(
+        institutionName: String = "BNP Paribas",
+        firstAccountName: String = "Compte courant",
+        firstAccountInitialBalance: String = "1500",
+        secondAccountName: String = "Livret A",
+        secondAccountInitialBalance: String = "3000",
+        transactionLabel: String = "Courses",
+        transactionAmount: String = "42"
+    ) {
+        tabBars.buttons["tab.accounts"].tap()
+
+        // First account — no institution exists yet, so create one inline.
+        buttons["button.addAccount"].tap()
+        let accountNameField = textFields["accountField.name"]
+        XCTAssertTrue(accountNameField.waitForExistence(timeout: 5))
+
+        buttons["button.toggleNewInstitution"].tap()
+        let institutionNameField = textFields["institutionField.name"]
+        XCTAssertTrue(institutionNameField.waitForExistence(timeout: 5))
+        institutionNameField.tap()
+        waitForKeyboard()
+        institutionNameField.typeText(institutionName)
+        dismissKeyboardIfNeeded()
+        buttons["button.institutionSubmit"].tap()
+
+        accountNameField.tap()
+        waitForKeyboard()
+        accountNameField.typeText(firstAccountName)
+        let firstBalanceField = textFields["accountField.initialBalance"]
+        firstBalanceField.tap()
+        waitForKeyboard()
+        firstBalanceField.typeText(firstAccountInitialBalance)
+        dismissKeyboardIfNeeded()
+        buttons["button.accountSubmit"].tap()
+        XCTAssertTrue(tabBars.buttons["tab.accounts"].waitForExistence(timeout: 5))
+
+        // Second account — same institution, already selectable by default.
+        buttons["button.addAccount"].tap()
+        let secondAccountNameField = textFields["accountField.name"]
+        XCTAssertTrue(secondAccountNameField.waitForExistence(timeout: 5))
+        secondAccountNameField.tap()
+        waitForKeyboard()
+        secondAccountNameField.typeText(secondAccountName)
+        let secondBalanceField = textFields["accountField.initialBalance"]
+        secondBalanceField.tap()
+        waitForKeyboard()
+        secondBalanceField.typeText(secondAccountInitialBalance)
+        dismissKeyboardIfNeeded()
+        buttons["button.accountSubmit"].tap()
+        XCTAssertTrue(tabBars.buttons["tab.accounts"].waitForExistence(timeout: 5))
+
+        // Transaction on the first account.
+        buttons["button.addTransaction"].tap()
+        let splitAmountField = textFields["transactionField.splitAmount"].firstMatch
+        XCTAssertTrue(splitAmountField.waitForExistence(timeout: 5))
+        splitAmountField.tap()
+        waitForKeyboard()
+        splitAmountField.typeText(transactionAmount)
+
+        let labelField = textFields["transactionField.label"]
+        labelField.tap()
+        waitForKeyboard()
+        labelField.typeText(transactionLabel)
+        dismissKeyboardIfNeeded()
+        buttons["button.transactionSubmit"].tap()
+        XCTAssertTrue(tabBars.buttons["tab.dashboard"].waitForExistence(timeout: 5)
+                      || tabBars.buttons["tab.transactions"].waitForExistence(timeout: 5))
+
+        // Transfer from the first to the second account.
+        tabBars.buttons["tab.accounts"].tap()
+        buttons["button.addTransfer"].tap()
+        let transferAmountField = textFields["transferField.amount"]
+        XCTAssertTrue(transferAmountField.waitForExistence(timeout: 5))
+        transferAmountField.tap()
+        waitForKeyboard()
+        transferAmountField.typeText("10")
+        dismissKeyboardIfNeeded()
+        buttons["button.transferSubmit"].tap()
     }
 }
