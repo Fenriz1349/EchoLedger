@@ -49,6 +49,7 @@ struct AccountListView: View {
                                               isSelected: false)
                         }
                         .buttonStyle(.borderless)
+                        .accessibilityIdentifier("button.addAccount")
 
                         Button { sheet = .transfer } label: {
                             CustomButtonLabel(iconLeading: "arrow.left.arrow.right",
@@ -57,6 +58,7 @@ struct AccountListView: View {
                                               isSelected: false)
                         }
                         .buttonStyle(.borderless)
+                        .accessibilityIdentifier("button.addTransfer")
                     }
                     .listRowBackground(Color.clear)
 

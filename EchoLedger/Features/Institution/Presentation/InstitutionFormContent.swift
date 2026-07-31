@@ -30,6 +30,7 @@ struct InstitutionFormContent: View {
                 cornerRadius: .echoCorner,
                 hasShadow: false
             )
+            .accessibilityIdentifier("institutionField.name")
 
             Picker("Categorie", selection: $viewModel.category) {
                 ForEach(InstitutionCategory.allCases, id: \.self) { category in
@@ -38,6 +39,7 @@ struct InstitutionFormContent: View {
                 }
             }
             .pickerStyle(.menu)
+            .accessibilityIdentifier("institutionField.category")
 
             Button {
                 Task { await viewModel.submit() }
@@ -49,6 +51,7 @@ struct InstitutionFormContent: View {
                 )
             }
             .disabled(!viewModel.isFormValid || viewModel.isLoading)
+            .accessibilityIdentifier("button.institutionSubmit")
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
 
@@ -76,6 +79,7 @@ struct InstitutionFormContent: View {
                     )
                 }
                 .disabled(viewModel.isLoading)
+                .accessibilityIdentifier("button.deleteInstitution")
                 .confirmationDialog(
                     "Supprimer l'établissement ?",
                     isPresented: $viewModel.showDeleteDialog,

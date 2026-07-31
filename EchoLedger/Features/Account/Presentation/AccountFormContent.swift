@@ -33,12 +33,14 @@ struct AccountFormContent: View {
                 .listRowInsets(EdgeInsets())
                 .padding(.top)
                 .padding(.horizontal)
+                .accessibilityIdentifier("accountField.name")
 
                 Picker("Categorie", selection: $viewModel.category) {
                     ForEach(AccountCategory.allCases, id: \.self) { category in
                         Label(category.name, systemImage: category.icon).tag(category)
                     }
                 }
+                .accessibilityIdentifier("accountField.category")
             }
 
             if viewModel.existingAccount == nil {
@@ -54,10 +56,12 @@ struct AccountFormContent: View {
                             hasShadow: false
                         )
                         .onChange(of: viewModel.initialBalanceText) { viewModel.sanitizeBalance() }
+                        .accessibilityIdentifier("accountField.initialBalance")
                         SegmentedToggle(selection: $viewModel.isInitialBalanceExpense, style: .account)
                     }
 
                     DatePicker("Date", selection: $viewModel.initialBalanceDate, displayedComponents: .date)
+                        .accessibilityIdentifier("accountField.initialBalanceDate")
                 }
             }
 
@@ -73,6 +77,7 @@ struct AccountFormContent: View {
                                 .tag(Optional(institution))
                         }
                     }
+                    .accessibilityIdentifier("accountField.institution")
                 }
 
                 Button {
@@ -83,6 +88,7 @@ struct AccountFormContent: View {
                         systemImage: viewModel.showAddInstitutionForm ? "xmark" : "plus"
                     )
                 }
+                .accessibilityIdentifier("button.toggleNewInstitution")
 
                 if viewModel.showAddInstitutionForm {
                     InstitutionFormContent(viewModel: viewModel.addInstitutionFormViewModel)
@@ -105,6 +111,7 @@ struct AccountFormContent: View {
                 )
             }
             .disabled(!viewModel.isFormValid || viewModel.isLoading)
+            .accessibilityIdentifier("button.accountSubmit")
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
 
@@ -138,6 +145,7 @@ struct AccountFormContent: View {
                                           isSelected: false)
                     }
                     .disabled(viewModel.isLoading)
+                    .accessibilityIdentifier("button.deleteAccount")
                     .confirmationDialog(
                         "Supprimer le compte ?",
                         isPresented: $viewModel.showDeleteDialog,

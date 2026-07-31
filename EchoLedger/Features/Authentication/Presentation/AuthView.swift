@@ -76,6 +76,7 @@ struct AuthView: View {
                     isSelected: viewModel.isFormValid
                 )
             }
+            .accessibilityIdentifier("button.authSubmit")
             .disabled(!viewModel.isFormValid || viewModel.isLoading)
 
             Divider()

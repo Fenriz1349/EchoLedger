@@ -40,6 +40,7 @@ struct TransferFormRowView: View {
                 }
                 .foregroundStyle(Color.accentColor)
             }
+            .accessibilityIdentifier(source == "De" ? "transferField.source" : "transferField.destination")
         }
     }
 }

@@ -27,6 +27,7 @@ struct UserProfileAnonymousView: View {
                         CustomButtonLabel(message: "Arrêter l'essai", color: .orange, isSelected: false)
                     }
                     .disabled(viewModel.isLoading)
+                    .accessibilityIdentifier("button.stopDemo")
 
                     Divider()
 
@@ -61,6 +62,7 @@ struct UserProfileAnonymousView: View {
                         )
                     }
                     .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
+                    .accessibilityIdentifier("button.linkAccountSubmit")
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 30)
