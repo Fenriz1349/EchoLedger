@@ -98,6 +98,12 @@
 		681CA86B2F62CBC9002E1EF7 /* DeleteTransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */; };
 		681F3401301C916E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F3400301C916E00C31BF6 /* GoogleService-Info.plist */; };
 		681F3402301C916E00C31BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 681F3400301C916E00C31BF6 /* GoogleService-Info.plist */; };
+		681F340C301C9F0700C31BF6 /* AccountDeleteModeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681F3405301C9F0700C31BF6 /* AccountDeleteModeUITests.swift */; };
+		681F340D301C9F0700C31BF6 /* AuthUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681F3406301C9F0700C31BF6 /* AuthUITests.swift */; };
+		681F340E301C9F0700C31BF6 /* SignOutSignInUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681F3408301C9F0700C31BF6 /* SignOutSignInUITests.swift */; };
+		681F340F301C9F0700C31BF6 /* UITestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681F3409301C9F0700C31BF6 /* UITestsHelper.swift */; };
+		681F3410301C9F0700C31BF6 /* UserLifecycleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681F340A301C9F0700C31BF6 /* UserLifecycleUITests.swift */; };
+		681F3411301C9F0700C31BF6 /* EchoLedgerCloudUlTests.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 681F3407301C9F0700C31BF6 /* EchoLedgerCloudUlTests.xctestplan */; };
 		6824DC9B2FC036D8007375C0 /* TransferBetweenAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */; };
 		6824DC9D2FC036E0007375C0 /* TransferFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */; };
 		6824DCA02FC036FD007375C0 /* TransferFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */; };
@@ -650,6 +656,12 @@
 		681CA8682F62CBA5002E1EF7 /* GetTransactionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsTests.swift; sourceTree = "<group>"; };
 		681CA86A2F62CBC9002E1EF7 /* DeleteTransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTransactionTests.swift; sourceTree = "<group>"; };
 		681F3400301C916E00C31BF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		681F3405301C9F0700C31BF6 /* AccountDeleteModeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeleteModeUITests.swift; sourceTree = "<group>"; };
+		681F3406301C9F0700C31BF6 /* AuthUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUITests.swift; sourceTree = "<group>"; };
+		681F3407301C9F0700C31BF6 /* EchoLedgerCloudUlTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EchoLedgerCloudUlTests.xctestplan; sourceTree = "<group>"; };
+		681F3408301C9F0700C31BF6 /* SignOutSignInUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutSignInUITests.swift; sourceTree = "<group>"; };
+		681F3409301C9F0700C31BF6 /* UITestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestsHelper.swift; sourceTree = "<group>"; };
+		681F340A301C9F0700C31BF6 /* UserLifecycleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLifecycleUITests.swift; sourceTree = "<group>"; };
 		6824DC9A2FC036D8007375C0 /* TransferBetweenAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferBetweenAccounts.swift; sourceTree = "<group>"; };
 		6824DC9C2FC036E0007375C0 /* TransferFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormInput.swift; sourceTree = "<group>"; };
 		6824DC9F2FC036FD007375C0 /* TransferFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFormViewModel.swift; sourceTree = "<group>"; };
@@ -900,14 +912,6 @@
 		68EF99F72FA3968500FEBC1A /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EchoLedgerCloudUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		683133AD2F61A1A8004AA5E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -1150,6 +1154,19 @@
 				681C55CD2FE6922A00339E87 /* DeleteUserRule.swift */,
 			);
 			path = LifecycleRules;
+			sourceTree = "<group>";
+		};
+		681F340B301C9F0700C31BF6 /* EchoLedgerCloudUITests */ = {
+			isa = PBXGroup;
+			children = (
+				681F3407301C9F0700C31BF6 /* EchoLedgerCloudUlTests.xctestplan */,
+				681F3409301C9F0700C31BF6 /* UITestsHelper.swift */,
+				681F3406301C9F0700C31BF6 /* AuthUITests.swift */,
+				681F3405301C9F0700C31BF6 /* AccountDeleteModeUITests.swift */,
+				681F3408301C9F0700C31BF6 /* SignOutSignInUITests.swift */,
+				681F340A301C9F0700C31BF6 /* UserLifecycleUITests.swift */,
+			);
+			path = EchoLedgerCloudUITests;
 			sourceTree = "<group>";
 		};
 		6824DC972FC036AE007375C0 /* Transfer */ = {
@@ -1522,7 +1539,7 @@
 				681B47002F7F9138000CC7C4 /* EchoLedger.app */,
 				681B47012F7F9138000CC7C4 /* EchoLedgerTests.xctest */,
 				6838217D2FC8432000CA6761 /* EchoLedgerCloud.app */,
-				683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */,
+				681F340B301C9F0700C31BF6 /* EchoLedgerCloudUITests */,
 				683821A22FC8695000CA6761 /* Frameworks */,
 				68617AB5300A8488007C5731 /* EchoLedgerE2ETests..xctest */,
 				683BD8E63018D05B00CDC125 /* EchoLedgerCloudUITests.xctest */,
@@ -2050,9 +2067,6 @@
 			dependencies = (
 				683BD8ED3018D05B00CDC125 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				683BD8E73018D05B00CDC125 /* EchoLedgerCloudUITests */,
-			);
 			name = EchoLedgerCloudUITests;
 			packageProductDependencies = (
 			);
@@ -2183,6 +2197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681F3411301C9F0700C31BF6 /* EchoLedgerCloudUlTests.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2509,6 +2524,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681F340C301C9F0700C31BF6 /* AccountDeleteModeUITests.swift in Sources */,
+				681F340D301C9F0700C31BF6 /* AuthUITests.swift in Sources */,
+				681F340E301C9F0700C31BF6 /* SignOutSignInUITests.swift in Sources */,
+				681F340F301C9F0700C31BF6 /* UITestsHelper.swift in Sources */,
+				681F3410301C9F0700C31BF6 /* UserLifecycleUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

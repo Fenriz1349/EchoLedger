@@ -22,12 +22,16 @@ final class AccountDeleteModeUITests: XCTestCase {
         app.signUpAndReachDashboard()
         app.createFullDataset()
 
-        // Delete the first account, keeping its history.
+        // Delete the first account, keeping its history — via the detail screen's edit button,
+        // not a swipe action (swipe gestures are fragile in XCUITest).
         app.tabBars.buttons["tab.accounts"].tap()
-        let firstAccountRow = app.staticTexts["Compte courant"]
+        let firstAccountRow = app.staticTexts["Livret A"]
         XCTAssertTrue(firstAccountRow.waitForExistence(timeout: 5))
-        firstAccountRow.swipeLeft()
-        app.buttons["Modifier"].tap()
+        firstAccountRow.tap()
+
+        let editButton = app.buttons["button.editAccount"]
+        XCTAssertTrue(editButton.waitForExistence(timeout: 5))
+        editButton.tap()
 
         let deleteButton = app.buttons["button.deleteAccount"]
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 5))
@@ -37,18 +41,20 @@ final class AccountDeleteModeUITests: XCTestCase {
 
         // Back on the accounts list: the deleted account is gone.
         XCTAssertTrue(app.tabBars.buttons["tab.accounts"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Compte courant"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts["Livret A"].waitForExistence(timeout: 3))
 
         // Its transaction survives in the history, since we kept it.
         app.tabBars.buttons["tab.transactions"].tap()
-        XCTAssertTrue(app.staticTexts["Courses"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Courses marché"].waitForExistence(timeout: 5))
 
         // Delete the second account, this time erasing everything.
         app.tabBars.buttons["tab.accounts"].tap()
-        let secondAccountRow = app.staticTexts["Livret A"]
+        let secondAccountRow = app.staticTexts["Compte courant"]
         XCTAssertTrue(secondAccountRow.waitForExistence(timeout: 5))
-        secondAccountRow.swipeLeft()
-        app.buttons["Modifier"].tap()
+        secondAccountRow.tap()
+
+        XCTAssertTrue(editButton.waitForExistence(timeout: 5))
+        editButton.tap()
 
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 5))
         deleteButton.tap()
@@ -56,7 +62,7 @@ final class AccountDeleteModeUITests: XCTestCase {
         app.alerts["Confirmer la suppression"].buttons["Supprimer"].tap()
 
         XCTAssertTrue(app.tabBars.buttons["tab.accounts"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Livret A"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts["Compte courant"].waitForExistence(timeout: 3))
 
         // Cleanup: delete the whole test account.
         app.tabBars.buttons["tab.profile"].tap()

@@ -134,6 +134,7 @@ struct AccountDetailView: View {
                 Button { showEditForm = true } label: {
                     Image(systemName: "pencil")
                 }
+                .accessibilityIdentifier("button.editAccount")
             }
         }
         .navigationDestination(item: $selectedTransaction) { transaction in
