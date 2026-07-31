@@ -7,9 +7,9 @@
 
 import XCTest
 
-/// Exercises the full account lifecycle: demo mode, data creation, conversion to a permanent
-/// account (verifying the data persists through it), then deletion — regression-tests the
-/// `LinkAnonymousAccount` and `DeleteUserRule` flows end to end against the real app.
+/// Exercises the full account lifecycle: demo mode, data creation, conversion to a permanent account
+/// (verifying the data persists through it), then deletion
+/// Regression-tests the `LinkAnonymousAccount` and `DeleteUserRule` flows end to end against the real app.
 final class UserLifecycleUITests: XCTestCase {
 
     override func setUpWithError() throws {
@@ -38,6 +38,7 @@ final class UserLifecycleUITests: XCTestCase {
         app.tabBars.buttons["tab.profile"].tap()
         XCTAssertTrue(app.buttons["button.stopDemo"].waitForExistence(timeout: 5),
                       "Expected the anonymous profile screen (demo banner) before conversion.")
+        app.buttons["button.showLinkAccountForm"].tap()
 
         let firstNameField = app.textFields["authField.firstName"]
         firstNameField.tap()
