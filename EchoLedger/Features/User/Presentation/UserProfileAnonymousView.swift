@@ -7,13 +7,13 @@
 
 import SwiftUI
 import CustomLabels
-import CustomTextFields
 
 /// Displayed when the current session is anonymous.
-/// Shows a demo mode banner and a form to create a permanent account.
+/// Shows a demo mode banner and an entry point to create a permanent account.
 struct UserProfileAnonymousView: View {
 
     @Bindable var viewModel: UserProfileViewModel
+    @State private var showLinkAccountForm = false
 
     var body: some View {
         NavigationStack {
@@ -22,56 +22,29 @@ struct UserProfileAnonymousView: View {
                     AnonymousHeaderView(dayInDemo: viewModel.daysRemainingInDemo)
 
                     Button {
+                        showLinkAccountForm = true
+                    } label: {
+                        CustomButtonLabel(message: "Créer un compte permanent", color: .accentColor, isSelected: false)
+                    }
+                    .disabled(viewModel.isLoading)
+                    .accessibilityIdentifier("button.showLinkAccountForm")
+
+                    Button {
                         viewModel.showDeleteAlert = true
                     } label: {
                         CustomButtonLabel(message: "Arrêter l'essai", color: .orange, isSelected: false)
                     }
                     .disabled(viewModel.isLoading)
                     .accessibilityIdentifier("button.stopDemo")
-
-                    Divider()
-
-                    Text("Créer un compte permanent")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    AuthFormContent(
-                        isSignUp: .constant(true),
-                        firstName: $viewModel.linkFirstName,
-                        lastName: $viewModel.linkLastName,
-                        email: $viewModel.linkEmail,
-                        password: $viewModel.linkPassword,
-                        confirmPassword: $viewModel.linkConfirmPassword,
-                        firstNameState: $viewModel.linkFirstNameState,
-                        lastNameState: $viewModel.linkLastNameState,
-                        emailState: $viewModel.linkEmailState,
-                        passwordState: $viewModel.linkPasswordState,
-                        confirmPasswordState: $viewModel.linkConfirmPasswordState,
-                        firstNameValidator: viewModel.isValidName,
-                        lastNameValidator: viewModel.isValidName,
-                        confirmPasswordValidator: viewModel.isValidConfirmPassword
-                    )
-
-                    Button {
-                        Task { await viewModel.linkAccount() }
-                    } label: {
-                        CustomButtonLabel(
-                            message: "Créer mon compte",
-                            color: .accentColor,
-                            isSelected: viewModel.isLinkFormValid
-                        )
-                    }
-                    .disabled(!viewModel.isLinkFormValid || viewModel.isLoading)
-                    .accessibilityIdentifier("button.linkAccountSubmit")
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 30)
                 .padding(.bottom, 40)
-                .contentShape(Rectangle())
-                .onTapGesture { UIView.dismissKeyboard() }
             }
-            .scrollDismissesKeyboard(.immediately)
             .echoBackground()
+            .sheet(isPresented: $showLinkAccountForm) {
+                LinkAccountFormView(viewModel: viewModel)
+            }
             .alert("Arrêter l'essai ?", isPresented: $viewModel.showDeleteAlert) {
                 Button("Arrêter", role: .destructive) {
                     Task { await viewModel.deleteUserProfile() }
