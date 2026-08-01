@@ -31,14 +31,22 @@ final class FirestoreLifecycleE2ETests: XCTestCase {
             Firestore.firestore().settings = settings
             Self.isConfigured = true
         }
-        _ = try await Auth.auth().signInAnonymously()
+        // Clears any stale local session first — a crash in a previous run could leave one behind,
+        // making signInAnonymously() skip creating this run's Firestore user document.
+        let localSource = AuthLocalSource()
+        localSource.clearUserId()
+        localSource.clearAnonymousCreationDate()
 
-        let userId = UUID()
+        // Signs in via AuthStoring, not the raw SDK, so the Firestore user document gets created —
+        // firestore.rules requires it before any subcollection write is allowed.
+        let authStoring = AuthStoring(local: localSource, remote: AuthRemoteSource(), userRemote: UserRemoteSource())
+        let session = try await authStoring.signInAnonymously()
+
         container = DIContainer(
-            userId: userId,
+            userId: session.userId,
             toasty: ToastyManager(),
-            authStoring: AuthStoring(local: AuthLocalSource(), remote: AuthRemoteSource(), userRemote: UserRemoteSource()),
-            authSession: AuthSession(userId: userId, isAnonymous: true),
+            authStoring: authStoring,
+            authSession: session,
             networkMonitor: NetworkMonitor()
         )
     }
@@ -60,7 +68,7 @@ final class FirestoreLifecycleE2ETests: XCTestCase {
     /// Verifies the full create → update → delete cycle persists correctly in real Firestore.
     func test_fullLifecycle_persistsCorrectlyInRealFirestore() async throws {
         try await container.addInstitution.execute(AddInstitutionInput(
-            userId: container.userId, name: "BNP Paribas", category: .bank, logoURL: nil
+            userId: container.userId, name: "Banque", category: .bank, logoURL: nil
         ))
         let institutions = try await container.getInstitutions.execute(for: container.userId)
         let institution = try XCTUnwrap(institutions.first)
