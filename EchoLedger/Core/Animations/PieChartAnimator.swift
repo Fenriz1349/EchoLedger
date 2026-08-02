@@ -28,10 +28,13 @@ final class PieChartAnimator {
 
         task = Task {
             for index in 0..<count {
+                guard !Task.isCancelled else { return }
 
                 try? await Task.sleep(
                     nanoseconds: UInt64(delay * 1_000_000_000)
                 )
+
+                guard !Task.isCancelled else { return }
 
                 await MainActor.run {
                     withAnimation(animation) {
