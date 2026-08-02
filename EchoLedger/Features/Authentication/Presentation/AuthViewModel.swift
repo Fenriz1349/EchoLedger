@@ -38,7 +38,7 @@ final class AuthViewModel {
     private let createUserProfileUseCase: CreateUserProfile
     private let signInAnonymouslyUseCase: SignInAnonymously
     private let resetPasswordUseCase: ResetPassword
-    let onAuthSuccess: (AuthSession) -> Void
+    let onAuthSuccess: (AuthSession) async -> Void
 
     /// A name is valid when it is not empty (ignoring whitespace).
     /// Shared by the text fields (display) and the form validity checks so both stay in sync.
@@ -73,7 +73,7 @@ final class AuthViewModel {
         signInWithEmail: SignInWithEmail,
         createUserProfile: CreateUserProfile,
         signInAnonymously: SignInAnonymously,
-        onAuthSuccess: @escaping (AuthSession) -> Void,
+        onAuthSuccess: @escaping (AuthSession) async -> Void,
         resetPassword: ResetPassword,
     ) {
         self.toasty = toasty
@@ -101,7 +101,7 @@ final class AuthViewModel {
             } else {
                 session = try await signInWithEmailUseCase.execute(email: email, password: password)
             }
-            onAuthSuccess(session)
+            await onAuthSuccess(session)
         } catch {
             toasty.showError(error)
         }
@@ -113,7 +113,7 @@ final class AuthViewModel {
         defer { isLoading = false }
         do {
             let session = try await signInAnonymouslyUseCase.execute()
-            onAuthSuccess(session)
+            await onAuthSuccess(session)
         } catch {
             toasty.showError(error)
         }

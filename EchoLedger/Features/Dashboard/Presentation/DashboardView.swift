@@ -61,6 +61,7 @@ struct DashboardView: View {
                             ExpensePieChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.expenseTotals
                             )
+                            .id(coordinator.dashboardViewModel.graphsViewModel.expenseTotals.count)
                         }
                         .listRowBackground(Color.echoCard)
                     }
@@ -71,6 +72,7 @@ struct DashboardView: View {
                             IncomePieChartView(
                                 data: coordinator.dashboardViewModel.graphsViewModel.incomeTotals
                             )
+                            .id(coordinator.dashboardViewModel.graphsViewModel.incomeTotals.count)
                         }
                         .listRowBackground(Color.echoCard)
                     }
