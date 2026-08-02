@@ -37,10 +37,12 @@ struct MonthlyPieCarouselView: View {
 
             if !current.expenses.isEmpty {
                 ExpensePieChartView(data: current.expenses)
+                    .id(current.month)
             }
 
             if !current.income.isEmpty {
                 IncomePieChartView(data: current.income)
+                    .id(current.month)
             }
 
             if current.expenses.isEmpty && current.income.isEmpty {
