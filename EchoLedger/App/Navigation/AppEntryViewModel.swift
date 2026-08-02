@@ -62,7 +62,7 @@ final class AppEntryViewModel {
             createUserProfile: CreateUserProfile(repository: authStoring),
             signInAnonymously: SignInAnonymously(repository: authStoring),
             onAuthSuccess: { [weak self] session in
-                Task { await self?.handleAuthSuccess(session: session) }
+                await self?.handleAuthSuccess(session: session)
             },
             resetPassword: ResetPassword(repository: authStoring)
         )
