@@ -1,41 +1,93 @@
 name: CI
 
+# Run on every PR targeting dev/main, and on every direct push to these branches.
+# Skipped when a change only touches release-please's own files (see ci-skip.yml, which reports
+# a trivial success for this same check in that case instead).
 on:
   pull_request:
-    branches: [main, dev]
+    branches: [dev, main]
+    paths-ignore:
+      - "EchoLedger/Resources/Version.xcconfig"
+      - ".release-please-manifest.json"
+      - "CHANGELOG.md"
+  push:
+    branches: [dev, main]
+    paths-ignore:
+      - "EchoLedger/Resources/Version.xcconfig"
+      - ".release-please-manifest.json"
+      - "CHANGELOG.md"
 
+# Only one run at a time per branch/PR: a new run for the same ref cancels whatever was
+# already running for it (avoids duplicate runs when a push and a PR event fire close together).
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-test:
-    # release-please's own version-bump PRs only touch version/changelog files —
-    # skip the actual build so they don't wait on (or waste) a full CI run.
-    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
-    runs-on: macos-15
+    # "macos-latest" always resolves to GitHub's current default macOS image, so this stays
+    # correct without us tracking Apple/GitHub's release naming over time.
+    runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         scheme: [EchoLedgerCloud, EchoLedger]
-
     steps:
+      # Clone the repo at the commit that triggered this run.
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_16.app/Contents/Developer
+      # GitHub's macOS runners ship several Xcode versions at once; pick the one we build with.
+      # No official GitHub action does this, so we use this popular, widely-used third-party one.
+      # "latest-stable" avoids hardcoding a version number that may not exist on the runner yet.
+      - name: Select Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
-      - name: Resolve Swift package dependencies
+      # GoogleService-Info.plist is gitignored (per-environment config, see README).
+      # Rebuild it here from a repo secret so the app can call FirebaseApp.configure() without crashing.
+      - name: Write GoogleService-Info.plist
+        run: echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}" | base64 --decode > EchoLedger/GoogleService-Info.plist
+
+      # Xcode normally resolves packages into a hashed, unpredictable DerivedData path, which
+      # can't be cached reliably. Pin a fixed path instead (used by every xcodebuild call below)
+      # so the cache step can target it consistently across runs.
+      - name: Cache resolved Swift packages
+        uses: actions/cache@v4
+        with:
+          path: DerivedData/SourcePackages
+          # Package.resolved is one file shared by every scheme in the project, so both
+          # matrix legs hit the exact same cache entry instead of duplicating it per scheme.
+          key: spm-${{ hashFiles('EchoLedger.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: spm-
+
+      # Fetch the Firebase SDK (and any other SPM dependency) as its own step, so it's visible
+      # in the logs separately from the actual build. A cache hit above makes this near-instant.
+      - name: Resolve Swift Package dependencies
+        run: xcodebuild -resolvePackageDependencies -project EchoLedger.xcodeproj -scheme ${{ matrix.scheme }} -derivedDataPath DerivedData
+
+      # Compile the app for the iOS Simulator. No real device/certificate involved, so no code
+      # signing is needed.
+      - name: Build
         run: |
-          xcodebuild -resolvePackageDependencies \
+          xcodebuild build \
             -project EchoLedger.xcodeproj \
-            -scheme ${{ matrix.scheme }}
+            -scheme ${{ matrix.scheme }} \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO
 
-      - name: Run unit tests (default test plan)
+      # Run the unit tests (default test plan) on an actual simulator instance, since "test" needs
+      # a concrete device to run the app on, unlike "build" which only needs a platform.
+      # Unlike "latest-stable" above, xcodebuild has no "any available device" keyword, so this
+      # device name is the one place that may need adjusting if it isn't on the runner (the
+      # failure log lists the actually available simulators).
+      - name: Test
         run: |
           xcodebuild test \
             -project EchoLedger.xcodeproj \
             -scheme ${{ matrix.scheme }} \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            -skipPackagePluginValidation
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO
