@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    # release-please's own version-bump PRs only touch version/changelog files —
+    # skip the actual build so they don't wait on (or waste) a full CI run.
+    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        scheme: [EchoLedgerCloud, EchoLedger]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.app/Contents/Developer
+
+      - name: Resolve Swift package dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project EchoLedger.xcodeproj \
+            -scheme ${{ matrix.scheme }}
+
+      - name: Run unit tests (default test plan)
+        run: |
+          xcodebuild test \
+            -project EchoLedger.xcodeproj \
+            -scheme ${{ matrix.scheme }} \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -skipPackagePluginValidation
