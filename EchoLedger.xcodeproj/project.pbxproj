@@ -391,6 +391,8 @@
 		683D5FE42FE426E00049D07D /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE22FE426E00049D07D /* DownloadImage.swift */; };
 		683D5FE72FE441820049D07D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE62FE441820049D07D /* OfflineView.swift */; };
 		683D5FE82FE441820049D07D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D5FE62FE441820049D07D /* OfflineView.swift */; };
+		683E5EEB30373ADA0074581A /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 683E5EEA30373ADA0074581A /* Version.xcconfig */; };
+		683E5EEC30373ADA0074581A /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 683E5EEA30373ADA0074581A /* Version.xcconfig */; };
 		68442435301BA9B600CD73CE /* LifecycleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68442434301BA9B600CD73CE /* LifecycleError.swift */; };
 		68442436301BA9B600CD73CE /* LifecycleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68442434301BA9B600CD73CE /* LifecycleError.swift */; };
 		684497142F75380900337F74 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684497132F75380900337F74 /* PreviewData.swift */; };
@@ -780,6 +782,7 @@
 		683D5FDF2FE413860049D07D /* OfflineError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineError.swift; sourceTree = "<group>"; };
 		683D5FE22FE426E00049D07D /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
 		683D5FE62FE441820049D07D /* OfflineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
+		683E5EEA30373ADA0074581A /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		68442434301BA9B600CD73CE /* LifecycleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleError.swift; sourceTree = "<group>"; };
 		684497132F75380900337F74 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		684497152F753D4F00337F74 /* AddTransactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionInput.swift; sourceTree = "<group>"; };
@@ -1805,6 +1808,7 @@
 			isa = PBXGroup;
 			children = (
 				685A1EA32F5ACF700009B885 /* Assets.xcassets */,
+				683E5EEA30373ADA0074581A /* Version.xcconfig */,
 				685A1EA42F5ACF700009B885 /* Localizable.xcstrings */,
 			);
 			path = Resources;
@@ -2196,6 +2200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				683821772FC8432000CA6761 /* Assets.xcassets in Resources */,
+				683E5EEC30373ADA0074581A /* Version.xcconfig in Resources */,
 				683821782FC8432000CA6761 /* Localizable.xcstrings in Resources */,
 				681F3401301C916E00C31BF6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -2214,6 +2219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				685A1EB72F5ACF700009B885 /* Assets.xcassets in Resources */,
+				683E5EEB30373ADA0074581A /* Version.xcconfig in Resources */,
 				685A1EB82F5ACF700009B885 /* Localizable.xcstrings in Resources */,
 				681F3402301C916E00C31BF6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -2864,6 +2870,7 @@
 		};
 		6838217B2FC8432000CA6761 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 683E5EEA30373ADA0074581A /* Version.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2885,7 +2892,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -2901,6 +2907,7 @@
 		};
 		6838217C2FC8432000CA6761 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 683E5EEA30373ADA0074581A /* Version.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2922,7 +2929,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger.cloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -3101,6 +3107,7 @@
 		};
 		6857E3CF2F51AB4400913E12 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 683E5EEA30373ADA0074581A /* Version.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3120,7 +3127,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -3135,6 +3141,7 @@
 		};
 		6857E3D02F51AB4400913E12 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 683E5EEA30373ADA0074581A /* Version.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3154,7 +3161,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliencotte.EchoLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
