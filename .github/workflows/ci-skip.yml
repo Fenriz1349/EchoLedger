@@ -1,0 +1,31 @@
+name: CI
+
+# Mirror image of ci.yml's paths-ignore: triggers only when a change touches exclusively
+# release-please's own files, and reports an immediate success for the "build-and-test" check
+# (same job name as ci.yml) so the required status check is satisfied without a real build —
+# a version bump alone can't break the app, re-running the full suite would be wasted time.
+on:
+  pull_request:
+    branches: [dev, main]
+    paths:
+      - "EchoLedger/Resources/Version.xcconfig"
+      - ".release-please-manifest.json"
+      - "CHANGELOG.md"
+  push:
+    branches: [dev, main]
+    paths:
+      - "EchoLedger/Resources/Version.xcconfig"
+      - ".release-please-manifest.json"
+      - "CHANGELOG.md"
+
+jobs:
+  build-and-test:
+    # Must mirror ci.yml's matrix exactly — GitHub names each matrix job's check
+    # "build-and-test (value)", and branch protection requires both of those names.
+    # Without the same matrix here, this workflow can't produce a matching check.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        scheme: [EchoLedgerCloud, EchoLedger]
+    steps:
+      - run: echo "Only release-please's own files changed, skipping the real build/test."
