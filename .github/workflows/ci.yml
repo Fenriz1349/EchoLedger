@@ -88,6 +88,6 @@ jobs:
           xcodebuild test \
             -project EchoLedger.xcodeproj \
             -scheme ${{ matrix.scheme }} \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
             -derivedDataPath DerivedData \
             CODE_SIGNING_ALLOWED=NO
